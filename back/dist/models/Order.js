@@ -9,53 +9,37 @@ var _sequelize = _interopRequireDefault(require("sequelize"));
 
 var _db = require("../database/db.js");
 
-var _Order = _interopRequireDefault(require("./Order.js"));
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-var Client = _db.sequelize.define('client', {
+var Order = _db.sequelize.define('order', {
   id: {
     type: _sequelize["default"].INTEGER,
     primaryKey: true,
     autoIncrement: true
   },
-  name: {
+  ammount: {
+    type: _sequelize["default"].INTEGER,
+    allowNull: false
+  },
+  shippingAddress: {
     type: _sequelize["default"].TEXT,
     allowNull: false
   },
-  lastname: {
+  createDate: {
+    type: _sequelize["default"].DATE,
+    allowNull: false
+  },
+  status: {
     type: _sequelize["default"].TEXT,
     allowNull: false
   },
-  email: {
-    type: _sequelize["default"].TEXT,
-    allowNull: false
-  },
-  password: {
-    type: _sequelize["default"].TEXT,
-    allowNull: false
-  },
-  address: {
-    type: _sequelize["default"].TEXT,
-    allowNull: false
-  },
-  phone: {
-    type: _sequelize["default"].TEXT,
+  id_client: {
+    type: _sequelize["default"].INTEGER,
     allowNull: false
   }
 }, {
   timestamps: false
 });
 
-Client.hasMany(_Order["default"], {
-  foreignKey: 'id_client',
-  sourceKey: 'id'
-});
-
-_Order["default"].belongsTo(Client, {
-  foreignKey: 'id_client',
-  sourceKey: 'id'
-});
-
-var _default = Client;
+var _default = Order;
 exports["default"] = _default;

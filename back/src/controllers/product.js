@@ -1,14 +1,19 @@
 import Product from '../models/Product.js';
+import Order from '../models/Order.js';
+import Diet from '../models/Diet.js';
+import Category from '../models/Category.js';
 
 export async function createProduct(req, res) {
-    const { name, price, description } = req.body;
+    const { name, price, description, image, stock } = req.body;
     try {
         let newProduct = await Product.create({
             name,
             price,
             description,
+            image,
+            stock,
         }, {
-            fields: ['name', 'price', 'description']
+            fields: ['name', 'price', 'description', 'image', 'stock' ]
         }
         )
         if (newProduct) {
@@ -26,4 +31,25 @@ export async function createProduct(req, res) {
         })
 
     }
+}
+export async function postOrder(req, res) {
+    const { id_product, id_order } = req.params
+    var product = await Product.findByPk(id_product)
+    var order = await Order.findByPk(id_order)
+    var resultado = await product.addOrder(order)
+    res.send(resultado)
+}
+export async function postDiet(req, res) {
+    const { id_product, id_diet } = req.params
+    var product = await Product.findByPk(id_product)
+    var diet = await Diet.findByPk(id_diet)
+    var resultado = await product.addDiet(diet)
+    res.send(resultado)
+}
+export async function postCategory(req, res) {
+    const { id_product, id_category } = req.params
+    var product = await Product.findByPk(id_product)
+    var category = await Category.findByPk(id_category)
+    var resultado = await product.addCategory(category)
+    res.send(resultado)
 }

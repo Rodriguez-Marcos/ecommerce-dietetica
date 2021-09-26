@@ -3,9 +3,9 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.createClient = createClient;
+exports.createDiet = createDiet;
 
-var _Client = _interopRequireDefault(require("../models/Client.js"));
+var _Diet = _interopRequireDefault(require("../models/Diet.js"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
@@ -13,43 +13,39 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
-function createClient(_x, _x2) {
-  return _createClient.apply(this, arguments);
+function createDiet(_x, _x2) {
+  return _createDiet.apply(this, arguments);
 }
 
-function _createClient() {
-  _createClient = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(req, res) {
-    var _req$body, name, lastname, email, password, address, phone, newClient;
+function _createDiet() {
+  _createDiet = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(req, res) {
+    var _req$body, name, description, newDiet;
 
     return regeneratorRuntime.wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
-            _req$body = req.body, name = _req$body.name, lastname = _req$body.lastname, email = _req$body.email, password = _req$body.password, address = _req$body.address, phone = _req$body.phone;
+            _req$body = req.body, name = _req$body.name, description = _req$body.description;
             _context.prev = 1;
             _context.next = 4;
-            return _Client["default"].create({
+            return _Diet["default"].create({
               name: name,
-              lastname: lastname,
-              email: email,
-              password: password,
-              address: address,
-              phone: phone
+              description: description
             }, {
-              fields: ['name', 'lastname', 'email', 'password', 'address', 'phone']
+              fields: ['name', 'description']
             });
 
           case 4:
-            newClient = _context.sent;
+            newDiet = _context.sent;
 
-            if (!newClient) {
+            if (!newDiet) {
               _context.next = 7;
               break;
             }
 
             return _context.abrupt("return", res.json({
-              message: 'Client created successfully',
-              data: newClient
+              message: 'Diet created successfully',
+              data: newDiet
             }));
 
           case 7:
@@ -72,5 +68,5 @@ function _createClient() {
       }
     }, _callee, null, [[1, 9]]);
   }));
-  return _createClient.apply(this, arguments);
+  return _createDiet.apply(this, arguments);
 }

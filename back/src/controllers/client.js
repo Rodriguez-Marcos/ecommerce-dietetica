@@ -1,13 +1,17 @@
 import Client from '../models/Client.js';
 
 export async function createClient(req, res) {
-    const { name, lastname } = req.body;
+    const { name, lastname, email, password, address, phone } = req.body;
     try {
         let newClient = await Client.create({
-            name,
-            lastname,
+            name, 
+            lastname, 
+            email, 
+            password, 
+            address, 
+            phone
         }, {
-            fields: ['name', 'lastname']
+            fields: ['name', 'lastname', 'email', 'password', 'address', 'phone']
         }
         )
         if (newClient) {
