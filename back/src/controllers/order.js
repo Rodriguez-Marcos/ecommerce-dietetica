@@ -30,3 +30,35 @@ export async function createOrder(req, res) {
 
     }
 }
+export async function getOrders(req, res) {
+    try{
+    let orders = await Order.findAll()
+    return res.status(200).send(orders)
+    }catch (err) {
+        console.log(err)
+        res.status(500).json({
+            message: 'Something goes Wrong',
+            data: {}
+
+        })
+
+    }
+}
+export async function deleteOrder(req,res){
+    const {id}=req.params
+    try{
+    let order = await Order.destroy({where: {id:id}})
+    return res.json({
+        message: 'Order deleted successfully',
+        data: order
+    })
+    }catch (err) {
+        console.log(err)
+        res.status(500).json({
+            message: 'Something goes Wrong',
+            data: {}
+
+        })
+
+    }
+}

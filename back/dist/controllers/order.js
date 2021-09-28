@@ -4,6 +4,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.createOrder = createOrder;
+exports.getOrders = getOrders;
+exports.deleteOrder = deleteOrder;
 
 var _Order = _interopRequireDefault(require("../models/Order.js"));
 
@@ -72,4 +74,88 @@ function _createOrder() {
     }, _callee, null, [[1, 9]]);
   }));
   return _createOrder.apply(this, arguments);
+}
+
+function getOrders(_x3, _x4) {
+  return _getOrders.apply(this, arguments);
+}
+
+function _getOrders() {
+  _getOrders = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(req, res) {
+    var orders;
+    return regeneratorRuntime.wrap(function _callee2$(_context2) {
+      while (1) {
+        switch (_context2.prev = _context2.next) {
+          case 0:
+            _context2.prev = 0;
+            _context2.next = 3;
+            return _Order["default"].findAll();
+
+          case 3:
+            orders = _context2.sent;
+            return _context2.abrupt("return", res.status(200).send(orders));
+
+          case 7:
+            _context2.prev = 7;
+            _context2.t0 = _context2["catch"](0);
+            console.log(_context2.t0);
+            res.status(500).json({
+              message: 'Something goes Wrong',
+              data: {}
+            });
+
+          case 11:
+          case "end":
+            return _context2.stop();
+        }
+      }
+    }, _callee2, null, [[0, 7]]);
+  }));
+  return _getOrders.apply(this, arguments);
+}
+
+function deleteOrder(_x5, _x6) {
+  return _deleteOrder.apply(this, arguments);
+}
+
+function _deleteOrder() {
+  _deleteOrder = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3(req, res) {
+    var id, order;
+    return regeneratorRuntime.wrap(function _callee3$(_context3) {
+      while (1) {
+        switch (_context3.prev = _context3.next) {
+          case 0:
+            id = req.params.id;
+            _context3.prev = 1;
+            _context3.next = 4;
+            return _Order["default"].destroy({
+              where: {
+                id: id
+              }
+            });
+
+          case 4:
+            order = _context3.sent;
+            return _context3.abrupt("return", res.json({
+              message: 'Order deleted successfully',
+              data: order
+            }));
+
+          case 8:
+            _context3.prev = 8;
+            _context3.t0 = _context3["catch"](1);
+            console.log(_context3.t0);
+            res.status(500).json({
+              message: 'Something goes Wrong',
+              data: {}
+            });
+
+          case 12:
+          case "end":
+            return _context3.stop();
+        }
+      }
+    }, _callee3, null, [[1, 8]]);
+  }));
+  return _deleteOrder.apply(this, arguments);
 }

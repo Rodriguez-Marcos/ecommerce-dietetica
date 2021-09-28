@@ -32,6 +32,38 @@ export async function createProduct(req, res) {
 
     }
 }
+export async function getProducts(req, res) {
+    try{
+    let products = await Product.findAll()
+    return res.status(200).send(products)
+    }catch (err) {
+        console.log(err)
+        res.status(500).json({
+            message: 'Something goes Wrong',
+            data: {}
+
+        })
+
+    }
+}
+export async function deleteProduct(req,res){
+    const {id}=req.params
+    try{
+    let product = await Product.destroy({where: {id:id}})
+    return res.json({
+        message: 'Product deleted successfully',
+        data: product
+    })
+    }catch (err) {
+        console.log(err)
+        res.status(500).json({
+            message: 'Something goes Wrong',
+            data: {}
+
+        })
+
+    }
+}
 export async function postOrder(req, res) {
     const { id_product, id_order } = req.params
     var product = await Product.findByPk(id_product)
