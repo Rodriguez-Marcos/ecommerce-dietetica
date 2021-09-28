@@ -25,8 +25,7 @@ const Order = sequelize.define('order', {
     },
     id_client: {
         type: Sequelize.INTEGER,
-        allowNull: false,
-        
+        allowNull: false, 
     },
 }, {
     timestamps: false
