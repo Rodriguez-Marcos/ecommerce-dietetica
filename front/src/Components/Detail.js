@@ -3,7 +3,7 @@
 import React, { useEffect } from 'react'
 // import { useSelector } from 'react-redux';
 import { useSelector, useDispatch } from 'react-redux'
-import {  getById } from '../Actions/index'
+import {  getById } from '../actions/index'
 import styles from './Detail.module.css'
 
 function Detail({ match }) {

@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import { NavLink} from 'react-router-dom';
 import { connect } from 'react-redux';
 import './Navbar.css';
-import { getProductbyName } from '../Actions/index'
+import { getProductbyName } from '../actions/index'
 
 
 

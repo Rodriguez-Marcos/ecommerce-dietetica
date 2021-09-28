@@ -1,9 +1,9 @@
 import './App.css';
 import {BrowserRouter,Route} from 'react-router-dom'
-import Home from './Components/Home';
-import Detail from './Components/Detail';
+import Home from './components/Home';
+import Detail from './components/Detail.js';
 
-import NavBar from './Components/NavBar';
+import NavBar from './components/NavBar';
 import { Switch } from 'react-router';
  
 function App() {
