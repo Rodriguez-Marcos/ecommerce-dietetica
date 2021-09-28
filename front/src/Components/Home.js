@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux"
 import { getProducts } from "../Actions/index";
 import ProductsCards from '../Components/Products'
@@ -6,18 +6,17 @@ import ProductsCards from '../Components/Products'
 
 
 function ProductsHome({ products, getProducts }) {
-
-  
+  const [productos,setProductos]=useState([])
     useEffect(() => {
-        getProducts()
-     //eslint-disable-next-line react-hooks/exhaustive-deps
-
+        getProducts();
     }, [])
 
 
     return (
         <div >
+            <h1>soy un home</h1>
                 <div className='home'>
+                  {console.log(products)}
                 <ProductsCards
                     products={products} /> 
             </div> 

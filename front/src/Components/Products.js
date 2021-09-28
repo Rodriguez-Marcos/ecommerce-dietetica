@@ -2,11 +2,15 @@ import React,{useState,useEffect} from 'react';
 import { connect } from 'react-redux';
 import ProductCard from './ProductCard';
 
-function ProductsCards({ products }) {
+function ProductsCards( params ,{ products }) {
+  useEffect(()=>{
 
+  },[])
   return (
              <div >
+               asdf
               {products && products.map((product) => (
+                
                 <div  className="Recetario" key={product.id}>
           <ProductCard
           image={product.image}

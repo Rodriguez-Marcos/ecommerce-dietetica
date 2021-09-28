@@ -1,0 +1,16 @@
+.navbar {
+    height: 56px;
+    width: 100%;
+    padding-top: 2%;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.527);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+.navbar nav {
+    height: 100%;
+
+}
