@@ -32,6 +32,10 @@ export async function createProduct(req, res) {
 
     }
 }
+
+
+
+
 export async function getProducts(req, res) {
     try{
     let products = await Product.findAll()
@@ -46,6 +50,10 @@ export async function getProducts(req, res) {
 
     }
 }
+
+
+
+
 export async function deleteProduct(req,res){
     const {id}=req.params
     try{

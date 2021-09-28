@@ -1,11 +1,11 @@
+import React, { useEffect } from "react";
+import { connect } from "react-redux"
+import { getProducts } from "../Actions/index";
+import ProductsCards from '../Components/Products'
 
 
 
-
-
-
-
-function ProductsHome({ recipe, getProducts }) {
+function ProductsHome({ products, getProducts }) {
 
   
     useEffect(() => {
@@ -18,7 +18,7 @@ function ProductsHome({ recipe, getProducts }) {
     return (
         <div >
                 <div className='home'>
-                <RecipesCards
+                <ProductsCards
                     products={products} /> 
             </div> 
 

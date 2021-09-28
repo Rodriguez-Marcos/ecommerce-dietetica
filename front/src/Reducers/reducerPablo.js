@@ -1,7 +1,7 @@
-import { GET_PRODUCTS } from "../Actions"
+import { GET_PRODUCTS } from "../Actions/index"
 
 
-InitialState = {
+const InitialState = {
     products: [],
 }
 
@@ -15,9 +15,6 @@ export default function reducerPablo(state = InitialState, action) {
                 ...state,
                 products: action.payload,
             };
-
-
-
 
 
         default:
