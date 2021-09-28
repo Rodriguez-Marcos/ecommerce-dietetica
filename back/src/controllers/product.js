@@ -14,7 +14,7 @@ export async function createProduct(req, res) {
             image,
             stock,
         }, {
-            fields: ['name', 'price', 'description', 'image', 'stock' ]
+            fields: ['name', 'price', 'description', 'image', 'stock']
         }
         )
         if (newProduct) {
@@ -39,58 +39,81 @@ export async function createProduct(req, res) {
 
 
 export async function getProducts(req, res) {
-    let {name} = req.query
-    if(!name){
-    try{
-    let products = await Product.findAll()
-    return res.status(200).send(products)
-    }catch (err) {
-        console.log(err)
-        res.status(500).json({
-            message: 'Something goes Wrong',
-            data: {}
-
-        })
-    }}
-    else{
-        let query = name.toLowerCase()
-        try{
-            const filterproducts = await Product.findAll({
-                where: {name:{[Sequelize.Op.like]:`%${query}%`}
-            }})
-            return res.status(200).json(filterproducts)
-        }catch (err) {
+    let { name, id_category } = req.query
+    if (!id_category && !name) {
+        try {
+            let products = await Product.findAll()
+            return res.status(200).send(products)
+        } catch (err) {
             console.log(err)
-            res.json(err)
-        }
+            res.status(500).json({
+                message: 'Something goes Wrong',
+                data: {}
 
+            })
+        }
+    }
+    else {
+        if (name) {
+            let query = name.toLowerCase()
+            try {
+                const filterproducts = await Product.findAll({
+                    where: {
+                        name: { [Sequelize.Op.like]: `%${query}%` }
+                    }
+                })
+                return res.status(200).json(filterproducts)
+            } catch (err) {
+                console.log(err)
+                res.json(err)
+            }
+        } else {
+            try {
+                let products = await Product.findAll({
+                    include: [{
+                        model: Category,
+                        through: { attributes: [] },
+                        where: { 'id': id_category }
+                    }]
+                })
+                return res.status(200).send(products)
+            } catch (err) {
+                console.log(err)
+                res.status(500).json({
+                    message: 'Something goes Wrong',
+                    data: {}
+
+                })
+            }
+        }
     }
 }
 
 
 
-export async function getById(req,res){
-    const {id} = req.params
-    try{
-    let products = await Product.findByPk(id)
-    return res.json(products)}
+export async function getById(req, res) {
+    const { id } = req.params
+    try {
+        let products = await Product.findByPk(id)
+        return res.json(products)
+    }
     catch (err) {
-        console.error({err})
+        console.error({ err })
         res.json(err)
     }
 }
 
 
 
-export async function deleteProduct(req,res){
-    const {id}=req.params
-    try{
-    let product = await Product.destroy({where: {id:id}})
-    return res.json({
-        message: 'Product deleted successfully',
-        data: product
-    })
-    }catch (err) {
+export async function deleteProduct(req, res) {
+    const { id } = req.params
+    try {
+        let product = await Product.destroy({ where: { id: id } })
+        return res.json({
+            message: 'Product deleted successfully',
+            data: product
+        })
+    } catch (err) {
         console.log(err)
         res.status(500).json({
             message: 'Something goes Wrong',
@@ -100,6 +123,25 @@ export async function deleteProduct(req,res){
 
     }
 }
+// export async function filterProductsbyCategory(req,res){
+// const {id_category}=req.query
+// try{
+// let products=await Product.findAll({include: [ { 
+//     model: Category,  
+//     through: { attributes: [] },
+//     where: { 'Category.id': id_category }
+// } ]})
+// return res.status(200).send(products)
+//     }catch (err) {
+//         console.log(err)
+//         res.status(500).json({
+//             message: 'Something goes Wrong',
+//             data: {}
+
+//         })
+//     }
+// }
+
 export async function postOrder(req, res) {
     const { id_product, id_order } = req.params
     var product = await Product.findByPk(id_product)

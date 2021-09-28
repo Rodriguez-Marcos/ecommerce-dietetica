@@ -96,14 +96,15 @@ function getProducts(_x3, _x4) {
 
 function _getProducts() {
   _getProducts = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(req, res) {
-    var name, products, query, filterproducts;
+    var _req$query, name, id_category, products, query, filterproducts, _products;
+
     return regeneratorRuntime.wrap(function _callee2$(_context2) {
       while (1) {
         switch (_context2.prev = _context2.next) {
           case 0:
-            name = req.query.name;
+            _req$query = req.query, name = _req$query.name, id_category = _req$query.id_category;
 
-            if (name) {
+            if (!(!id_category && !name)) {
               _context2.next = 15;
               break;
             }
@@ -126,35 +127,72 @@ function _getProducts() {
             });
 
           case 13:
-            _context2.next = 27;
+            _context2.next = 41;
             break;
 
           case 15:
+            if (!name) {
+              _context2.next = 30;
+              break;
+            }
+
             query = name.toLowerCase();
-            _context2.prev = 16;
-            _context2.next = 19;
+            _context2.prev = 17;
+            _context2.next = 20;
             return _Product["default"].findAll({
               where: {
                 name: _defineProperty({}, _sequelize.Sequelize.Op.like, "%".concat(query, "%"))
               }
             });
 
-          case 19:
+          case 20:
             filterproducts = _context2.sent;
             return _context2.abrupt("return", res.status(200).json(filterproducts));
 
-          case 23:
-            _context2.prev = 23;
-            _context2.t1 = _context2["catch"](16);
+          case 24:
+            _context2.prev = 24;
+            _context2.t1 = _context2["catch"](17);
             console.log(_context2.t1);
             res.json(_context2.t1);
 
-          case 27:
+          case 28:
+            _context2.next = 41;
+            break;
+
+          case 30:
+            _context2.prev = 30;
+            _context2.next = 33;
+            return _Product["default"].findAll({
+              include: [{
+                model: _Category["default"],
+                through: {
+                  attributes: []
+                },
+                where: {
+                  'id': id_category
+                }
+              }]
+            });
+
+          case 33:
+            _products = _context2.sent;
+            return _context2.abrupt("return", res.status(200).send(_products));
+
+          case 37:
+            _context2.prev = 37;
+            _context2.t2 = _context2["catch"](30);
+            console.log(_context2.t2);
+            res.status(500).json({
+              message: 'Something goes Wrong',
+              data: {}
+            });
+
+          case 41:
           case "end":
             return _context2.stop();
         }
       }
-    }, _callee2, null, [[2, 9], [16, 23]]);
+    }, _callee2, null, [[2, 9], [17, 24], [30, 37]]);
   }));
   return _getProducts.apply(this, arguments);
 }
@@ -199,7 +237,24 @@ function _getById() {
 
 function deleteProduct(_x7, _x8) {
   return _deleteProduct.apply(this, arguments);
-}
+} // export async function filterProductsbyCategory(req,res){
+// const {id_category}=req.query
+// try{
+// let products=await Product.findAll({include: [ { 
+//     model: Category,  
+//     through: { attributes: [] },
+//     where: { 'Category.id': id_category }
+// } ]})
+// return res.status(200).send(products)
+//     }catch (err) {
+//         console.log(err)
+//         res.status(500).json({
+//             message: 'Something goes Wrong',
+//             data: {}
+//         })
+//     }
+// }
+
 
 function _deleteProduct() {
   _deleteProduct = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4(req, res) {
