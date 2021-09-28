@@ -2,6 +2,7 @@ import Product from '../models/Product.js';
 import Order from '../models/Order.js';
 import Diet from '../models/Diet.js';
 import Category from '../models/Category.js';
+import { Sequelize } from 'sequelize';
 
 export async function createProduct(req, res) {
     const { name, price, description, image, stock } = req.body;
@@ -37,6 +38,8 @@ export async function createProduct(req, res) {
 
 
 export async function getProducts(req, res) {
+    let {name} = req.query
+    if(!name){
     try{
     let products = await Product.findAll()
     return res.status(200).send(products)
@@ -47,10 +50,34 @@ export async function getProducts(req, res) {
             data: {}
 
         })
+    }}
+    else{
+        let query = name.toLowerCase()
+        try{
+            const filterproducts = await Product.findAll({
+                where: {name:{[Sequelize.Op.like]:`%${query}%`}
+            }})
+            return res.status(200).json(filterproducts)
+        }catch (err) {
+            console.log(err)
+            res.json(err)
+        }
 
     }
 }
 
+
+
+export async function getById(req,res){
+    const {id} = req.params
+    try{
+    let products = await Product.findByPk(id)
+    return res.json(products)}
+    catch (err) {
+        console.error({err})
+        res.json(err)
+    }
+}
 
 
 

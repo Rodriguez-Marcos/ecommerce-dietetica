@@ -5,6 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.createProduct = createProduct;
 exports.getProducts = getProducts;
+exports.getById = getById;
 exports.deleteProduct = deleteProduct;
 exports.postOrder = postOrder;
 exports.postDiet = postDiet;
@@ -18,7 +19,11 @@ var _Diet = _interopRequireDefault(require("../models/Diet.js"));
 
 var _Category = _interopRequireDefault(require("../models/Category.js"));
 
+var _sequelize = require("sequelize");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
@@ -91,45 +96,76 @@ function getProducts(_x3, _x4) {
 
 function _getProducts() {
   _getProducts = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(req, res) {
-    var products;
+    var name, products, query, filterproducts;
     return regeneratorRuntime.wrap(function _callee2$(_context2) {
       while (1) {
         switch (_context2.prev = _context2.next) {
           case 0:
-            _context2.prev = 0;
-            _context2.next = 3;
+            name = req.query.name;
+
+            if (name) {
+              _context2.next = 15;
+              break;
+            }
+
+            _context2.prev = 2;
+            _context2.next = 5;
             return _Product["default"].findAll();
 
-          case 3:
+          case 5:
             products = _context2.sent;
             return _context2.abrupt("return", res.status(200).send(products));
 
-          case 7:
-            _context2.prev = 7;
-            _context2.t0 = _context2["catch"](0);
+          case 9:
+            _context2.prev = 9;
+            _context2.t0 = _context2["catch"](2);
             console.log(_context2.t0);
             res.status(500).json({
               message: 'Something goes Wrong',
               data: {}
             });
 
-          case 11:
+          case 13:
+            _context2.next = 27;
+            break;
+
+          case 15:
+            query = name.toLowerCase();
+            _context2.prev = 16;
+            _context2.next = 19;
+            return _Product["default"].findAll({
+              where: {
+                name: _defineProperty({}, _sequelize.Sequelize.Op.like, "%".concat(query, "%"))
+              }
+            });
+
+          case 19:
+            filterproducts = _context2.sent;
+            return _context2.abrupt("return", res.status(200).json(filterproducts));
+
+          case 23:
+            _context2.prev = 23;
+            _context2.t1 = _context2["catch"](16);
+            console.log(_context2.t1);
+            res.json(_context2.t1);
+
+          case 27:
           case "end":
             return _context2.stop();
         }
       }
-    }, _callee2, null, [[0, 7]]);
+    }, _callee2, null, [[2, 9], [16, 23]]);
   }));
   return _getProducts.apply(this, arguments);
 }
 
-function deleteProduct(_x5, _x6) {
-  return _deleteProduct.apply(this, arguments);
+function getById(_x5, _x6) {
+  return _getById.apply(this, arguments);
 }
 
-function _deleteProduct() {
-  _deleteProduct = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3(req, res) {
-    var id, product;
+function _getById() {
+  _getById = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3(req, res) {
+    var id, products;
     return regeneratorRuntime.wrap(function _callee3$(_context3) {
       while (1) {
         switch (_context3.prev = _context3.next) {
@@ -137,29 +173,19 @@ function _deleteProduct() {
             id = req.params.id;
             _context3.prev = 1;
             _context3.next = 4;
-            return _Product["default"].destroy({
-              where: {
-                id: id
-              }
-            }).then(function (response) {
-              return response;
-            });
+            return _Product["default"].findByPk(id);
 
           case 4:
-            product = _context3.sent;
-            return _context3.abrupt("return", res.json({
-              message: 'Product deleted successfully',
-              data: product
-            }));
+            products = _context3.sent;
+            return _context3.abrupt("return", res.json(products));
 
           case 8:
             _context3.prev = 8;
             _context3.t0 = _context3["catch"](1);
-            console.log(_context3.t0);
-            res.status(500).json({
-              message: 'Something goes Wrong',
-              data: {}
+            console.error({
+              err: _context3.t0
             });
+            res.json(_context3.t0);
 
           case 12:
           case "end":
@@ -168,74 +194,80 @@ function _deleteProduct() {
       }
     }, _callee3, null, [[1, 8]]);
   }));
+  return _getById.apply(this, arguments);
+}
+
+function deleteProduct(_x7, _x8) {
   return _deleteProduct.apply(this, arguments);
 }
 
-function postOrder(_x7, _x8) {
-  return _postOrder.apply(this, arguments);
-}
-
-function _postOrder() {
-  _postOrder = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4(req, res) {
-    var _req$params, id_product, id_order, product, order, resultado;
-
+function _deleteProduct() {
+  _deleteProduct = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4(req, res) {
+    var id, product;
     return regeneratorRuntime.wrap(function _callee4$(_context4) {
       while (1) {
         switch (_context4.prev = _context4.next) {
           case 0:
-            _req$params = req.params, id_product = _req$params.id_product, id_order = _req$params.id_order;
-            _context4.next = 3;
-            return _Product["default"].findByPk(id_product);
+            id = req.params.id;
+            _context4.prev = 1;
+            _context4.next = 4;
+            return _Product["default"].destroy({
+              where: {
+                id: id
+              }
+            });
 
-          case 3:
+          case 4:
             product = _context4.sent;
-            _context4.next = 6;
-            return _Order["default"].findByPk(id_order);
+            return _context4.abrupt("return", res.json({
+              message: 'Product deleted successfully',
+              data: product
+            }));
 
-          case 6:
-            order = _context4.sent;
-            _context4.next = 9;
-            return product.addOrder(order);
+          case 8:
+            _context4.prev = 8;
+            _context4.t0 = _context4["catch"](1);
+            console.log(_context4.t0);
+            res.status(500).json({
+              message: 'Something goes Wrong',
+              data: {}
+            });
 
-          case 9:
-            resultado = _context4.sent;
-            res.send(resultado);
-
-          case 11:
+          case 12:
           case "end":
             return _context4.stop();
         }
       }
-    }, _callee4);
+    }, _callee4, null, [[1, 8]]);
   }));
+  return _deleteProduct.apply(this, arguments);
+}
+
+function postOrder(_x9, _x10) {
   return _postOrder.apply(this, arguments);
 }
 
-function postDiet(_x9, _x10) {
-  return _postDiet.apply(this, arguments);
-}
-
-function _postDiet() {
-  _postDiet = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee5(req, res) {
-    var _req$params2, id_product, id_diet, product, diet, resultado;
+function _postOrder() {
+  _postOrder = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee5(req, res) {
+    var _req$params, id_product, id_order, product, order, resultado;
 
     return regeneratorRuntime.wrap(function _callee5$(_context5) {
       while (1) {
         switch (_context5.prev = _context5.next) {
           case 0:
-            _req$params2 = req.params, id_product = _req$params2.id_product, id_diet = _req$params2.id_diet;
+            _req$params = req.params, id_product = _req$params.id_product, id_order = _req$params.id_order;
             _context5.next = 3;
             return _Product["default"].findByPk(id_product);
 
           case 3:
             product = _context5.sent;
             _context5.next = 6;
-            return _Diet["default"].findByPk(id_diet);
+            return _Order["default"].findByPk(id_order);
 
           case 6:
-            diet = _context5.sent;
+            order = _context5.sent;
             _context5.next = 9;
-            return product.addDiet(diet);
+            return product.addOrder(order);
 
           case 9:
             resultado = _context5.sent;
@@ -248,34 +280,34 @@ function _postDiet() {
       }
     }, _callee5);
   }));
+  return _postOrder.apply(this, arguments);
+}
+
+function postDiet(_x11, _x12) {
   return _postDiet.apply(this, arguments);
 }
 
-function postCategory(_x11, _x12) {
-  return _postCategory.apply(this, arguments);
-}
-
-function _postCategory() {
-  _postCategory = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee6(req, res) {
-    var _req$params3, id_product, id_category, product, category, resultado;
+function _postDiet() {
+  _postDiet = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee6(req, res) {
+    var _req$params2, id_product, id_diet, product, diet, resultado;
 
     return regeneratorRuntime.wrap(function _callee6$(_context6) {
       while (1) {
         switch (_context6.prev = _context6.next) {
           case 0:
-            _req$params3 = req.params, id_product = _req$params3.id_product, id_category = _req$params3.id_category;
+            _req$params2 = req.params, id_product = _req$params2.id_product, id_diet = _req$params2.id_diet;
             _context6.next = 3;
             return _Product["default"].findByPk(id_product);
 
           case 3:
             product = _context6.sent;
             _context6.next = 6;
-            return _Category["default"].findByPk(id_category);
+            return _Diet["default"].findByPk(id_diet);
 
           case 6:
-            category = _context6.sent;
+            diet = _context6.sent;
             _context6.next = 9;
-            return product.addCategory(category);
+            return product.addDiet(diet);
 
           case 9:
             resultado = _context6.sent;
@@ -287,6 +319,46 @@ function _postCategory() {
         }
       }
     }, _callee6);
+  }));
+  return _postDiet.apply(this, arguments);
+}
+
+function postCategory(_x13, _x14) {
+  return _postCategory.apply(this, arguments);
+}
+
+function _postCategory() {
+  _postCategory = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee7(req, res) {
+    var _req$params3, id_product, id_category, product, category, resultado;
+
+    return regeneratorRuntime.wrap(function _callee7$(_context7) {
+      while (1) {
+        switch (_context7.prev = _context7.next) {
+          case 0:
+            _req$params3 = req.params, id_product = _req$params3.id_product, id_category = _req$params3.id_category;
+            _context7.next = 3;
+            return _Product["default"].findByPk(id_product);
+
+          case 3:
+            product = _context7.sent;
+            _context7.next = 6;
+            return _Category["default"].findByPk(id_category);
+
+          case 6:
+            category = _context7.sent;
+            _context7.next = 9;
+            return product.addCategory(category);
+
+          case 9:
+            resultado = _context7.sent;
+            res.send(resultado);
+
+          case 11:
+          case "end":
+            return _context7.stop();
+        }
+      }
+    }, _callee7);
   }));
   return _postCategory.apply(this, arguments);
 }

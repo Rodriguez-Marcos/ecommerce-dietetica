@@ -10,7 +10,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "d
 
 function main() {
   _db.sequelize.sync({
-    force: true
+    force: false
   }).then(function () {
     _app["default"].listen(3001, function () {
       console.log('listening on port 3001'); // eslint-disable-line no-console
