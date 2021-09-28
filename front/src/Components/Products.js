@@ -1,14 +1,18 @@
 import React,{useState,useEffect} from 'react';
 import { connect } from 'react-redux';
 import ProductCard from './ProductCard';
+import './productsgrid.css'
 
-function ProductsCards( params ,{ products }) {
+export default function ProductsCards( params) {
+  
+  let products = params.products
+
+  
   useEffect(()=>{
 
   },[])
   return (
              <div >
-               asdf
               {products && products.map((product) => (
                 
                 <div  className="Recetario" key={product.id}>
@@ -23,7 +27,6 @@ function ProductsCards( params ,{ products }) {
           />
           </div>
           
-
           ))}
     </div>
     
@@ -31,10 +34,3 @@ function ProductsCards( params ,{ products }) {
 };
 
 
-const mapStateToProps = (state) => {
-  return {
-    products: state.products,
-  };
-};
-
-export default connect(mapStateToProps, null)(ProductsCards);
