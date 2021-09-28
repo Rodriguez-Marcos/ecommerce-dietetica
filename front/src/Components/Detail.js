@@ -30,7 +30,7 @@ function Detail({ match }) {
                 <br />
                 <br />
 
-                <img className={styles.dogImage} src={producto?.image ? producto.image : 'https://www.google.com/search?q=nueces&rlz=1C1GCEA_enAR870AR870&sxsrf=AOaemvIX6PimctUH_HxAEWvenpMSZAufQw:1632843866400&source=lnms&tbm=isch&sa=X&ved=2ahUKEwjl24S1gaLzAhVdq5UCHX-nCgYQ_AUoAXoECAEQAw&biw=1536&bih=722&dpr=1.25#imgrc=5NAUK6L-BJ5XmM'} alt='none'/>
+                <img className={styles.dogImage} src={producto?.image  || 'https://www.lavanguardia.com/files/og_thumbnail/uploads/2019/08/07/5e998395e126a.jpeg'} alt='none'/>
 
                 <br />
                 <br />
