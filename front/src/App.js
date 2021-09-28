@@ -1,7 +1,7 @@
 import './App.css';
 import {BrowserRouter,Route} from 'react-router-dom'
 import Home from './Components/Home';
-import axios from 'axios';
+import Detail from './Components/Detail';
 
 import ProductsHome from './Components/Home';
 import NavBar from './Components/NavBar';
@@ -12,7 +12,9 @@ function App() {
     <BrowserRouter>
     <NavBar/>
     <Switch>
-    <Route path='/' component={ProductsHome}/>
+    <Route exact path='/home' component={ProductsHome}/>
+    <Route exact path='/home' component={Home}/>
+    <Route exact path='/Detail/:id' component={Detail}/>
     </Switch>
     </BrowserRouter>
     

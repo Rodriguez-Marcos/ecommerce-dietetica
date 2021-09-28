@@ -6,7 +6,7 @@ import ProductsCards from '../Components/Products'
 
 
 function ProductsHome({ products, getProducts }) {
-  const [productos,setProductos]=useState([])
+
     useEffect(() => {
         getProducts();
     }, [])

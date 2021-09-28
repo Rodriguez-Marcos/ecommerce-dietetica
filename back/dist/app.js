@@ -30,8 +30,26 @@ function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && 
 var cors = require('cors'); //Importing routes 
 
 
-var app = (0, _express["default"])(); //Middleware
+var app = (0, _express["default"])();
+app.use(cors());
+app.use(function (req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*'); // update to match the domain you will make the request from
 
+  res.header('Access-Control-Allow-Credentials', 'true');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
+  next();
+}); //Middleware
+
+app.use(cors());
+app.use(function (req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*'); // update to match the domain you will make the request from
+
+  res.header('Access-Control-Allow-Credentials', 'true');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
+  next();
+});
 app.use((0, _express.json)()); // muestra por consola lo que va llegando
 
 app.use((0, _morgan["default"])('dev')); //entiende archivos en formato json
