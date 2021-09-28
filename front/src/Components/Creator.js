@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
+import { postProduct } from "../Actions";
 
 export default function Creator() {
   let dispatch = useDispatch();
@@ -22,6 +23,8 @@ export default function Creator() {
   function handlerSubmit(e){
       e.preventDefault()
       if(input.name&& input.price && input.stock &&  input.description && input.image){
+
+        dispatch(postProduct(input))
 setInput({
             name: "",
             image: "",
@@ -33,9 +36,7 @@ setInput({
       alert("falta informacion requerida en el formulario")
 
       }
-    }
-
-  return (
+    }  return (
     <div>
       <form onSubmit= {(e)=>handlerSubmit(e)}>
         <div>

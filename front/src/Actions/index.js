@@ -32,3 +32,13 @@ export function getById(id) {
         };
     };
 };
+export function postProduct(payload){
+    return async function (dispatch) {
+        await axios.post("http://localhost:3001/products", payload);
+       
+           return dispatch({
+             type: "POST_PRODUCTS",
+             payload,
+           });
+         };
+       }

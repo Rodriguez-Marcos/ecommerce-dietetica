@@ -15,8 +15,7 @@ export default function reducerPablo(state = InitialState, action) {
                 ...state,
                 products: action.payload,
             };
-
-
+            
         default:
             return {...state}
     }
