@@ -14,21 +14,21 @@ function ProductsHome({ products, getProducts }) {
 
     return (
         <div >
-            <h1>soy un home</h1>
                 <div className='home'>
-                  {console.log(products)}
                 <ProductsCards
                     products={products} /> 
             </div> 
 
         </div>
     )
-}
+};
+
+
 
 const mapStateToProps = (state) => {
 
     return {
-        products: state.products
+        products: state.reducerPablo.products
     }
 }
 
