@@ -9,7 +9,7 @@ import Orderroutes from './routes/order.js'
 import Categoryroutes from './routes/category.js'
 import Dietroutes from './routes/diet.js'
 
-const app = express();
+const app = express()
 
 app.use(cors())
 app.use((req, res, next) => {
@@ -21,6 +21,14 @@ app.use((req, res, next) => {
   });
 
 //Middleware
+app.use(cors())
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*'); // update to match the domain you will make the request from
+    res.header('Access-Control-Allow-Credentials', 'true');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
+    next();
+  });
 app.use(json()); // muestra por consola lo que va llegando
 app.use(morgan('dev')); //entiende archivos en formato json
 
@@ -38,7 +46,6 @@ app.use('/clients', Clientroutes);
 app.use('/orders', Orderroutes);
 app.use('/categories', Categoryroutes);
 app.use('/diets', Dietroutes);
-
 
 
 
