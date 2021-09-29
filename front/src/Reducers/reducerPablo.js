@@ -1,4 +1,4 @@
-import { GET_PRODUCTS } from "../actions/index"
+import { GET_PRODUCTS } from "../Actions/index"
 
 
 const InitialState = {
