@@ -3,6 +3,7 @@ import { NavLink} from 'react-router-dom';
 import { connect } from 'react-redux';
 import './Navbar.css';
 import { getProductbyName } from '../Actions/index'
+import FilterRecipes from './Filters'
 
 
 
@@ -31,6 +32,9 @@ function handleClik() {
         <div className='navlink'>
           <NavLink to="/home" className='navlink1' >Home</NavLink>
           <NavLink to="/products" className='navlink1'>Create a New Product</NavLink>
+          </div>
+          <div className='inputs'>
+            <FilterRecipes/>
           </div>
           <div className='busqueda'>
           <input value={ActualState} type='text' placeholder='buscador' className='inputsearch' onChange={handleChange}/>
