@@ -1,34 +1,78 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { getDiets, getCategories, getByIdCategory, getProducts } from "../Actions";
+import { getDiets, getCategories, getByIdCategory, getProducts,orderPrice,getByIdDiet } from "../Actions";
 
 
 
-function ProductsFilters({ getDiets, getCategories, getByIdCategory, getProducts,categories }) {
+function ProductsFilters({ getDiets, getCategories, getByIdCategory, getProducts,categories,diets, orderPrice,products,getByIdDiet }) {
 
 
     useEffect(() => {
         getCategories()
         }, [])
 
+    useEffect(() => {
+        getDiets()
+        }, [])
+
+
+
     function handleCategory(event) {
 
-        if (event.target.value === 'Categories') {
+        if (event.target.value !== 'Categories') {
+            return getByIdCategory(event.target.value)
+        }
+         getProducts();
+    };
+
+    
+    function handleDiet(event) {
+
+        if (event.target.value === 'Diets') {
             return getProducts();
         }
-        getByIdCategory(event.target.value)
+        getByIdDiet(event.target.value)
+    };
+
+
+
+
+    function handlePrice(event) {
+
+        if (event.target.value === 'Price') {
+            return getProducts();
+        }
+        orderPrice(products,{tipe:event.target.value})
+        
     }
 
 
     return (
         <div>
-
+    
             <select className='selectores' onChange={handleCategory}>
                 <option label='Search by Categories' value='Categories'></option>
                 {categories.length ? categories.map((cat, i) => (
                         <option key={i} value={cat.id} label={cat.name}></option>
                     )) : null}
             </select>
+        
+
+    
+            <select className='selectores' onChange={handleDiet}>
+                <option label='Search by Diets' value='Diets'></option>
+                {diets.length ? diets.map((diet, i) => (
+                        <option key={i} value={diet.id} label={diet.name}></option>
+                    )) : null}
+            </select>
+        
+
+            <select className='selectores' onChange={handlePrice}>
+                    <option label='Order by Price' value='Price'></option>
+                    <option value='Ascendent' >Ascendent</option>
+                    <option value='Descendent' >Descendent</option>
+                </select>
+
         </div>
     )
 }
@@ -47,7 +91,10 @@ const mapDispatchToProps = (dispatch) => {
         getCategories: () => dispatch(getCategories()),
         getDiets: () => dispatch(getDiets()),
         getByIdCategory: (id) => dispatch(getByIdCategory(id)),
+        getByIdDiet: (id) => dispatch(getByIdDiet(id)),
         getProducts: () => dispatch(getProducts()),
+        orderPrice: (orderTarget, product) => dispatch(orderPrice(orderTarget, product)),
+
 
     }
 }
