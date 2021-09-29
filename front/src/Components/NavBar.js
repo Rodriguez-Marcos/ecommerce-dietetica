@@ -3,7 +3,7 @@ import { Link,NavLink } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import './Navbar.css';
-import { getProductbyName, resetFilters} from '../Actions/index'
+import { getProductbyName,  setLoading} from '../Actions/index'
 import {Navbar, Nav, NavDropdown,Form, FormControl, Button} from 'react-bootstrap'
 import ProductsFilters from './Filters'
 import { useAuth0 } from "@auth0/auth0-react";
@@ -12,7 +12,7 @@ import {LogoutButton} from './Logout'
 import {Profile} from './Profile'
 
 
-function NavBar({ getProductbyName, resetFilters }) {
+function NavBar({ getProductbyName, setLoading }) {
 
   const [ActualState, setActualState] = useState('')
   const {isAuthenticated} = useAuth0();
@@ -27,8 +27,8 @@ function NavBar({ getProductbyName, resetFilters }) {
   function handleSubmit(e) {
     e.preventDefault();
     getProductbyName(ActualState);
+    setLoading();
     history.push("/search");
-    
   }
   
   function handleChange(event) {
@@ -62,7 +62,7 @@ function NavBar({ getProductbyName, resetFilters }) {
          : <LoginButton/>
 }
           </div>
-    <Form className="d-flex">
+    <Form className="d-flex" onSubmit={(e) => handleSubmit(e)}>
       <FormControl
         type="search"
         placeholder="Search"
@@ -82,6 +82,7 @@ function NavBar({ getProductbyName, resetFilters }) {
 const mapStateToProps = (state) => {
   return {
     product: state.product,
+    loading: state.reducerPablo.loading,
   }
 }
 const mapDispatchToProps = (dispatch) => {
@@ -89,8 +90,8 @@ const mapDispatchToProps = (dispatch) => {
     getProductbyName: name => {
       dispatch(getProductbyName(name))
     },
-    resetFilters:() => {
-      dispatch(resetFilters())
+    setLoading:() => {
+      dispatch(setLoading())
     },
   }
 }

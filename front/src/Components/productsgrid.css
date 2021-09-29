@@ -13,7 +13,10 @@
     display: inline-block;
     min-width: 144px;
     min-height: 330px;
-
+}
+.Recetario:hover{
+    filter: brightness(1.15);
+    cursor: pointer;
 }
 
 img{
