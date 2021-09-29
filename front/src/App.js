@@ -1,7 +1,7 @@
 import './App.css';
 import {BrowserRouter,Route} from 'react-router-dom'
 import Home from './Components/Home';
-import Detail from './Components/Detail';
+import Detail from './Components/Detail.js';
 import Creator from './Components/Creator';
 
 
