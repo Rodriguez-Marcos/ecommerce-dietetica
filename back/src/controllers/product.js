@@ -48,11 +48,11 @@ export async function getProducts(req, res) {
         }
         else {
             if (name) {
-                let query = name.toLowerCase()
+            
 
                 const filterproducts = await Product.findAll({
                     where: {
-                        name: { [Sequelize.Op.like]: `%${query}%` }
+                        name: { [Sequelize.Op.iLike]: `%${name}%` }
                     }
                 })
                 return res.status(200).json(filterproducts)

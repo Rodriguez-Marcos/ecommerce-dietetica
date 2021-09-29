@@ -73,7 +73,18 @@ export function postProduct(payload){
          };
        }
 
+   
 
+export function postCategory(payload){
+    return async function (dispatch) {
+        await axios.post("http://localhost:3001/categories", payload);
+       
+           return dispatch({
+             type: "POST_CATEGORY",
+             payload,
+           });
+         };
+       }
 
 export function getByIdCategory(id){
     return async function(dispatch) {
