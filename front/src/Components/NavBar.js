@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import './Navbar.css';
 import { getProductbyName } from '../Actions/index'
 import {Navbar, Nav, NavDropdown,Form, FormControl, Button} from 'react-bootstrap'
-import FilterRecipes from './Filters'
+import ProductsFilters from './Filters'
 import { useAuth0 } from "@auth0/auth0-react";
 import {LoginButton} from './Login'
 import {LogoutButton} from './Logout'
@@ -45,6 +45,9 @@ return(
         About
       </Nav.Link>
     </Nav>
+    <div>
+    <ProductsFilters/>
+    </div>
    <div>
           { isAuthenticated ? <>
             <LogoutButton/>
