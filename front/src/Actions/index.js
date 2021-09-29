@@ -23,8 +23,8 @@ export function getProducts() {
         return axios.get(`http://localhost:3001/products/`)
             .then((response) => {
                 dispatch({
-                    type: GET_PRODUCTS,
-                    payload: response.data
+                    payload: response.data,
+                    type: GET_PRODUCTS
                 })
             })
     }
