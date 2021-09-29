@@ -7,9 +7,9 @@ export const GET_BY_ID_CATEGORY = 'GET_BY_ID_CATEGORY';
 export const GET_BY_ID_DIET = 'GET_BY_ID_DIET';
 export const ORDER_PRICE = 'ORDER_PRICE';
 export const GET_PRODUCTS_FILTERED = 'GET_PRODUCTS_FILTERED';
-export const RESET_FILTERS ='RESET_FILTERS';
 export const PAGINATE = 'PAGINATE';
-
+export const FAIL_TO_LOAD = 'FAIL_TO_LOAD'
+export const SET_LOADING = 'SET_LOADING';
 export const paginate = (recipes) => {
     return {
         type: PAGINATE,
@@ -37,6 +37,11 @@ export function getProductbyName(name) {
                 dispatch({
                     type: GET_PRODUCTS_FILTERED,
                     payload: response.data
+                })
+            })
+            .catch(err=>{
+                dispatch({
+                    type: FAIL_TO_LOAD,
                 })
             })
     }
@@ -144,10 +149,10 @@ export function orderPrice(orderTarget, product) {
 }
 
 
-export function resetFilters(){
+export function setLoading(){
     return function(dispatch) {
         return dispatch({
-            type: RESET_FILTERS
+            type: SET_LOADING,
         })
     }
 }
