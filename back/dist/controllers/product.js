@@ -96,20 +96,20 @@ function getProducts(_x3, _x4) {
 
 function _getProducts() {
   _getProducts = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(req, res) {
-    var _req$query, name, id_category, id_diet, products, query, filterproducts, _products, _products2;
+    var _req$query, name, id_category, id_diet, products, filterproducts, _products, _products2, _products3;
 
     return regeneratorRuntime.wrap(function _callee2$(_context2) {
       while (1) {
         switch (_context2.prev = _context2.next) {
           case 0:
             _req$query = req.query, name = _req$query.name, id_category = _req$query.id_category, id_diet = _req$query.id_diet;
+            _context2.prev = 1;
 
             if (!(!id_category && !name && !id_diet)) {
-              _context2.next = 15;
+              _context2.next = 9;
               break;
             }
 
-            _context2.prev = 2;
             _context2.next = 5;
             return _Product["default"].findAll();
 
@@ -118,87 +118,54 @@ function _getProducts() {
             return _context2.abrupt("return", res.status(200).send(products));
 
           case 9:
-            _context2.prev = 9;
-            _context2.t0 = _context2["catch"](2);
-            console.log(_context2.t0);
-            res.status(500).json({
-              message: 'Something goes Wrong',
-              data: {}
-            });
-
-          case 13:
-            _context2.next = 55;
-            break;
-
-          case 15:
             if (!name) {
-              _context2.next = 30;
+              _context2.next = 16;
               break;
             }
 
-            query = name.toLowerCase();
-            _context2.prev = 17;
-            _context2.next = 20;
+            _context2.next = 12;
             return _Product["default"].findAll({
               where: {
-                name: _defineProperty({}, _sequelize.Sequelize.Op.like, "%".concat(query, "%"))
+                name: _defineProperty({}, _sequelize.Sequelize.Op.iLike, "%".concat(name, "%"))
               }
             });
 
-          case 20:
+          case 12:
             filterproducts = _context2.sent;
             return _context2.abrupt("return", res.status(200).json(filterproducts));
 
-          case 24:
-            _context2.prev = 24;
-            _context2.t1 = _context2["catch"](17);
-            console.log(_context2.t1);
-            res.json(_context2.t1);
-
-          case 28:
-            _context2.next = 55;
-            break;
-
-          case 30:
-            if (!id_category) {
-              _context2.next = 44;
+          case 16:
+            if (!(id_category && id_diet)) {
+              _context2.next = 23;
               break;
             }
 
-            _context2.prev = 31;
-            _context2.next = 34;
+            _context2.next = 19;
             return _Product["default"].findAll({
               include: [{
                 model: _Category["default"],
-                through: {
-                  attributes: []
-                },
                 where: {
                   'id': id_category
+                }
+              }, {
+                model: _Diet["default"],
+                where: {
+                  'id': id_diet
                 }
               }]
             });
 
-          case 34:
+          case 19:
             _products = _context2.sent;
             return _context2.abrupt("return", res.status(200).send(_products));
 
-          case 38:
-            _context2.prev = 38;
-            _context2.t2 = _context2["catch"](31);
-            console.log(_context2.t2);
-            res.status(500).json({
-              message: 'Something goes Wrong',
-              data: {}
-            });
+          case 23:
+            if (!id_diet) {
+              _context2.next = 30;
+              break;
+            }
 
-          case 42:
-            _context2.next = 55;
-            break;
-
-          case 44:
-            _context2.prev = 44;
-            _context2.next = 47;
+            _context2.next = 26;
             return _Product["default"].findAll({
               include: [{
                 model: _Diet["default"],
@@ -211,25 +178,52 @@ function _getProducts() {
               }]
             });
 
-          case 47:
+          case 26:
             _products2 = _context2.sent;
             return _context2.abrupt("return", res.status(200).send(_products2));
 
-          case 51:
-            _context2.prev = 51;
-            _context2.t3 = _context2["catch"](44);
-            console.log(_context2.t3);
+          case 30:
+            if (!id_category) {
+              _context2.next = 35;
+              break;
+            }
+
+            _context2.next = 33;
+            return _Product["default"].findAll({
+              include: [{
+                model: _Category["default"],
+                through: {
+                  attributes: []
+                },
+                where: {
+                  'id': id_category
+                }
+              }]
+            });
+
+          case 33:
+            _products3 = _context2.sent;
+            return _context2.abrupt("return", res.status(200).send(_products3));
+
+          case 35:
+            _context2.next = 41;
+            break;
+
+          case 37:
+            _context2.prev = 37;
+            _context2.t0 = _context2["catch"](1);
+            console.log(_context2.t0);
             res.status(500).json({
               message: 'Something goes Wrong',
               data: {}
             });
 
-          case 55:
+          case 41:
           case "end":
             return _context2.stop();
         }
       }
-    }, _callee2, null, [[2, 9], [17, 24], [31, 38], [44, 51]]);
+    }, _callee2, null, [[1, 37]]);
   }));
   return _getProducts.apply(this, arguments);
 }

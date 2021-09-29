@@ -40,71 +40,63 @@ export async function createProduct(req, res) {
 
 export async function getProducts(req, res) {
     let { name, id_category, id_diet } = req.query
-    if (!id_category && !name && !id_diet) {
-        try {
+    try {
+        if (!id_category && !name && !id_diet) {
+
             let products = await Product.findAll()
             return res.status(200).send(products)
-        } catch (err) {
-            console.log(err)
-            res.status(500).json({
-                message: 'Something goes Wrong',
-                data: {}
-
-            })
         }
-    }
-    else {
-        if (name) {
-            let query = name.toLowerCase()
-            try {
+        else {
+            if (name) {
+            
+
                 const filterproducts = await Product.findAll({
                     where: {
-                        name: { [Sequelize.Op.like]: `%${query}%` }
+                        name: { [Sequelize.Op.iLike]: `%${name}%` }
                     }
                 })
                 return res.status(200).json(filterproducts)
-            } catch (err) {
-                console.log(err)
-                res.json(err)
-            }
-        } else if (id_category) {
-            try {
-                let products = await Product.findAll({
-                    include: [{
-                        model: Category,
-                        through: { attributes: [] },
-                        where: { 'id': id_category }
-                    }]
-                })
-                return res.status(200).send(products)
-            } catch (err) {
-                console.log(err)
-                res.status(500).json({
-                    message: 'Something goes Wrong',
-                    data: {}
+            } else {
+                if (id_category && id_diet) {
 
-                })
+                    let products = await Product.findAll({
+                        include: [{
+                            model: Category,
+                            where: { 'id': id_category }
+                        },
+                        {
+                            model: Diet,
+                            where: { 'id': id_diet }
+                        }]
+                    })
+                    return res.status(200).send(products)
+                } else if (id_diet) {
+                    let products = await Product.findAll({
+                        include: [{
+                            model: Diet,
+                            through: { attributes: [] },
+                            where: { 'id': id_diet }
+                        }]
+                    })
+                    return res.status(200).send(products)
+                } else if (id_category) {
+                    let products = await Product.findAll({
+                        include: [{
+                            model: Category,
+                            through: { attributes: [] },
+                            where: { 'id': id_category }
+                        }]
+                    })
+                    return res.status(200).send(products)
+                }
             }
-        } else {
-            try {
-                let products = await Product.findAll({
-                    include: [{
-                        model: Diet,
-                        through: { attributes: [] },
-                        where: { 'id': id_diet }
-                    }]
-                })
-                return res.status(200).send(products)
-            } catch (err) {
-                console.log(err)
-                res.status(500).json({
-                    message: 'Something goes Wrong',
-                    data: {}
-
-                })
-            }
-
         }
+    } catch (err) {
+        console.log(err)
+        res.status(500).json({
+            message: 'Something goes Wrong',
+            data: {}
+        })
     }
 }
 

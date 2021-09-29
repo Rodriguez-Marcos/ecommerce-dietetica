@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux"
 import { getProducts } from "../Actions/index";
-import ProductsCards from '../Components/Products'
 import './Home.css'
+import ProductsCards from './Products'
+
 
 
 
