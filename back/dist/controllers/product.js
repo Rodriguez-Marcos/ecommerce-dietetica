@@ -96,20 +96,20 @@ function getProducts(_x3, _x4) {
 
 function _getProducts() {
   _getProducts = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(req, res) {
-    var _req$query, name, id_category, id_diet, products, query, filterproducts, _products, _products2;
+    var _req$query, name, id_category, id_diet, products, query, filterproducts, _products, _products2, _products3;
 
     return regeneratorRuntime.wrap(function _callee2$(_context2) {
       while (1) {
         switch (_context2.prev = _context2.next) {
           case 0:
             _req$query = req.query, name = _req$query.name, id_category = _req$query.id_category, id_diet = _req$query.id_diet;
+            _context2.prev = 1;
 
             if (!(!id_category && !name && !id_diet)) {
-              _context2.next = 15;
+              _context2.next = 9;
               break;
             }
 
-            _context2.prev = 2;
             _context2.next = 5;
             return _Product["default"].findAll();
 
@@ -118,54 +118,77 @@ function _getProducts() {
             return _context2.abrupt("return", res.status(200).send(products));
 
           case 9:
-            _context2.prev = 9;
-            _context2.t0 = _context2["catch"](2);
-            console.log(_context2.t0);
-            res.status(500).json({
-              message: 'Something goes Wrong',
-              data: {}
-            });
-
-          case 13:
-            _context2.next = 55;
-            break;
-
-          case 15:
             if (!name) {
-              _context2.next = 30;
+              _context2.next = 17;
               break;
             }
 
             query = name.toLowerCase();
-            _context2.prev = 17;
-            _context2.next = 20;
+            _context2.next = 13;
             return _Product["default"].findAll({
               where: {
                 name: _defineProperty({}, _sequelize.Sequelize.Op.like, "%".concat(query, "%"))
               }
             });
 
-          case 20:
+          case 13:
             filterproducts = _context2.sent;
             return _context2.abrupt("return", res.status(200).json(filterproducts));
 
-          case 24:
-            _context2.prev = 24;
-            _context2.t1 = _context2["catch"](17);
-            console.log(_context2.t1);
-            res.json(_context2.t1);
-
-          case 28:
-            _context2.next = 55;
-            break;
-
-          case 30:
-            if (!id_category) {
-              _context2.next = 44;
+          case 17:
+            if (!(id_category && id_diet)) {
+              _context2.next = 24;
               break;
             }
 
-            _context2.prev = 31;
+            _context2.next = 20;
+            return _Product["default"].findAll({
+              include: [{
+                model: _Category["default"],
+                where: {
+                  'id': id_category
+                }
+              }, {
+                model: _Diet["default"],
+                where: {
+                  'id': id_diet
+                }
+              }]
+            });
+
+          case 20:
+            _products = _context2.sent;
+            return _context2.abrupt("return", res.status(200).send(_products));
+
+          case 24:
+            if (!id_diet) {
+              _context2.next = 31;
+              break;
+            }
+
+            _context2.next = 27;
+            return _Product["default"].findAll({
+              include: [{
+                model: _Diet["default"],
+                through: {
+                  attributes: []
+                },
+                where: {
+                  'id': id_diet
+                }
+              }]
+            });
+
+          case 27:
+            _products2 = _context2.sent;
+            return _context2.abrupt("return", res.status(200).send(_products2));
+
+          case 31:
+            if (!id_category) {
+              _context2.next = 36;
+              break;
+            }
+
             _context2.next = 34;
             return _Product["default"].findAll({
               include: [{
@@ -180,56 +203,28 @@ function _getProducts() {
             });
 
           case 34:
-            _products = _context2.sent;
-            return _context2.abrupt("return", res.status(200).send(_products));
+            _products3 = _context2.sent;
+            return _context2.abrupt("return", res.status(200).send(_products3));
+
+          case 36:
+            _context2.next = 42;
+            break;
 
           case 38:
             _context2.prev = 38;
-            _context2.t2 = _context2["catch"](31);
-            console.log(_context2.t2);
+            _context2.t0 = _context2["catch"](1);
+            console.log(_context2.t0);
             res.status(500).json({
               message: 'Something goes Wrong',
               data: {}
             });
 
           case 42:
-            _context2.next = 55;
-            break;
-
-          case 44:
-            _context2.prev = 44;
-            _context2.next = 47;
-            return _Product["default"].findAll({
-              include: [{
-                model: _Diet["default"],
-                through: {
-                  attributes: []
-                },
-                where: {
-                  'id': id_diet
-                }
-              }]
-            });
-
-          case 47:
-            _products2 = _context2.sent;
-            return _context2.abrupt("return", res.status(200).send(_products2));
-
-          case 51:
-            _context2.prev = 51;
-            _context2.t3 = _context2["catch"](44);
-            console.log(_context2.t3);
-            res.status(500).json({
-              message: 'Something goes Wrong',
-              data: {}
-            });
-
-          case 55:
           case "end":
             return _context2.stop();
         }
       }
-    }, _callee2, null, [[2, 9], [17, 24], [31, 38], [44, 51]]);
+    }, _callee2, null, [[1, 38]]);
   }));
   return _getProducts.apply(this, arguments);
 }
