@@ -42,13 +42,8 @@ function NavBar({ getProductbyName, setLoading }) {
   <Navbar.Collapse className="link-search" >
     <Nav className="navbar-nav">
       <Nav.Link ><NavLink to="/home" className='navlink1' >Home</NavLink></Nav.Link>
-      <Nav.Link ><NavLink to="/products" className='navlink1'>Create Product</NavLink></Nav.Link>
-      <NavDropdown title="Categories">
-        <NavDropdown.Item >1 Category</NavDropdown.Item>
-        <NavDropdown.Item >2 Category</NavDropdown.Item>
-      </NavDropdown>
+      <Nav.Link ><NavLink to="/Admin" className='navlink1'>Create Product</NavLink></Nav.Link>
       <Nav.Link href="#" disabled>
-        About
       </Nav.Link>
     </Nav>
     <div>

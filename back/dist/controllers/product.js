@@ -96,7 +96,7 @@ function getProducts(_x3, _x4) {
 
 function _getProducts() {
   _getProducts = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(req, res) {
-    var _req$query, name, id_category, id_diet, products, query, filterproducts, _products, _products2, _products3;
+    var _req$query, name, id_category, id_diet, products, filterproducts, _products, _products2, _products3;
 
     return regeneratorRuntime.wrap(function _callee2$(_context2) {
       while (1) {
@@ -119,29 +119,28 @@ function _getProducts() {
 
           case 9:
             if (!name) {
-              _context2.next = 17;
+              _context2.next = 16;
               break;
             }
 
-            query = name.toLowerCase();
-            _context2.next = 13;
+            _context2.next = 12;
             return _Product["default"].findAll({
               where: {
-                name: _defineProperty({}, _sequelize.Sequelize.Op.like, "%".concat(query, "%"))
+                name: _defineProperty({}, _sequelize.Sequelize.Op.iLike, "%".concat(name, "%"))
               }
             });
 
-          case 13:
+          case 12:
             filterproducts = _context2.sent;
             return _context2.abrupt("return", res.status(200).json(filterproducts));
 
-          case 17:
+          case 16:
             if (!(id_category && id_diet)) {
-              _context2.next = 24;
+              _context2.next = 23;
               break;
             }
 
-            _context2.next = 20;
+            _context2.next = 19;
             return _Product["default"].findAll({
               include: [{
                 model: _Category["default"],
@@ -156,17 +155,17 @@ function _getProducts() {
               }]
             });
 
-          case 20:
+          case 19:
             _products = _context2.sent;
             return _context2.abrupt("return", res.status(200).send(_products));
 
-          case 24:
+          case 23:
             if (!id_diet) {
-              _context2.next = 31;
+              _context2.next = 30;
               break;
             }
 
-            _context2.next = 27;
+            _context2.next = 26;
             return _Product["default"].findAll({
               include: [{
                 model: _Diet["default"],
@@ -179,17 +178,17 @@ function _getProducts() {
               }]
             });
 
-          case 27:
+          case 26:
             _products2 = _context2.sent;
             return _context2.abrupt("return", res.status(200).send(_products2));
 
-          case 31:
+          case 30:
             if (!id_category) {
-              _context2.next = 36;
+              _context2.next = 35;
               break;
             }
 
-            _context2.next = 34;
+            _context2.next = 33;
             return _Product["default"].findAll({
               include: [{
                 model: _Category["default"],
@@ -202,16 +201,16 @@ function _getProducts() {
               }]
             });
 
-          case 34:
+          case 33:
             _products3 = _context2.sent;
             return _context2.abrupt("return", res.status(200).send(_products3));
 
-          case 36:
-            _context2.next = 42;
+          case 35:
+            _context2.next = 41;
             break;
 
-          case 38:
-            _context2.prev = 38;
+          case 37:
+            _context2.prev = 37;
             _context2.t0 = _context2["catch"](1);
             console.log(_context2.t0);
             res.status(500).json({
@@ -219,12 +218,12 @@ function _getProducts() {
               data: {}
             });
 
-          case 42:
+          case 41:
           case "end":
             return _context2.stop();
         }
       }
-    }, _callee2, null, [[1, 38]]);
+    }, _callee2, null, [[1, 37]]);
   }));
   return _getProducts.apply(this, arguments);
 }
