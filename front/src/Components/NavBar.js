@@ -37,42 +37,7 @@ function NavBar({ getProductbyName, setLoading }) {
     setActualState(event.target.value)
   }
   
-  return(
-    <Navbar classname="navbar" expand="md">
-  <Nav.Link ><NavLink to="/home" className='navlink' >Salvatore</NavLink></Nav.Link>
-  <Navbar.Toggle aria-controls="navbarScroll" />
-  <Navbar.Collapse className="link-search" >
-    <Nav className="navbar-nav">
-      <Nav.Link ><NavLink to="/home" className='navlink1' >Home</NavLink></Nav.Link>
-      <Nav.Link ><NavLink to="/Admin" className='navlink1'>Create Product</NavLink></Nav.Link>
-      <Nav.Link href="#" disabled>
-      </Nav.Link>
-    </Nav>
-    <div>
-    <ProductsFilters/>
-    </div>
-   <div>
-          { isAuthenticated ? <>
-            <LogoutButton/>
-          <Profile/>
-          </> 
-         : <LoginButton/>
-}
-          </div>
-    <Form className="d-flex" onSubmit={(e) => handleSubmit(e)}>
-      <FormControl
-        type="search"
-        placeholder="Search"
-        className="mr-2"
-        aria-label="Search"
-        value={ActualState} type='text' placeholder='buscador' className='inputsearch' onChange={handleChange} 
-      />
-      <Button onSubmit={(e) => handleSubmit(e)} onClick={(e) => handleSubmit(e)} variant="outline-success">Search</Button>
-    </Form>
-  </Navbar.Collapse>
-
-
-  return (
+   return (
     <div className="content">
       <Navbar classname="navbar" expand="lg">
         <Navbar.Brand href="#"><NavLink to="/home" className='logo' >Salvatore</NavLink></Navbar.Brand>
@@ -95,10 +60,16 @@ function NavBar({ getProductbyName, setLoading }) {
             <Nav.Link>About</Nav.Link>
           </Nav>
           <Nav>
-          <Form className="d-flex">
-            <FormControl id="inputSearch" placeholder="Search"/>
-            <Button variant="success">Search</Button>
-          </Form>
+          <Form className="d-flex" onSubmit={(e) => handleSubmit(e)}>
+      <FormControl
+        type="search"
+        placeholder="Search"
+        className="mr-2"
+        aria-label="Search"
+        value={ActualState} type='text' placeholder='buscador' className='inputsearch' onChange={handleChange} 
+      />
+      <Button onSubmit={(e) => handleSubmit(e)} onClick={(e) => handleSubmit(e)} variant="outline-success">Search</Button>
+    </Form>
           {isAuthenticated ? <>
             <LogoutButton />
             <Profile />
@@ -106,10 +77,13 @@ function NavBar({ getProductbyName, setLoading }) {
             : <LoginButton />
           }
           </Nav>
+          <div>
+    <ProductsFilters/>
+    </div>
         </Navbar.Collapse>
       </Navbar>
     </div>
-  )
+  ) 
 
 };
 
