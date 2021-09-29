@@ -39,29 +39,11 @@ app.use(function (req, res, next) {
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
   next();
-}); //Middleware
-
-app.use(cors());
-app.use(function (req, res, next) {
-  res.header('Access-Control-Allow-Origin', '*'); // update to match the domain you will make the request from
-
-  res.header('Access-Control-Allow-Credentials', 'true');
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-  res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
-  next();
 });
-app.use((0, _express.json)()); // muestra por consola lo que va llegando
+app.use((0, _express.json)()); //entiende archivos en formato json
 
-app.use((0, _morgan["default"])('dev')); //entiende archivos en formato json
+app.use((0, _morgan["default"])('dev')); // muestra por consola lo que va llegando
 
-app.use(cors());
-app.use(function (req, res, next) {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Headers', 'Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method');
-  res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
-  res.header('Allow', 'GET, POST, OPTIONS, PUT, DELETE');
-  next();
-});
 app.use('/products', _product["default"]);
 app.use('/clients', _client["default"]);
 app.use('/orders', _order["default"]);

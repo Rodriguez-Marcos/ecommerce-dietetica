@@ -6,6 +6,16 @@ export const GET_DIETS = 'GET_DIETS';
 export const GET_BY_ID_CATEGORY = 'GET_BY_ID_CATEGORY';
 export const GET_BY_ID_DIET = 'GET_BY_ID_DIET';
 export const ORDER_PRICE = 'ORDER_PRICE';
+export const GET_PRODUCTS_FILTERED = 'GET_PRODUCTS_FILTERED';
+export const RESET_FILTERS ='RESET_FILTERS';
+export const PAGINATE = 'PAGINATE';
+
+export const paginate = (recipes) => {
+    return {
+        type: PAGINATE,
+        payload: recipes,
+    };
+};
 
 export function getProducts() {
 
@@ -13,15 +23,23 @@ export function getProducts() {
         return axios.get(`http://localhost:3001/products/`)
             .then((response) => {
                 dispatch({
-                    type: GET_PRODUCTS,
-                    payload: response.data
+                    payload: response.data,
+                    type: GET_PRODUCTS
                 })
             })
     }
 }
 
-export function getProductbyName() {
-    return 0
+export function getProductbyName(name) {
+    return async function (dispatch) {
+        return axios.get(`http://localhost:3001/products?name=${name}`)
+            .then((response) => {
+                dispatch({
+                    type: GET_PRODUCTS_FILTERED,
+                    payload: response.data
+                })
+            })
+    }
 }
 
 export function getById(id) {
@@ -137,3 +155,10 @@ export function orderPrice(orderTarget, product) {
 }
 
 
+export function resetFilters(){
+    return function(dispatch) {
+        return dispatch({
+            type: RESET_FILTERS
+        })
+    }
+}
