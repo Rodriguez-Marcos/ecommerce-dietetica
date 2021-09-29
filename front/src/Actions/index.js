@@ -85,6 +85,16 @@ export function postCategory(payload){
            });
          };
        }
+       export function postDiet(payload){
+        return async function (dispatch) {
+            await axios.post("http://localhost:3001/diets", payload);
+           
+               return dispatch({
+                 type: "POST_DIET",
+                 payload,
+               });
+             };
+           }
 
 export function getByIdCategory(id){
     return async function(dispatch) {

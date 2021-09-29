@@ -16,6 +16,10 @@ export default function reducerDavid(state = InitialState, action) {
             return {
                 ...state
             }
+            case 'POST_DIET':
+                return {
+                    ...state
+                }
             
         default:
             return {...state}

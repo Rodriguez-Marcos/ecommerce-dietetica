@@ -2,12 +2,11 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
-import { postProduct } from "../Actions";
-import { postCategory } from "../Actions";
+import { postProduct, postCategory, postDiet } from "../Actions";
 
 export default function Creator() {
   let dispatch = useDispatch();
-
+  // estados locales
   const [input, setInput] = useState({
     name: "",
     image: "",
@@ -19,6 +18,12 @@ export default function Creator() {
     name: "",
     description: "",
   });
+  const [diet, setDiet] = useState({
+    name: "",
+    description: "",
+  });
+
+  // handlers de seteo
   function handlerProduct(e) {
     setInput({
       ...input,
@@ -31,6 +36,14 @@ export default function Creator() {
       [e.target.name]: e.target.value,
     });
   }
+  function handlerDiet(e) {
+    setDiet({
+      ...diet,
+      [e.target.name]: e.target.value,
+    });
+  }
+  // handlers de submit
+
   function handlerSubmitProduct(e) {
     e.preventDefault();
     if (
@@ -57,11 +70,24 @@ export default function Creator() {
     e.preventDefault();
     if (category.name && category.description) {
       dispatch(postCategory(category));
-      setInput({
+      setCategory({
         name: "",
         description: "",
       });
       alert(" Categoria creada con exito");
+    } else {
+      alert("falta informacion requerida en el formulario");
+    }
+  }
+  function handlerSubmitDiet(e) {
+    e.preventDefault();
+    if (diet.name && diet.description) {
+      dispatch(postDiet(diet));
+      setDiet({
+        name: "",
+        description: "",
+      });
+      alert(" Dieta creada con exito");
     } else {
       alert("falta informacion requerida en el formulario");
     }
@@ -129,7 +155,7 @@ export default function Creator() {
         <div>
           <label>Nombre de categoria</label>
           <input
-            name='name'
+            name="name"
             type="text"
             value={category.name}
             onChange={(e) => handlerCategory(e)}
@@ -139,20 +165,42 @@ export default function Creator() {
         <div>
           <label>Descripción de categoria</label>
           <input
-            name='description'
+            name="description"
             type="textarea"
             value={category.description}
             onChange={(e) => handlerCategory(e)}
           />
           {!category.description ? <output> ❌</output> : <output> ✔</output>}
-          <button> Crear Categoria</button>
         </div>
+        <button> Crear Categoria</button>
+      </form>
+      <form onSubmit={(e) => handlerSubmitDiet(e)}>
+        <h2> agregar nueva Dieta</h2>
+        <div>
+          <label>Nombre de Dieta</label>
+          <input
+            name="name"
+            type="text"
+            value={diet.name}
+            onChange={(e) => handlerDiet(e)}
+          />
+          {!diet.name ? <output> ❌</output> : <output> ✔</output>}
+        </div>
+        <div>
+          <label>Descripción de la Dieta</label>
+          <input
+            name="description"
+            type="textarea"
+            value={diet.description}
+            onChange={(e) => handlerDiet(e)}
+          />
+          {!diet.description ? <output> ❌</output> : <output> ✔</output>}
+        </div>
+        <button> Crear Dieta</button>
       </form>
     </div>
   );
 }
-
-
 
 /*
 
