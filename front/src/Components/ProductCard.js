@@ -1,5 +1,5 @@
 import React from 'react';import { useHistory } from 'react-router-dom';
-import style from './ProductCard.module.css';
+
 
 
 
@@ -11,9 +11,9 @@ export function ProductCard({ name,price,id,description,stock,image }) {
   }
 
   return (
-    <div className={style.divPadre} onClick={()=>handleClick()}>
+    <div  onClick={()=>handleClick()}>
         <div key={id}>
-        <img className='imagenrota' src={image || 'https://www.wpbeginner.com/wp-content/uploads/2013/04/wp404error.jpg'} alt={'imagen nro:'+id+' no encontrada'}/>
+        <img  src={image || 'https://www.wpbeginner.com/wp-content/uploads/2013/04/wp404error.jpg'} alt={'imagen nro:'+id+' no encontrada'}/>
         <h2>{name}</h2>
         <h5>{description}</h5>
         <h4>{price}</h4>
