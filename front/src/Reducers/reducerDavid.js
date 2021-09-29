@@ -12,6 +12,10 @@ export default function reducerDavid(state = InitialState, action) {
         case 'POST_PRODUCTS':
             return {
                 ...state,};
+        case 'POST_CATEGORY':
+            return {
+                ...state
+            }
             
         default:
             return {...state}
