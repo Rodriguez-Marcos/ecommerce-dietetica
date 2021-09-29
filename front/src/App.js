@@ -4,6 +4,7 @@ import Home from './Components/Home';
 import Detail from './Components/Detail';
 import Creator from './Components/Creator';
 
+
 import NavBar from './Components/NavBar';
 import { Switch } from 'react-router';
  
