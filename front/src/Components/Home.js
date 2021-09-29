@@ -14,6 +14,7 @@ function ProductsHome({ products, getProducts }) {
 
     return (
         <div >
+           
                 <div className='home'>
                 <ProductsCards
                     products={products} /> 

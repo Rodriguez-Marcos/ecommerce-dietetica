@@ -7,5 +7,6 @@ export default combineReducers({
     reducerDavid,
     reducerPablo, 
     reducerRocio,
+    
     // Agregar Aqui nuevos reducers
   })

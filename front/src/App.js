@@ -2,6 +2,7 @@ import './App.css';
 import {BrowserRouter,Route} from 'react-router-dom'
 import Home from './Components/Home';
 import Detail from './Components/Detail.js';
+import Creator from './Components/Creator';
 
 
 import NavBar from './Components/NavBar';
@@ -14,6 +15,7 @@ function App() {
     <Switch>
     <Route exact path='/home' component={Home}/>
     <Route exact path='/Detail/:id' component={Detail}/>
+    <Route exact path='/Admin' component={Creator}/>
     </Switch>
     </BrowserRouter>
     

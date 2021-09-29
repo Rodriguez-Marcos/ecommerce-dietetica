@@ -39,8 +39,8 @@ export async function createProduct(req, res) {
 
 
 export async function getProducts(req, res) {
-    let { name, id_category } = req.query
-    if (!id_category && !name) {
+    let { name, id_category, id_diet } = req.query
+    if (!id_category && !name && !id_diet) {
         try {
             let products = await Product.findAll()
             return res.status(200).send(products)
@@ -67,7 +67,7 @@ export async function getProducts(req, res) {
                 console.log(err)
                 res.json(err)
             }
-        } else {
+        } else if (id_category) {
             try {
                 let products = await Product.findAll({
                     include: [{
@@ -85,6 +85,25 @@ export async function getProducts(req, res) {
 
                 })
             }
+        } else {
+            try {
+                let products = await Product.findAll({
+                    include: [{
+                        model: Diet,
+                        through: { attributes: [] },
+                        where: { 'id': id_diet }
+                    }]
+                })
+                return res.status(200).send(products)
+            } catch (err) {
+                console.log(err)
+                res.status(500).json({
+                    message: 'Something goes Wrong',
+                    data: {}
+
+                })
+            }
+
         }
     }
 }

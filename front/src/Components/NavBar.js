@@ -4,11 +4,17 @@ import { connect } from 'react-redux';
 import './Navbar.css';
 import { getProductbyName } from '../Actions/index'
 import {Navbar, Nav, NavDropdown,Form, FormControl, Button} from 'react-bootstrap'
+import FilterRecipes from './Filters'
+import { useAuth0 } from "@auth0/auth0-react";
+import {LoginButton} from './Login'
+import {LogoutButton} from './Logout'
+import {Profile} from './Profile'
+
 
 function NavBar({getProductbyName}) {
 
   const [ActualState, setActualState] = useState('')
-
+  const {isAuthenticated} = useAuth0();
 
 
   function handleChange(event) {
@@ -21,6 +27,7 @@ function handleClik() {
     getProductbyName(ActualState)
 
 }
+
 
 return(
   <Navbar classname="navbar" expand="md">
@@ -38,6 +45,14 @@ return(
         About
       </Nav.Link>
     </Nav>
+   <div>
+          { isAuthenticated ? <>
+            <LogoutButton/>
+          <Profile/>
+          </> 
+         : <LoginButton/>
+}
+          </div>
     <Form className="d-flex">
       <FormControl
         type="search"
@@ -51,6 +66,7 @@ return(
 
 </Navbar>
 )
+
   };
 
   const mapStateToProps = (state) => {
