@@ -34,8 +34,8 @@ export function ProductCard({product}) {
 
   return (
       <div key={product.id}>
-        {location.pathname === '/trolley' ? <h5 style={{ position: 'absolute', color: 'red' }} onClick={e => handleClose(e)}>x</h5> : false}
           <div className={styles.cardContainer}>
+        {location.pathname === '/trolley' ? <h5 style={{ position: 'relative', color: 'red', left: '290px', top: '2px' }} onClick={e => handleClose(e)}>x</h5> : false}
             <div className={styles.cardName}>{product.name}</div>
 
             <img className={styles.cardFoto} src={product.image} alt="Not Found" />
@@ -49,7 +49,7 @@ export function ProductCard({product}) {
             </Link>
           </div>
 
-          <button onClick={(e)=>handleClickTrolley(e)} className={styles.boton}>Agregar al carrito</button>
+          {location.pathname !== '/trolley' ?<button onClick={(e)=>handleClickTrolley(e)} className={styles.boton}>Agregar al carrito</button>:false}
 
 
         </div>
