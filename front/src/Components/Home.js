@@ -3,7 +3,8 @@ import { connect } from "react-redux"
 import { getProducts } from "../Actions/index";
 import './Home.css'
 import ProductsCards from './Products'
-
+import { Image, Button, Overlay, Tooltip, OverlayTrigger } from 'react-bootstrap'
+import banner from '../image/BANNER-SALVATORE.jpg'
 
 
 
@@ -16,11 +17,11 @@ function ProductsHome({ products, getProducts }) {
 
     return (
         <div >
-                <div className='home'>
+            <Image id="banner" src={banner} fluid />
+            <div className='home'>
                 <ProductsCards
-                    products={products} /> 
-            </div> 
-
+                    products={products} />
+            </div>
         </div>
     )
 };
