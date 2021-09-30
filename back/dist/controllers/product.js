@@ -35,13 +35,13 @@ function createProduct(_x, _x2) {
 
 function _createProduct() {
   _createProduct = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(req, res) {
-    var _req$body, name, price, description, image, stock, newProduct;
+    var _req$body, name, price, description, image, stock, ids_categories, ids_diets, newProduct, categories, diets;
 
     return regeneratorRuntime.wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
-            _req$body = req.body, name = _req$body.name, price = _req$body.price, description = _req$body.description, image = _req$body.image, stock = _req$body.stock;
+            _req$body = req.body, name = _req$body.name, price = _req$body.price, description = _req$body.description, image = _req$body.image, stock = _req$body.stock, ids_categories = _req$body.ids_categories, ids_diets = _req$body.ids_diets;
             _context.prev = 1;
             _context.next = 4;
             return _Product["default"].create({
@@ -57,8 +57,44 @@ function _createProduct() {
           case 4:
             newProduct = _context.sent;
 
+            if (!ids_categories) {
+              _context.next = 11;
+              break;
+            }
+
+            _context.next = 8;
+            return _Category["default"].findAll({
+              where: {
+                id: ids_categories
+              }
+            });
+
+          case 8:
+            categories = _context.sent;
+            _context.next = 11;
+            return newProduct.addCategory(categories);
+
+          case 11:
+            if (!ids_diets) {
+              _context.next = 17;
+              break;
+            }
+
+            _context.next = 14;
+            return _Diet["default"].findAll({
+              where: {
+                id: ids_diets
+              }
+            });
+
+          case 14:
+            diets = _context.sent;
+            _context.next = 17;
+            return newProduct.addDiet(diets);
+
+          case 17:
             if (!newProduct) {
-              _context.next = 7;
+              _context.next = 19;
               break;
             }
 
@@ -67,12 +103,12 @@ function _createProduct() {
               data: newProduct
             }));
 
-          case 7:
-            _context.next = 13;
+          case 19:
+            _context.next = 25;
             break;
 
-          case 9:
-            _context.prev = 9;
+          case 21:
+            _context.prev = 21;
             _context.t0 = _context["catch"](1);
             console.log(_context.t0);
             res.status(500).json({
@@ -80,12 +116,12 @@ function _createProduct() {
               data: {}
             });
 
-          case 13:
+          case 25:
           case "end":
             return _context.stop();
         }
       }
-    }, _callee, null, [[1, 9]]);
+    }, _callee, null, [[1, 21]]);
   }));
   return _createProduct.apply(this, arguments);
 }
