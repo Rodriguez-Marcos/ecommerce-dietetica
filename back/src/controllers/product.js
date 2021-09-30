@@ -5,7 +5,7 @@ import Category from '../models/Category.js';
 import { Sequelize,Op } from 'sequelize';
 
 export async function createProduct(req, res) {
-    const { name, price, description, image, stock } = req.body;
+    const { name, price, description, image, stock,ids_categories,ids_diets } = req.body;
     try {
         let newProduct = await Product.create({
             name,
@@ -17,6 +17,13 @@ export async function createProduct(req, res) {
             fields: ['name', 'price', 'description', 'image', 'stock']
         }
         )
+        if (ids_categories){
+            let categories = await Category.findAll({where: { id:ids_categories}})
+            await newProduct.addCategory(categories)}
+            if (ids_diets){
+            let diets = await Diet.findAll({where: { id:ids_diets}})
+            await newProduct.addDiet(diets)}
+            
         if (newProduct) {
             return res.json({
                 message: 'Product created successfully',
@@ -167,17 +174,4 @@ export async function postOrder(req, res) {
     var resultado = await product.addOrder(order)
     res.send(resultado)
 }
-export async function postDiet(req, res) {
-    const { id_product, id_diet } = req.params
-    var product = await Product.findByPk(id_product)
-    var diet = await Diet.findByPk(id_diet)
-    var resultado = await product.addDiet(diet)
-    res.send(resultado)
-}
-export async function postCategory(req, res) {
-    const { id_product, id_category } = req.params
-    var product = await Product.findByPk(id_product)
-    var category = await Category.findByPk(id_category)
-    var resultado = await product.addCategory(category)
-    res.send(resultado)
-}
+
