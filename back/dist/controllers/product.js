@@ -8,8 +8,6 @@ exports.getProducts = getProducts;
 exports.getById = getById;
 exports.deleteProduct = deleteProduct;
 exports.postOrder = postOrder;
-exports.postDiet = postDiet;
-exports.postCategory = postCategory;
 
 var _Product = _interopRequireDefault(require("../models/Product.js"));
 
@@ -432,84 +430,4 @@ function _postOrder() {
     }, _callee5);
   }));
   return _postOrder.apply(this, arguments);
-}
-
-function postDiet(_x11, _x12) {
-  return _postDiet.apply(this, arguments);
-}
-
-function _postDiet() {
-  _postDiet = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee6(req, res) {
-    var _req$params2, id_product, id_diet, product, diet, resultado;
-
-    return regeneratorRuntime.wrap(function _callee6$(_context6) {
-      while (1) {
-        switch (_context6.prev = _context6.next) {
-          case 0:
-            _req$params2 = req.params, id_product = _req$params2.id_product, id_diet = _req$params2.id_diet;
-            _context6.next = 3;
-            return _Product["default"].findByPk(id_product);
-
-          case 3:
-            product = _context6.sent;
-            _context6.next = 6;
-            return _Diet["default"].findByPk(id_diet);
-
-          case 6:
-            diet = _context6.sent;
-            _context6.next = 9;
-            return product.addDiet(diet);
-
-          case 9:
-            resultado = _context6.sent;
-            res.send(resultado);
-
-          case 11:
-          case "end":
-            return _context6.stop();
-        }
-      }
-    }, _callee6);
-  }));
-  return _postDiet.apply(this, arguments);
-}
-
-function postCategory(_x13, _x14) {
-  return _postCategory.apply(this, arguments);
-}
-
-function _postCategory() {
-  _postCategory = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee7(req, res) {
-    var _req$params3, id_product, id_category, product, category, resultado;
-
-    return regeneratorRuntime.wrap(function _callee7$(_context7) {
-      while (1) {
-        switch (_context7.prev = _context7.next) {
-          case 0:
-            _req$params3 = req.params, id_product = _req$params3.id_product, id_category = _req$params3.id_category;
-            _context7.next = 3;
-            return _Product["default"].findByPk(id_product);
-
-          case 3:
-            product = _context7.sent;
-            _context7.next = 6;
-            return _Category["default"].findByPk(id_category);
-
-          case 6:
-            category = _context7.sent;
-            _context7.next = 9;
-            return product.addCategory(category);
-
-          case 9:
-            resultado = _context7.sent;
-            res.send(resultado);
-
-          case 11:
-          case "end":
-            return _context7.stop();
-        }
-      }
-    }, _callee7);
-  }));
-  return _postCategory.apply(this, arguments);
 }

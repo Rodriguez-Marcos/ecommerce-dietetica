@@ -13,15 +13,11 @@ var _require2 = require('../controllers/product'),
     getProducts = _require2.getProducts,
     getById = _require2.getById,
     deleteProduct = _require2.deleteProduct,
-    postOrder = _require2.postOrder,
-    postDiet = _require2.postDiet,
-    postCategory = _require2.postCategory;
+    postOrder = _require2.postOrder;
 
 var router = Router();
 router.post('/', createProduct);
 router.post('/:id_product/orders/:id_order', postOrder);
-router.post('/:id_product/diets/:id_diet', postDiet);
-router.post('/:id_product/categories/:id_category', postCategory);
 router.get('/', getProducts);
 router.get('/:id', getById);
 router["delete"]('/:id', deleteProduct);
