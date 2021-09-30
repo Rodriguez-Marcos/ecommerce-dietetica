@@ -7,16 +7,17 @@ import { getProductbyName,  setLoading} from '../Actions/index'
 import {Navbar, Nav, NavDropdown,Form, FormControl, Button} from 'react-bootstrap'
 import ProductsFilters from './Filters'
 import { useAuth0 } from "@auth0/auth0-react";
-import {LoginButton} from './Login'
-import {LogoutButton} from './Logout'
-import {Profile} from './Profile'
-import {BsBag} from "react-icons/bs";
+import { LoginButton } from './Login'
+import { LogoutButton } from './Logout'
+import { Profile } from './Profile'
+import Logo from '../image/SALVATORE-grande.png'
+
 
 
 function NavBar({ getProductbyName, setLoading }) {
 
   const [ActualState, setActualState] = useState('')
-  const {isAuthenticated} = useAuth0();
+  const { isAuthenticated } = useAuth0();
 
 
 
@@ -36,50 +37,51 @@ function NavBar({ getProductbyName, setLoading }) {
     setActualState(event.target.value)
   }
   
-  return(
-    <Navbar classname="navbar" expand="md">
-  <Nav.Link ><NavLink to="/home" className='navlink' >Salvatore</NavLink></Nav.Link>
-  <Navbar.Toggle aria-controls="navbarScroll" />
-  <Navbar.Collapse className="link-search" >
-    <Nav className="navbar-nav">
-      <Nav.Link ><NavLink to="/home" className='navlink1' >Home</NavLink></Nav.Link>
-      <Nav.Link ><NavLink to="/Admin" className='navlink1'>Create Product</NavLink></Nav.Link>
-      <Nav.Link ><NavLink to="/trolley" className='navlink1'><BsBag/></NavLink></Nav.Link>
-      <Nav.Link href="#" disabled>
-      </Nav.Link>
-    </Nav>
-    <div>
-    <ProductsFilters/>
-    </div>
-   <div>
-          { isAuthenticated ? <>
-            <LogoutButton/>
-          <Profile/>
-          </> 
-         : <LoginButton/>
-}
-          </div>
-    <Form className="d-flex" onSubmit={(e) => handleSubmit(e)}>
+   return (
+    <div className="content">
+      <Navbar classname="navbar" expand="lg">
+        <Navbar.Brand href="#"><NavLink to="/home" ><img className="Logo" src={Logo}/></NavLink></Navbar.Brand>
+        <Navbar.Toggle aria-controls="navbarScroll" />
+        <Navbar.Collapse id="navbarScroll">
+          <Nav id="navScroll"
+            className="mr-auto my-2 my-lg-0"
+            style={{ maxHeight: '100px' }}
+            navbarScroll
+          >
+            <Nav.Link ><NavLink to="/home" className='navlink1' >Home</NavLink></Nav.Link>
+            <ProductsFilters/>
+            <Nav.Link>About</Nav.Link>
+          </Nav>
+          <Nav>
+          <Form className="d-flex" onSubmit={(e) => handleSubmit(e)}>
       <FormControl
         type="search"
         placeholder="Search"
         className="mr-2"
         aria-label="Search"
-        value={ActualState} type='text' placeholder='buscador' className='inputsearch' onChange={handleChange} 
+        value={ActualState} type='text'  id='inputSearch' onChange={handleChange} 
       />
-      <Button onSubmit={(e) => handleSubmit(e)} onClick={(e) => handleSubmit(e)} variant="outline-success">Search</Button>
+      <Button onSubmit={(e) => handleSubmit(e)} onClick={(e) => handleSubmit(e)} variant="success">Search</Button>
     </Form>
-  </Navbar.Collapse>
+          {isAuthenticated ? <>
+            <LogoutButton />
+            <Profile />
+          </>
+            : <LoginButton />
+          }
+          </Nav>
+        </Navbar.Collapse>
+      </Navbar>
+    </div>
+  ) 
 
-</Navbar>
-)
-
-  };
+};
 
 const mapStateToProps = (state) => {
   return {
     product: state.product,
     loading: state.reducerPablo.loading,
+
   }
 }
 const mapDispatchToProps = (dispatch) => {
@@ -87,9 +89,11 @@ const mapDispatchToProps = (dispatch) => {
     getProductbyName: name => {
       dispatch(getProductbyName(name))
     },
+
     setLoading:() => {
       dispatch(setLoading())
     },
+
   }
 }
 

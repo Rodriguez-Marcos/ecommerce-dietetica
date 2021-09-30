@@ -1,32 +1,74 @@
 :root{
-    --colorCafe: #4b4011;
+    --colorCafe: #99642C;
     --hoverColorText:rgb(175, 172, 172);
 }
 .navbar{
     background-color: var(--colorCafe);
+    padding: 10px;
+}
+.content{
+    position: fixed;
+    width: 100vw;
+    top: 0
 }
 .navlink1{
-    color: white;
+    color:white;
     text-decoration: none;
 }
 .navlink1:hover{
     color: var(--hoverColorText)
 }
 
-.navbrand{
+#navbarScrollingDropdown {
+    text-decoration: none;  
     color: white;
 }
-.navlink{
+#navbarScrollingDropdown:hover {  
+    color: var(--hoverColorText)
+}
+
+.logo{
     text-decoration: none;
     font-size: medium;
     color: white;
 }
-.navlink:hover{
+.logo:hover{
     color: var(--hoverColorText);
 }
-.link-search{
-    justify-content: space-evenly;
+#navbarScroll{
+    justify-content: center;
 }
+#inputSearch{
+    background-color: transparent;
+}
+#inputSearch::placeholder{
+    color: white;
+    border-color: transparent;
+    outline: none;
+}
+#inputSearch:hover{
+    border: none;
+    color: white;
+}
+#navScroll::-webkit-scrollbar {
+    -webkit-appearance: none;
+}
+#inputSearch{
+    margin-right: 10px;
+}
+.Logo{
+    width: 10vw;
+}
+.Logo:hover{
+    background-color: rgb(18, 121, 18);
+    border-radius: 20px;
+}
+@media only screen and (max-width: 600px) {
+    .Logo{
+        width: 30vw;
+    }
+  }
+/* Movil */
 .navbar-nav{
     align-items: center;
 }

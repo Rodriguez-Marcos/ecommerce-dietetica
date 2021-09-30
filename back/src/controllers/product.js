@@ -2,7 +2,7 @@ import Product from '../models/Product.js';
 import Order from '../models/Order.js';
 import Diet from '../models/Diet.js';
 import Category from '../models/Category.js';
-import { Sequelize } from 'sequelize';
+import { Sequelize,Op } from 'sequelize';
 
 export async function createProduct(req, res) {
     const { name, price, description, image, stock } = req.body;
@@ -39,27 +39,27 @@ export async function createProduct(req, res) {
 
 
 export async function getProducts(req, res) {
-    let { name, id_category, id_diet } = req.query
+    let { name, id_category, id_diet,priceL,priceH } = req.query
     try {
         if (!id_category && !name && !id_diet) {
 
-            let products = await Product.findAll()
-            return res.status(200).send(products)
+            var products = await Product.findAll()
+            //res.status(200).send(products)
         }
         else {
             if (name) {
             
 
-                const filterproducts = await Product.findAll({
+                var products = await Product.findAll({
                     where: {
-                        name: { [Sequelize.Op.iLike]: `%${name}%` }
+                        name: { [Op.iLike]: `%${name}%` }
                     }
                 })
-                return res.status(200).json(filterproducts)
+                //res.status(200).json(products)
             } else {
                 if (id_category && id_diet) {
 
-                    let products = await Product.findAll({
+                    var products = await Product.findAll({
                         include: [{
                             model: Category,
                             where: { 'id': id_category }
@@ -69,28 +69,35 @@ export async function getProducts(req, res) {
                             where: { 'id': id_diet }
                         }]
                     })
-                    return res.status(200).send(products)
+                    //res.status(200).send(products)
                 } else if (id_diet) {
-                    let products = await Product.findAll({
+                    var products = await Product.findAll({
                         include: [{
                             model: Diet,
                             through: { attributes: [] },
                             where: { 'id': id_diet }
                         }]
                     })
-                    return res.status(200).send(products)
+                    //res.status(200).send(products)
                 } else if (id_category) {
-                    let products = await Product.findAll({
+                    var products = await Product.findAll({
                         include: [{
                             model: Category,
                             through: { attributes: [] },
                             where: { 'id': id_category }
                         }]
                     })
-                    return res.status(200).send(products)
+                    //res.status(200).send(products)
                 }
             }
         }
+        if(!priceL)priceL=0;
+        if(!priceH)priceH= await Product.max("price")
+        let productsName = products.map(product=>product.name)
+        let productsFound= await Product.findAll({where:{name:productsName, price:{[Op.between]: [parseInt(priceL), parseInt(priceH)],}}})
+        return res.status(200).send(productsFound)
+        
+        
     } catch (err) {
         console.log(err)
         res.status(500).json({

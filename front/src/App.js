@@ -5,6 +5,7 @@ import Detail from './Components/Detail.js';
 import Creator from './Components/Creator';
 import Search from './Components/Search';
 import NavBar from './Components/NavBar';
+import Footer from './Components/Footer';
 import { Switch } from 'react-router';
 import Trolley from './Components/Trolley';
  
@@ -19,6 +20,7 @@ function App() {
     <Route exact path='/search' component={Search}/>
     <Route exact path='/trolley' component={Trolley}/>
     </Switch>
+    <Footer/>
     </BrowserRouter>
     
   );

@@ -20,37 +20,55 @@ function Detail({ match }) {
 
 
     return (
-        <div className={styles.main}>
+        <div className={styles.fondo}>
+        <div className={styles.container}>
+           
+            </div>
                 
-            <div className={styles.dogDetail}>
-                <br />
+            <div className={styles.detail}>
+                <div class = "row"></div>
+                <div class= "col-md-6">
+                <img className={styles.Image} src={producto?.image } alt='none'/>
+                </div>
                 
-                <p className={styles.dogName}><br /> Name: {producto?.name.toUpperCase()}</p>
-
-                <br />
-                <br />
-
-                <img className={styles.dogImage} src={producto?.image  || 'https://www.lavanguardia.com/files/og_thumbnail/uploads/2019/08/07/5e998395e126a.jpeg'} alt='none'/>
-
-                <br />
-                <br />
+              
+                <div className={styles.detalles}>
+                <div class = "col-md-25">
+               
+                <p className={styles.titulo}>Detalle del producto</p>
+                <p className={styles.title}>
+                 </p> <p className={styles.producto}>{producto?.name.toUpperCase()}</p>
+               
+               
    
                 <br />
 
-                <p className={styles.dogWeight}>Price:  {producto?.price} </p>
+                <div className={styles.title}>
+                    Precio:  
+                    </div>
+                    <p className={styles.producto}>${producto?.price} </p>
+          
 
-              
+                <p className={styles.title}>Sobre este producto:  
+                <p className={styles.producto}> {producto?.description} </p></p>
 
-                <p className={styles.dogWeight}>description: {producto?.description} </p>
+                <p className={styles.title}>Stock:
+                <p className={styles.producto}> {producto?.stock} unidades</p></p>
+                <button type="button" class="btn btn-secondary">Agregar a favoritos</button>
+                <br />
+                <br />
+                <button type="button" class="btn btn-success">Agregar al carrito</button>
+                
+               
+                
 
                
-
-                <p className={styles.dogWeight}>Stock:  {producto?.stock}</p>
-              
+                </div>
 
             </div>
-      
-        </div>
+            </div>
+      </div>
+       
     
 
     )
