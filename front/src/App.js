@@ -5,6 +5,7 @@ import Detail from './Components/Detail.js';
 import Creator from './Components/Creator';
 import Search from './Components/Search';
 import NavBar from './Components/NavBar';
+import Footer from './Components/Footer';
 import { Switch } from 'react-router';
  
 function App() {
@@ -17,6 +18,7 @@ function App() {
     <Route exact path='/Admin' component={Creator}/>
     <Route exact path='/search' component={Search}/>
     </Switch>
+    <Footer/>
     </BrowserRouter>
     
   );

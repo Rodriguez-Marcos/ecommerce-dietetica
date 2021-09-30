@@ -22,8 +22,7 @@ function Detail({ match }) {
     return (
         <div className={styles.fondo}>
         <div className={styles.container}>
-            <div class='page-header'>
-                <h1 className={styles.titulo}>Detalle del producto</h1>
+           
             </div>
                 
             <div className={styles.detail}>
@@ -36,8 +35,10 @@ function Detail({ match }) {
                 <div className={styles.detalles}>
                 <div class = "col-md-25">
                
+                <p className={styles.titulo}>Detalle del producto</p>
                 <p className={styles.title}>
                  </p> <p className={styles.producto}>{producto?.name.toUpperCase()}</p>
+               
                
    
                 <br />
@@ -67,7 +68,7 @@ function Detail({ match }) {
             </div>
             </div>
       </div>
-        </div>
+       
     
 
     )

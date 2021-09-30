@@ -9,7 +9,7 @@
     justify-content: center;
     margin: -15px;
     margin-bottom: 50px;
-    margin-top: 40px;
+    margin-top: 80px;
 }
 
 .cardContainer {
@@ -18,8 +18,9 @@
     width: 300px;
     height: 400px;
     margin: 1px 5px;
+    
     border-radius: 10px;
-    padding: 10px;
+    padding: 15px;
     transition: box-shadow, 10ms;
     transition: border, 500ms;
 }
@@ -60,14 +61,24 @@
 }
 
 .cardAttack {
-    text-align: center;
+    position: relative;
+   top: -320px;
+   left: 40px;
+   width: 18%;
+   font-size: 17px;
+   color: rgb(255, 255, 255);
+   font-weight: 600;
+   background-color: rgba(0, 0, 0, 0.726);
+   padding: 5px;
+
+    /* text-align: center;
     color: #97890d;
  
     font-size: 20px;
     font-weight: bold;
     letter-spacing: 2px;
     margin-bottom: 10px;
-    margin-left: 25px;
+    margin-left: 25px; */
 }
 
 
