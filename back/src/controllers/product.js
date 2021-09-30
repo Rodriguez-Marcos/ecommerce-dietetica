@@ -2,10 +2,10 @@ import Product from '../models/Product.js';
 import Order from '../models/Order.js';
 import Diet from '../models/Diet.js';
 import Category from '../models/Category.js';
-import { Sequelize,Op } from 'sequelize';
+import { Sequelize, Op } from 'sequelize';
 
 export async function createProduct(req, res) {
-    const { name, price, description, image, stock,ids_categories,ids_diets } = req.body;
+    const { name, price, description, image, stock, ids_categories, ids_diets } = req.body;
     try {
         let newProduct = await Product.create({
             name,
@@ -17,13 +17,15 @@ export async function createProduct(req, res) {
             fields: ['name', 'price', 'description', 'image', 'stock']
         }
         )
-        if (ids_categories){
-            let categories = await Category.findAll({where: { id:ids_categories}})
-            await newProduct.addCategory(categories)}
-            if (ids_diets){
-            let diets = await Diet.findAll({where: { id:ids_diets}})
-            await newProduct.addDiet(diets)}
-            
+        if (ids_categories) {
+            let categories = await Category.findAll({ where: { id: ids_categories } })
+            await newProduct.addCategory(categories)
+        }
+        if (ids_diets) {
+            let diets = await Diet.findAll({ where: { id: ids_diets } })
+            await newProduct.addDiet(diets)
+        }
+
         if (newProduct) {
             return res.json({
                 message: 'Product created successfully',
@@ -46,7 +48,7 @@ export async function createProduct(req, res) {
 
 
 export async function getProducts(req, res) {
-    let { name, id_category, id_diet,priceL,priceH } = req.query
+    let { name, id_category, id_diet, priceL, priceH } = req.query
     try {
         if (!id_category && !name && !id_diet) {
 
@@ -55,7 +57,7 @@ export async function getProducts(req, res) {
         }
         else {
             if (name) {
-            
+
 
                 var products = await Product.findAll({
                     where: {
@@ -98,13 +100,13 @@ export async function getProducts(req, res) {
                 }
             }
         }
-        if(!priceL)priceL=0;
-        if(!priceH)priceH= await Product.max("price")
-        let productsName = products.map(product=>product.name)
-        let productsFound= await Product.findAll({where:{name:productsName, price:{[Op.between]: [parseInt(priceL), parseInt(priceH)],}}})
+        if (!priceL) priceL = 0;
+        if (!priceH) priceH = await Product.max("price")
+        let productsName = products.map(product => product.name)
+        let productsFound = await Product.findAll({ where: { name: productsName, price: { [Op.between]: [parseInt(priceL), parseInt(priceH)], } } })
         return res.status(200).send(productsFound)
-        
-        
+
+
     } catch (err) {
         console.log(err)
         res.status(500).json({
