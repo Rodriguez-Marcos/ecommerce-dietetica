@@ -16,7 +16,7 @@ code {
 }
 
 body::-webkit-scrollbar{
-  background-color: rgba(55, 119, 12, 0.685);
+  background-color: rgba(18, 121, 18, 0.795);
   border-radius: 4px;
   width: 8px;
 }

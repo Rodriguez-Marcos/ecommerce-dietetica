@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import './Navbar.css';
 import { getProductbyName, setLoading } from '../Actions/index'
 import { Navbar, Nav, NavDropdown, Form, FormControl, Button } from 'react-bootstrap'
-import ProductsFilters from './Filters'
+// import ProductsFilters from './Filters'
 import { useAuth0 } from "@auth0/auth0-react";
 import { LoginButton } from './Login'
 import { LogoutButton } from './Logout'
@@ -50,7 +50,6 @@ function NavBar({ getProductbyName, setLoading }) {
           >
             <Nav.Link ><NavLink to="/home" className='navlink1' >Home</NavLink></Nav.Link>
             <Nav.Link ><NavLink to="/trolley" className='navlink1' >Carrito</NavLink></Nav.Link>
-            <ProductsFilters/>
             <Nav.Link>About</Nav.Link>
           </Nav>
           <Nav>
@@ -73,6 +72,8 @@ function NavBar({ getProductbyName, setLoading }) {
           </Nav>
         </Navbar.Collapse>
       </Navbar>
+      {/* <ProductsFilters/> */}
+
     </div>
   )
 
