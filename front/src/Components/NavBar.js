@@ -49,14 +49,7 @@ function NavBar({ getProductbyName, setLoading }) {
             navbarScroll
           >
             <Nav.Link ><NavLink to="/home" className='navlink1' >Home</NavLink></Nav.Link>
-            <NavDropdown className="Dropdown" title="Product" id="navbarScrollingDropdown">
-              <NavDropdown.Item><NavLink to="/products" >Create Product</NavLink></NavDropdown.Item>
-              <NavDropdown.Divider />
-            </NavDropdown>
-            <NavDropdown title="Categories" id="navbarScrollingDropdown">
-              <NavDropdown.Item>Category 1</NavDropdown.Item>
-              <NavDropdown.Divider />
-            </NavDropdown>
+            <ProductsFilters/>
             <Nav.Link>About</Nav.Link>
           </Nav>
           <Nav>
@@ -66,9 +59,9 @@ function NavBar({ getProductbyName, setLoading }) {
         placeholder="Search"
         className="mr-2"
         aria-label="Search"
-        value={ActualState} type='text' placeholder='buscador' className='inputsearch' onChange={handleChange} 
+        value={ActualState} type='text'  id='inputSearch' onChange={handleChange} 
       />
-      <Button onSubmit={(e) => handleSubmit(e)} onClick={(e) => handleSubmit(e)} variant="outline-success">Search</Button>
+      <Button onSubmit={(e) => handleSubmit(e)} onClick={(e) => handleSubmit(e)} variant="success">Search</Button>
     </Form>
           {isAuthenticated ? <>
             <LogoutButton />
@@ -77,9 +70,6 @@ function NavBar({ getProductbyName, setLoading }) {
             : <LoginButton />
           }
           </Nav>
-          <div>
-    <ProductsFilters/>
-    </div>
         </Navbar.Collapse>
       </Navbar>
     </div>
