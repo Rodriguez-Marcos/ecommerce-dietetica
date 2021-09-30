@@ -50,7 +50,7 @@ function NavBar({ getProductbyName, setLoading }) {
           >
             <Nav.Link ><NavLink to="/home" className='navlink1' >Home</NavLink></Nav.Link>
             <NavDropdown className="Dropdown" title="Product" id="navbarScrollingDropdown">
-              <NavDropdown.Item><NavLink to="/products" >Create Product</NavLink></NavDropdown.Item>
+              <NavDropdown.Item><NavLink to="/Admin" >Create Product</NavLink></NavDropdown.Item>
               <NavDropdown.Divider />
             </NavDropdown>
             <NavDropdown title="Categories" id="navbarScrollingDropdown">
