@@ -1,3 +1,8 @@
+:root{
+    --hoverColorText:rgb(175, 172, 172);
+    --hoverVerde:rgba(16, 112, 16, 0.795);
+    --colorCafe: #99642C;
+}
 #a{
     align-items: center;
     padding: 20px;
@@ -8,9 +13,35 @@
     align-items: center;
     justify-content: center;
     border-radius: 15px;
+    
 }
 #divImg img{
     width: 200px;
     height: 300px;
     border-radius: 15px;
+}
+#borrarimg{
+    width: 5vw;
+}
+#borrarimg:hover{
+    width: 6vw;
+}
+#borrarBtn{
+    background-color: transparent;
+    border: none
+}
+#carrito{
+    background-color: #849836;
+    color: rgb(255, 255, 255);
+    border: none
+}
+#carrito:hover{
+    background-color: var(--colorCafe);
+}
+#carritoimg{
+    width: 3vw;
+}
+#btns{
+    display: flex;
+    justify-content: center;
 }
