@@ -10,6 +10,7 @@ export const GET_PRODUCTS_FILTERED = 'GET_PRODUCTS_FILTERED';
 export const PAGINATE = 'PAGINATE';
 export const FAIL_TO_LOAD = 'FAIL_TO_LOAD'
 export const SET_LOADING = 'SET_LOADING';
+
 export const paginate = (recipes) => {
     return {
         type: PAGINATE,
