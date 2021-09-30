@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-
 import { Link,NavLink } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -11,6 +10,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { LoginButton } from './Login'
 import { LogoutButton } from './Logout'
 import { Profile } from './Profile'
+import Logo from '../image/SALVATORE-grande.png'
 
 
 
@@ -40,7 +40,7 @@ function NavBar({ getProductbyName, setLoading }) {
    return (
     <div className="content">
       <Navbar classname="navbar" expand="lg">
-        <Navbar.Brand href="#"><NavLink to="/home" className='logo' >Salvatore</NavLink></Navbar.Brand>
+        <Navbar.Brand href="#"><NavLink to="/home" ><img className="Logo" src={Logo}/></NavLink></Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll">
           <Nav id="navScroll"
@@ -49,14 +49,7 @@ function NavBar({ getProductbyName, setLoading }) {
             navbarScroll
           >
             <Nav.Link ><NavLink to="/home" className='navlink1' >Home</NavLink></Nav.Link>
-            <NavDropdown className="Dropdown" title="Product" id="navbarScrollingDropdown">
-              <NavDropdown.Item><NavLink to="/Admin" >Create Product</NavLink></NavDropdown.Item>
-              <NavDropdown.Divider />
-            </NavDropdown>
-            <NavDropdown title="Categories" id="navbarScrollingDropdown">
-              <NavDropdown.Item>Category 1</NavDropdown.Item>
-              <NavDropdown.Divider />
-            </NavDropdown>
+            <ProductsFilters/>
             <Nav.Link>About</Nav.Link>
           </Nav>
           <Nav>
@@ -66,9 +59,9 @@ function NavBar({ getProductbyName, setLoading }) {
         placeholder="Search"
         className="mr-2"
         aria-label="Search"
-        value={ActualState} type='text' placeholder='buscador' className='inputsearch' onChange={handleChange} 
+        value={ActualState} type='text'  id='inputSearch' onChange={handleChange} 
       />
-      <Button onSubmit={(e) => handleSubmit(e)} onClick={(e) => handleSubmit(e)} variant="outline-success">Search</Button>
+      <Button onSubmit={(e) => handleSubmit(e)} onClick={(e) => handleSubmit(e)} variant="success">Search</Button>
     </Form>
           {isAuthenticated ? <>
             <LogoutButton />
@@ -77,9 +70,6 @@ function NavBar({ getProductbyName, setLoading }) {
             : <LoginButton />
           }
           </Nav>
-          <div>
-    <ProductsFilters/>
-    </div>
         </Navbar.Collapse>
       </Navbar>
     </div>

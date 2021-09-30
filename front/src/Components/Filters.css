@@ -1,0 +1,20 @@
+:root{
+    
+    --hoverColorText:rgb(175, 172, 172);
+}
+.Selects{
+    display: flex;
+}
+#select{
+    background-color: transparent;
+    border: none;
+    color: white;
+}
+#select:hover{
+color: var(--hoverColorText);
+}
+@media only screen and (max-width: 600px) {
+    #op{
+       font-size: small;
+    }
+  }
