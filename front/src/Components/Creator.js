@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
 import { postProduct, postCategory, postDiet } from "../Actions";
+import axios from "axios";
 
 export default function Creator() {
   let dispatch = useDispatch();
@@ -24,12 +25,37 @@ export default function Creator() {
   });
 
   // handlers de seteo
-  function handlerProduct(e) {
-    setInput({
-      ...input,
-      [e.target.name]: e.target.value,
-    });
+  async function handlerProduct(e) {
+    if (e.target.name == "image") {
+      let file = e.target.files;
+
+      let formData = new FormData();
+      formData.append("file", file[0]);
+      formData.append("upload_preset", "imgsalvatore");
+      let res = await fetch(
+        "https://api.cloudinary.com/v1_1/salvatorehnery/image/upload",
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
+
+      const fire = await res.json();
+      console.log(fire.secure_url);
+
+      setInput({
+        ...input,
+        image: fire.secure_url,
+      });
+    } else {
+      setInput({
+        ...input,
+        [e.target.name]: e.target.value,
+      });
+    }
   }
+
+
   function handlerCategory(e) {
     setCategory({
       ...category,
@@ -93,8 +119,10 @@ export default function Creator() {
     }
   }
   return (
-    <div>
-      <div>
+    <div >
+      <h1> agregar productos</h1>
+       <h1> agregar productos</h1>
+      <div >
         <form onSubmit={(e) => handlerSubmitProduct(e)}>
           <div>
             <label>Nombre</label>
@@ -142,7 +170,6 @@ export default function Creator() {
             <input
               type="file"
               accept="image/png, .jpeg, .jpg"
-              value={input.image}
               name="image"
               onChange={(e) => handlerProduct(e)}
             />
