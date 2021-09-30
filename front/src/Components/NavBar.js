@@ -49,7 +49,8 @@ function NavBar({ getProductbyName, setLoading }) {
             navbarScroll
           >
             <Nav.Link ><NavLink to="/home" className='navlink1' >Home</NavLink></Nav.Link>
-            <ProductsFilters />
+            <Nav.Link ><NavLink to="/trolley" className='navlink1' >Carrito</NavLink></Nav.Link>
+
             <Nav.Link>About</Nav.Link>
           </Nav>
           <Nav>

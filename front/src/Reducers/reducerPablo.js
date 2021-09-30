@@ -8,6 +8,7 @@ const InitialState = {
     productsFiltered: [],
     loading: false,
     error: false,
+    comodin: false,
 }
 
 
@@ -75,6 +76,11 @@ export default function reducerPablo(state = InitialState, action) {
                 ...state,
                 loading: true,
                 error: false,
+            }
+        case 'COMODIN':
+            return{
+                ...state,
+                comodin: !state.comodin,
             }
         default:
             return { ...state }
