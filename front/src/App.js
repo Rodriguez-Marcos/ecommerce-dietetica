@@ -18,7 +18,7 @@ function App() {
     <Route exact path='/Admin' component={Creator}/>
     <Route exact path='/search' component={Search}/>
     </Switch>
-    <Footer/>
+    {/* <Footer/> */}
     </BrowserRouter>
     
   );

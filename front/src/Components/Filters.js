@@ -51,21 +51,21 @@ function ProductsFilters({ getDiets, getCategories, getByIdCategory, getProducts
     return (
         <div className="Selects">
              <Form.Control id="select" size="sm" as="select"     onChange={handleCategory}>
-             <option id="op" label='Search by Categories' value='Categories'></option>
+             <option id="op" label='Categories' value='Categories'></option>
                 {categories.length ? categories.map((cat, i) => (
                         <option key={i} value={cat.id} label={cat.name}></option>
                     )) : null}    
             </Form.Control>
            
             <Form.Control id="select" size="sm" as="select" onChange={handleDiet}>
-            <option label='Search by Diets' value='Diets'></option>
+            <option label='Diets' value='Diets'></option>
                 {diets.length ? diets.map((diet, i) => (
                         <option key={i} value={diet.id} label={diet.name}></option>
                     )) : null}
             </Form.Control>
     
             <Form.Control id="select" size="sm" as="select" onChange={handlePrice}>
-            <option label='Order by Price' value='Price'></option>
+            <option label='Price' value='Price'></option>
                     <option value='Ascendent' >Ascendent</option>
                     <option value='Descendent' >Descendent</option>
             </Form.Control>

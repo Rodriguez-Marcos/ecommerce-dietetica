@@ -9,6 +9,7 @@
     background-color: transparent;
     border: none;
     color: white;
+    text-align: center;
 }
 #select:hover{
 color: var(--hoverColorText);
