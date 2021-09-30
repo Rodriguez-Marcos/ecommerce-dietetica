@@ -96,17 +96,17 @@ function getProducts(_x3, _x4) {
 
 function _getProducts() {
   _getProducts = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(req, res) {
-    var _req$query, name, id_category, id_diet, products, filterproducts, _products, _products2, _products3;
+    var _req$query, name, id_category, id_diet, priceL, priceH, products, productsName, productsFound;
 
     return regeneratorRuntime.wrap(function _callee2$(_context2) {
       while (1) {
         switch (_context2.prev = _context2.next) {
           case 0:
-            _req$query = req.query, name = _req$query.name, id_category = _req$query.id_category, id_diet = _req$query.id_diet;
+            _req$query = req.query, name = _req$query.name, id_category = _req$query.id_category, id_diet = _req$query.id_diet, priceL = _req$query.priceL, priceH = _req$query.priceH;
             _context2.prev = 1;
 
             if (!(!id_category && !name && !id_diet)) {
-              _context2.next = 9;
+              _context2.next = 8;
               break;
             }
 
@@ -115,32 +115,34 @@ function _getProducts() {
 
           case 5:
             products = _context2.sent;
-            return _context2.abrupt("return", res.status(200).send(products));
+            _context2.next = 30;
+            break;
 
-          case 9:
+          case 8:
             if (!name) {
-              _context2.next = 16;
+              _context2.next = 14;
               break;
             }
 
-            _context2.next = 12;
+            _context2.next = 11;
             return _Product["default"].findAll({
               where: {
-                name: _defineProperty({}, _sequelize.Sequelize.Op.iLike, "%".concat(name, "%"))
+                name: _defineProperty({}, _sequelize.Op.iLike, "%".concat(name, "%"))
               }
             });
 
-          case 12:
-            filterproducts = _context2.sent;
-            return _context2.abrupt("return", res.status(200).json(filterproducts));
+          case 11:
+            products = _context2.sent;
+            _context2.next = 30;
+            break;
 
-          case 16:
+          case 14:
             if (!(id_category && id_diet)) {
-              _context2.next = 23;
+              _context2.next = 20;
               break;
             }
 
-            _context2.next = 19;
+            _context2.next = 17;
             return _Product["default"].findAll({
               include: [{
                 model: _Category["default"],
@@ -155,17 +157,18 @@ function _getProducts() {
               }]
             });
 
-          case 19:
-            _products = _context2.sent;
-            return _context2.abrupt("return", res.status(200).send(_products));
+          case 17:
+            products = _context2.sent;
+            _context2.next = 30;
+            break;
 
-          case 23:
+          case 20:
             if (!id_diet) {
-              _context2.next = 30;
+              _context2.next = 26;
               break;
             }
 
-            _context2.next = 26;
+            _context2.next = 23;
             return _Product["default"].findAll({
               include: [{
                 model: _Diet["default"],
@@ -178,17 +181,18 @@ function _getProducts() {
               }]
             });
 
-          case 26:
-            _products2 = _context2.sent;
-            return _context2.abrupt("return", res.status(200).send(_products2));
+          case 23:
+            products = _context2.sent;
+            _context2.next = 30;
+            break;
 
-          case 30:
+          case 26:
             if (!id_category) {
-              _context2.next = 35;
+              _context2.next = 30;
               break;
             }
 
-            _context2.next = 33;
+            _context2.next = 29;
             return _Product["default"].findAll({
               include: [{
                 model: _Category["default"],
@@ -201,16 +205,41 @@ function _getProducts() {
               }]
             });
 
-          case 33:
-            _products3 = _context2.sent;
-            return _context2.abrupt("return", res.status(200).send(_products3));
+          case 29:
+            products = _context2.sent;
+
+          case 30:
+            if (!priceL) priceL = 0;
+
+            if (priceH) {
+              _context2.next = 35;
+              break;
+            }
+
+            _context2.next = 34;
+            return _Product["default"].max("price");
+
+          case 34:
+            priceH = _context2.sent;
 
           case 35:
-            _context2.next = 41;
-            break;
+            productsName = products.map(function (product) {
+              return product.name;
+            });
+            _context2.next = 38;
+            return _Product["default"].findAll({
+              where: {
+                name: productsName,
+                price: _defineProperty({}, _sequelize.Op.between, [parseInt(priceL), parseInt(priceH)])
+              }
+            });
 
-          case 37:
-            _context2.prev = 37;
+          case 38:
+            productsFound = _context2.sent;
+            return _context2.abrupt("return", res.status(200).send(productsFound));
+
+          case 42:
+            _context2.prev = 42;
             _context2.t0 = _context2["catch"](1);
             console.log(_context2.t0);
             res.status(500).json({
@@ -218,12 +247,12 @@ function _getProducts() {
               data: {}
             });
 
-          case 41:
+          case 46:
           case "end":
             return _context2.stop();
         }
       }
-    }, _callee2, null, [[1, 37]]);
+    }, _callee2, null, [[1, 42]]);
   }));
   return _getProducts.apply(this, arguments);
 }
