@@ -91,13 +91,12 @@ export async function getProducts(req, res) {
                 }
             }
         }
-        if(priceL,priceH){
+        if(!priceL)priceL=0;
+        if(!priceH)priceH= await Product.max("price")
         let productsName = products.map(product=>product.name)
-        console.log(priceL)
-        console.log(parseInt(priceL))
         let productsFound= await Product.findAll({where:{name:productsName, price:{[Op.between]: [parseInt(priceL), parseInt(priceH)],}}})
-        return res.status(200).send(productsFound)}
-        else {return res.status(200).send(products)}
+        return res.status(200).send(productsFound)
+        
         
     } catch (err) {
         console.log(err)

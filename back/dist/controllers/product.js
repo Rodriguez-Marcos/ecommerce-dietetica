@@ -209,17 +209,24 @@ function _getProducts() {
             products = _context2.sent;
 
           case 30:
-            if (!(priceL, priceH)) {
-              _context2.next = 40;
+            if (!priceL) priceL = 0;
+
+            if (priceH) {
+              _context2.next = 35;
               break;
             }
 
+            _context2.next = 34;
+            return _Product["default"].max("price");
+
+          case 34:
+            priceH = _context2.sent;
+
+          case 35:
             productsName = products.map(function (product) {
               return product.name;
             });
-            console.log(priceL);
-            console.log(parseInt(priceL));
-            _context2.next = 36;
+            _context2.next = 38;
             return _Product["default"].findAll({
               where: {
                 name: productsName,
@@ -227,19 +234,12 @@ function _getProducts() {
               }
             });
 
-          case 36:
+          case 38:
             productsFound = _context2.sent;
             return _context2.abrupt("return", res.status(200).send(productsFound));
 
-          case 40:
-            return _context2.abrupt("return", res.status(200).send(products));
-
-          case 41:
-            _context2.next = 47;
-            break;
-
-          case 43:
-            _context2.prev = 43;
+          case 42:
+            _context2.prev = 42;
             _context2.t0 = _context2["catch"](1);
             console.log(_context2.t0);
             res.status(500).json({
@@ -247,12 +247,12 @@ function _getProducts() {
               data: {}
             });
 
-          case 47:
+          case 46:
           case "end":
             return _context2.stop();
         }
       }
-    }, _callee2, null, [[1, 43]]);
+    }, _callee2, null, [[1, 42]]);
   }));
   return _getProducts.apply(this, arguments);
 }
