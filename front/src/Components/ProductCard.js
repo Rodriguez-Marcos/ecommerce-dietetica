@@ -1,23 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import { connect, useDispatch } from 'react-redux';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import Cookies from 'universal-cookie';
+import styles from './product.module.css';
+import { Link } from 'react-router-dom';
+
+
 
 const cookies = new Cookies();
 
 
 
 
-export function ProductCard(product) {
-  const { name, price, id, description, stock, image } = product;
-  let history = useHistory();
+export function ProductCard({product}) {
   let location = useLocation();
   let dispatch = useDispatch();
 
-
-  function handleClick() {
-    history.push('/Detail/' + id);
-  }
   function handleClickTrolley(e) {
     e.preventDefault();
     let trolley = Array.isArray(cookies.get('trolley')) ? [...cookies.get('trolley')] : [];
@@ -35,19 +33,26 @@ export function ProductCard(product) {
   }
 
   return (
-    <div  >
-      {console.log(location.pathname)}
-      <div key={id}>
+      <div key={product.id}>
         {location.pathname === '/trolley' ? <h5 style={{ position: 'absolute', color: 'red' }} onClick={e => handleClose(e)}>x</h5> : false}
-        <img src={image || 'https://www.wpbeginner.com/wp-content/uploads/2013/04/wp404error.jpg'} alt={'imagen nro:' + id + ' no encontrada'} />
-        <h2>{name}</h2>
-        <h5>{description}</h5>
-        <h4>{price}</h4>
-        <h4>{description}</h4>
-        <h4>{stock}</h4>
-        <button onClick={e => handleClickTrolley(e)}>Agregar al Carrito</button>
-      </div>
-    </div>
+          <div className={styles.cardContainer}>
+            <div className={styles.cardName}>{product.name}</div>
+
+            <img className={styles.cardFoto} src={product.image} alt="Not Found" />
+            <div className={styles.cardAttack}>${product.price}</div>
+          </div>
+          <div className={styles.detail}>
+            <Link to={`/Detail/${product.id}`} style={{ color: "black", textDecoration: "none" }}>
+              <p>
+                Ver este producto
+              </p>
+            </Link>
+          </div>
+
+          <button onClick={(e)=>handleClickTrolley(e)} className={styles.boton}>Agregar al carrito</button>
+
+
+        </div>
   );
 }
 

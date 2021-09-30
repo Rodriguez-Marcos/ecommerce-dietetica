@@ -1,5 +1,5 @@
-import { useSelector } from "react-redux"
-import ProductsCards from "./Products"
+import { useSelector } from "react-redux";
+import ProductsCards from "./Products";
 import Cookies from "universal-cookie";
 
 const cookies = new Cookies();
