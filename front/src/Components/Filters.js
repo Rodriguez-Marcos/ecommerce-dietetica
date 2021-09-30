@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { getDiets, getCategories, getByIdCategory, getProducts,orderPrice,getByIdDiet } from "../Actions";
-
+import {Form} from 'react-bootstrap'
+import './Filters.css'
 
 
 function ProductsFilters({ getDiets, getCategories, getByIdCategory, getProducts,categories,diets, orderPrice,products,getByIdDiet }) {
@@ -48,30 +49,26 @@ function ProductsFilters({ getDiets, getCategories, getByIdCategory, getProducts
 
 
     return (
-        <div>
-    
-            <select className='selectores' onChange={handleCategory}>
-                <option label='Search by Categories' value='Categories'></option>
+        <div className="Selects">
+             <Form.Control id="select" size="sm" as="select"     onChange={handleCategory}>
+             <option label='Search by Categories' value='Categories'></option>
                 {categories.length ? categories.map((cat, i) => (
                         <option key={i} value={cat.id} label={cat.name}></option>
-                    )) : null}
-            </select>
-        
-
-    
-            <select className='selectores' onChange={handleDiet}>
-                <option label='Search by Diets' value='Diets'></option>
+                    )) : null}    
+            </Form.Control>
+           
+            <Form.Control id="select" size="sm" as="select" onChange={handleDiet}>
+            <option label='Search by Diets' value='Diets'></option>
                 {diets.length ? diets.map((diet, i) => (
                         <option key={i} value={diet.id} label={diet.name}></option>
                     )) : null}
-            </select>
-        
-
-            <select className='selectores' onChange={handlePrice}>
-                    <option label='Order by Price' value='Price'></option>
+            </Form.Control>
+    
+            <Form.Control id="select" size="sm" as="select" onChange={handlePrice}>
+            <option label='Order by Price' value='Price'></option>
                     <option value='Ascendent' >Ascendent</option>
                     <option value='Descendent' >Descendent</option>
-                </select>
+            </Form.Control>
 
         </div>
     )
