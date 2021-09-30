@@ -28,6 +28,21 @@
   color: #61dafb;
 }
 
+#fondo{
+  position: fixed;
+  z-index: -1;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+}
+
+/* @media only screen and (max-width: 600px) {
+  #fondo{
+    margin-top: -13px;
+  }
+} */
+
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

@@ -8,10 +8,12 @@ import NavBar from './Components/NavBar';
 import Footer from './Components/Footer';
 import { Switch } from 'react-router';
 import Trolley from './Components/Trolley';
- 
+import {Image} from 'react-bootstrap'
+import fondo from '../src/image/fondo1.jpg'
 function App() {
   return (
     <BrowserRouter>
+     <Image id="fondo" src={fondo} fluid />
     <NavBar/>
     <Switch>
     <Route exact path='/home' component={Home}/>

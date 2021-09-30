@@ -8,6 +8,7 @@ import { Provider } from "react-redux";
 import { store } from "./Store/store";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+
 ReactDOM.render(
   <Provider store={store}>
     <React.StrictMode>
@@ -15,7 +16,7 @@ ReactDOM.render(
       domain="dev-lvb6t68e.us.auth0.com" 
       clientId="xUY0ZdO7LMadGcSB1qIK6uxZolixCz5C" 
       redirectUri={window.location.origin} >
-      <App />
+      <App/>
       </Auth0Provider>
     </React.StrictMode>
   </Provider>

@@ -3,9 +3,11 @@ import { connect, useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import Cookies from 'universal-cookie';
 import { Link } from 'react-router-dom';
-import { Card, ListGroup, ListGroupItem } from 'react-bootstrap'
+import { Button, Card, ListGroup, ListGroupItem } from 'react-bootstrap'
 import './ProductCard.css'
-
+import defaultimg from '../image/salvatore-grande-color.png'
+import borrar from '../image/cancelar.png'
+import compras from '../image/carrito.png'
 
 const cookies = new Cookies();
 
@@ -34,18 +36,18 @@ export function ProductCard({ product }) {
 
   return (
     <Card style={{ width: '18rem' }} id="a">
-      {location.pathname === '/trolley' ? <h5 onClick={e => handleClose(e)}>x</h5> : false}
       <Card.Title>{product.name}</Card.Title>
       <Card id="divImg">
-        <Card.Img id="img" variant="top" src={product.image} alt="Not Found" />
+        <Card.Img id="img" variant="top" src={product.image?  product.image: defaultimg} />
       </Card>
       <ListGroup className="list-group-flush">
         <ListGroupItem>Precio actual ${product.price}</ListGroupItem>
         <ListGroupItem>
           <Link to={`/Detail/${product.id}`} >Ver este producto</Link>
         </ListGroupItem>
-        <ListGroupItem>
-          {location.pathname !== '/trolley' ? <button onClick={(e) => handleClickTrolley(e)} >Agregar al carrito</button> : false}
+        <ListGroupItem id="btns">
+          {location.pathname !== '/trolley' ? <Button id="carrito" onClick={(e) => handleClickTrolley(e)} >Agregar  <Card.Img id="carritoimg" src={compras}/></Button> : false}
+          {location.pathname === '/trolley' ? <Button id="borrarBtn" onClick={e => handleClose(e)}><Card.Img id="borrarimg" src={borrar}/></Button> : false}
         </ListGroupItem>
       </ListGroup>
     </Card>
