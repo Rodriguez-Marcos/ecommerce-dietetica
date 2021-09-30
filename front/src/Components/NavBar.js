@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-
 import { Link,NavLink } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -11,6 +10,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { LoginButton } from './Login'
 import { LogoutButton } from './Logout'
 import { Profile } from './Profile'
+import Logo from '../image/SALVATORE-grande.png'
 
 
 
@@ -40,7 +40,7 @@ function NavBar({ getProductbyName, setLoading }) {
    return (
     <div className="content">
       <Navbar classname="navbar" expand="lg">
-        <Navbar.Brand href="#"><NavLink to="/home" className='logo' >Salvatore</NavLink></Navbar.Brand>
+        <Navbar.Brand href="#"><NavLink to="/home" ><img className="Logo" src={Logo}/></NavLink></Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll">
           <Nav id="navScroll"

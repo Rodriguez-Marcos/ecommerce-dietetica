@@ -51,7 +51,7 @@ function ProductsFilters({ getDiets, getCategories, getByIdCategory, getProducts
     return (
         <div className="Selects">
              <Form.Control id="select" size="sm" as="select"     onChange={handleCategory}>
-             <option label='Search by Categories' value='Categories'></option>
+             <option id="op" label='Search by Categories' value='Categories'></option>
                 {categories.length ? categories.map((cat, i) => (
                         <option key={i} value={cat.id} label={cat.name}></option>
                     )) : null}    
