@@ -20,7 +20,7 @@ function App() {
     <Route exact path='/search' component={Search}/>
     <Route exact path='/trolley' component={Trolley}/>
     </Switch>
-    <Footer/>
+    {/* <Footer/> */}
     </BrowserRouter>
     
   );

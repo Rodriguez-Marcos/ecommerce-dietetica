@@ -26,25 +26,17 @@
 }
 
 
-
-.cardContainer:hover {
-    /* light blue color #00e1ff 
-    orange #ff9100*/
-    /* box-shadow: 0 0 15px 2px #ffffff;
-    border: 1px solid transparent; */
-}
-
 .cardContainer img {
-    width: auto;
-    height: 320px;
+    width: 150px;
+    height: 150px;
     display: flex;
     margin-left: 40px;
     justify-content: center;
 }
 
 .cardContainer img:hover {
-    width: auto;
-    height: 321px;
+    width: 200px;
+    height: 200px;
     display: flex;
     justify-content: center;
 }
