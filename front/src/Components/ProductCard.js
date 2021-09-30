@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { connect, useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import Cookies from 'universal-cookie';
-import styles from './product.module.css';
 import { Link } from 'react-router-dom';
-
+import { Card, ListGroup, ListGroupItem } from 'react-bootstrap'
+import './ProductCard.css'
 
 
 const cookies = new Cookies();
@@ -12,7 +12,7 @@ const cookies = new Cookies();
 
 
 
-export function ProductCard({product}) {
+export function ProductCard({ product }) {
   let location = useLocation();
   let dispatch = useDispatch();
 
@@ -33,26 +33,22 @@ export function ProductCard({product}) {
   }
 
   return (
-      <div key={product.id}>
-          <div className={styles.cardContainer}>
-        {location.pathname === '/trolley' ? <h5 style={{ position: 'relative', color: 'red', left: '290px', top: '2px' }} onClick={e => handleClose(e)}>x</h5> : false}
-            <div className={styles.cardName}>{product.name}</div>
-
-            <img className={styles.cardFoto} src={product.image} alt="Not Found" />
-            <div className={styles.cardAttack}>${product.price}</div>
-          </div>
-          <div className={styles.detail}>
-            <Link to={`/Detail/${product.id}`} style={{ color: "black", textDecoration: "none" }}>
-              <p>
-                Ver este producto
-              </p>
-            </Link>
-          </div>
-
-          {location.pathname !== '/trolley' ?<button onClick={(e)=>handleClickTrolley(e)} className={styles.boton}>Agregar al carrito</button>:false}
-
-
-        </div>
+    <Card style={{ width: '18rem' }} id="a">
+      {location.pathname === '/trolley' ? <h5 onClick={e => handleClose(e)}>x</h5> : false}
+      <Card.Title>{product.name}</Card.Title>
+      <Card id="divImg">
+        <Card.Img id="img" variant="top" src={product.image} alt="Not Found" />
+      </Card>
+      <ListGroup className="list-group-flush">
+        <ListGroupItem>Precio actual ${product.price}</ListGroupItem>
+        <ListGroupItem>
+          <Link to={`/Detail/${product.id}`} >Ver este producto</Link>
+        </ListGroupItem>
+        <ListGroupItem>
+          {location.pathname !== '/trolley' ? <button onClick={(e) => handleClickTrolley(e)} >Agregar al carrito</button> : false}
+        </ListGroupItem>
+      </ListGroup>
+    </Card>
   );
 }
 
