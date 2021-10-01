@@ -310,8 +310,11 @@ function _getById() {
               where: {
                 id: id
               },
-              include: _Category["default"],
-              Diet: _Diet["default"]
+              include: [{
+                model: _Category["default"]
+              }, {
+                model: _Diet["default"]
+              }]
             });
 
           case 4:
@@ -408,8 +411,11 @@ function _updateProduct() {
               where: {
                 id: id
               },
-              include: _Category["default"],
-              Diet: _Diet["default"]
+              include: [{
+                model: _Category["default"]
+              }, {
+                model: _Diet["default"]
+              }]
             });
 
           case 5:
@@ -418,8 +424,11 @@ function _updateProduct() {
               where: {
                 id: id
               },
-              include: _Category["default"],
-              Diet: _Diet["default"]
+              include: [{
+                model: _Category["default"]
+              }, {
+                model: _Diet["default"]
+              }]
             });
 
           case 7:
@@ -462,8 +471,7 @@ function _updateProduct() {
 
           case 20:
             return _context5.abrupt("return", res.json({
-              message: 'Product updated successfully',
-              data: product
+              message: 'Product updated successfully'
             }));
 
           case 21:

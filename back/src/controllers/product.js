@@ -119,7 +119,7 @@ export async function getProducts(req, res) {
 export async function getById(req, res) {
     const { id } = req.params
     try {
-        let products = await Product.findOne({ where: { id: id }, include: Category, Diet })
+        let products = await Product.findOne({ where: { id: id }, include: [{ model: Category }, { model: Diet }] })
         return res.json(products)
     }
     catch (err) {
@@ -169,12 +169,12 @@ export async function updateProduct(req, res) {
             image: image,
             stock: stock
         }, {
-            where: { id: id }, include:
-                Category, Diet
+            where: { id: id }, include: [{ model: Category }, { model: Diet }]
         }
         )
 
-        var product = await Product.findOne({ where: { id: id }, include: Category, Diet },)
+
+        var product = await Product.findOne({ where: { id: id }, include: [{ model: Category }, { model: Diet }] })
         if (ids_categories) {
             var categories = await Category.findAll({ where: { id: ids_categories } })
             await product.setCategories(categories)
@@ -184,9 +184,7 @@ export async function updateProduct(req, res) {
             await product.setDiets(diets)
 
             return res.json({
-                message: 'Product updated successfully',
-                data: product
-
+                message: 'Product updated successfully'
             })
         }
     } catch (err) {
