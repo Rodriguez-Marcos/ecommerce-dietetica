@@ -25,6 +25,9 @@
     background-color: transparent;
     margin-bottom: 10px;
 }
+#titleFilter:hover{
+    color: var(--hoverVerde);
+}
 #title{
     color: var(--hoverVerde);
 }
