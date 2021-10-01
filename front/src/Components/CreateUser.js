@@ -71,8 +71,12 @@ export default function CreateUser() {
     const responseGoogle = (response) => {
         console.log(response.profileObj);
         createUserByGoogle(response.profileObj)
+<<<<<<< HEAD
         if (response.profileObj !== undefined){
         history.push('/home')}
+=======
+        history.push('/home')
+>>>>>>> 269c7f0c16047c532eb639cf8abf6321b9449221
       }
 
     return (
@@ -84,7 +88,10 @@ export default function CreateUser() {
               name="name"
               onChange={handlerUser}
             /> 
+<<<<<<< HEAD
             
+=======
+>>>>>>> 269c7f0c16047c532eb639cf8abf6321b9449221
         <p>Apellido</p>
         <input
               type="text"
@@ -92,7 +99,10 @@ export default function CreateUser() {
               name="lastname"
               onChange={handlerUser}
             /> 
+<<<<<<< HEAD
             
+=======
+>>>>>>> 269c7f0c16047c532eb639cf8abf6321b9449221
         <p>Password</p>
         <input
               type="password"
@@ -100,7 +110,10 @@ export default function CreateUser() {
               name="password"
               onChange={handlerUser}
             /> 
+<<<<<<< HEAD
            
+=======
+>>>>>>> 269c7f0c16047c532eb639cf8abf6321b9449221
         <p>Email</p>
         <input
               type="text"
