@@ -39,11 +39,11 @@ export function ProductCard({ product }) {
       <Card.Title>{product.name}</Card.Title>
       <Card id="divImg">
         <Card.Img id="img" variant="top" src={product.image?  product.image: defaultimg} />
+        <Card id="precio">Precio ${product.price}</Card>
       </Card>
       <ListGroup className="list-group-flush">
-        <ListGroupItem>Precio actual ${product.price}</ListGroupItem>
         <ListGroupItem>
-          <Link to={`/Detail/${product.id}`} >Ver este producto</Link>
+          <Link id="detalles" to={`/Detail/${product.id}`} >Ver este producto</Link>
         </ListGroupItem>
         <ListGroupItem id="btns">
           {location.pathname !== '/trolley' ? <Button id="carrito" onClick={(e) => handleClickTrolley(e)} >Agregar  <Card.Img id="carritoimg" src={compras}/></Button> : false}
