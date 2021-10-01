@@ -1,9 +1,13 @@
 :root{
     
     --hoverColorText:rgb(175, 172, 172);
+    --hoverVerde:rgba(16, 112, 16, 0.795);
+    --colorCafe: #99642C;
+
 }
 .Selects{
     display: flex;
+    background-color: #849836;
 }
 #select{
     background-color: transparent;
@@ -12,10 +16,18 @@
     text-align: center;
 }
 #select:hover{
-color: var(--hoverColorText);
+    appearance: none;
 }
+#op{
+    background-color:  #849836;
+}
+
+
+
+
+
 @media only screen and (max-width: 600px) {
     #op{
-       font-size: small;
+       font-size: 13px;
     }
   }

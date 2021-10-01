@@ -1,11 +1,19 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { postProduct, postCategory, postDiet } from "../Actions";
-import axios from "axios";
+import Table from "./Table";
+import { getProducts } from "../Actions";
 
 export default function Creator() {
+  const s = useSelector((state) => state.reducerPablo.products);
+  console.log(s);
+
+  useEffect(() => {
+    dispatch(getProducts());
+  }, []);
+
   let dispatch = useDispatch();
   // estados locales
   const [input, setInput] = useState({
@@ -54,7 +62,6 @@ export default function Creator() {
       });
     }
   }
-
 
   function handlerCategory(e) {
     setCategory({
@@ -119,10 +126,10 @@ export default function Creator() {
     }
   }
   return (
-    <div >
+    <div>
       <h1> agregar productos</h1>
-       <h1> agregar productos</h1>
-      <div >
+      <h1> agregar productos</h1>
+      <div>
         <form onSubmit={(e) => handlerSubmitProduct(e)}>
           <div>
             <label>Nombre</label>
@@ -230,6 +237,19 @@ export default function Creator() {
           <button> Crear Dieta</button>
         </form>
       </div>
+      {s.map((e) => {
+        return (
+          <div key={e.id}>
+            <Table
+              id={e.id}
+              product={e.name}
+              stock={e.stock}
+              price={e.price}
+              stock={e.stock}
+            />
+          </div>
+        );
+      })}
     </div>
   );
 }
