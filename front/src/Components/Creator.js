@@ -461,7 +461,7 @@ export default function Creator() {
           </thead>
           {p.map((e) => (
             <Tables
-           
+          
               id={e.id}
               product={e.name}
               stock={e.stock}
