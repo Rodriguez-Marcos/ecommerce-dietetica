@@ -3,8 +3,19 @@ import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
 import { postProduct, postCategory, postDiet } from "../Actions";
-import Table from "./Table";
+import Tables from "./Table";
 import { getProducts } from "../Actions";
+import 'bootstrap'
+import {
+  Table,
+  Button,
+  Container,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  FormGroup,
+  ModalFooter,
+} from "reactstrap";
 
 export default function Creator() {
   const s = useSelector((state) => state.reducerPablo.products);
@@ -127,10 +138,21 @@ export default function Creator() {
   }
   return (
     <div>
-      <h1> agregar productos</h1>
-      <h1> agregar productos</h1>
-      <div>
-        <form onSubmit={(e) => handlerSubmitProduct(e)}>
+      <h1> .</h1>
+      <h1>.</h1>
+      <h1>.</h1>
+      <Button color = 'success'> Insertar Producto</Button> {'    '}
+      <Button color = 'warning'> Insertar Categoria</Button>  {'    '}
+      <Button color = 'info'> Insertar Dieta</Button>  {'    '}
+      <Modal>
+        <ModalHeader>
+          <div>
+            <h3>
+              Insertar Nuevo Producto
+            </h3>
+          </div>
+        </ModalHeader>
+        <form >          
           <div>
             <label>Nombre</label>
             <input
@@ -184,8 +206,29 @@ export default function Creator() {
           </div>
           <button> Crear producto </button>
         </form>
-      </div>
-      <div>
+      </Modal> {'    '}
+      <ModalFooter>
+            <Button
+              color="primary"
+              onSubmit={(e) => handlerSubmitProduct(e)} 
+            >
+              Insertar
+            </Button>
+            <Button
+              className="btn btn-danger"
+           
+            >
+              Cancelar
+            </Button>
+          </ModalFooter>
+      <Modal>
+      <ModalHeader>
+          <div>
+            <h3>
+              Insertar Nueva Categoria
+            </h3>
+          </div>
+        </ModalHeader>
         <form onSubmit={(e) => handlerSubmitCategory(e)}>
           <h2> agregar nueva categoria</h2>
           <div>
@@ -210,9 +253,18 @@ export default function Creator() {
           </div>
           <button> Crear Categoria</button>
         </form>
-      </div>
-      <div>
-        <form onSubmit={(e) => handlerSubmitDiet(e)}>
+      </Modal> {'    '}
+      <Modal>
+      <ModalHeader>
+          <div>
+            <h3>
+              Insertar Nueva Dieta
+            </h3>
+          </div>
+        </ModalHeader>
+        <ModalBody onSubmit={(e) => handlerSubmitDiet(e)}>
+
+
           <h2> agregar nueva Dieta</h2>
           <div>
             <label>Nombre de Dieta</label>
@@ -235,12 +287,12 @@ export default function Creator() {
             {!diet.description ? <output> ❌</output> : <output> ✔</output>}
           </div>
           <button> Crear Dieta</button>
-        </form>
-      </div>
+        </ModalBody>
+      </Modal>
       {s.map((e) => {
         return (
           <div key={e.id}>
-            <Table
+            <Tables
               id={e.id}
               product={e.name}
               stock={e.stock}

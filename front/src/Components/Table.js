@@ -1,37 +1,55 @@
-import React from "react";
+import { React, useEffect, useState } from "react";
+import { deleteProductByID } from "../Actions";
+import { useSelector, useDispatch } from "react-redux";
+import "bootstrap";
+import {
+  Table,
+  Button,
+  Container,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  FormGroup,
+  ModalFooter,
+} from "reactstrap";
 
-export default function ({ product, stock, price, id, img }) {
+export default function ({ product, stock, price, id }) {
+  let [data, setData] = useState({
+    id,
+  });
+
+  function handlerDelete(e) {
+    e.preventDefault();
+  }
+
+  let dispatch = useDispatch();
+
   return (
     <div key={id}>
-      <table class="table table-responsive">
-        <thead>
-          <tr>
-          <th>Número</th>
-            <th>Producto</th>
-            <th>Precio</th>
-            <th>Stock</th>
-            <th>Eliminar</th>
-            <th>Editar</th>
-            <th>Aceptar</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-          <td>{id}</td>
-            <td>{product}</td>
-            <td>{price}</td>
-            <td>{stock}</td>
-            <td><button>❌</button></td>
-            <td><button>⚙</button></td>
-            <td><button>✔</button></td>
-            
-            
-           
+      <Container>
+        <Table>
+          <thead>
+            <tr>
+              <th>Producto</th>
+              <th>Precio</th>
+              <th>Stock</th>
+              <th>Acción</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{product}</td>
+              <td>{price}</td>
+              <td>{stock}</td>
+              <td>
+                <Button color= 'primary'>⚙</Button> {'   '}
 
-
-          </tr>
-        </tbody>
-      </table>
+                <Button  color ='danger'>🗑</Button>
+              </td>
+            </tr>
+          </tbody>
+        </Table>
+      </Container>
     </div>
   );
 }

@@ -4,7 +4,7 @@ import { useLocation } from 'react-router-dom';
 import Cookies from 'universal-cookie';
 import { Link } from 'react-router-dom';
 import { Card, ListGroup, ListGroupItem } from 'react-bootstrap'
-import './ProductCard.css'
+// import './ProductCard.css'
 
 
 const cookies = new Cookies();
