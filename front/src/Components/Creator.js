@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
 import { postProduct, postCategory, postDiet } from "../Actions";
 import Tables from "./Table";
-import { getProducts } from "../Actions";
+import { getProducts, getCategories , getDiets } from "../Actions";
 import "bootstrap";
 import {
   Table,
@@ -18,12 +18,23 @@ import {
 } from "reactstrap";
 
 export default function Creator() {
-  const s = useSelector((state) => state.reducerPablo.products);
+  const p = useSelector((state) => state.reducerPablo.products);
+  const c = useSelector((state) => state.reducerPablo.categories);
+  const d = useSelector((state) => state.reducerPablo.diets);
+
 
   let dispatch = useDispatch();
+ // Renderizados
   useEffect(() => {
     dispatch(getProducts());
-  }, []);
+  }, [dispatch]);
+  useEffect(() => {
+    dispatch(getDiets());
+  }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(getCategories());
+  }, [dispatch]);
 
   // estados locales
   const [input, setInput] = useState({
@@ -32,7 +43,10 @@ export default function Creator() {
     price: "",
     description: "",
     stock: "",
+    ids_categories: [],
+    ids_diets: [],
   });
+  console.log(input);
   const [category, setCategory] = useState({
     name: "",
     description: "",
@@ -59,7 +73,6 @@ export default function Creator() {
       );
 
       const fire = await res.json();
-     
 
       setInput({
         ...input,
@@ -70,6 +83,38 @@ export default function Creator() {
         ...input,
         [e.target.name]: e.target.value,
       });
+    }
+  }
+
+  function handlerCategories(e) {
+    if (e.target.checked) {
+      setInput({
+        ...input,
+        ids_categories: [...input.ids_categories, e.target.value],
+      });
+    }
+    else{
+      setInput({
+        ...input,
+        ids_categories: [],
+      });
+
+    }
+  }
+
+  function handlerDiets(e) {
+    if (e.target.checked) {
+      setInput({
+        ...input,
+        ids_diets: [...input.ids_diets, e.target.value],
+      });
+    }
+    else {
+      setInput({
+        ...input,
+        ids_diets: [],
+      });
+
     }
   }
 
@@ -98,19 +143,19 @@ export default function Creator() {
     ) {
       dispatch(postProduct(input));
       alert(" Producto creado con exito");
-      closeProduct()
+      closeProduct();
     } else {
       alert("falta informacion requerida en el formulario");
     }
   }
- 
+
   function handlerSubmitCategory(e) {
     e.preventDefault();
     if (category.name && category.description) {
       dispatch(postCategory(category));
-      
+
       alert(" Categoria creada con exito");
-      closeCategory()
+      closeCategory();
     } else {
       alert("falta informacion requerida en el formulario");
     }
@@ -119,9 +164,9 @@ export default function Creator() {
     e.preventDefault();
     if (diet.name && diet.description) {
       dispatch(postDiet(diet));
-   
+
       alert(" Dieta creada con exito");
-      closeDiet()
+      closeDiet();
     } else {
       alert("falta informacion requerida en el formulario");
     }
@@ -222,54 +267,86 @@ export default function Creator() {
         </ModalHeader>
         <ModalBody>
           <FormGroup>
-            
             <input
               className="form-control"
               type="text"
               value={input.name}
               name="name"
               onChange={(e) => handlerProduct(e)}
-              placeholder ='Nombre'
+              placeholder="Nombre"
             />
             {!input.name ? <output> ❌</output> : <output> ✔</output>}
           </FormGroup>
           <FormGroup>
-         
             <input
               className="form-control"
               type="number"
               value={input.price}
               name="price"
-              placeholder ='precio'
+              placeholder="precio"
               onChange={(e) => handlerProduct(e)}
             />
             {!input.price ? <output> ❌</output> : <output> ✔</output>}
           </FormGroup>
           <FormGroup>
-            
             <input
               className="form-control"
               type="textarea"
               value={input.description}
               name="description"
-              placeholder='Descripcion'
+              placeholder="Descripcion"
               onChange={(e) => handlerProduct(e)}
             />
             {!input.description ? <output> ❌</output> : <output> ✔</output>}
           </FormGroup>
           <FormGroup>
-           
             <input
               className="form-control"
               type="number"
               value={input.stock}
               min="0"
               name="stock"
-              placeholder='Stock'
+              placeholder="Stock"
               onChange={(e) => handlerProduct(e)}
             />
             {!input.stock ? <output> ❌</output> : <output> ✔</output>}
           </FormGroup>
+
+          <div>
+          <h4> Elegir Categorias</h4> 
+            {c.map((e, i) => (
+              <div class="form-check">
+                <label key={i} class="form-check-label">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    name="ids_categories"
+                    value={e.id}
+                    onChange={(e) => handlerCategories(e)}
+                  />
+                  {e.name}
+                </label>
+              </div>
+            ))}
+          </div>
+          <div>
+            <h4> Elegir Dieta</h4> 
+            {d.map((e, i) => (
+              <div class="form-check">
+                <label key={i} class="form-check-label">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    name="ids_diets"
+                    value={e.id}
+                    onChange={(e) => handlerDiets(e)}
+                  />
+                  {e.name}
+                </label>
+              </div>
+            ))}
+          </div>
+
           <FormGroup>
             <label> Inserte imagen</label>
             <input
@@ -277,7 +354,6 @@ export default function Creator() {
               type="file"
               accept="image/png, .jpeg, .jpg"
               name="image"
-             
               onChange={(e) => handlerProduct(e)}
             />
             {!input.image ? <output> ❌</output> : <output> ✔</output>}
@@ -361,7 +437,6 @@ export default function Creator() {
             />
             {!diet.description ? <output> ❌</output> : <output> ✔</output>}
           </div>
-        
         </ModalBody>
         <ModalFooter>
           <Button color="primary" onClick={(e) => handlerSubmitDiet(e)}>
@@ -384,7 +459,7 @@ export default function Creator() {
               <th>Acción</th>
             </tr>
           </thead>
-          {s.map((e) => (
+          {p.map((e) => (
             <Tables
               description={e.description}
               id={e.id}
@@ -400,4 +475,3 @@ export default function Creator() {
     </div>
   );
 }
-
