@@ -5,9 +5,10 @@ import { connect } from 'react-redux';
 import './Navbar.css';
 import { getProductbyName, setLoading } from '../Actions/index'
 import { Navbar, Nav, NavDropdown, Form, FormControl, Button } from 'react-bootstrap'
-// import ProductsFilters from './Filters'
-
 import Logo from '../image/SALVATORE-grande.png'
+import lupa from '../image/buscar.png'
+
+
 
 
 
@@ -43,13 +44,14 @@ function NavBar({ getProductbyName, setLoading }) {
             className="mr-auto my-2 my-lg-0"
             style={{ maxHeight: '100px' }}
             navbarScroll
+            id="Links"
           >
             <Nav.Link ><NavLink to="/home" className='navlink1' >Home</NavLink></Nav.Link>
             <Nav.Link ><NavLink to="/trolley" className='navlink1' >Carrito</NavLink></Nav.Link>
             <Nav.Link>About</Nav.Link>
           </Nav>
-          <Nav>
-            <Form className="d-flex" onSubmit={(e) => handleSubmit(e)}>
+          <Nav id="busqueda">
+            <Form className="d-flex" id="d-flex" onSubmit={(e) => handleSubmit(e)}>
               <FormControl
                 type="search"
                 placeholder="Search"
@@ -57,7 +59,7 @@ function NavBar({ getProductbyName, setLoading }) {
                 aria-label="Search"
                 value={ActualState} type='text' id='inputSearch' onChange={handleChange}
               />
-              <Button onSubmit={(e) => handleSubmit(e)} onClick={(e) => handleSubmit(e)} variant="success">Search</Button>
+              <button id="lupabtn" onSubmit={(e) => handleSubmit(e)} onClick={(e) => handleSubmit(e)}><img  id="lupaimg" src={lupa}/></button>
             </Form>
            <NavLink to='/CreateUser'> Crear Cuenta  </NavLink>
           </Nav>

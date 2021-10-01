@@ -19,6 +19,11 @@
 .navlink1:hover{
     color: var(--hoverColorText)
 }
+#Links{
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+}
 
 #navbarScrollingDropdown {
     text-decoration: none;  
@@ -41,21 +46,31 @@
 }
 #inputSearch{
     background-color: transparent;
+    border-color: white;
 }
 #inputSearch::placeholder{
     color: white;
-    border-color: transparent;
     outline: none;
+    border-color: white;
 }
 #inputSearch:hover{
     border: none;
     color: white;
+    border-color: white;
 }
 #navScroll::-webkit-scrollbar {
     -webkit-appearance: none;
 }
+#d-flex{
+    align-items: center;
+}
 #inputSearch{
     margin-right: 10px;
+    height: 6vh;
+}
+#busqueda{
+    width: 100%;
+    justify-content: space-around;
 }
 .Logo{
     width: 10vw;
@@ -64,9 +79,33 @@
     background-color: rgb(18, 121, 18);
     border-radius: 20px;
 }
+#lupabtn{
+    background-color: transparent;
+    border: none;
+    width: auto;
+    height: auto;
+    transition: 1s;
+    border-radius: 36px;
+    outline: none;
+    border: none;
+}
+#lupabtn:focus{
+    outline: none;
+    border: none;
+}
+#lupabtn:hover{
+    background-color: #849836;;
+    border-radius: 36px;
+}
+#lupaimg{
+    width: 5vw;
+}
 @media only screen and (max-width: 700px) {
     .Logo{
         width: 20vw;
+    }
+    #lupaimg{
+        width: 10vw;
     }
   }
 /* Movil */
