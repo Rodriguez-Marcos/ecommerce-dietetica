@@ -20,6 +20,11 @@ export default function reducerDavid(state = InitialState, action) {
                 return {
                     ...state
                 }
+        case 'DELETE_PRODUCT_BY_ID':
+            return {
+                ...state,
+                products: action.payload, 
+            }
             
         default:
             return {...state}

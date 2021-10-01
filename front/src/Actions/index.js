@@ -47,6 +47,21 @@ export function getProductbyName(name) {
             })
     }
 }
+export function deleteProductByID(id) {
+    return async function(dispatch) {
+        try {
+            const res = await axios.delete('http://localhost:3001/products/' + id);
+            console.log(res)
+            return dispatch({
+                type: 'DELETE_PRODUCT_BY_ID',
+                payload: res.data
+            });
+        } catch (err) {
+            console.log(err)
+        };
+    };
+};
+
 
 export function getById(id) {
     return async function(dispatch) {
