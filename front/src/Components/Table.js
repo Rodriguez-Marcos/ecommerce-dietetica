@@ -3,14 +3,7 @@ import { deleteProductByID } from "../Actions";
 import { useSelector, useDispatch } from "react-redux";
 import "bootstrap";
 import {
-  Table,
   Button,
-  Container,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  FormGroup,
-  ModalFooter,
 } from "reactstrap";
 
 export default function ({ product, stock, price, id, img, description }) {

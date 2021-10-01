@@ -19,7 +19,7 @@ import {
 
 export default function Creator() {
   const s = useSelector((state) => state.reducerPablo.products);
-  console.log(s);
+
   let dispatch = useDispatch();
   useEffect(() => {
     dispatch(getProducts());
@@ -59,7 +59,7 @@ export default function Creator() {
       );
 
       const fire = await res.json();
-      console.log(fire.secure_url);
+     
 
       setInput({
         ...input,
@@ -97,27 +97,20 @@ export default function Creator() {
       input.image
     ) {
       dispatch(postProduct(input));
-      setInput({
-        name: "",
-        image: "",
-        price: "",
-        description: "",
-        stock: "",
-      });
       alert(" Producto creado con exito");
+      closeProduct()
     } else {
       alert("falta informacion requerida en el formulario");
     }
   }
+ 
   function handlerSubmitCategory(e) {
     e.preventDefault();
     if (category.name && category.description) {
       dispatch(postCategory(category));
-      setCategory({
-        name: "",
-        description: "",
-      });
+      
       alert(" Categoria creada con exito");
+      closeCategory()
     } else {
       alert("falta informacion requerida en el formulario");
     }
@@ -126,24 +119,102 @@ export default function Creator() {
     e.preventDefault();
     if (diet.name && diet.description) {
       dispatch(postDiet(diet));
-      setDiet({
-        name: "",
-        description: "",
-      });
+   
       alert(" Dieta creada con exito");
+      closeDiet()
     } else {
       alert("falta informacion requerida en el formulario");
     }
   }
+
+  // Modales
+
+  const [modal, setModal] = useState({
+    product: false,
+    category: false,
+    diet: false,
+  });
+  function openProduct() {
+    setModal({
+      ...modal,
+      product: true,
+    });
+  }
+  function closeProduct() {
+    setModal({
+      ...modal,
+      product: false,
+    });
+    setInput({
+      name: "",
+      image: "",
+      price: "",
+      description: "",
+      stock: "",
+    });
+  }
+  //
+
+  function openCategory() {
+    setModal({
+      ...modal,
+      category: true,
+    });
+  }
+
+  function closeCategory() {
+    setModal({
+      ...modal,
+      category: false,
+    });
+    setCategory({
+      name: "",
+      description: "",
+    });
+  }
+
+  //
+
+  function openDiet() {
+    setModal({
+      ...modal,
+      diet: true,
+    });
+  }
+
+  function closeDiet() {
+    setModal({
+      ...modal,
+      diet: false,
+    });
+    setDiet({
+      name: "",
+      description: "",
+    });
+  }
+
+  // INICIO DEL COMPONENTE
   return (
     <div>
       <h1> .</h1>
       <h1>.</h1>
       <h1>.</h1>
-      <Button color="success"> Insertar Producto</Button> {"    "}
-      <Button color="warning"> Insertar Categoria</Button> {"    "}
-      <Button color="info"> Insertar Dieta</Button> {"    "}
-      <Modal>
+      <Button color="success" onClick={() => openProduct()}>
+        {" "}
+        Insertar Producto
+      </Button>{" "}
+      {"    "}
+      <Button color="warning" onClick={() => openCategory()}>
+        {" "}
+        Insertar Categoria
+      </Button>{" "}
+      {"    "}
+      <Button color="info" onClick={() => openDiet()}>
+        {" "}
+        Insertar Dieta
+      </Button>{" "}
+      {"    "}
+      <Modal isOpen={modal.product}>
         <ModalHeader>
           <div>
             <h3>Insertar Nuevo Producto</h3>
@@ -151,71 +222,78 @@ export default function Creator() {
         </ModalHeader>
         <ModalBody>
           <FormGroup>
-            <label>Nombre</label>
+            
             <input
               className="form-control"
               type="text"
               value={input.name}
               name="name"
               onChange={(e) => handlerProduct(e)}
+              placeholder ='Nombre'
             />
             {!input.name ? <output> ❌</output> : <output> ✔</output>}
           </FormGroup>
           <FormGroup>
-            <label>Precio</label>
+         
             <input
               className="form-control"
               type="number"
               value={input.price}
               name="price"
+              placeholder ='precio'
               onChange={(e) => handlerProduct(e)}
             />
             {!input.price ? <output> ❌</output> : <output> ✔</output>}
           </FormGroup>
           <FormGroup>
-            <label>Descripción </label>
+            
             <input
               className="form-control"
               type="textarea"
               value={input.description}
               name="description"
+              placeholder='Descripcion'
               onChange={(e) => handlerProduct(e)}
             />
             {!input.description ? <output> ❌</output> : <output> ✔</output>}
           </FormGroup>
           <FormGroup>
-            <label>Stock </label>
+           
             <input
               className="form-control"
               type="number"
               value={input.stock}
               min="0"
               name="stock"
+              placeholder='Stock'
               onChange={(e) => handlerProduct(e)}
             />
             {!input.stock ? <output> ❌</output> : <output> ✔</output>}
           </FormGroup>
           <FormGroup>
-            <label> imagen</label>
+            <label> Inserte imagen</label>
             <input
               className="form-control"
               type="file"
               accept="image/png, .jpeg, .jpg"
               name="image"
+             
               onChange={(e) => handlerProduct(e)}
             />
             {!input.image ? <output> ❌</output> : <output> ✔</output>}
           </FormGroup>
         </ModalBody>
         <ModalFooter>
-          <Button color="primary" onSubmit={(e) => handlerSubmitProduct(e)}>
+          <Button color="primary" onClick={(e) => handlerSubmitProduct(e)}>
             Insertar
           </Button>
-          <Button className="btn btn-danger">Cancelar</Button>
+          <Button className="btn btn-danger" onClick={() => closeProduct()}>
+            Cancelar
+          </Button>
         </ModalFooter>
       </Modal>{" "}
       {"    "}
-      <Modal>
+      <Modal isOpen={modal.category}>
         <ModalHeader>
           <div>
             <h3>Insertar Nueva Categoria</h3>
@@ -244,16 +322,17 @@ export default function Creator() {
             />
             {!category.description ? <output> ❌</output> : <output> ✔</output>}
           </FormGroup>
-          <button> Crear Categoria</button>
         </ModalBody>
         <ModalFooter>
-          <Button color="primary" onSubmit={(e) => handlerSubmitCategory(e)}>
+          <Button color="primary" onClick={(e) => handlerSubmitCategory(e)}>
             Insertar
           </Button>
-          <Button className="btn btn-danger">Cancelar</Button>
+          <Button className="btn btn-danger" onClick={() => closeCategory()}>
+            Cancelar
+          </Button>
         </ModalFooter>
       </Modal>
-      <Modal>
+      <Modal isOpen={modal.diet}>
         <ModalHeader>
           <div>
             <h3>Insertar Nueva Dieta</h3>
@@ -282,13 +361,15 @@ export default function Creator() {
             />
             {!diet.description ? <output> ❌</output> : <output> ✔</output>}
           </div>
-          <button> Crear Dieta</button>
+        
         </ModalBody>
         <ModalFooter>
-          <Button color="primary" onSubmit={(e) => handlerSubmitDiet(e)}>
+          <Button color="primary" onClick={(e) => handlerSubmitDiet(e)}>
             Insertar
           </Button>
-          <Button className="btn btn-danger">Cancelar</Button>
+          <Button className="btn btn-danger" onClick={() => closeDiet()}>
+            Cancelar
+          </Button>
         </ModalFooter>
       </Modal>
       <Container>
@@ -320,7 +401,3 @@ export default function Creator() {
   );
 }
 
-/*
-
-name, price, description, image, stock 
-*/
