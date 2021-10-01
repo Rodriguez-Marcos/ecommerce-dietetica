@@ -1,25 +1,20 @@
 import Sequelize from 'sequelize';
 import { sequelize } from '../database/db.js'
 import Order from './Order.js'
-const Client = sequelize.define('client', {
-    id: {
-        type: Sequelize.INTEGER,
+const Clientbygoogle = sequelize.define('clientbygoogle', {
+    googleId: {
+        type: Sequelize.TEXT,
         primaryKey: true,
-        autoIncrement: true,
     },
-    name: {
+    givenName: {
         type: Sequelize.TEXT,
         allowNull: false,
     },
-    lastname: {
+    familyName: {
         type: Sequelize.TEXT,
         allowNull: false,
     },
     email: {
-        type: Sequelize.TEXT,
-        allowNull: false,
-    },
-    password: {
         type: Sequelize.TEXT,
         allowNull: false,
     },
@@ -37,7 +32,7 @@ const Client = sequelize.define('client', {
     timestamps: false
 })
 
-Client.hasMany(Order,{foreignKey:'id_client',sourceKey:'id'})
-Order.belongsTo(Client,{foreignKey:'id_client',sourceKey:'id'})
+Clientbygoogle.hasMany(Order,{foreignKey:'googleId_client',sourceKey:'googleId'})
+Order.belongsTo(Clientbygoogle,{foreignKey:'googleId_client',sourceKey:'googleId'})
 
-export default Client
+export default Clientbygoogle

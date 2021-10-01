@@ -7,6 +7,8 @@ export const GET_BY_ID_CATEGORY = 'GET_BY_ID_CATEGORY';
 export const GET_BY_ID_DIET = 'GET_BY_ID_DIET';
 export const ORDER_PRICE = 'ORDER_PRICE';
 export const GET_PRODUCTS_FILTERED = 'GET_PRODUCTS_FILTERED';
+export const GET_BY_PRICE = 'GET_BY_PRICE';
+export const GET_BY_DIET_AND_CATEGORY = 'GET_BY_DIET_AND_CATEGORY';
 export const PAGINATE = 'PAGINATE';
 export const FAIL_TO_LOAD = 'FAIL_TO_LOAD'
 export const SET_LOADING = 'SET_LOADING';
@@ -145,6 +147,21 @@ export function getByIdDiet(id){
 };
 
 
+export function getByIdDietAndCategory(CategoryId,DietId){
+    return async function(dispatch) {
+        try {
+            const res = await axios.get(`http://localhost:3001/products?id_category=${CategoryId}&id_diet=${DietId}`);
+            return dispatch({
+                type: GET_BY_DIET_AND_CATEGORY,
+                payload: res.data
+            });
+        } catch (err) {
+            console.log(err)
+        };
+    };
+};
+
+
 
 
 export function getCategories() {
@@ -193,3 +210,19 @@ export function setLoading(){
         })
     }
 }
+
+
+export function getByPrice(priceL,priceH){
+    return async function(dispatch) {
+        try {
+            const res = await axios.get(`http://localhost:3001/products?priceL=${priceL}&priceH=${priceH}`);
+            return dispatch({
+                type: GET_BY_PRICE,
+                payload: res.data
+            });
+        } catch (err) {
+            console.log(err)
+        };
+    };
+};
+

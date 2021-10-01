@@ -54,6 +54,7 @@ function Detail({ match }) {
 
                 <p className={styles.title}>Stock:
                 <p className={styles.producto}> {producto?.stock} unidades</p></p>
+                <p className={styles.title}>Categorias:{producto?.ids_category}</p>
                 <button type="button" class="btn btn-secondary">Agregar a favoritos</button>
                 <br />
                 <br />

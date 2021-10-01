@@ -6,8 +6,11 @@ Object.defineProperty(exports, "__esModule", {
 exports.createClient = createClient;
 exports.getClients = getClients;
 exports.deleteClient = deleteClient;
+exports.createClientGoogle = createClientGoogle;
 
 var _Client = _interopRequireDefault(require("../models/Client.js"));
+
+var _Clientbygoogle = _interopRequireDefault(require("../models/Clientbygoogle.js"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
@@ -159,4 +162,60 @@ function _deleteClient() {
     }, _callee3, null, [[1, 8]]);
   }));
   return _deleteClient.apply(this, arguments);
+}
+
+function createClientGoogle(_x7, _x8) {
+  return _createClientGoogle.apply(this, arguments);
+}
+
+function _createClientGoogle() {
+  _createClientGoogle = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4(req, res) {
+    var _req$body2, givenName, familyName, email, googleId, clientbygoogle;
+
+    return regeneratorRuntime.wrap(function _callee4$(_context4) {
+      while (1) {
+        switch (_context4.prev = _context4.next) {
+          case 0:
+            _req$body2 = req.body, givenName = _req$body2.givenName, familyName = _req$body2.familyName, email = _req$body2.email, googleId = _req$body2.googleId;
+
+            if (!(!givenName || !familyName || !email || !googleId)) {
+              _context4.next = 3;
+              break;
+            }
+
+            return _context4.abrupt("return", res.status(404).send('Faltan datos'));
+
+          case 3:
+            _context4.prev = 3;
+            console.log(googleId);
+            _context4.next = 7;
+            return _Clientbygoogle["default"].create({
+              givenName: givenName,
+              familyName: familyName,
+              email: email,
+              googleId: googleId
+            });
+
+          case 7:
+            clientbygoogle = _context4.sent;
+            res.status(200).send({
+              message: 'user by google create',
+              data: clientbygoogle
+            });
+            _context4.next = 14;
+            break;
+
+          case 11:
+            _context4.prev = 11;
+            _context4.t0 = _context4["catch"](3);
+            console.error(_context4.t0);
+
+          case 14:
+          case "end":
+            return _context4.stop();
+        }
+      }
+    }, _callee4, null, [[3, 11]]);
+  }));
+  return _createClientGoogle.apply(this, arguments);
 }

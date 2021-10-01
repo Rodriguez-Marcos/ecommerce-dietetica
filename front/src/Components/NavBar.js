@@ -6,10 +6,7 @@ import './Navbar.css';
 import { getProductbyName, setLoading } from '../Actions/index'
 import { Navbar, Nav, NavDropdown, Form, FormControl, Button } from 'react-bootstrap'
 // import ProductsFilters from './Filters'
-import { useAuth0 } from "@auth0/auth0-react";
-import { LoginButton } from './Login'
-import { LogoutButton } from './Logout'
-import { Profile } from './Profile'
+
 import Logo from '../image/SALVATORE-grande.png'
 
 
@@ -17,7 +14,6 @@ import Logo from '../image/SALVATORE-grande.png'
 function NavBar({ getProductbyName, setLoading }) {
 
   const [ActualState, setActualState] = useState('')
-  const { isAuthenticated } = useAuth0();
 
 
 
@@ -63,12 +59,7 @@ function NavBar({ getProductbyName, setLoading }) {
               />
               <Button onSubmit={(e) => handleSubmit(e)} onClick={(e) => handleSubmit(e)} variant="success">Search</Button>
             </Form>
-            {isAuthenticated ? <>
-              <LogoutButton />
-              <Profile />
-            </>
-              : <LoginButton />
-            }
+           <NavLink to='/CreateUser'> Crear Cuenta  </NavLink>
           </Nav>
         </Navbar.Collapse>
       </Navbar>

@@ -1,7 +1,8 @@
 import React from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { useState, useEffect } from "react";
+
 import { postProduct, postCategory, postDiet } from "../Actions";
 import Tables from "./Table";
 import { getProducts, getCategories , getDiets } from "../Actions";
@@ -51,10 +52,15 @@ export default function Creator() {
     name: "",
     description: "",
   });
+
+
   const [diet, setDiet] = useState({
     name: "",
     description: "",
   });
+
+
+
 
   // handlers de seteo
   async function handlerProduct(e) {
@@ -124,12 +130,57 @@ export default function Creator() {
       [e.target.name]: e.target.value,
     });
   }
+
+
   function handlerDiet(e) {
     setDiet({
       ...diet,
       [e.target.name]: e.target.value,
     });
   }
+
+
+
+  function handleDietsSelection(event) {
+
+    if(event.target.value === ''){
+      return
+    }
+
+    const dietsExists = input.ids_diets.find(
+      (item) => item === event.target.value
+    );
+
+    if (!dietsExists) {
+
+      setInput({
+        ...input,
+        ids_diets: [...input.ids_diets, event.target.value],
+      });
+    }
+  }
+  function handleCategorySelection(event) {
+
+    if(event.target.value === ''){
+      return
+    }
+
+    const categoryExists = input.ids_categories.find(
+      (item) => item === event.target.value
+    );
+
+    if (!categoryExists) {
+
+      setInput({
+        ...input,
+        ids_categories: [...input.ids_categories, event.target.value],
+      });
+    }
+  }
+
+
+
+
   // handlers de submit
 
   function handlerSubmitProduct(e) {
@@ -139,7 +190,9 @@ export default function Creator() {
       input.price &&
       input.stock &&
       input.description &&
-      input.image
+      input.image &&
+      input.ids_diets &&
+      input.ids_categories
     ) {
       dispatch(postProduct(input));
       alert(" Producto creado con exito");
@@ -160,6 +213,8 @@ export default function Creator() {
       alert("falta informacion requerida en el formulario");
     }
   }
+
+
   function handlerSubmitDiet(e) {
     e.preventDefault();
     if (diet.name && diet.description) {
@@ -473,5 +528,7 @@ export default function Creator() {
         </Table>
       </Container>
     </div>
+    
+
   );
 }

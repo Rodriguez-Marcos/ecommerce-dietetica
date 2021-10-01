@@ -64,7 +64,7 @@ function _createProduct() {
             _context.next = 8;
             return _Category["default"].findAll({
               where: {
-                id: ids_categories
+                name: ids_categories
               }
             });
 
@@ -82,7 +82,7 @@ function _createProduct() {
             _context.next = 14;
             return _Diet["default"].findAll({
               where: {
-                id: ids_diets
+                name: ids_diets
               }
             });
 

@@ -1,4 +1,5 @@
 import Client from '../models/Client.js';
+import Clientbygoogle from '../models/Clientbygoogle.js';
 
 export async function createClient(req, res) {
     const { name, lastname, email, password, address, phone } = req.body;
@@ -61,5 +62,25 @@ export async function deleteClient(req,res){
 
         })
 
+    }
+}
+
+export async function createClientGoogle(req,res){
+    let {givenName, familyName , email, googleId} = req.body;
+    if(!givenName || !familyName || !email || !googleId)
+    {return res.status(404).send('Faltan datos')}
+    try {
+        console.log(googleId)
+        let clientbygoogle = await Clientbygoogle.create({
+             givenName,
+             familyName, 
+             email, 
+             googleId
+        })
+        res.status(200).send({
+            message: 'user by google create',
+           data: clientbygoogle})
+    }catch (err) {
+        console.error(err)
     }
 }
