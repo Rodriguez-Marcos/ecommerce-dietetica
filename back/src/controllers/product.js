@@ -18,11 +18,11 @@ export async function createProduct(req, res) {
         }
         )
         if (ids_categories) {
-            let categories = await Category.findAll({ where: { name: ids_categories } })
+            let categories = await Category.findAll({ where: { id: ids_categories } })
             await newProduct.addCategory(categories)
         }
         if (ids_diets) {
-            let diets = await Diet.findAll({ where: { name: ids_diets } })
+            let diets = await Diet.findAll({ where: { id: ids_diets } })
             await newProduct.addDiet(diets)
         }
 
@@ -42,8 +42,6 @@ export async function createProduct(req, res) {
 
     }
 }
-
-
 
 export async function getProducts(req, res) {
     let { name, id_category, id_diet, priceL, priceH } = req.query
@@ -114,8 +112,6 @@ export async function getProducts(req, res) {
     }
 }
 
-
-
 export async function getById(req, res) {
     const { id } = req.params
     try {
@@ -127,8 +123,6 @@ export async function getById(req, res) {
         res.json(err)
     }
 }
-
-
 
 export async function deleteProduct(req, res) {
     const { id } = req.params
