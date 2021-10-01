@@ -1,38 +1,52 @@
 import React, { useEffect, useState,useRef } from "react";
 import { connect } from "react-redux";
-import { getDiets, getCategories, getByIdCategory, getProducts,orderPrice,getByIdDiet } from "../Actions";
+import { getDiets, getCategories, getProducts,orderPrice,getByPrice,getByIdDietAndCategory } from "../Actions";
 import {Form, Button, Overlay, Tooltip} from 'react-bootstrap'
 import './Filters.css'
 
 
-function ProductsFilters({ getDiets, getCategories, getByIdCategory, getProducts,categories,diets, orderPrice,products,getByIdDiet }) {
+function ProductsFilters({ getDiets, getCategories, getProducts,categories,diets, orderPrice,products,getByIdDiet,getByIdDietAndCategory,getByPrice }) {
+
+
+    const [sliderValmin, setSliderValmin] = useState('');
+
+
+    const [sliderValmax, setSliderValmax] = useState('');
+
+
+    const [categoryfilter, setCategoryFilter] = useState('');
+
+
+    const [dietsfilter, setDietsFilter] = useState('');
+
+
+    
 
 
     useEffect(() => {
         getCategories()
-        }, [])
+    }, [])
 
     useEffect(() => {
         getDiets()
-        }, [])
+    }, [])
 
 
 
     function handleCategory(event) {
-
-        if (event.target.value !== 'Categories') {
-            return getByIdCategory(event.target.value)
+        if(event.target.value ==='Category'){
+            return getProducts()
         }
-         getProducts();
+        setCategoryFilter(event.target.value)
+        return getByIdDietAndCategory(categoryfilter,dietsfilter)
     };
-
     
     function handleDiet(event) {
-
-        if (event.target.value === 'Diets') {
-            return getProducts();
+        if(event.target.value ==='Diets'){
+            return getProducts()
         }
-        getByIdDiet(event.target.value)
+        setDietsFilter(event.target.value)
+        return getByIdDietAndCategory(categoryfilter,dietsfilter)
     };
 
 
@@ -46,31 +60,90 @@ function ProductsFilters({ getDiets, getCategories, getByIdCategory, getProducts
         orderPrice(products,{tipe:event.target.value})
         
     }
+
+
+    function handleName(event) {
+
+        if (event.target.value === 'Order By Name') {
+            return getProducts();
+        }
+        orderPrice(products,{tipe:event.target.value})
+        
+    }
     
     
+
+    function handleByPriceMin(event) { 
+        setSliderValmin(event.target.value);
+    }
+
+
+    function handleByPriceMax(event) { 
+        setSliderValmax(event.target.value);
+    }
+
+    function HandleChangeOnSubmit(event){ 
+        event.preventDefault();
+            if(sliderValmin > sliderValmax && sliderValmax > 0){
+            return  alert('min es mayor')}
+
+        getByPrice(sliderValmin,sliderValmax);
+    }
+
+
 
     return (
         <div className="Selects">
              <Form.Control id="select" size="sm" as="select"     onChange={handleCategory}>
              <option id="op" label='Categories' value='Categories'></option>
-                {categories.length ? categories.map((cat, i) => (
+                {categories.map((cat, i) => (
                         <option id="op" key={i} value={cat.id} label={cat.name}></option>
-                    )) : null}    
+                    )) }   
            
             </Form.Control>
            
             <Form.Control id="select" size="sm" as="select" onChange={handleDiet}>
             <option id="op" label='Diets' value='Diets'></option>
-                {diets.length ? diets.map((diet, i) => (
+                {diets.map((diet, i) => (
                         <option id="op" key={i} value={diet.id} label={diet.name}></option>
-                    )) : null}
+                    )) }
             </Form.Control>
     
+            <Form.Control id="select" size="sm" as="select" onChange={handleName}>
+            <option id="op" label='Order By Name' value='Order By Name'></option>
+                    <option id="op" value='Ascendent' >Ascendent</option>
+                    <option id="op" value='Descendent' >Descendent</option>
+            </Form.Control>
+
             <Form.Control id="select" size="sm" as="select" onChange={handlePrice}>
             <option id="op" label='Price' value='Price'></option>
                     <option id="op" value='Ascendent' >Ascendent</option>
                     <option id="op" value='Descendent' >Descendent</option>
             </Form.Control>
+
+            <div className="range-slider">
+               
+
+            <form onSubmit={HandleChangeOnSubmit}>
+                <label>Search By Price Range</label>
+               <input
+                   type="text"
+                   placeholder='Min'
+                   value={sliderValmin}
+                   onChange={handleByPriceMin}
+               />
+                 
+               <input
+                   type="text"
+                   placeholder='Max'
+                   value={sliderValmax}
+                   onChange={handleByPriceMax}
+               />
+             <input type="submit" value='Search' className='enviarformulario'/>
+
+               </form>
+           </div>
+
         </div>
     )
 }
@@ -81,6 +154,8 @@ const mapStateToProps = ((state) => {
         products: state.reducerPablo.products,
         categories: state.reducerPablo.categories,
         diets: state.reducerPablo.diets,
+        productsbyprice: state.reducerPablo.productsbyprice,
+
     }
 })
 
@@ -88,11 +163,10 @@ const mapDispatchToProps = (dispatch) => {
     return {
         getCategories: () => dispatch(getCategories()),
         getDiets: () => dispatch(getDiets()),
-        getByIdCategory: (id) => dispatch(getByIdCategory(id)),
-        getByIdDiet: (id) => dispatch(getByIdDiet(id)),
         getProducts: () => dispatch(getProducts()),
         orderPrice: (orderTarget, product) => dispatch(orderPrice(orderTarget, product)),
-
+        getByPrice: (priceL, priceH) => dispatch(getByPrice(priceL, priceH)),
+        getByIdDietAndCategory: (CategoryId,DietId) =>dispatch(getByIdDietAndCategory(CategoryId,DietId))
 
     }
 }

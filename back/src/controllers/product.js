@@ -18,11 +18,11 @@ export async function createProduct(req, res) {
         }
         )
         if (ids_categories) {
-            let categories = await Category.findAll({ where: { id: ids_categories } })
+            let categories = await Category.findAll({ where: { name: ids_categories } })
             await newProduct.addCategory(categories)
         }
         if (ids_diets) {
-            let diets = await Diet.findAll({ where: { id: ids_diets } })
+            let diets = await Diet.findAll({ where: { name: ids_diets } })
             await newProduct.addDiet(diets)
         }
 

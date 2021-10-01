@@ -1,20 +1,28 @@
 import React from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { useState, useEffect } from "react";
-import { postProduct, postCategory, postDiet } from "../Actions";
+import { postProduct, postCategory, postDiet, getDiets, getCategories } from "../Actions";
 import Table from "./Table";
 import { getProducts } from "../Actions";
+import './Creator.css'
 
 export default function Creator() {
   const s = useSelector((state) => state.reducerPablo.products);
-  console.log(s);
+    const diets = useSelector(state => state.reducerPablo.diets)
+    const categories = useSelector(state => state.reducerPablo.categories)
+
 
   useEffect(() => {
     dispatch(getProducts());
+    dispatch(getDiets());
+    dispatch(getCategories());
   }, []);
 
   let dispatch = useDispatch();
+
+
+
   // estados locales
   const [input, setInput] = useState({
     name: "",
@@ -22,15 +30,25 @@ export default function Creator() {
     price: "",
     description: "",
     stock: "",
+    ids_categories:[],
+    ids_diets:[],
   });
+
+
+
   const [category, setCategory] = useState({
     name: "",
     description: "",
   });
+
+
   const [diet, setDiet] = useState({
     name: "",
     description: "",
   });
+
+
+
 
   // handlers de seteo
   async function handlerProduct(e) {
@@ -69,12 +87,57 @@ export default function Creator() {
       [e.target.name]: e.target.value,
     });
   }
+
+
   function handlerDiet(e) {
     setDiet({
       ...diet,
       [e.target.name]: e.target.value,
     });
   }
+
+
+
+  function handleDietsSelection(event) {
+
+    if(event.target.value === ''){
+      return
+    }
+
+    const dietsExists = input.ids_diets.find(
+      (item) => item === event.target.value
+    );
+
+    if (!dietsExists) {
+
+      setInput({
+        ...input,
+        ids_diets: [...input.ids_diets, event.target.value],
+      });
+    }
+  }
+  function handleCategorySelection(event) {
+
+    if(event.target.value === ''){
+      return
+    }
+
+    const categoryExists = input.ids_categories.find(
+      (item) => item === event.target.value
+    );
+
+    if (!categoryExists) {
+
+      setInput({
+        ...input,
+        ids_categories: [...input.ids_categories, event.target.value],
+      });
+    }
+  }
+
+
+
+
   // handlers de submit
 
   function handlerSubmitProduct(e) {
@@ -84,7 +147,9 @@ export default function Creator() {
       input.price &&
       input.stock &&
       input.description &&
-      input.image
+      input.image &&
+      input.ids_diets &&
+      input.ids_categories
     ) {
       dispatch(postProduct(input));
       setInput({
@@ -93,12 +158,16 @@ export default function Creator() {
         price: "",
         description: "",
         stock: "",
+        ids_diets:[],
+        ids_categories:[],
       });
       alert(" Producto creado con exito");
     } else {
       alert("falta informacion requerida en el formulario");
     }
   }
+
+
   function handlerSubmitCategory(e) {
     e.preventDefault();
     if (category.name && category.description) {
@@ -112,6 +181,8 @@ export default function Creator() {
       alert("falta informacion requerida en el formulario");
     }
   }
+
+
   function handlerSubmitDiet(e) {
     e.preventDefault();
     if (diet.name && diet.description) {
@@ -125,14 +196,17 @@ export default function Creator() {
       alert("falta informacion requerida en el formulario");
     }
   }
+
+
+
   return (
-    <div>
-      <h1> agregar productos</h1>
-      <h1> agregar productos</h1>
+    <div className='soloprueba'>
+      <h1> Add products</h1>
+      <div >
       <div>
         <form onSubmit={(e) => handlerSubmitProduct(e)}>
           <div>
-            <label>Nombre</label>
+            <label>Name</label>
             <input
               type="text"
               value={input.name}
@@ -142,7 +216,7 @@ export default function Creator() {
             {!input.name ? <output> ❌</output> : <output> ✔</output>}
           </div>
           <div>
-            <label>Precio</label>
+            <label>Price</label>
             <input
               type="number"
               value={input.price}
@@ -152,7 +226,7 @@ export default function Creator() {
             {!input.price ? <output> ❌</output> : <output> ✔</output>}
           </div>
           <div>
-            <label>Descripción </label>
+            <label>Description </label>
             <input
               type="textarea"
               value={input.description}
@@ -173,7 +247,7 @@ export default function Creator() {
             {!input.stock ? <output> ❌</output> : <output> ✔</output>}
           </div>
           <div>
-            <label> imagen</label>
+            <label> image</label>
             <input
               type="file"
               accept="image/png, .jpeg, .jpg"
@@ -182,9 +256,38 @@ export default function Creator() {
             />
             {!input.image ? <output> ❌</output> : <output> ✔</output>}
           </div>
+          <div>
+            <label>Diet type: </label>
+            <input type="text" name="ids_diets" value={input.ids_diets} placeholder='Diets' />
+            <select onChange={handleDietsSelection}>
+              <option value=''>Select a diets</option>
+              {
+                diets?.map((item, i) => {
+                  return  <option value={item.name} key={i} >{item.name}</option>;
+                })
+              }
+            </select>
+              {!input.ids_diets.length ? <output> ❌</output> : <output> ✔</output>}
+          </div>
+          <div>
+            <label>Category: </label>
+            <input type="text" name="ids_categories" value={input.ids_categories} placeholder='Category' />
+            <select onChange={handleCategorySelection}>
+              <option value=''>Select a category</option>
+              {
+                categories?.map((item, i) => {
+                  return  <option value={item.name} key={i} >{item.name}</option>;
+                })
+              }
+            </select>
+              {!input.ids_categories.length ? <output> ❌</output> : <output> ✔</output>}
+          </div>
           <button> Crear producto </button>
         </form>
       </div>
+      {/* //////////////////////////////////////////////////////////////////
+     ///////////////////////    CATEGORIA
+     ////////////////////////////////////////////////// */}
       <div>
         <form onSubmit={(e) => handlerSubmitCategory(e)}>
           <h2> agregar nueva categoria</h2>
@@ -211,6 +314,9 @@ export default function Creator() {
           <button> Crear Categoria</button>
         </form>
       </div>
+      {/* //////////////////////////////////////////////////////////////////
+     ///////////////////////    DIETA
+     ////////////////////////////////////////////////// */}
       <div>
         <form onSubmit={(e) => handlerSubmitDiet(e)}>
           <h2> agregar nueva Dieta</h2>
@@ -251,10 +357,12 @@ export default function Creator() {
         );
       })}
     </div>
+    </div>
+
   );
 }
 
 /*
 
-name, price, description, image, stock 
+name, price, description, image, stock
 */

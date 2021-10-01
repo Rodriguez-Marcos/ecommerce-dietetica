@@ -1,4 +1,4 @@
-import { GET_PRODUCTS, GET_CATEGORIES, GET_DIETS, GET_BY_ID_CATEGORY, ORDER_PRICE, GET_BY_ID_DIET, GET_PRODUCTS_FILTERED, PAGINATE, FAIL_TO_LOAD, SET_LOADING } from "../Actions/index"
+import { GET_PRODUCTS,GET_BY_DIET_AND_CATEGORY, GET_BY_PRICE, GET_CATEGORIES, GET_DIETS, GET_BY_ID_CATEGORY, ORDER_PRICE, GET_BY_ID_DIET, GET_PRODUCTS_FILTERED, PAGINATE, FAIL_TO_LOAD, SET_LOADING } from "../Actions/index"
 
 
 const InitialState = {
@@ -8,6 +8,8 @@ const InitialState = {
     productsFiltered: [],
     loading: false,
     error: false,
+    productsbyprice: [],
+
     comodin: false,
 }
 
@@ -48,6 +50,12 @@ export default function reducerPablo(state = InitialState, action) {
                 products: action.payload
             };
 
+        case GET_BY_DIET_AND_CATEGORY:
+            return {
+                ...state,
+                products: action.payload
+            };
+
         case ORDER_PRICE:
             return {
                 ...state,
@@ -77,8 +85,13 @@ export default function reducerPablo(state = InitialState, action) {
                 loading: true,
                 error: false,
             }
+        case GET_BY_PRICE:
+            return {
+                ...state,
+                products: action.payload.slice()
+            }
         case 'COMODIN':
-            return{
+            return {
                 ...state,
                 comodin: !state.comodin,
             }
