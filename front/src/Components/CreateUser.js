@@ -71,7 +71,8 @@ export default function CreateUser() {
     const responseGoogle = (response) => {
         console.log(response.profileObj);
         createUserByGoogle(response.profileObj)
-        history.push('/home')
+        if (response.profileObj !== undefined){
+        history.push('/home')}
       }
 
     return (
@@ -83,6 +84,7 @@ export default function CreateUser() {
               name="name"
               onChange={handlerUser}
             /> 
+            
         <p>Apellido</p>
         <input
               type="text"
@@ -90,6 +92,7 @@ export default function CreateUser() {
               name="lastname"
               onChange={handlerUser}
             /> 
+            
         <p>Password</p>
         <input
               type="password"
@@ -97,6 +100,7 @@ export default function CreateUser() {
               name="password"
               onChange={handlerUser}
             /> 
+           
         <p>Email</p>
         <input
               type="text"
