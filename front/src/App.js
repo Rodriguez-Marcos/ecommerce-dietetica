@@ -6,6 +6,7 @@ import Creator from './Components/Creator';
 import Search from './Components/Search';
 import NavBar from './Components/NavBar';
 import Footer from './Components/Footer';
+import CreateUser from './Components/CreateUser';
 import { Switch } from 'react-router';
 import Trolley from './Components/Trolley';
 import {Image} from 'react-bootstrap'
@@ -21,6 +22,7 @@ function App() {
     <Route exact path='/Admin' component={Creator}/>
     <Route exact path='/search' component={Search}/>
     <Route exact path='/trolley' component={Trolley}/>
+    <Route exact path='/CreateUser' component={CreateUser}/>
     </Switch>
     {/* <Footer/> */}
     </BrowserRouter>
