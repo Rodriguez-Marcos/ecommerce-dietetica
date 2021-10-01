@@ -13,7 +13,7 @@ import {
   ModalFooter,
 } from "reactstrap";
 
-export default function ({ product, stock, price, id }) {
+export default function ({ product, stock, price, id, img, description }) {
   let [data, setData] = useState({
     id,
   });
@@ -25,31 +25,20 @@ export default function ({ product, stock, price, id }) {
   let dispatch = useDispatch();
 
   return (
-    <div key={id}>
-      <Container>
-        <Table>
-          <thead>
-            <tr>
-              <th>Producto</th>
-              <th>Precio</th>
-              <th>Stock</th>
-              <th>Acción</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>{product}</td>
-              <td>{price}</td>
-              <td>{stock}</td>
-              <td>
-                <Button color= 'primary'>⚙</Button> {'   '}
+    <tbody key={id}>
+      <td>
+        {" "}
+        <img src={img} height="60" width="80" />
+      </td>
+      <td>{product}</td>
+      <td>{description}</td>
 
-                <Button  color ='danger'>🗑</Button>
-              </td>
-            </tr>
-          </tbody>
-        </Table>
-      </Container>
-    </div>
+      <td>{price}</td>
+      <td>{stock}</td>
+      <td>
+        <Button color="primary">⚙</Button> {"   "}
+        <Button color="danger">🗑</Button>
+      </td>
+    </tbody>
   );
 }

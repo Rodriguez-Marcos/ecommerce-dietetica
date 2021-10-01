@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import { postProduct, postCategory, postDiet } from "../Actions";
 import Tables from "./Table";
 import { getProducts } from "../Actions";
-import 'bootstrap'
+import "bootstrap";
 import {
   Table,
   Button,
@@ -20,12 +20,11 @@ import {
 export default function Creator() {
   const s = useSelector((state) => state.reducerPablo.products);
   console.log(s);
-
+  let dispatch = useDispatch();
   useEffect(() => {
     dispatch(getProducts());
   }, []);
 
-  let dispatch = useDispatch();
   // estados locales
   const [input, setInput] = useState({
     name: "",
@@ -141,51 +140,53 @@ export default function Creator() {
       <h1> .</h1>
       <h1>.</h1>
       <h1>.</h1>
-      <Button color = 'success'> Insertar Producto</Button> {'    '}
-      <Button color = 'warning'> Insertar Categoria</Button>  {'    '}
-      <Button color = 'info'> Insertar Dieta</Button>  {'    '}
+      <Button color="success"> Insertar Producto</Button> {"    "}
+      <Button color="warning"> Insertar Categoria</Button> {"    "}
+      <Button color="info"> Insertar Dieta</Button> {"    "}
       <Modal>
         <ModalHeader>
           <div>
-            <h3>
-              Insertar Nuevo Producto
-            </h3>
+            <h3>Insertar Nuevo Producto</h3>
           </div>
         </ModalHeader>
-        <form >          
-          <div>
+        <ModalBody>
+          <FormGroup>
             <label>Nombre</label>
             <input
+              className="form-control"
               type="text"
               value={input.name}
               name="name"
               onChange={(e) => handlerProduct(e)}
             />
             {!input.name ? <output> ❌</output> : <output> ✔</output>}
-          </div>
-          <div>
+          </FormGroup>
+          <FormGroup>
             <label>Precio</label>
             <input
+              className="form-control"
               type="number"
               value={input.price}
               name="price"
               onChange={(e) => handlerProduct(e)}
             />
             {!input.price ? <output> ❌</output> : <output> ✔</output>}
-          </div>
-          <div>
+          </FormGroup>
+          <FormGroup>
             <label>Descripción </label>
             <input
+              className="form-control"
               type="textarea"
               value={input.description}
               name="description"
               onChange={(e) => handlerProduct(e)}
             />
             {!input.description ? <output> ❌</output> : <output> ✔</output>}
-          </div>
-          <div>
+          </FormGroup>
+          <FormGroup>
             <label>Stock </label>
             <input
+              className="form-control"
               type="number"
               value={input.stock}
               min="0"
@@ -193,82 +194,76 @@ export default function Creator() {
               onChange={(e) => handlerProduct(e)}
             />
             {!input.stock ? <output> ❌</output> : <output> ✔</output>}
-          </div>
-          <div>
+          </FormGroup>
+          <FormGroup>
             <label> imagen</label>
             <input
+              className="form-control"
               type="file"
               accept="image/png, .jpeg, .jpg"
               name="image"
               onChange={(e) => handlerProduct(e)}
             />
             {!input.image ? <output> ❌</output> : <output> ✔</output>}
-          </div>
-          <button> Crear producto </button>
-        </form>
-      </Modal> {'    '}
-      <ModalFooter>
-            <Button
-              color="primary"
-              onSubmit={(e) => handlerSubmitProduct(e)} 
-            >
-              Insertar
-            </Button>
-            <Button
-              className="btn btn-danger"
-           
-            >
-              Cancelar
-            </Button>
-          </ModalFooter>
+          </FormGroup>
+        </ModalBody>
+        <ModalFooter>
+          <Button color="primary" onSubmit={(e) => handlerSubmitProduct(e)}>
+            Insertar
+          </Button>
+          <Button className="btn btn-danger">Cancelar</Button>
+        </ModalFooter>
+      </Modal>{" "}
+      {"    "}
       <Modal>
-      <ModalHeader>
+        <ModalHeader>
           <div>
-            <h3>
-              Insertar Nueva Categoria
-            </h3>
+            <h3>Insertar Nueva Categoria</h3>
           </div>
         </ModalHeader>
-        <form onSubmit={(e) => handlerSubmitCategory(e)}>
-          <h2> agregar nueva categoria</h2>
-          <div>
+        <ModalBody onSubmit={(e) => handlerSubmitCategory(e)}>
+          <FormGroup>
             <label>Nombre de categoria</label>
             <input
+              className="form-control"
               name="name"
               type="text"
               value={category.name}
               onChange={(e) => handlerCategory(e)}
             />
             {!category.name ? <output> ❌</output> : <output> ✔</output>}
-          </div>
-          <div>
+          </FormGroup>
+          <FormGroup>
             <label>Descripción de categoria</label>
             <input
+              className="form-control"
               name="description"
               type="textarea"
               value={category.description}
               onChange={(e) => handlerCategory(e)}
             />
             {!category.description ? <output> ❌</output> : <output> ✔</output>}
-          </div>
+          </FormGroup>
           <button> Crear Categoria</button>
-        </form>
-      </Modal> {'    '}
+        </ModalBody>
+        <ModalFooter>
+          <Button color="primary" onSubmit={(e) => handlerSubmitCategory(e)}>
+            Insertar
+          </Button>
+          <Button className="btn btn-danger">Cancelar</Button>
+        </ModalFooter>
+      </Modal>
       <Modal>
-      <ModalHeader>
+        <ModalHeader>
           <div>
-            <h3>
-              Insertar Nueva Dieta
-            </h3>
+            <h3>Insertar Nueva Dieta</h3>
           </div>
         </ModalHeader>
         <ModalBody onSubmit={(e) => handlerSubmitDiet(e)}>
-
-
-          <h2> agregar nueva Dieta</h2>
           <div>
             <label>Nombre de Dieta</label>
             <input
+              className="form-control"
               name="name"
               type="text"
               value={diet.name}
@@ -279,6 +274,7 @@ export default function Creator() {
           <div>
             <label>Descripción de la Dieta</label>
             <input
+              className="form-control"
               name="description"
               type="textarea"
               value={diet.description}
@@ -288,20 +284,38 @@ export default function Creator() {
           </div>
           <button> Crear Dieta</button>
         </ModalBody>
+        <ModalFooter>
+          <Button color="primary" onSubmit={(e) => handlerSubmitDiet(e)}>
+            Insertar
+          </Button>
+          <Button className="btn btn-danger">Cancelar</Button>
+        </ModalFooter>
       </Modal>
-      {s.map((e) => {
-        return (
-          <div key={e.id}>
+      <Container>
+        <Table>
+          <thead>
+            <tr>
+              <th>Imagen</th>
+              <th>Producto</th>
+              <th>Descripción</th>
+              <th>Precio</th>
+              <th>Stock</th>
+              <th>Acción</th>
+            </tr>
+          </thead>
+          {s.map((e) => (
             <Tables
+              description={e.description}
               id={e.id}
               product={e.name}
               stock={e.stock}
               price={e.price}
               stock={e.stock}
+              img={e.image}
             />
-          </div>
-        );
-      })}
+          ))}
+        </Table>
+      </Container>
     </div>
   );
 }
