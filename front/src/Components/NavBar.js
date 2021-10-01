@@ -65,7 +65,6 @@ function NavBar({ getProductbyName, setLoading }) {
           </Nav>
         </Navbar.Collapse>
       </Navbar>
-      {/* <ProductsFilters/> */}
 
     </div>
   )
