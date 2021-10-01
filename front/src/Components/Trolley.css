@@ -1,0 +1,11 @@
+#carritoCompras{
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    flex-direction: column;
+}
+#carritoCompras a{
+    text-decoration: none;
+}

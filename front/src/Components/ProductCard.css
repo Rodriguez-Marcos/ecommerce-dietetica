@@ -8,8 +8,8 @@
     padding: 20px;
 }
 #divImg{
-    width: 210px;
-    height: 320px;
+    width: 200px;
+    height: 300px;
     align-items: center;
     justify-content: center;
     border-radius: 15px;
@@ -44,4 +44,26 @@
 #btns{
     display: flex;
     justify-content: center;
+}
+#detalles{
+    text-decoration: none;
+    color: var(--colorCafe);
+}
+#detalles:hover{
+    color: var(--hoverVerde);
+}
+#precio{
+    position: absolute;
+    background-color: rgba(128, 128, 128, 0);
+    color: transparent;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#precio:hover{
+   background-color: rgba(5, 5, 5, 0.507);
+   color: rgb(245, 239, 245);
+   border-radius: 15px;
 }
