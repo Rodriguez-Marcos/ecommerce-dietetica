@@ -9,6 +9,7 @@ import defaultimg from '../image/salvatore-grande-color.png'
 import borrar from '../image/cancelar.png'
 import compras from '../image/carrito.png'
 
+
 const cookies = new Cookies();
 
 
