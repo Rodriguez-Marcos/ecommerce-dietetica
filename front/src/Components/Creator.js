@@ -60,8 +60,6 @@ export default function Creator() {
   });
 
 
-
-
   // handlers de seteo
   async function handlerProduct(e) {
     if (e.target.name == "image") {
