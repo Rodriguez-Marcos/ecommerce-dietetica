@@ -7,6 +7,7 @@ exports.createProduct = createProduct;
 exports.getProducts = getProducts;
 exports.getById = getById;
 exports.deleteProduct = deleteProduct;
+exports.updateProduct = updateProduct;
 exports.postOrder = postOrder;
 
 var _Product = _interopRequireDefault(require("../models/Product.js"));
@@ -305,7 +306,13 @@ function _getById() {
             id = req.params.id;
             _context3.prev = 1;
             _context3.next = 4;
-            return _Product["default"].findByPk(id);
+            return _Product["default"].findOne({
+              where: {
+                id: id
+              },
+              include: _Category["default"],
+              Diet: _Diet["default"]
+            });
 
           case 4:
             products = _context3.sent;
@@ -331,24 +338,7 @@ function _getById() {
 
 function deleteProduct(_x7, _x8) {
   return _deleteProduct.apply(this, arguments);
-} // export async function filterProductsbyCategory(req,res){
-// const {id_category}=req.query
-// try{
-// let products=await Product.findAll({include: [ { 
-//     model: Category,  
-//     through: { attributes: [] },
-//     where: { 'Category.id': id_category }
-// } ]})
-// return res.status(200).send(products)
-//     }catch (err) {
-//         console.log(err)
-//         res.status(500).json({
-//             message: 'Something goes Wrong',
-//             data: {}
-//         })
-//     }
-// }
-
+}
 
 function _deleteProduct() {
   _deleteProduct = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4(req, res) {
@@ -392,42 +382,149 @@ function _deleteProduct() {
   return _deleteProduct.apply(this, arguments);
 }
 
-function postOrder(_x9, _x10) {
-  return _postOrder.apply(this, arguments);
+function updateProduct(_x9, _x10) {
+  return _updateProduct.apply(this, arguments);
 }
 
-function _postOrder() {
-  _postOrder = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee5(req, res) {
-    var _req$params, id_product, id_order, product, order, resultado;
+function _updateProduct() {
+  _updateProduct = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee5(req, res) {
+    var id, _req$body2, name, price, description, image, stock, ids_categories, ids_diets, product, categories, diets;
 
     return regeneratorRuntime.wrap(function _callee5$(_context5) {
       while (1) {
         switch (_context5.prev = _context5.next) {
           case 0:
-            _req$params = req.params, id_product = _req$params.id_product, id_order = _req$params.id_order;
-            _context5.next = 3;
-            return _Product["default"].findByPk(id_product);
+            id = req.params.id;
+            _req$body2 = req.body, name = _req$body2.name, price = _req$body2.price, description = _req$body2.description, image = _req$body2.image, stock = _req$body2.stock, ids_categories = _req$body2.ids_categories, ids_diets = _req$body2.ids_diets;
+            _context5.prev = 2;
+            _context5.next = 5;
+            return _Product["default"].update({
+              name: name,
+              price: price,
+              description: description,
+              image: image,
+              stock: stock
+            }, {
+              where: {
+                id: id
+              },
+              include: _Category["default"],
+              Diet: _Diet["default"]
+            });
 
-          case 3:
+          case 5:
+            _context5.next = 7;
+            return _Product["default"].findOne({
+              where: {
+                id: id
+              },
+              include: _Category["default"],
+              Diet: _Diet["default"]
+            });
+
+          case 7:
             product = _context5.sent;
-            _context5.next = 6;
-            return _Order["default"].findByPk(id_order);
 
-          case 6:
-            order = _context5.sent;
-            _context5.next = 9;
-            return product.addOrder(order);
+            if (!ids_categories) {
+              _context5.next = 14;
+              break;
+            }
 
-          case 9:
-            resultado = _context5.sent;
-            res.send(resultado);
+            _context5.next = 11;
+            return _Category["default"].findAll({
+              where: {
+                id: ids_categories
+              }
+            });
 
           case 11:
+            categories = _context5.sent;
+            _context5.next = 14;
+            return product.setCategories(categories);
+
+          case 14:
+            if (!ids_diets) {
+              _context5.next = 21;
+              break;
+            }
+
+            _context5.next = 17;
+            return _Diet["default"].findAll({
+              where: {
+                id: ids_diets
+              }
+            });
+
+          case 17:
+            diets = _context5.sent;
+            _context5.next = 20;
+            return product.setDiets(diets);
+
+          case 20:
+            return _context5.abrupt("return", res.json({
+              message: 'Product updated successfully',
+              data: product
+            }));
+
+          case 21:
+            _context5.next = 27;
+            break;
+
+          case 23:
+            _context5.prev = 23;
+            _context5.t0 = _context5["catch"](2);
+            console.log(_context5.t0);
+            res.status(500).json({
+              message: 'Something goes Wrong',
+              data: {}
+            });
+
+          case 27:
           case "end":
             return _context5.stop();
         }
       }
-    }, _callee5);
+    }, _callee5, null, [[2, 23]]);
+  }));
+  return _updateProduct.apply(this, arguments);
+}
+
+function postOrder(_x11, _x12) {
+  return _postOrder.apply(this, arguments);
+}
+
+function _postOrder() {
+  _postOrder = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee6(req, res) {
+    var _req$params, id_product, id_order, product, order, resultado;
+
+    return regeneratorRuntime.wrap(function _callee6$(_context6) {
+      while (1) {
+        switch (_context6.prev = _context6.next) {
+          case 0:
+            _req$params = req.params, id_product = _req$params.id_product, id_order = _req$params.id_order;
+            _context6.next = 3;
+            return _Product["default"].findByPk(id_product);
+
+          case 3:
+            product = _context6.sent;
+            _context6.next = 6;
+            return _Order["default"].findByPk(id_order);
+
+          case 6:
+            order = _context6.sent;
+            _context6.next = 9;
+            return product.addOrder(order);
+
+          case 9:
+            resultado = _context6.sent;
+            res.send(resultado);
+
+          case 11:
+          case "end":
+            return _context6.stop();
+        }
+      }
+    }, _callee6);
   }));
   return _postOrder.apply(this, arguments);
 }

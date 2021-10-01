@@ -13,7 +13,8 @@ var _require2 = require('../controllers/product'),
     getProducts = _require2.getProducts,
     getById = _require2.getById,
     deleteProduct = _require2.deleteProduct,
-    postOrder = _require2.postOrder;
+    postOrder = _require2.postOrder,
+    updateProduct = _require2.updateProduct;
 
 var router = Router();
 router.post('/', createProduct);
@@ -21,5 +22,6 @@ router.post('/:id_product/orders/:id_order', postOrder);
 router.get('/', getProducts);
 router.get('/:id', getById);
 router["delete"]('/:id', deleteProduct);
+router.put('/:id', updateProduct);
 var _default = router;
 exports["default"] = _default;
