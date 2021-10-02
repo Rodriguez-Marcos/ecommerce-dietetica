@@ -1,11 +1,12 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
 
+import { useSelector, useDispatch } from "react-redux";
 import { postProduct, postCategory, postDiet } from "../Actions";
 import Tables from "./Table";
-import { getProducts, getCategories , getDiets } from "../Actions";
+import FormEdit from "./FormEdit";
+import { getProducts, getCategories, getDiets } from "../Actions";
 import "bootstrap";
 import {
   Table,
@@ -23,9 +24,8 @@ export default function Creator() {
   const c = useSelector((state) => state.reducerPablo.categories);
   const d = useSelector((state) => state.reducerPablo.diets);
 
-
   let dispatch = useDispatch();
- // Renderizados
+  // Renderizados
   useEffect(() => {
     dispatch(getProducts());
   }, [dispatch]);
@@ -53,12 +53,10 @@ export default function Creator() {
     description: "",
   });
 
-
   const [diet, setDiet] = useState({
     name: "",
     description: "",
   });
-
 
   // handlers de seteo
   async function handlerProduct(e) {
@@ -96,13 +94,11 @@ export default function Creator() {
         ...input,
         ids_categories: [...input.ids_categories, e.target.value],
       });
-    }
-    else{
+    } else {
       setInput({
         ...input,
         ids_categories: [],
       });
-
     }
   }
 
@@ -112,13 +108,11 @@ export default function Creator() {
         ...input,
         ids_diets: [...input.ids_diets, e.target.value],
       });
-    }
-    else {
+    } else {
       setInput({
         ...input,
         ids_diets: [],
       });
-
     }
   }
 
@@ -129,7 +123,6 @@ export default function Creator() {
     });
   }
 
-
   function handlerDiet(e) {
     setDiet({
       ...diet,
@@ -137,12 +130,9 @@ export default function Creator() {
     });
   }
 
-
-
   function handleDietsSelection(event) {
-
-    if(event.target.value === ''){
-      return
+    if (event.target.value === "") {
+      return;
     }
 
     const dietsExists = input.ids_diets.find(
@@ -150,7 +140,6 @@ export default function Creator() {
     );
 
     if (!dietsExists) {
-
       setInput({
         ...input,
         ids_diets: [...input.ids_diets, event.target.value],
@@ -158,9 +147,8 @@ export default function Creator() {
     }
   }
   function handleCategorySelection(event) {
-
-    if(event.target.value === ''){
-      return
+    if (event.target.value === "") {
+      return;
     }
 
     const categoryExists = input.ids_categories.find(
@@ -168,16 +156,12 @@ export default function Creator() {
     );
 
     if (!categoryExists) {
-
       setInput({
         ...input,
         ids_categories: [...input.ids_categories, event.target.value],
       });
     }
   }
-
-
-
 
   // handlers de submit
 
@@ -212,7 +196,6 @@ export default function Creator() {
     }
   }
 
-
   function handlerSubmitDiet(e) {
     e.preventDefault();
     if (diet.name && diet.description) {
@@ -232,6 +215,18 @@ export default function Creator() {
     category: false,
     diet: false,
   });
+  const [editModal, setEditModal] = useState({
+    product: false,
+    category: false,
+    diet: false,
+  });
+  function editProductOpen() {
+    setModal({
+      ...editModal,
+      product: true,
+    });
+  }
+
   function openProduct() {
     setModal({
       ...modal,
@@ -241,6 +236,19 @@ export default function Creator() {
   function closeProduct() {
     setModal({
       ...modal,
+      product: false,
+    });
+    setInput({
+      name: "",
+      image: "",
+      price: "",
+      description: "",
+      stock: "",
+    });
+  }
+  function editProductClose() {
+    setModal({
+      ...editModal,
       product: false,
     });
     setInput({
@@ -298,20 +306,16 @@ export default function Creator() {
       <h1>.</h1>
       <h1>.</h1>
       <Button color="success" onClick={() => openProduct()}>
-        {" "}
         Insertar Producto
       </Button>{" "}
       {"    "}
       <Button color="warning" onClick={() => openCategory()}>
-        {" "}
         Insertar Categoria
-      </Button>{" "}
+      </Button>
       {"    "}
       <Button color="info" onClick={() => openDiet()}>
-        {" "}
         Insertar Dieta
-      </Button>{" "}
-      {"    "}
+      </Button>
       <Modal isOpen={modal.product}>
         <ModalHeader>
           <div>
@@ -327,8 +331,8 @@ export default function Creator() {
               name="name"
               onChange={(e) => handlerProduct(e)}
               placeholder="Nombre"
-            />
-            {!input.name ? <output> ❌</output> : <output> ✔</output>}
+            />{" "}
+            {!input.name ? <output>✏</output> : <output> ✔</output>}
           </FormGroup>
           <FormGroup>
             <input
@@ -339,7 +343,7 @@ export default function Creator() {
               placeholder="precio"
               onChange={(e) => handlerProduct(e)}
             />
-            {!input.price ? <output> ❌</output> : <output> ✔</output>}
+            {!input.price ? <output> ✏</output> : <output> ✔</output>}
           </FormGroup>
           <FormGroup>
             <input
@@ -350,7 +354,7 @@ export default function Creator() {
               placeholder="Descripcion"
               onChange={(e) => handlerProduct(e)}
             />
-            {!input.description ? <output> ❌</output> : <output> ✔</output>}
+            {!input.description ? <output> ✏</output> : <output> ✔</output>}
           </FormGroup>
           <FormGroup>
             <input
@@ -362,11 +366,10 @@ export default function Creator() {
               placeholder="Stock"
               onChange={(e) => handlerProduct(e)}
             />
-            {!input.stock ? <output> ❌</output> : <output> ✔</output>}
+            {!input.stock ? <output> ✏</output> : <output> ✔</output>}
           </FormGroup>
-
           <div>
-          <h4> Elegir Categorias</h4> 
+            <h4> Elegir Categorias</h4>
             {c.map((e, i) => (
               <div class="form-check">
                 <label key={i} class="form-check-label">
@@ -383,7 +386,7 @@ export default function Creator() {
             ))}
           </div>
           <div>
-            <h4> Elegir Dieta</h4> 
+            <h4> Elegir Dieta</h4>
             {d.map((e, i) => (
               <div class="form-check">
                 <label key={i} class="form-check-label">
@@ -399,7 +402,6 @@ export default function Creator() {
               </div>
             ))}
           </div>
-
           <FormGroup>
             <label> Inserte imagen</label>
             <input
@@ -409,7 +411,7 @@ export default function Creator() {
               name="image"
               onChange={(e) => handlerProduct(e)}
             />
-            {!input.image ? <output> ❌</output> : <output> ✔</output>}
+            {!input.image ? <output> ✏</output> : <output> ✔</output>}
           </FormGroup>
         </ModalBody>
         <ModalFooter>
@@ -420,8 +422,7 @@ export default function Creator() {
             Cancelar
           </Button>
         </ModalFooter>
-      </Modal>{" "}
-      {"    "}
+      </Modal>
       <Modal isOpen={modal.category}>
         <ModalHeader>
           <div>
@@ -438,7 +439,7 @@ export default function Creator() {
               value={category.name}
               onChange={(e) => handlerCategory(e)}
             />
-            {!category.name ? <output> ❌</output> : <output> ✔</output>}
+            {!category.name ? <output> ✏</output> : <output> ✔</output>}
           </FormGroup>
           <FormGroup>
             <label>Descripción de categoria</label>
@@ -449,7 +450,7 @@ export default function Creator() {
               value={category.description}
               onChange={(e) => handlerCategory(e)}
             />
-            {!category.description ? <output> ❌</output> : <output> ✔</output>}
+            {!category.description ? <output> ✏</output> : <output> ✔</output>}
           </FormGroup>
         </ModalBody>
         <ModalFooter>
@@ -477,7 +478,7 @@ export default function Creator() {
               value={diet.name}
               onChange={(e) => handlerDiet(e)}
             />
-            {!diet.name ? <output> ❌</output> : <output> ✔</output>}
+            {!diet.name ? <output> ✏</output> : <output> ✔</output>}
           </div>
           <div>
             <label>Descripción de la Dieta</label>
@@ -488,7 +489,7 @@ export default function Creator() {
               value={diet.description}
               onChange={(e) => handlerDiet(e)}
             />
-            {!diet.description ? <output> ❌</output> : <output> ✔</output>}
+            {!diet.description ? <output> ✏</output> : <output> ✔</output>}
           </div>
         </ModalBody>
         <ModalFooter>
@@ -500,13 +501,28 @@ export default function Creator() {
           </Button>
         </ModalFooter>
       </Modal>
+      {/* 
+      Modales de Edicion 
+      
+      */}
+      <FormEdit
+        d={d}
+        c={c}
+        editModal={editModal}
+        input={input}
+        handlerProduct={handlerProduct}
+        handlerCategories= {handlerCategories}
+        handlerDiets={handlerDiets}
+        handlerSubmitProduct={handlerSubmitProduct}
+        closeProduct={closeProduct}
+  
+      />
       <Container>
         <Table>
           <thead>
             <tr>
               <th>Imagen</th>
               <th>Producto</th>
-          
               <th>Precio</th>
               <th>Stock</th>
               <th>Acción</th>
@@ -514,19 +530,17 @@ export default function Creator() {
           </thead>
           {p.map((e) => (
             <Tables
-          
               id={e.id}
               product={e.name}
               stock={e.stock}
               price={e.price}
               stock={e.stock}
               img={e.image}
+              editProduct={editProductOpen}
             />
           ))}
         </Table>
       </Container>
     </div>
-    
-
   );
 }
