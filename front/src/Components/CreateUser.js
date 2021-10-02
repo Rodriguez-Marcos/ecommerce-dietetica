@@ -1,20 +1,18 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import GoogleLogin from 'react-google-login';
-import { validate } from '../Utils/ValidateUser'
+import { validate } from '../Utils/ValidateUser';
 import { useHistory } from "react-router-dom";
+import { createUser } from '../Actions/index';
+import { connect } from 'react-redux';
 import './CreateUser.css'
 
-export default function CreateUser() {
+ function CreateUser({respuesta,createUser}) {
 
     const history = useHistory();
+    
+    
 
-    async function createUser(payload) {
-        await axios.post("http://localhost:3001/clients", payload)
-            .then((response) => { console.log(response) })
-            .catch((err) => console.error(err))
-
-    };
     async function createUserByGoogle(payload) {
         await axios.post("http://localhost:3001/clients/bygoogle", payload)
             .then((response) => { console.log(response) })
@@ -22,7 +20,7 @@ export default function CreateUser() {
 
     };
 
-
+    const [click,setClick] = useState(0)
 
     const [input, setInput] = useState({
         name: '',
@@ -60,21 +58,25 @@ export default function CreateUser() {
             alert('Debes llenar todos los campos')
         }
         else {
-            
-            createUser(input)
-                .then( (res) => {
-                    
-                    if (res === 'Usuario ya creado') {
-                        alert('Email ya registrado')
-                    }
-                    /* else {
-                        alert('Se creo usuario exitosamente')
-                        history.push('/home')
-                    } */
-                })
-
-        }
+           createUser(input)
+            setClick(click + 1)
+          }
     }
+        useEffect( () => {
+            console.log(respuesta)
+            if(respuesta === undefined){
+                console.log('primera vuelta')
+            }else { 
+                if (respuesta === 'Usuario ya creado') {
+                    alert('Email ya registrado')
+                }
+                else {
+                    alert('Se creo usuario exitosamente')
+                    history.push('/home')
+                }}
+           
+        }, [click + 1] 
+        )
 
 
     const responseGoogle = (response) => {
@@ -133,3 +135,12 @@ export default function CreateUser() {
         </div>
     )
 }
+
+function mapStateToProps(state){
+   return {respuesta: state.user}
+}
+function mapDispatchToProps(dispatch) {
+    return {createUser:  (value)=> dispatch(createUser(value))}
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(CreateUser)

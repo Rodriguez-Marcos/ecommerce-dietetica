@@ -39,7 +39,7 @@ function _createClient() {
             _context.prev = 2;
 
             if (dateBaseByClient) {
-              _context.next = 11;
+              _context.next = 10;
               break;
             }
 
@@ -57,30 +57,20 @@ function _createClient() {
 
           case 6:
             newClient = _context.sent;
-
-            if (!newClient) {
-              _context.next = 9;
-              break;
-            }
-
             return _context.abrupt("return", res.json({
               message: 'Client created successfully',
               data: newClient
             }));
 
-          case 9:
-            _context.next = 12;
-            break;
-
-          case 11:
+          case 10:
             return _context.abrupt("return", res.send('Usuario ya creado'));
 
-          case 12:
-            _context.next = 18;
+          case 11:
+            _context.next = 17;
             break;
 
-          case 14:
-            _context.prev = 14;
+          case 13:
+            _context.prev = 13;
             _context.t0 = _context["catch"](2);
             console.log(_context.t0);
             res.status(500).json({
@@ -88,12 +78,12 @@ function _createClient() {
               data: {}
             });
 
-          case 18:
+          case 17:
           case "end":
             return _context.stop();
         }
       }
-    }, _callee, null, [[2, 14]]);
+    }, _callee, null, [[2, 13]]);
   }));
   return _createClient.apply(this, arguments);
 }
@@ -188,7 +178,7 @@ function createClientGoogle(_x7, _x8) {
 
 function _createClientGoogle() {
   _createClientGoogle = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4(req, res) {
-    var _req$body2, givenName, familyName, email, googleId, dateBaseByGoogle, checkin, clientbygoogle;
+    var _req$body2, givenName, familyName, email, googleId, dateBaseByGoogle, clientbygoogle;
 
     return regeneratorRuntime.wrap(function _callee4$(_context4) {
       while (1) {
@@ -205,17 +195,18 @@ function _createClientGoogle() {
 
           case 3:
             _context4.prev = 3;
-            dateBaseByGoogle = _Clientbygoogle["default"].findAll();
-            checkin = dateBaseByGoogle.filter(function (value) {
-              return value.email === email;
+            dateBaseByGoogle = _Clientbygoogle["default"].findOne({
+              where: {
+                email: email
+              }
             });
 
-            if (checkin) {
-              _context4.next = 13;
+            if (dateBaseByGoogle) {
+              _context4.next = 12;
               break;
             }
 
-            _context4.next = 9;
+            _context4.next = 8;
             return _Clientbygoogle["default"].create({
               givenName: givenName,
               familyName: familyName,
@@ -223,33 +214,33 @@ function _createClientGoogle() {
               googleId: googleId
             });
 
-          case 9:
+          case 8:
             clientbygoogle = _context4.sent;
             res.status(200).send({
               message: 'user by google create',
               data: clientbygoogle
             });
-            _context4.next = 14;
+            _context4.next = 13;
             break;
 
-          case 13:
+          case 12:
             res.status(200).send('Usuario ya creado');
 
-          case 14:
-            _context4.next = 19;
+          case 13:
+            _context4.next = 18;
             break;
 
-          case 16:
-            _context4.prev = 16;
+          case 15:
+            _context4.prev = 15;
             _context4.t0 = _context4["catch"](3);
             console.error(_context4.t0);
 
-          case 19:
+          case 18:
           case "end":
             return _context4.stop();
         }
       }
-    }, _callee4, null, [[3, 16]]);
+    }, _callee4, null, [[3, 15]]);
   }));
   return _createClientGoogle.apply(this, arguments);
 }

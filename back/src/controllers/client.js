@@ -20,12 +20,12 @@ export async function createClient(req, res) {
             fields: ['name', 'lastname', 'email', 'password', 'address', 'phone']
         }
         )
-        if (newClient) {
+       
             return res.json({
                 message: 'Client created successfully',
                 data: newClient
             })
-        }
+        
     }else {
        return res.send( 'Usuario ya creado' )
     }
@@ -77,11 +77,9 @@ export async function createClientGoogle(req,res){
     if(!givenName || !familyName || !email || !googleId)
     {return res.status(404).send('Faltan datos')}
     try {
-        let dateBaseByGoogle = Clientbygoogle.findAll()
+        let dateBaseByGoogle = Clientbygoogle.findOne({where : {email : email}})
 
-        const checkin = dateBaseByGoogle.filter((value) =>( value.email === email))
-
-        if(!checkin){
+        if(!dateBaseByGoogle){
 
         let clientbygoogle = await Clientbygoogle.create({
              givenName,
