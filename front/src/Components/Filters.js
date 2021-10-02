@@ -96,7 +96,7 @@ function ProductsFilters({ getDiets, getCategories, getProducts, categories, die
 
     return (
         <Tabs defaultActiveKey="default" transition={false} >
-            <Tab id="title" title="Filtros" disabled />
+            <Tab id="title" title="Filtros" eventKey="Filtro" />
             <Tab id="titleFilter" eventKey="home" title="Categories">
                 {/* <Form> */}
                 {['radio'].map((type) => (
@@ -229,23 +229,23 @@ function ProductsFilters({ getDiets, getCategories, getProducts, categories, die
                 <Form id="range" onSubmit={HandleChangeOnSubmit}>
                     <label>Search By Price Range</label>
                     <div id="rangeMinMax">
-                        <input
-                            id="inputPassword5"
+                        <input id="min-max"
                             type="text"
                             placeholder='Min'
                             value={sliderValmin}
                             onChange={handleByPriceMin}
                         />
-                        <input onChange={handleByPriceMin} type="range" min="0" max="1000000" step="10000" class="form-range" id="customRange1"></input>
+                        <input onChange={handleByPriceMin} type="range" min="0" max="1000" step="100" class="form-range" id="customRange1"></input>
                     </div>
                     <div id="rangeMinMax">
                         <input
+                            id="min-max"
                             type="text"
                             placeholder='Max'
                             value={sliderValmax}
                             onChange={handleByPriceMax}
                         />
-                        <input onChange={handleByPriceMax} type="range" min="0" max="1000000" step="10000" class="form-range" id="customRange1"></input>
+                        <input onChange={handleByPriceMax} type="range" min="0" max="1000" step="100" class="form-range" id="customRange1"></input>
                     </div>
                     <Button type="submit" value='Search' className='enviarformulario' >Buscar</Button>
                 </Form>
