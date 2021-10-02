@@ -5,6 +5,7 @@ import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import {  getById } from '../Actions/index'
 import styles from './Detail.module.css'
+import { DiscussionEmbed } from 'disqus-react';
 
 function Detail({ match }) {
     const { id } = match.params
@@ -30,6 +31,23 @@ function Detail({ match }) {
                 <div class= "col-md-6">
                 <img className={styles.Image} src={producto?.image } alt='none'/>
                 </div>
+                <section className={styles.comentarios}> 
+                
+                <DiscussionEmbed
+                   shortname='salvatoredietetica'
+                   config={
+                           {
+                               url: "http://localhost:3000",
+                               identifier: "http://localhost:3000/Detail/" + id,
+                               // como hacer para que me tome cada
+                               title: "Comentarios",
+                               language: 'es_MX' 
+                           }
+                           }
+                           />
+             
+              
+               </section> 
                 
               
                 <div className={styles.detalles}>

@@ -25,9 +25,13 @@ function NavBar({ getProductbyName, setLoading }) {
 
   function handleSubmit(e) {
     e.preventDefault();
+    if(ActualState){
     getProductbyName(ActualState);
     setLoading();
     history.push("/search");
+    }else{
+      history.push("/home");
+    }
   }
 
   function handleChange(event) {
@@ -65,7 +69,6 @@ function NavBar({ getProductbyName, setLoading }) {
           </Nav>
         </Navbar.Collapse>
       </Navbar>
-      {/* <ProductsFilters/> */}
 
     </div>
   )
