@@ -24,15 +24,26 @@ function createClient(_x, _x2) {
 
 function _createClient() {
   _createClient = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(req, res) {
-    var _req$body, name, lastname, email, password, address, phone, newClient;
+    var _req$body, name, lastname, email, password, address, phone, dateBaseByClient, newClient;
 
     return regeneratorRuntime.wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
             _req$body = req.body, name = _req$body.name, lastname = _req$body.lastname, email = _req$body.email, password = _req$body.password, address = _req$body.address, phone = _req$body.phone;
-            _context.prev = 1;
-            _context.next = 4;
+            dateBaseByClient = _Client["default"].findOne({
+              where: {
+                email: email
+              }
+            });
+            _context.prev = 2;
+
+            if (dateBaseByClient) {
+              _context.next = 11;
+              break;
+            }
+
+            _context.next = 6;
             return _Client["default"].create({
               name: name,
               lastname: lastname,
@@ -44,11 +55,11 @@ function _createClient() {
               fields: ['name', 'lastname', 'email', 'password', 'address', 'phone']
             });
 
-          case 4:
+          case 6:
             newClient = _context.sent;
 
             if (!newClient) {
-              _context.next = 7;
+              _context.next = 9;
               break;
             }
 
@@ -57,25 +68,32 @@ function _createClient() {
               data: newClient
             }));
 
-          case 7:
-            _context.next = 13;
+          case 9:
+            _context.next = 12;
             break;
 
-          case 9:
-            _context.prev = 9;
-            _context.t0 = _context["catch"](1);
+          case 11:
+            return _context.abrupt("return", res.send('Usuario ya creado'));
+
+          case 12:
+            _context.next = 18;
+            break;
+
+          case 14:
+            _context.prev = 14;
+            _context.t0 = _context["catch"](2);
             console.log(_context.t0);
             res.status(500).json({
               message: 'Something goes Wrong',
               data: {}
             });
 
-          case 13:
+          case 18:
           case "end":
             return _context.stop();
         }
       }
-    }, _callee, null, [[1, 9]]);
+    }, _callee, null, [[2, 14]]);
   }));
   return _createClient.apply(this, arguments);
 }
@@ -170,7 +188,7 @@ function createClientGoogle(_x7, _x8) {
 
 function _createClientGoogle() {
   _createClientGoogle = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4(req, res) {
-    var _req$body2, givenName, familyName, email, googleId, clientbygoogle;
+    var _req$body2, givenName, familyName, email, googleId, dateBaseByGoogle, checkin, clientbygoogle;
 
     return regeneratorRuntime.wrap(function _callee4$(_context4) {
       while (1) {
@@ -187,8 +205,17 @@ function _createClientGoogle() {
 
           case 3:
             _context4.prev = 3;
-            console.log(googleId);
-            _context4.next = 7;
+            dateBaseByGoogle = _Clientbygoogle["default"].findAll();
+            checkin = dateBaseByGoogle.filter(function (value) {
+              return value.email === email;
+            });
+
+            if (checkin) {
+              _context4.next = 13;
+              break;
+            }
+
+            _context4.next = 9;
             return _Clientbygoogle["default"].create({
               givenName: givenName,
               familyName: familyName,
@@ -196,7 +223,7 @@ function _createClientGoogle() {
               googleId: googleId
             });
 
-          case 7:
+          case 9:
             clientbygoogle = _context4.sent;
             res.status(200).send({
               message: 'user by google create',
@@ -205,17 +232,24 @@ function _createClientGoogle() {
             _context4.next = 14;
             break;
 
-          case 11:
-            _context4.prev = 11;
+          case 13:
+            res.status(200).send('Usuario ya creado');
+
+          case 14:
+            _context4.next = 19;
+            break;
+
+          case 16:
+            _context4.prev = 16;
             _context4.t0 = _context4["catch"](3);
             console.error(_context4.t0);
 
-          case 14:
+          case 19:
           case "end":
             return _context4.stop();
         }
       }
-    }, _callee4, null, [[3, 11]]);
+    }, _callee4, null, [[3, 16]]);
   }));
   return _createClientGoogle.apply(this, arguments);
 }

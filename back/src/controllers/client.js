@@ -3,7 +3,12 @@ import Clientbygoogle from '../models/Clientbygoogle.js';
 
 export async function createClient(req, res) {
     const { name, lastname, email, password, address, phone } = req.body;
+
+    let dateBaseByClient = Client.findOne({where : {email : email}})
+    
+
     try {
+        if(!dateBaseByClient){
         let newClient = await Client.create({
             name, 
             lastname, 
@@ -21,7 +26,9 @@ export async function createClient(req, res) {
                 data: newClient
             })
         }
-
+    }else {
+       return res.send( 'Usuario ya creado' )
+    }
     } catch (err) {
         console.log(err)
         res.status(500).json({
@@ -70,7 +77,12 @@ export async function createClientGoogle(req,res){
     if(!givenName || !familyName || !email || !googleId)
     {return res.status(404).send('Faltan datos')}
     try {
-        console.log(googleId)
+        let dateBaseByGoogle = Clientbygoogle.findAll()
+
+        const checkin = dateBaseByGoogle.filter((value) =>( value.email === email))
+
+        if(!checkin){
+
         let clientbygoogle = await Clientbygoogle.create({
              givenName,
              familyName, 
@@ -80,6 +92,9 @@ export async function createClientGoogle(req,res){
         res.status(200).send({
             message: 'user by google create',
            data: clientbygoogle})
+        }else {
+            res.status(200).send('Usuario ya creado')
+        }
     }catch (err) {
         console.error(err)
     }
