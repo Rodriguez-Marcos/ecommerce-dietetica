@@ -84,8 +84,10 @@ function ProductsFilters({ getDiets, getCategories, getProducts, categories, die
 
     function HandleChangeOnSubmit(event) {
         event.preventDefault();
-        if (sliderValmin > sliderValmax && sliderValmax > 0) {
-            return alert('min es mayor')
+        console.log(sliderValmax)
+        console.log(sliderValmin)
+        if (sliderValmin > sliderValmax || sliderValmax < '1' ) {
+            return alert('Ingresa valores correctos')
         }
         getByPrice(sliderValmin, sliderValmax);
     }
@@ -97,150 +99,156 @@ function ProductsFilters({ getDiets, getCategories, getProducts, categories, die
             <Tab id="title" title="Filtros" disabled />
             <Tab id="titleFilter" eventKey="home" title="Categories">
                 {/* <Form> */}
-                    {['radio'].map((type) => (
-                        <div key={`inline-${type}`} className="mb-3">
+                {['radio'].map((type) => (
+                    <div key={`inline-${type}`} className="mb-3">
+                        <Form.Check
+                            className="checkRadio"
+                            inline
+                            label="All"
+                            name="group1"
+                            type={type}
+                            id={`inline-${type}-1`}
+                            onChange={handleName}
+                            value='Order By Name'
+                        />
+                        {categories.map((cat, i) => (
                             <Form.Check
-                                className="checkRadio"
                                 inline
-                                label="All"
+                                label="1"
                                 name="group1"
                                 type={type}
                                 id={`inline-${type}-1`}
-                                onChange={handleName}
-                                value='Order By Name'
-                            />
-                            {categories.map((cat, i) => (
-                                <Form.Check
-                                    inline
-                                    label="1"
-                                    name="group1"
-                                    type={type}
-                                    id={`inline-${type}-1`}
-                                    id="op" key={i} value={cat.id} label={cat.name}
-                                    onChange={handleCategory}
-                                >
-                                </Form.Check>
-                            ))}
-                        </div>
-                    ))}
+                                id="op" key={i} value={cat.id} label={cat.name}
+                                onChange={handleCategory}
+                            >
+                            </Form.Check>
+                        ))}
+                    </div>
+                ))}
                 {/* </Form> */}
             </Tab>
             <Tab id="titleFilter" eventKey="Diet" title="Diet">
                 {/* <Form> */}
-                    {['radio'].map((type) => (
-                        <div key={`inline-${type}`} className="mb-3">
+                {['radio'].map((type) => (
+                    <div key={`inline-${type}`} className="mb-3">
+                        <Form.Check
+                            inline
+                            label="All"
+                            name="group1"
+                            type={type}
+                            id={`inline-${type}-1`}
+                            onChange={handleName}
+                            value='Order By Name'
+                        />
+                        {diets.map((diet, i) => (
                             <Form.Check
                                 inline
-                                label="All"
+                                label="1"
                                 name="group1"
                                 type={type}
                                 id={`inline-${type}-1`}
-                                onChange={handleName}
-                                value='Order By Name'
-                            />
-                            {diets.map((diet, i) => (
-                                <Form.Check
-                                    inline
-                                    label="1"
-                                    name="group1"
-                                    type={type}
-                                    id={`inline-${type}-1`}
-                                    onChange={handleDiet}
-                                    id="op" key={i} value={diet.id} label={diet.name}>
-                                </Form.Check>
-                            ))}
-                        </div>
-                    ))}
+                                onChange={handleDiet}
+                                id="op" key={i} value={diet.id} label={diet.name}>
+                            </Form.Check>
+                        ))}
+                    </div>
+                ))}
                 {/* </Form> */}
             </Tab>
             <Tab id="titleFilter" eventKey="order" title="Order A<->Z">
                 {/* <Form> */}
-                    {['radio'].map((type) => (
-                        <div key={`inline-${type}`} className="mb-3">
-                            <Form.Check
-                                inline
-                                label="All"
-                                name="group1"
-                                type={type}
-                                id={`inline-${type}-1`}
-                                onChange={handleName}
-                                value='Order By Name'
-                            />
-                            <Form.Check
-                                inline
-                                label="Ascendent"
-                                name="group1"
-                                type={type}
-                                id={`inline-${type}-1`}
-                                onChange={handleName}
-                                value='Ascendent'
-                            />
-                            <Form.Check
-                                inline
-                                label="Descendent"
-                                name="group1"
-                                type={type}
-                                id={`inline-${type}-1`}
-                                onChange={handleName}
-                                value='Descendent'
-                            />
-                        </div>
-                    ))}
+                {['radio'].map((type) => (
+                    <div key={`inline-${type}`} className="mb-3">
+                        <Form.Check
+                            inline
+                            label="All"
+                            name="group1"
+                            type={type}
+                            id={`inline-${type}-1`}
+                            onChange={handleName}
+                            value='Order By Name'
+                        />
+                        <Form.Check
+                            inline
+                            label="Ascendent"
+                            name="group1"
+                            type={type}
+                            id={`inline-${type}-1`}
+                            onChange={handleName}
+                            value='Ascendent'
+                        />
+                        <Form.Check
+                            inline
+                            label="Descendent"
+                            name="group1"
+                            type={type}
+                            id={`inline-${type}-1`}
+                            onChange={handleName}
+                            value='Descendent'
+                        />
+                    </div>
+                ))}
                 {/* </Form> */}
             </Tab>
             <Tab id="titleFilter" eventKey="Price" title="Price">
                 {/* <Form> */}
-                    {['radio'].map((type) => (
-                        <div key={`inline-${type}`} className="mb-3">
-                            <Form.Check
-                                inline
-                                label="All"
-                                name="group1"
-                                type={type}
-                                id={`inline-${type}-1`}
-                                onChange={handleName}
-                                value='Order By Name'
-                            />
-                            <Form.Check
-                                inline
-                                label="Ascendent"
-                                name="group1"
-                                type={type}
-                                id={`inline-${type}-1`}
-                                onChange={handlePrice}
-                                value='Ascendent'
-                            />
-                            <Form.Check
-                                inline
-                                label="Descendent"
-                                name="group1"
-                                type={type}
-                                id={`inline-${type}-1`}
-                                onChange={handlePrice}
-                                value='Descendent'
-                            />
-                        </div>
-                    ))}
+                {['radio'].map((type) => (
+                    <div key={`inline-${type}`} className="mb-3">
+                        <Form.Check
+                            inline
+                            label="All"
+                            name="group1"
+                            type={type}
+                            id={`inline-${type}-1`}
+                            onChange={handleName}
+                            value='Order By Name'
+                        />
+                        <Form.Check
+                            inline
+                            label="Ascendent"
+                            name="group1"
+                            type={type}
+                            id={`inline-${type}-1`}
+                            onChange={handlePrice}
+                            value='Ascendent'
+                        />
+                        <Form.Check
+                            inline
+                            label="Descendent"
+                            name="group1"
+                            type={type}
+                            id={`inline-${type}-1`}
+                            onChange={handlePrice}
+                            value='Descendent'
+                        />
+                    </div>
+                ))}
                 {/* </Form> */}
             </Tab>
             <Tab id="titleFilter" eventKey="Pri" title="Precio">
-                        <Form onSubmit={HandleChangeOnSubmit}>
-                            <label>Search By Price Range</label>
-                            <input
-                                type="text"
-                                placeholder='Min'
-                                value={sliderValmin}
-                                onChange={handleByPriceMin}
-                            />
-                            <input
-                                type="text"
-                                placeholder='Max'
-                                value={sliderValmax}
-                                onChange={handleByPriceMax}
-                            />
-                            <input type="submit" value='Search' className='enviarformulario' />
-
-                        </Form>
+                <Form id="range" onSubmit={HandleChangeOnSubmit}>
+                    <label>Search By Price Range</label>
+                    <div id="rangeMinMax">
+                        <input
+                            id="inputPassword5"
+                            type="text"
+                            placeholder='Min'
+                            value={sliderValmin}
+                            onChange={handleByPriceMin}
+                        />
+                        <input onChange={handleByPriceMin} type="range" min="0" max="1000000" step="10000" class="form-range" id="customRange1"></input>
+                    </div>
+                    <div id="rangeMinMax">
+                        <input
+                            type="text"
+                            placeholder='Max'
+                            value={sliderValmax}
+                            onChange={handleByPriceMax}
+                        />
+                        <input onChange={handleByPriceMax} type="range" min="0" max="1000000" step="10000" class="form-range" id="customRange1"></input>
+                    </div>
+                    <Button type="submit" value='Search' className='enviarformulario' >Buscar</Button>
+                </Form>
             </Tab>
         </Tabs>
 
