@@ -42,6 +42,7 @@
     height: 20vw;
     justify-content: space-between;
     flex-wrap: wrap;
+    margin-bottom: 20px;
     
 }
 #rangeMinMax{
@@ -82,7 +83,7 @@
         justify-content: space-between;
         flex-direction: row;
         justify-content: center;
-        margin-bottom: 43px;
+        margin-bottom: 110px;
     }
     #rangeMinMax{
         flex-direction: column;
