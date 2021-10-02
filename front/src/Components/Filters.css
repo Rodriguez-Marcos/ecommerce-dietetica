@@ -30,7 +30,10 @@
 }
 #title{
     color: var(--hoverVerde);
+    background-color: transparent;
+    margin-bottom: 10px;
 }
+
 #range{
     display: flex;
     flex-direction: column;
@@ -61,6 +64,13 @@
 .enviarformulario:hover{
     background-color: var(--hoverVerde) !important;
 }
+#min-max{
+    text-align: center;
+    width: 70%;
+    outline: none;
+    border: none;
+    background-color: transparent;
+}
 @media only screen and (max-width: 600px) {
     #op{
        font-size: 13px;
@@ -77,6 +87,10 @@
     #rangeMinMax{
         flex-direction: column;
         
+    }
+    .mb-3{
+        display: flex !important;
+        flex-direction: column !important;
     }
     
   }
