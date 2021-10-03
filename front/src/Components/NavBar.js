@@ -50,7 +50,7 @@ function NavBar({ getProductbyName, setLoading }) {
             navbarScroll
             id="Links"
           >
-            <Nav.Link ><NavLink to="/home" className='navlink1' >Home</NavLink></Nav.Link>
+            <Nav.Link ><NavLink to="/home" className='navlink1' >Inicio</NavLink></Nav.Link>
             <Nav.Link ><NavLink to="/trolley" className='navlink1' >Carrito</NavLink></Nav.Link>
             <Nav.Link>About</Nav.Link>
           </Nav>
@@ -58,7 +58,7 @@ function NavBar({ getProductbyName, setLoading }) {
             <Form className="d-flex" id="d-flex" onSubmit={(e) => handleSubmit(e)}>
               <FormControl
                 type="search"
-                placeholder="Search"
+                placeholder="Buscar"
                 className="mr-2"
                 aria-label="Search"
                 value={ActualState} type='text' id='inputSearch' onChange={handleChange}

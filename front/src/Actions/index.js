@@ -190,9 +190,11 @@ export function getDiets() {
 }
 
 
-export function orderPrice(orderTarget, product) {
+export function orderPrice(orderTarget, products) {
     return async function (dispatch) {
-        OrderByPrice(orderTarget, product)
+        console.log(orderTarget,products)
+        OrderByPrice(orderTarget, products)
+        
         .then((orderTarget) => {
             return dispatch({
                     type: ORDER_PRICE,
