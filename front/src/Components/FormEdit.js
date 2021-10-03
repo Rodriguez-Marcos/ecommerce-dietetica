@@ -1,4 +1,5 @@
 import React from "react";
+import { useState } from "react";
 
 import "bootstrap";
 import {
@@ -20,17 +21,22 @@ export default function FormEdit({
   handlerDiets,
   handlerSubmitProduct,
   editProductClose,
-}) 
-{
-  console.log('Estoy aqui ', input)
-
+}) {
+  const [edit, setEdit] = useState({
+    name: "",
+    image: "",
+    price: "",
+    description: "",
+    stock: "",
+    ids_categories: [],
+    ids_diets: [],
+  });
 
   return (
-    <Modal isOpen= {editModal.product}>
+    <Modal isOpen={editModal.product}>
       <ModalHeader>
         <div>
-          <h3>Edicion de Producto</h3>
-          <p> producto : {input.name}</p>
+          <h3>Editar Producto: {input.name} </h3>
         </div>
       </ModalHeader>
       <ModalBody>
@@ -41,7 +47,6 @@ export default function FormEdit({
             value={input.name}
             name="name"
             onChange={(e) => handlerProduct(e)}
-            placeholder="Nombre"
           />{" "}
           {!input.name ? <output>✏</output> : <output> ✔</output>}
         </FormGroup>
@@ -114,8 +119,15 @@ export default function FormEdit({
           ))}
         </div>
         <FormGroup>
-          <label> Inserte imagen</label>
-          <p> </p>
+          <label> Imagen actual:  </label>
+          {'                                     '}
+          {!input.image ? (
+            <output> ✏</output>
+          ) : (
+            <output>
+              <img src={input.image} width="30" height="30"></img>
+            </output>
+          )}
           <input
             className="form-control"
             type="file"
@@ -123,12 +135,11 @@ export default function FormEdit({
             name="image"
             onChange={(e) => handlerProduct(e)}
           />
-          {!input.image ? <output> ✏</output> : <output> ✔</output>}
         </FormGroup>
       </ModalBody>
       <ModalFooter>
         <Button color="primary" onClick={(e) => handlerSubmitProduct(e)}>
-          Insertar
+          Editar
         </Button>
         <Button className="btn btn-danger" onClick={(e) => editProductClose(e)}>
           Cancelar

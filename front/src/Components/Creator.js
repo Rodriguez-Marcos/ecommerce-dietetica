@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { postProduct, postCategory, postDiet } from "../Actions";
+import { postProduct, postCategory, postDiet , putProduct} from "../Actions";
 import "bootstrap/dist/css/bootstrap.min.css";
 import FormEdit from "./FormEdit";
 import FormCreator from "./FormCreator";
@@ -19,10 +19,11 @@ export default function Creator() {
     dispatch(getProducts());
     dispatch(getCategories());
     dispatch(getDiets());
-  }, [dispatch]);
+  }, []);
 
   // estados locales
   const [input, setInput] = useState({
+    id: "",
     name: "",
     image: "",
     price: "",
@@ -30,15 +31,6 @@ export default function Creator() {
     stock: "",
     ids_categories: [],
     ids_diets: [],
-    editar: {
-      name: "",
-      image: "",
-      price: "",
-      description: "",
-      stock: "",
-      ids_categories: [],
-      ids_diets: [],
-    },
   });
 
   const [category, setCategory] = useState({
@@ -52,6 +44,7 @@ export default function Creator() {
   });
 
   // handlers de seteo
+
   async function handlerProduct(e) {
     if (e.target.name == "image") {
       let file = e.target.files;
@@ -67,6 +60,7 @@ export default function Creator() {
         }
       );
       const fire = await res.json();
+
       setInput({
         ...input,
         image: fire.secure_url,
@@ -121,6 +115,28 @@ export default function Creator() {
     });
   }
 
+  // handles edit
+  function handlerSubmitProductEdit(e) {
+    e.preventDefault();
+    if (
+      input.name &&
+      input.price &&
+      input.stock &&
+      input.description &&
+      input.image &&
+      input.ids_diets.length !=0 &
+      input.ids_categories.length !=0
+    ) {
+
+      dispatch(putProduct(input, input.id ));
+      alert('Modificacion exitosa');
+      editProductClose();
+    } else {
+      alert("falta informacion requerida en el formulario");
+    }
+  }
+  console.log(input)
+
   // handlers de submit
 
   function handlerSubmitProduct(e) {
@@ -131,9 +147,10 @@ export default function Creator() {
       input.stock &&
       input.description &&
       input.image &&
-      input.ids_diets &&
-      input.ids_categories
+      input.ids_diets.length !=0 &&
+      input.ids_categories.length !=0
     ) {
+      console.log(input)
       dispatch(postProduct(input));
       alert(" Producto creado con exito");
       closeProduct();
@@ -168,6 +185,8 @@ export default function Creator() {
 
   // Modales
 
+  // Modales de Producto
+
   const [modal, setModal] = useState({
     product: false,
     category: false,
@@ -178,8 +197,6 @@ export default function Creator() {
     category: false,
     diet: false,
   });
-
- 
 
   function openProduct() {
     setModal({
@@ -198,25 +215,25 @@ export default function Creator() {
       price: "",
       description: "",
       stock: "",
+      ids_categories: [],
+      ids_diets: [],
     });
-  } 
-  
+  }
+
   function editProductOpen(e) {
     setEditModal({
       ...editModal,
       product: true,
     });
+
     setInput({
       ...input,
-      editar: {
-        name: e.name,
-        image: e.image,
-        price: e.price,
-        description: e.description,
-        stock: e.stock,
-        ids_categories: e.ids_categories,
-        ids_diets: e.ids_diets,
-      },
+      id: e.id,
+      name: e.name,
+      image: e.image,
+      price: e.price,
+      description: e.description,
+      stock: e.stock,
     });
   }
   function editProductClose() {
@@ -225,17 +242,16 @@ export default function Creator() {
       product: false,
     });
     setInput({
-      ...input,
-      editar: {
-        name: "",
-        image: "",
-        price: "",
-        description: "",
-        stock: "",
-      },
+      name: "",
+      image: "",
+      price: "",
+      description: "",
+      stock: "",
+      ids_categories: [],
+      ids_diets: [],
     });
   }
-  //
+  // Modales de Categoria
 
   function openCategory() {
     setModal({
@@ -255,7 +271,7 @@ export default function Creator() {
     });
   }
 
-  //
+  // Modales de Dieta
 
   function openDiet() {
     setModal({
@@ -319,11 +335,11 @@ export default function Creator() {
         d={d}
         c={c}
         editModal={editModal}
-        input={input.editar}
+        input={input}
         handlerProduct={handlerProduct}
         handlerCategories={handlerCategories}
         handlerDiets={handlerDiets}
-        handlerSubmitProduct={handlerSubmitProduct}
+        handlerSubmitProduct={handlerSubmitProductEdit}
         editProductClose={editProductClose}
       />
       <Container>
@@ -337,6 +353,7 @@ export default function Creator() {
               <th>Acción</th>
             </tr>
           </thead>
+
           {p.map((e) => (
             <tbody key={e.id}>
               <td>
