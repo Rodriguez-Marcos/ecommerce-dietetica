@@ -12,6 +12,10 @@ export const GET_BY_DIET_AND_CATEGORY = 'GET_BY_DIET_AND_CATEGORY';
 export const PAGINATE = 'PAGINATE';
 export const FAIL_TO_LOAD = 'FAIL_TO_LOAD'
 export const SET_LOADING = 'SET_LOADING';
+export const REVIEW_URL = "REVIEW_URL";
+export const GET_ID = "GET_ID";
+
+
 
 export const paginate = (recipes) => {
     return {
@@ -103,7 +107,7 @@ export function postCategory(payload){
            });
          };
        }
-       export function postDiet(payload){
+export function postDiet(payload){
         return async function (dispatch) {
             await axios.post("http://localhost:3001/diets", payload);
            
@@ -227,4 +231,15 @@ export function getByPrice(priceL,priceH){
         };
     };
 };
+
+export function review(payload){
+    return async function (dispatch) {
+        await axios.post("http://localhost:3001/review", payload);
+       
+           return dispatch({
+             type: "REVIEW_URL",
+             payload,
+           });
+         };
+       }
 
