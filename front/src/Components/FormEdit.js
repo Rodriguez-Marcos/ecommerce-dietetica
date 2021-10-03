@@ -19,14 +19,18 @@ export default function FormEdit({
   handlerCategories,
   handlerDiets,
   handlerSubmitProduct,
-  closeProduct,
-}) {
+  editProductClose,
+}) 
+{
+  console.log('Estoy aqui ', input)
+
+
   return (
-    <Modal isOpen={editModal.product}>
+    <Modal isOpen= {editModal.product}>
       <ModalHeader>
         <div>
-          <h3>Editar Producto</h3>
-          <p>{input.name} </p>
+          <h3>Edicion de Producto</h3>
+          <p> producto : {input.name}</p>
         </div>
       </ModalHeader>
       <ModalBody>
@@ -111,6 +115,7 @@ export default function FormEdit({
         </div>
         <FormGroup>
           <label> Inserte imagen</label>
+          <p> </p>
           <input
             className="form-control"
             type="file"
@@ -125,7 +130,7 @@ export default function FormEdit({
         <Button color="primary" onClick={(e) => handlerSubmitProduct(e)}>
           Insertar
         </Button>
-        <Button className="btn btn-danger" onClick={() => closeProduct()}>
+        <Button className="btn btn-danger" onClick={(e) => editProductClose(e)}>
           Cancelar
         </Button>
       </ModalFooter>

@@ -20,16 +20,14 @@ export default function ({ product, stock, price, id, img, editProduct }) {
   return (
     <tbody key={id}>
       <td>
-        {" "}
+      
         <img src={img} height="60" width="80" />
       </td>
       <td>{product}</td>
-    
-
       <td>{price}</td>
       <td>{stock}</td>
       <td>
-        <Button color="primary" onClick = {(e)=>editProduct(e)}>✏</Button> {"   "}
+        <Button color="primary" onClick = {(e)=>editProduct(e)}>✏</Button> 
         <Button color="danger">🗑</Button>
       </td>
     </tbody>

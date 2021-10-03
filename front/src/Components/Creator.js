@@ -1,40 +1,24 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-
 import { useSelector, useDispatch } from "react-redux";
 import { postProduct, postCategory, postDiet } from "../Actions";
-import Tables from "./Table";
+import "bootstrap/dist/css/bootstrap.min.css";
 import FormEdit from "./FormEdit";
+import FormCreator from "./FormCreator";
 import { getProducts, getCategories, getDiets } from "../Actions";
-import "bootstrap";
-import {
-  Table,
-  Button,
-  Container,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  FormGroup,
-  ModalFooter,
-} from "reactstrap";
+import { Table, Button, Container } from "reactstrap";
 
 export default function Creator() {
+  //estados
   const p = useSelector((state) => state.reducerPablo.products);
   const c = useSelector((state) => state.reducerPablo.categories);
   const d = useSelector((state) => state.reducerPablo.diets);
-
   let dispatch = useDispatch();
   // Renderizados
   useEffect(() => {
     dispatch(getProducts());
-  }, [dispatch]);
-  useEffect(() => {
-    dispatch(getDiets());
-  }, [dispatch]);
-
-  useEffect(() => {
     dispatch(getCategories());
+    dispatch(getDiets());
   }, [dispatch]);
 
   // estados locales
@@ -46,8 +30,17 @@ export default function Creator() {
     stock: "",
     ids_categories: [],
     ids_diets: [],
+    editar: {
+      name: "",
+      image: "",
+      price: "",
+      description: "",
+      stock: "",
+      ids_categories: [],
+      ids_diets: [],
+    },
   });
-  console.log(input);
+
   const [category, setCategory] = useState({
     name: "",
     description: "",
@@ -73,9 +66,7 @@ export default function Creator() {
           body: formData,
         }
       );
-
       const fire = await res.json();
-
       setInput({
         ...input,
         image: fire.secure_url,
@@ -128,39 +119,6 @@ export default function Creator() {
       ...diet,
       [e.target.name]: e.target.value,
     });
-  }
-
-  function handleDietsSelection(event) {
-    if (event.target.value === "") {
-      return;
-    }
-
-    const dietsExists = input.ids_diets.find(
-      (item) => item === event.target.value
-    );
-
-    if (!dietsExists) {
-      setInput({
-        ...input,
-        ids_diets: [...input.ids_diets, event.target.value],
-      });
-    }
-  }
-  function handleCategorySelection(event) {
-    if (event.target.value === "") {
-      return;
-    }
-
-    const categoryExists = input.ids_categories.find(
-      (item) => item === event.target.value
-    );
-
-    if (!categoryExists) {
-      setInput({
-        ...input,
-        ids_categories: [...input.ids_categories, event.target.value],
-      });
-    }
   }
 
   // handlers de submit
@@ -220,12 +178,8 @@ export default function Creator() {
     category: false,
     diet: false,
   });
-  function editProductOpen() {
-    setModal({
-      ...editModal,
-      product: true,
-    });
-  }
+
+ 
 
   function openProduct() {
     setModal({
@@ -245,18 +199,40 @@ export default function Creator() {
       description: "",
       stock: "",
     });
+  } 
+  
+  function editProductOpen(e) {
+    setEditModal({
+      ...editModal,
+      product: true,
+    });
+    setInput({
+      ...input,
+      editar: {
+        name: e.name,
+        image: e.image,
+        price: e.price,
+        description: e.description,
+        stock: e.stock,
+        ids_categories: e.ids_categories,
+        ids_diets: e.ids_diets,
+      },
+    });
   }
   function editProductClose() {
-    setModal({
+    setEditModal({
       ...editModal,
       product: false,
     });
     setInput({
-      name: "",
-      image: "",
-      price: "",
-      description: "",
-      stock: "",
+      ...input,
+      editar: {
+        name: "",
+        image: "",
+        price: "",
+        description: "",
+        stock: "",
+      },
     });
   }
   //
@@ -316,191 +292,25 @@ export default function Creator() {
       <Button color="info" onClick={() => openDiet()}>
         Insertar Dieta
       </Button>
-      <Modal isOpen={modal.product}>
-        <ModalHeader>
-          <div>
-            <h3>Insertar Nuevo Producto</h3>
-          </div>
-        </ModalHeader>
-        <ModalBody>
-          <FormGroup>
-            <input
-              className="form-control"
-              type="text"
-              value={input.name}
-              name="name"
-              onChange={(e) => handlerProduct(e)}
-              placeholder="Nombre"
-            />{" "}
-            {!input.name ? <output>✏</output> : <output> ✔</output>}
-          </FormGroup>
-          <FormGroup>
-            <input
-              className="form-control"
-              type="number"
-              value={input.price}
-              name="price"
-              placeholder="precio"
-              onChange={(e) => handlerProduct(e)}
-            />
-            {!input.price ? <output> ✏</output> : <output> ✔</output>}
-          </FormGroup>
-          <FormGroup>
-            <input
-              className="form-control"
-              type="textarea"
-              value={input.description}
-              name="description"
-              placeholder="Descripcion"
-              onChange={(e) => handlerProduct(e)}
-            />
-            {!input.description ? <output> ✏</output> : <output> ✔</output>}
-          </FormGroup>
-          <FormGroup>
-            <input
-              className="form-control"
-              type="number"
-              value={input.stock}
-              min="0"
-              name="stock"
-              placeholder="Stock"
-              onChange={(e) => handlerProduct(e)}
-            />
-            {!input.stock ? <output> ✏</output> : <output> ✔</output>}
-          </FormGroup>
-          <div>
-            <h4> Elegir Categorias</h4>
-            {c.map((e, i) => (
-              <div class="form-check">
-                <label key={i} class="form-check-label">
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    name="ids_categories"
-                    value={e.id}
-                    onChange={(e) => handlerCategories(e)}
-                  />
-                  {e.name}
-                </label>
-              </div>
-            ))}
-          </div>
-          <div>
-            <h4> Elegir Dieta</h4>
-            {d.map((e, i) => (
-              <div class="form-check">
-                <label key={i} class="form-check-label">
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    name="ids_diets"
-                    value={e.id}
-                    onChange={(e) => handlerDiets(e)}
-                  />
-                  {e.name}
-                </label>
-              </div>
-            ))}
-          </div>
-          <FormGroup>
-            <label> Inserte imagen</label>
-            <input
-              className="form-control"
-              type="file"
-              accept="image/png, .jpeg, .jpg"
-              name="image"
-              onChange={(e) => handlerProduct(e)}
-            />
-            {!input.image ? <output> ✏</output> : <output> ✔</output>}
-          </FormGroup>
-        </ModalBody>
-        <ModalFooter>
-          <Button color="primary" onClick={(e) => handlerSubmitProduct(e)}>
-            Insertar
-          </Button>
-          <Button className="btn btn-danger" onClick={() => closeProduct()}>
-            Cancelar
-          </Button>
-        </ModalFooter>
-      </Modal>
-      <Modal isOpen={modal.category}>
-        <ModalHeader>
-          <div>
-            <h3>Insertar Nueva Categoria</h3>
-          </div>
-        </ModalHeader>
-        <ModalBody onSubmit={(e) => handlerSubmitCategory(e)}>
-          <FormGroup>
-            <label>Nombre de categoria</label>
-            <input
-              className="form-control"
-              name="name"
-              type="text"
-              value={category.name}
-              onChange={(e) => handlerCategory(e)}
-            />
-            {!category.name ? <output> ✏</output> : <output> ✔</output>}
-          </FormGroup>
-          <FormGroup>
-            <label>Descripción de categoria</label>
-            <input
-              className="form-control"
-              name="description"
-              type="textarea"
-              value={category.description}
-              onChange={(e) => handlerCategory(e)}
-            />
-            {!category.description ? <output> ✏</output> : <output> ✔</output>}
-          </FormGroup>
-        </ModalBody>
-        <ModalFooter>
-          <Button color="primary" onClick={(e) => handlerSubmitCategory(e)}>
-            Insertar
-          </Button>
-          <Button className="btn btn-danger" onClick={() => closeCategory()}>
-            Cancelar
-          </Button>
-        </ModalFooter>
-      </Modal>
-      <Modal isOpen={modal.diet}>
-        <ModalHeader>
-          <div>
-            <h3>Insertar Nueva Dieta</h3>
-          </div>
-        </ModalHeader>
-        <ModalBody onSubmit={(e) => handlerSubmitDiet(e)}>
-          <div>
-            <label>Nombre de Dieta</label>
-            <input
-              className="form-control"
-              name="name"
-              type="text"
-              value={diet.name}
-              onChange={(e) => handlerDiet(e)}
-            />
-            {!diet.name ? <output> ✏</output> : <output> ✔</output>}
-          </div>
-          <div>
-            <label>Descripción de la Dieta</label>
-            <input
-              className="form-control"
-              name="description"
-              type="textarea"
-              value={diet.description}
-              onChange={(e) => handlerDiet(e)}
-            />
-            {!diet.description ? <output> ✏</output> : <output> ✔</output>}
-          </div>
-        </ModalBody>
-        <ModalFooter>
-          <Button color="primary" onClick={(e) => handlerSubmitDiet(e)}>
-            Insertar
-          </Button>
-          <Button className="btn btn-danger" onClick={() => closeDiet()}>
-            Cancelar
-          </Button>
-        </ModalFooter>
-      </Modal>
+      <FormCreator
+        modal={modal}
+        input={input}
+        handlerProduct={handlerProduct}
+        c={c}
+        d={d}
+        handlerCategories={handlerCategories}
+        handlerDiets={handlerDiets}
+        handlerSubmitProduct={handlerSubmitProduct}
+        closeProduct={closeProduct}
+        handlerSubmitCategory={handlerSubmitCategory}
+        category={category}
+        diet={diet}
+        handlerCategory={handlerCategory}
+        closeCategory={closeCategory}
+        handlerSubmitDiet={handlerSubmitDiet}
+        handlerDiet={handlerDiet}
+        closeDiet={closeDiet}
+      />
       {/* 
       Modales de Edicion 
       
@@ -509,13 +319,12 @@ export default function Creator() {
         d={d}
         c={c}
         editModal={editModal}
-        input={input}
+        input={input.editar}
         handlerProduct={handlerProduct}
-        handlerCategories= {handlerCategories}
+        handlerCategories={handlerCategories}
         handlerDiets={handlerDiets}
         handlerSubmitProduct={handlerSubmitProduct}
-        closeProduct={closeProduct}
-  
+        editProductClose={editProductClose}
       />
       <Container>
         <Table>
@@ -529,15 +338,20 @@ export default function Creator() {
             </tr>
           </thead>
           {p.map((e) => (
-            <Tables
-              id={e.id}
-              product={e.name}
-              stock={e.stock}
-              price={e.price}
-              stock={e.stock}
-              img={e.image}
-              editProduct={editProductOpen}
-            />
+            <tbody key={e.id}>
+              <td>
+                <img src={e.image} height="60" width="80" />
+              </td>
+              <td>{e.name}</td>
+              <td>{e.price}</td>
+              <td>{e.stock}</td>
+              <td>
+                <Button color="primary" onClick={() => editProductOpen(e)}>
+                  ✏
+                </Button>
+                <Button color="danger">🗑</Button>
+              </td>
+            </tbody>
           ))}
         </Table>
       </Container>
