@@ -1,23 +1,19 @@
 import React, { useEffect, useState, useRef } from "react";
 import { connect } from "react-redux";
-import { getDiets, getCategories, getProducts, orderPrice, getByPrice, getByIdDietAndCategory } from "../Actions";
+import { getDiets, getCategories, getProducts, orderPrice, getByPrice,getProductsFiltered } from "../Actions";
 import { Form, Button, Overlay, Tooltip, Tab, Tabs, Sonnet } from 'react-bootstrap'
 import './Filters.css'
 
 
-function ProductsFilters({ getDiets, getCategories, getProducts, categories, diets, orderPrice, products, getByIdDietAndCategory , getByPrice }) {
+function ProductsFilters({ getDiets, getCategories, getProducts, categories, diets, orderPrice, products, getProductsFiltered }) {
 
-
-    const [sliderValmin, setSliderValmin] = useState('');
-
-
-    const [sliderValmax, setSliderValmax] = useState('');
-
-
-    const [categoryfilter, setCategoryFilter] = useState('');
-
-
-    const [dietsfilter, setDietsFilter] = useState('');
+    
+    const [priceL, setPriceL] = useState('');
+    const [priceH, setPriceH] = useState('');
+    const [idcategory, setIdcategory] = useState('');
+    const [iddiet, setIddiet] = useState('');
+    const [sortby, setSortby] = useState('');
+    //const [sortbyPrice, setSortbyPrice] = useState('');
 
 
 
@@ -34,60 +30,54 @@ function ProductsFilters({ getDiets, getCategories, getProducts, categories, die
 
 
     function handleCategory(event) {
-
         if (event.target.value === 'Category') {
-            return setCategoryFilter('')
+            return setIdcategory('')
         }
-        return setCategoryFilter(event.target.value)
-    };
+        return setIdcategory(event.target.value)
+    }
 
 
     function handleDiet(event) {
         if (event.target.value === 'Dieta') {
-            return setDietsFilter('')
+            return setIddiet('')
         }
-
-        return setDietsFilter(event.target.value)
+        return setIddiet(event.target.value)
     };
 
     useEffect(() => {
-        getByIdDietAndCategory(categoryfilter, dietsfilter)
-    }, [categoryfilter, dietsfilter])
+        getProductsFiltered(idcategory,iddiet,priceL,priceH,sortby)
+    }, [idcategory,iddiet,priceL,priceH,sortby])
 
 
 
     function handlePrice(event) {
-
-        orderPrice(products, { tipe: event.target.value })
-
+        setSortby(event.target.value)
     }
 
 
     function handleName(event) {
-
-        orderPrice(products, { tipe: event.target.value })
-
+        setSortby(event.target.value)
     }
 
 
 
     function handleByPriceMin(event) {
-        setSliderValmin(event.target.value);
+        return setPriceL(event.target.value)
     }
 
 
     function handleByPriceMax(event) {
-        setSliderValmax(event.target.value);
+        return setPriceH(event.target.value)
     }
 
     function HandleChangeOnSubmit(event) {
         event.preventDefault();
-        console.log(sliderValmax)
-        console.log(sliderValmin)
-        if (sliderValmin > sliderValmax || sliderValmax < '1' ) {
+        console.log(priceH)
+        console.log(priceL)
+        if (priceL > priceH && priceH !== '' ) {
             return alert('Ingresa valores correctos')
         }
-        getByPrice(sliderValmin, sliderValmax);
+        getProductsFiltered(idcategory,iddiet,priceL,priceH,sortby);
     }
 
 
@@ -168,7 +158,7 @@ function ProductsFilters({ getDiets, getCategories, getProducts, categories, die
                             type={type}
                             id={`inline-${type}-1`}
                             onChange={handleName}
-                            value='Order By Name'
+                            value='Name'
                         />
                         <Form.Check
                             inline
@@ -177,7 +167,7 @@ function ProductsFilters({ getDiets, getCategories, getProducts, categories, die
                             type={type}
                             id={`inline-${type}-1`}
                             onChange={handleName}
-                            value='Ascendent'
+                            value='AscendentName'
                         />
                         <Form.Check
                             inline
@@ -186,7 +176,7 @@ function ProductsFilters({ getDiets, getCategories, getProducts, categories, die
                             type={type}
                             id={`inline-${type}-1`}
                             onChange={handleName}
-                            value='Descendent'
+                            value='DescendentName'
                         />
                     </div>
                 ))}
@@ -212,7 +202,7 @@ function ProductsFilters({ getDiets, getCategories, getProducts, categories, die
                             type={type}
                             id={`inline-${type}-1`}
                             onChange={handlePrice}
-                            value='Ascendent'
+                            value='AscendentPrice'
                         />
                         <Form.Check
                             inline
@@ -221,7 +211,7 @@ function ProductsFilters({ getDiets, getCategories, getProducts, categories, die
                             type={type}
                             id={`inline-${type}-1`}
                             onChange={handlePrice}
-                            value='Descendent'
+                            value='DescendentPrice'
                         />
                     </div>
                 ))}
@@ -233,13 +223,13 @@ function ProductsFilters({ getDiets, getCategories, getProducts, categories, die
                     <input
                         type="text"
                         placeholder='Min'
-                        value={sliderValmin}
+                        value={priceL}
                         onChange={handleByPriceMin}
                     />
                     <input
                         type="text"
                         placeholder='Max'
-                        value={sliderValmax}
+                        value={priceH}
                         onChange={handleByPriceMax}
                     />
                     <input type="submit" value='Buscar' className='enviarformulario' />
@@ -321,7 +311,7 @@ const mapDispatchToProps = (dispatch) => {
         getProducts: () => dispatch(getProducts()),
         orderPrice: (orderTarget, products) => dispatch(orderPrice(orderTarget, products)),
         getByPrice: (priceL, priceH) => dispatch(getByPrice(priceL, priceH)),
-        getByIdDietAndCategory: (CategoryId, DietId) => dispatch(getByIdDietAndCategory(CategoryId, DietId))
+        getProductsFiltered: (idcategory,iddiet,priceL,priceH,sortby) => dispatch(getProductsFiltered(idcategory,iddiet,priceL,priceH,sortby))
 
     }
 }

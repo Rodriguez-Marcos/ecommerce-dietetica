@@ -151,10 +151,10 @@ export function getByIdDiet(id){
 };
 
 
-export function getByIdDietAndCategory(CategoryId,DietId){
+export function getProductsFiltered(CategoryId,DietId,priceL,priceH,sortby){
     return async function(dispatch) {
         try {
-            const res = await axios.get(`http://localhost:3001/products?id_category=${CategoryId}&id_diet=${DietId}`);
+            const res = await axios.get(`http://localhost:3001/products?id_category=${CategoryId}&id_diet=${DietId}&priceL=${priceL}&priceH=${priceH}&sortby=${sortby}`);
             return dispatch({
                 type: GET_BY_DIET_AND_CATEGORY,
                 payload: res.data

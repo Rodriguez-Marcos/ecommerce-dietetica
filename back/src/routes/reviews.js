@@ -1,7 +1,5 @@
-const router = require("express").Router();
-const addReview = require("../controllers/addReview");
-router.use(express.json());
-
+const { Router } = require('express')
+const {addReview} = require("../controllers/addReview");
 const router = Router()
 
 

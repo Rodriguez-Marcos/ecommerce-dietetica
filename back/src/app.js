@@ -8,6 +8,7 @@ import Clientroutes from './routes/client.js'
 import Orderroutes from './routes/order.js'
 import Categoryroutes from './routes/category.js'
 import Dietroutes from './routes/diet.js'
+import Reviewroutes from './routes/review.js'
 
 const app = express()
 
@@ -27,6 +28,7 @@ app.use('/clients', Clientroutes);
 app.use('/orders', Orderroutes);
 app.use('/categories', Categoryroutes);
 app.use('/diets', Dietroutes);
+app.use('/reviews',Reviewroutes)
 
 
 

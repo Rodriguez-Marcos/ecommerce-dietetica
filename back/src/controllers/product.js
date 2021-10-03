@@ -44,7 +44,7 @@ export async function createProduct(req, res) {
 }
 
 export async function getProducts(req, res) {
-    let { name, id_category, id_diet, priceL, priceH } = req.query
+    let { name, id_category, id_diet, priceL, priceH, sortby } = req.query
     try {
         if (!id_category && !name && !id_diet) {
 
@@ -99,7 +99,20 @@ export async function getProducts(req, res) {
         if (!priceL) priceL = 0;
         if (!priceH) priceH = await Product.max("price")
         let productsName = products.map(product => product.name)
-        let productsFound = await Product.findAll({ where: { name: productsName, price: { [Op.between]: [parseInt(priceL), parseInt(priceH)], } } })
+        var productsFound = await Product.findAll({ where: { name: productsName, price: { [Op.between]: [parseInt(priceL), parseInt(priceH)], } } })
+        if (sortby) {
+            if (sortby === 'AscendentName') {
+                productsFound.sort((a, b) => a.name.localeCompare(b.name))
+            } else if (sortby === 'DescendentName') {
+                productsFound.sort((a, b) => b.name.localeCompare(a.name))
+            } else if (sortby === 'AscendentPrice') {
+            productsFound.sort((a, b) => a.price - b.price)
+            } else if (sortby === 'DescendentPrice') {
+                productsFound.sort((a, b) => b.price - a.price)
+            } 
+        }
+
+
         return res.status(200).send(productsFound)
 
 

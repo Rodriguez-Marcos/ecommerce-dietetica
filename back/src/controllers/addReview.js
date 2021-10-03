@@ -5,9 +5,8 @@ export async function addReview (req, res, next) {
   let review = req.body;
   try {
     review = await Review.create({ ...review });
-    return res.json(review).status(200);
+    return res.status(200).json(review);
   } catch (err) {
-    res.json(err);
-    return console.log(err);
+    return res.json(err)  ;
   }
 };

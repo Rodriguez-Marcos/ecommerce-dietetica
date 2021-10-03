@@ -21,6 +21,8 @@ var _category = _interopRequireDefault(require("./routes/category.js"));
 
 var _diet = _interopRequireDefault(require("./routes/diet.js"));
 
+var _review = _interopRequireDefault(require("./routes/review.js"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
@@ -49,5 +51,6 @@ app.use('/clients', _client["default"]);
 app.use('/orders', _order["default"]);
 app.use('/categories', _category["default"]);
 app.use('/diets', _diet["default"]);
+app.use('/reviews', _review["default"]);
 var _default = app;
 exports["default"] = _default;
