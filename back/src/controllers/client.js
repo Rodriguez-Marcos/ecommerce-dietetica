@@ -1,5 +1,7 @@
 import Client from '../models/Client.js';
 import Clientbygoogle from '../models/Clientbygoogle.js';
+import Cart from '../models/Cart.js';
+import Favorite from '../models/Favorite.js';
 
 export async function createClient(req, res) {
     const { name, lastname, email, password, address, phone } = req.body;
@@ -16,6 +18,14 @@ export async function createClient(req, res) {
         }
         )
         if (newClient) {
+            let client_id = await Client.findOne({where: {name: newClient.name},attributes:['id']})
+            console.log(client_id.dataValues.id)
+            await Cart.create({
+                id_client: client_id.dataValues.id
+            })
+            await Favorite.create({
+                id_client: client_id.dataValues.id
+            })
             return res.json({
                 message: 'Client created successfully',
                 data: newClient
@@ -71,15 +81,26 @@ export async function createClientGoogle(req,res){
     {return res.status(404).send('Faltan datos')}
     try {
         console.log(googleId)
-        let clientbygoogle = await Clientbygoogle.create({
+        let newClient = await Clientbygoogle.create({
              givenName,
              familyName, 
              email, 
              googleId
         })
-        res.status(200).send({
-            message: 'user by google create',
-           data: clientbygoogle})
+        if (newClient) {
+            let client_id = await Clientbygoogle.findOne({where: {givenName: newClient.givenName},attributes:['googleId']})
+            console.log(client_id)
+            await Cart.create({
+                id_clientGoogle: client_id.dataValues.googleId
+            })
+            await Favorite.create({
+                id_clientGoogle: client_id.dataValues.googleId
+            })
+            return res.status(200).send({
+                message: 'user by google create',
+               data: newClient})
+        }
+        
     }catch (err) {
         console.error(err)
     }
