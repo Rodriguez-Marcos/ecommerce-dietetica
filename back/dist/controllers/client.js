@@ -30,11 +30,7 @@ function createClient(_x, _x2) {
 
 function _createClient() {
   _createClient = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(req, res) {
-<<<<<<< HEAD
-    var _req$body, name, lastname, email, password, address, phone, dateBaseByClient, newClient;
-=======
-    var _req$body, name, lastname, email, password, address, phone, newClient, client_id;
->>>>>>> fd24989c48480e84f03e41b378a8f1279edfb876
+    var _req$body, name, lastname, email, password, address, phone, dateBaseByClient, newClient, client_id;
 
     return regeneratorRuntime.wrap(function _callee$(_context) {
       while (1) {
@@ -50,13 +46,13 @@ function _createClient() {
 
           case 3:
             dateBaseByClient = _context.sent;
-            _context.prev = 4;
 
             if (dateBaseByClient) {
-              _context.next = 12;
+              _context.next = 30;
               break;
             }
 
+            _context.prev = 5;
             _context.next = 8;
             return _Client["default"].create({
               name: name,
@@ -71,15 +67,13 @@ function _createClient() {
 
           case 8:
             newClient = _context.sent;
-<<<<<<< HEAD
-=======
 
             if (!newClient) {
-              _context.next = 15;
+              _context.next = 21;
               break;
             }
 
-            _context.next = 8;
+            _context.next = 12;
             return _Client["default"].findOne({
               where: {
                 name: newClient.name
@@ -87,69 +81,59 @@ function _createClient() {
               attributes: ['id']
             });
 
-          case 8:
+          case 12:
             client_id = _context.sent;
             console.log(client_id.dataValues.id);
-            _context.next = 12;
+            _context.next = 16;
             return _Cart["default"].create({
               id_client: client_id.dataValues.id
             });
 
-          case 12:
-            _context.next = 14;
+          case 16:
+            _context.next = 18;
             return _Favorite["default"].create({
               id_client: client_id.dataValues.id
             });
 
-          case 14:
->>>>>>> fd24989c48480e84f03e41b378a8f1279edfb876
+          case 18:
             return _context.abrupt("return", res.json({
               message: 'Client created successfully',
               data: newClient
             }));
 
-<<<<<<< HEAD
-          case 12:
+          case 21:
             return _context.abrupt("return", res.json({
               message: 'Usuario ya creado'
             }));
 
-          case 13:
-            _context.next = 19;
+          case 22:
+            _context.next = 28;
             break;
 
-          case 15:
-            _context.prev = 15;
-            _context.t0 = _context["catch"](4);
-=======
-          case 15:
-            _context.next = 21;
-            break;
-
-          case 17:
-            _context.prev = 17;
-            _context.t0 = _context["catch"](1);
->>>>>>> fd24989c48480e84f03e41b378a8f1279edfb876
+          case 24:
+            _context.prev = 24;
+            _context.t0 = _context["catch"](5);
             console.log(_context.t0);
             res.status(500).json({
               message: 'Something goes Wrong',
               data: {}
             });
 
-<<<<<<< HEAD
-          case 19:
-=======
-          case 21:
->>>>>>> fd24989c48480e84f03e41b378a8f1279edfb876
+          case 28:
+            _context.next = 31;
+            break;
+
+          case 30:
+            return _context.abrupt("return", res.json({
+              message: 'Usuario ya creado'
+            }));
+
+          case 31:
           case "end":
             return _context.stop();
         }
       }
-<<<<<<< HEAD
-    }, _callee, null, [[4, 15]]);
-=======
-    }, _callee, null, [[1, 17]]);
->>>>>>> fd24989c48480e84f03e41b378a8f1279edfb876
+    }, _callee, null, [[5, 24]]);
   }));
   return _createClient.apply(this, arguments);
 }
@@ -242,15 +226,9 @@ function loginUser(_x7, _x8) {
   return _loginUser.apply(this, arguments);
 }
 
-<<<<<<< HEAD
 function _loginUser() {
   _loginUser = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4(req, res) {
     var _req$body2, email, password, dateBaseByClient;
-=======
-function _createClientGoogle() {
-  _createClientGoogle = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4(req, res) {
-    var _req$body2, givenName, familyName, email, googleId, newClient, client_id;
->>>>>>> fd24989c48480e84f03e41b378a8f1279edfb876
 
     return regeneratorRuntime.wrap(function _callee4$(_context4) {
       while (1) {
@@ -370,7 +348,7 @@ function createClientGoogle(_x11, _x12) {
 
 function _createClientGoogle() {
   _createClientGoogle = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee6(req, res) {
-    var _req$body4, givenName, familyName, email, googleId, dateBaseByGoogle, clientbygoogle;
+    var _req$body4, givenName, familyName, email, googleId, dateBaseByGoogle, newClient, client_id;
 
     return regeneratorRuntime.wrap(function _callee6$(_context6) {
       while (1) {
@@ -398,11 +376,12 @@ function _createClientGoogle() {
             dateBaseByGoogle = _context6.sent;
 
             if (dateBaseByGoogle) {
-              _context6.next = 14;
+              _context6.next = 22;
               break;
             }
 
-            _context6.next = 10;
+            console.log(googleId);
+            _context6.next = 11;
             return _Clientbygoogle["default"].create({
               givenName: givenName,
               familyName: familyName,
@@ -410,39 +389,15 @@ function _createClientGoogle() {
               googleId: googleId
             });
 
-<<<<<<< HEAD
-          case 10:
-            clientbygoogle = _context6.sent;
-            res.status(200).send({
-              message: 'user by google create',
-              data: clientbygoogle
-            });
-            _context6.next = 15;
-            break;
-
-          case 14:
-            res.status(200).send('Usuario ya creado');
-
-          case 15:
-            _context6.next = 20;
-            break;
-
-          case 17:
-            _context6.prev = 17;
-            _context6.t0 = _context6["catch"](3);
-            console.error(_context6.t0);
-
-          case 20:
-=======
-          case 7:
-            newClient = _context4.sent;
+          case 11:
+            newClient = _context6.sent;
 
             if (!newClient) {
-              _context4.next = 18;
+              _context6.next = 22;
               break;
             }
 
-            _context4.next = 11;
+            _context6.next = 15;
             return _Clientbygoogle["default"].findOne({
               where: {
                 givenName: newClient.givenName
@@ -450,46 +405,41 @@ function _createClientGoogle() {
               attributes: ['googleId']
             });
 
-          case 11:
-            client_id = _context4.sent;
+          case 15:
+            client_id = _context6.sent;
             console.log(client_id);
-            _context4.next = 15;
+            _context6.next = 19;
             return _Cart["default"].create({
               id_clientGoogle: client_id.dataValues.googleId
             });
 
-          case 15:
-            _context4.next = 17;
+          case 19:
+            _context6.next = 21;
             return _Favorite["default"].create({
               id_clientGoogle: client_id.dataValues.googleId
             });
 
-          case 17:
-            return _context4.abrupt("return", res.status(200).send({
+          case 21:
+            return _context6.abrupt("return", res.status(200).send({
               message: 'user by google create',
               data: newClient
             }));
 
-          case 18:
-            _context4.next = 23;
+          case 22:
+            _context6.next = 27;
             break;
 
-          case 20:
-            _context4.prev = 20;
-            _context4.t0 = _context4["catch"](3);
-            console.error(_context4.t0);
+          case 24:
+            _context6.prev = 24;
+            _context6.t0 = _context6["catch"](3);
+            console.error(_context6.t0);
 
-          case 23:
->>>>>>> fd24989c48480e84f03e41b378a8f1279edfb876
+          case 27:
           case "end":
             return _context6.stop();
         }
       }
-<<<<<<< HEAD
-    }, _callee6, null, [[3, 17]]);
-=======
-    }, _callee4, null, [[3, 20]]);
->>>>>>> fd24989c48480e84f03e41b378a8f1279edfb876
+    }, _callee6, null, [[3, 24]]);
   }));
   return _createClientGoogle.apply(this, arguments);
 }
