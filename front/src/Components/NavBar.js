@@ -6,6 +6,7 @@ import './Navbar.css';
 import { getProductbyName, setLoading } from '../Actions/index'
 import { Navbar, Nav, NavDropdown, Form, FormControl, Button } from 'react-bootstrap'
 // import ProductsFilters from './Filters'
+import useUser from '../Hooks/UseUser'; //hook para loguearse y ver si esta logueado el usuario
 
 import Logo from '../image/SALVATORE-grande.png'
 
@@ -14,6 +15,7 @@ import Logo from '../image/SALVATORE-grande.png'
 function NavBar({ getProductbyName, setLoading }) {
 
   const [ActualState, setActualState] = useState('')
+  const {isLogin, logout} = useUser()
 
 
 
@@ -59,7 +61,8 @@ function NavBar({ getProductbyName, setLoading }) {
               />
               <Button onSubmit={(e) => handleSubmit(e)} onClick={(e) => handleSubmit(e)} variant="success">Search</Button>
             </Form>
-           <NavLink to='/CreateUser'> Crear Cuenta  </NavLink>
+           {!isLogin?<NavLink to='/CreateUser'> Crear Cuenta  </NavLink>:false}
+           {!isLogin?<NavLink to='/login'> Ingresar  </NavLink>:<NavLink to='/home' onClick={logout}>Salir</NavLink>}
           </Nav>
         </Navbar.Collapse>
       </Navbar>

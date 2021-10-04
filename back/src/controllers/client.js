@@ -1,8 +1,10 @@
 import Client from '../models/Client.js';
 import Clientbygoogle from '../models/Clientbygoogle.js';
+const bcrypt = require('bcrypt');
 
 export async function createClient(req, res) {
-    const { name, lastname, email, password, address, phone } = req.body;
+    let { name, lastname, email, password, address, phone } = req.body;
+    password = await bcrypt.hash(password, 10);
     try {
         let newClient = await Client.create({
             name, 
@@ -67,6 +69,8 @@ export async function deleteClient(req,res){
 
 export async function createClientGoogle(req,res){
     let {givenName, familyName , email, googleId} = req.body;
+    googleId = await bcrypt.hash(googleId, 10);
+
     if(!givenName || !familyName || !email || !googleId)
     {return res.status(404).send('Faltan datos')}
     try {
