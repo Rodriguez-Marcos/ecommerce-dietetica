@@ -26,6 +26,7 @@ export const paginate = (recipes) => {
     };
 };
 
+
 export function getProducts() {
 
     return async function (dispatch) {
@@ -89,13 +90,25 @@ export function getById(id) {
 export function postProduct(payload) {
     return async function (dispatch) {
         await axios.post("http://localhost:3001/products", payload);
+       
+           return dispatch({
+             type: "POST_PRODUCTS",
+             payload,
+           });
+         };
+       }
+export function putProduct(payload, id ){
+        return async function (dispatch) {
+            await axios.put("http://localhost:3001/products/"+ id, payload);
+           
+               return dispatch({
+                 type: "PUT_PRODUCTS",
+                 payload,
+                 id,
+               });
+             };
+           }
 
-        return dispatch({
-            type: "POST_PRODUCTS",
-            payload,
-        });
-    };
-}
 
 
 

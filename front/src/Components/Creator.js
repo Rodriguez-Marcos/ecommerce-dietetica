@@ -1,12 +1,11 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-
-import { postProduct, postCategory, postDiet } from "../Actions";
-import Tables from "./Table";
-import { getProducts, getCategories , getDiets } from "../Actions";
-import "bootstrap";
+import { postProduct, postCategory, postDiet, putProduct } from "../Actions";
+import "bootstrap/dist/css/bootstrap.min.css";
+import FormEdit from "./FormEdit";
+import FormCreator from "./FormCreator";
+import { getProducts, getCategories, getDiets, deleteProductByID } from "../Actions";
 import {
   Table,
   Button,
@@ -14,31 +13,25 @@ import {
   Modal,
   ModalHeader,
   ModalBody,
-  FormGroup,
   ModalFooter,
 } from "reactstrap";
 
 export default function Creator() {
+  //estados
   const p = useSelector((state) => state.reducerPablo.products);
   const c = useSelector((state) => state.reducerPablo.categories);
   const d = useSelector((state) => state.reducerPablo.diets);
-
-
   let dispatch = useDispatch();
- // Renderizados
+  // Renderizados
   useEffect(() => {
     dispatch(getProducts());
-  }, [dispatch]);
-  useEffect(() => {
-    dispatch(getDiets());
-  }, [dispatch]);
-
-  useEffect(() => {
     dispatch(getCategories());
-  }, [dispatch]);
+    dispatch(getDiets());
+  }, [dispatch, deleteProductByID]);
 
   // estados locales
   const [input, setInput] = useState({
+    id: "",
     name: "",
     image: "",
     price: "",
@@ -47,20 +40,19 @@ export default function Creator() {
     ids_categories: [],
     ids_diets: [],
   });
-  console.log(input);
+
   const [category, setCategory] = useState({
     name: "",
     description: "",
   });
-
 
   const [diet, setDiet] = useState({
     name: "",
     description: "",
   });
 
-
   // handlers de seteo
+
   async function handlerProduct(e) {
     if (e.target.name == "image") {
       let file = e.target.files;
@@ -75,7 +67,6 @@ export default function Creator() {
           body: formData,
         }
       );
-
       const fire = await res.json();
 
       setInput({
@@ -96,13 +87,11 @@ export default function Creator() {
         ...input,
         ids_categories: [...input.ids_categories, e.target.value],
       });
-    }
-    else{
+    } else {
       setInput({
         ...input,
         ids_categories: [],
       });
-
     }
   }
 
@@ -112,13 +101,11 @@ export default function Creator() {
         ...input,
         ids_diets: [...input.ids_diets, e.target.value],
       });
-    }
-    else {
+    } else {
       setInput({
         ...input,
         ids_diets: [],
       });
-
     }
   }
 
@@ -129,7 +116,6 @@ export default function Creator() {
     });
   }
 
-
   function handlerDiet(e) {
     setDiet({
       ...diet,
@@ -137,47 +123,46 @@ export default function Creator() {
     });
   }
 
-
-
-  function handleDietsSelection(event) {
-
-    if(event.target.value === ''){
-      return
-    }
-
-    const dietsExists = input.ids_diets.find(
-      (item) => item === event.target.value
-    );
-
-    if (!dietsExists) {
-
-      setInput({
-        ...input,
-        ids_diets: [...input.ids_diets, event.target.value],
-      });
+  // handles edit
+  function handlerSubmitProductEdit(e) {
+    e.preventDefault();
+    if (
+      input.name &&
+      input.price &&
+      input.stock &&
+      input.description &&
+      input.image &&
+      (input.ids_diets.length != 0) & (input.ids_categories.length != 0)
+    ) {
+      dispatch(putProduct(input, input.id));
+      alert("Modificacion exitosa");
+      editProductClose();
+    } else {
+      alert("falta informacion requerida en el formulario");
     }
   }
-  function handleCategorySelection(event) {
+  console.log(input);
 
-    if(event.target.value === ''){
-      return
-    }
+  // Eliminar
 
-    const categoryExists = input.ids_categories.find(
-      (item) => item === event.target.value
-    );
+  function deleteProduct() {
+ 
+   
+  dispatch(deleteProductByID(input.id))
 
-    if (!categoryExists) {
+  setInput({
+    ...input,
+    name: '',
+    id: ''
+  });
+  setDeleteModal({
+    ...deleteModal,
+    product: false,
+  });
 
-      setInput({
-        ...input,
-        ids_categories: [...input.ids_categories, event.target.value],
-      });
-    }
+  dispatch(getProducts())
+  
   }
-
-
-
 
   // handlers de submit
 
@@ -189,11 +174,13 @@ export default function Creator() {
       input.stock &&
       input.description &&
       input.image &&
-      input.ids_diets &&
-      input.ids_categories
+      input.ids_diets.length != 0 &&
+      input.ids_categories.length != 0
     ) {
+      console.log(input);
       dispatch(postProduct(input));
       alert(" Producto creado con exito");
+      dispatch(getProducts())
       closeProduct();
     } else {
       alert("falta informacion requerida en el formulario");
@@ -212,7 +199,6 @@ export default function Creator() {
     }
   }
 
-
   function handlerSubmitDiet(e) {
     e.preventDefault();
     if (diet.name && diet.description) {
@@ -227,11 +213,24 @@ export default function Creator() {
 
   // Modales
 
+  // Modales de Producto
+
   const [modal, setModal] = useState({
     product: false,
     category: false,
     diet: false,
   });
+  const [editModal, setEditModal] = useState({
+    product: false,
+    category: false,
+    diet: false,
+  });
+  const [deleteModal, setDeleteModal] = useState({
+    product: false,
+    category: false,
+    diet: false,
+  });
+
   function openProduct() {
     setModal({
       ...modal,
@@ -249,9 +248,68 @@ export default function Creator() {
       price: "",
       description: "",
       stock: "",
+      ids_categories: [],
+      ids_diets: [],
     });
   }
-  //
+
+  function editProductOpen(e) {
+    setEditModal({
+      ...editModal,
+      product: true,
+    });
+
+    setInput({
+      ...input,
+      id: e.id,
+      name: e.name,
+      image: e.image,
+      price: e.price,
+      description: e.description,
+      stock: e.stock,
+    });
+  }
+  function editProductClose() {
+    setEditModal({
+      ...editModal,
+      product: false,
+    });
+    setInput({
+      name: "",
+      image: "",
+      price: "",
+      description: "",
+      stock: "",
+      ids_categories: [],
+      ids_diets: [],
+    });
+  }
+
+  function openDeleteProduct(e) {
+    setDeleteModal({
+      ...deleteModal,
+      product: true,
+    });
+    setInput({
+      ...input,
+      name: e.name,
+      id: e.id
+    });
+  }
+  function closeDeleteProduct(){
+    setDeleteModal({
+      ...deleteModal,
+      product: false,
+    });
+    setInput({
+      ...input,
+      name: '',
+      id: '',
+    });
+  }
+
+  
+  // Modales de Categoria
 
   function openCategory() {
     setModal({
@@ -271,7 +329,7 @@ export default function Creator() {
     });
   }
 
-  //
+  // Modales de Dieta
 
   function openDiet() {
     setModal({
@@ -298,235 +356,91 @@ export default function Creator() {
       <h1>.</h1>
       <h1>.</h1>
       <Button color="success" onClick={() => openProduct()}>
-        {" "}
         Insertar Producto
       </Button>{" "}
       {"    "}
       <Button color="warning" onClick={() => openCategory()}>
-        {" "}
         Insertar Categoria
-      </Button>{" "}
+      </Button>
       {"    "}
       <Button color="info" onClick={() => openDiet()}>
-        {" "}
         Insertar Dieta
-      </Button>{" "}
-      {"    "}
-      <Modal isOpen={modal.product}>
-        <ModalHeader>
-          <div>
-            <h3>Insertar Nuevo Producto</h3>
-          </div>
-        </ModalHeader>
-        <ModalBody>
-          <FormGroup>
-            <input
-              className="form-control"
-              type="text"
-              value={input.name}
-              name="name"
-              onChange={(e) => handlerProduct(e)}
-              placeholder="Nombre"
-            />
-            {!input.name ? <output> ❌</output> : <output> ✔</output>}
-          </FormGroup>
-          <FormGroup>
-            <input
-              className="form-control"
-              type="number"
-              value={input.price}
-              name="price"
-              placeholder="precio"
-              onChange={(e) => handlerProduct(e)}
-            />
-            {!input.price ? <output> ❌</output> : <output> ✔</output>}
-          </FormGroup>
-          <FormGroup>
-            <input
-              className="form-control"
-              type="textarea"
-              value={input.description}
-              name="description"
-              placeholder="Descripcion"
-              onChange={(e) => handlerProduct(e)}
-            />
-            {!input.description ? <output> ❌</output> : <output> ✔</output>}
-          </FormGroup>
-          <FormGroup>
-            <input
-              className="form-control"
-              type="number"
-              value={input.stock}
-              min="0"
-              name="stock"
-              placeholder="Stock"
-              onChange={(e) => handlerProduct(e)}
-            />
-            {!input.stock ? <output> ❌</output> : <output> ✔</output>}
-          </FormGroup>
-
-          <div>
-          <h4> Elegir Categorias</h4> 
-            {c.map((e, i) => (
-              <div class="form-check">
-                <label key={i} class="form-check-label">
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    name="ids_categories"
-                    value={e.id}
-                    onChange={(e) => handlerCategories(e)}
-                  />
-                  {e.name}
-                </label>
-              </div>
-            ))}
-          </div>
-          <div>
-            <h4> Elegir Dieta</h4> 
-            {d.map((e, i) => (
-              <div class="form-check">
-                <label key={i} class="form-check-label">
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    name="ids_diets"
-                    value={e.id}
-                    onChange={(e) => handlerDiets(e)}
-                  />
-                  {e.name}
-                </label>
-              </div>
-            ))}
-          </div>
-
-          <FormGroup>
-            <label> Inserte imagen</label>
-            <input
-              className="form-control"
-              type="file"
-              accept="image/png, .jpeg, .jpg"
-              name="image"
-              onChange={(e) => handlerProduct(e)}
-            />
-            {!input.image ? <output> ❌</output> : <output> ✔</output>}
-          </FormGroup>
-        </ModalBody>
-        <ModalFooter>
-          <Button color="primary" onClick={(e) => handlerSubmitProduct(e)}>
-            Insertar
-          </Button>
-          <Button className="btn btn-danger" onClick={() => closeProduct()}>
-            Cancelar
-          </Button>
-        </ModalFooter>
-      </Modal>{" "}
-      {"    "}
-      <Modal isOpen={modal.category}>
-        <ModalHeader>
-          <div>
-            <h3>Insertar Nueva Categoria</h3>
-          </div>
-        </ModalHeader>
-        <ModalBody onSubmit={(e) => handlerSubmitCategory(e)}>
-          <FormGroup>
-            <label>Nombre de categoria</label>
-            <input
-              className="form-control"
-              name="name"
-              type="text"
-              value={category.name}
-              onChange={(e) => handlerCategory(e)}
-            />
-            {!category.name ? <output> ❌</output> : <output> ✔</output>}
-          </FormGroup>
-          <FormGroup>
-            <label>Descripción de categoria</label>
-            <input
-              className="form-control"
-              name="description"
-              type="textarea"
-              value={category.description}
-              onChange={(e) => handlerCategory(e)}
-            />
-            {!category.description ? <output> ❌</output> : <output> ✔</output>}
-          </FormGroup>
-        </ModalBody>
-        <ModalFooter>
-          <Button color="primary" onClick={(e) => handlerSubmitCategory(e)}>
-            Insertar
-          </Button>
-          <Button className="btn btn-danger" onClick={() => closeCategory()}>
-            Cancelar
-          </Button>
-        </ModalFooter>
-      </Modal>
-      <Modal isOpen={modal.diet}>
-        <ModalHeader>
-          <div>
-            <h3>Insertar Nueva Dieta</h3>
-          </div>
-        </ModalHeader>
-        <ModalBody onSubmit={(e) => handlerSubmitDiet(e)}>
-          <div>
-            <label>Nombre de Dieta</label>
-            <input
-              className="form-control"
-              name="name"
-              type="text"
-              value={diet.name}
-              onChange={(e) => handlerDiet(e)}
-            />
-            {!diet.name ? <output> ❌</output> : <output> ✔</output>}
-          </div>
-          <div>
-            <label>Descripción de la Dieta</label>
-            <input
-              className="form-control"
-              name="description"
-              type="textarea"
-              value={diet.description}
-              onChange={(e) => handlerDiet(e)}
-            />
-            {!diet.description ? <output> ❌</output> : <output> ✔</output>}
-          </div>
-        </ModalBody>
-        <ModalFooter>
-          <Button color="primary" onClick={(e) => handlerSubmitDiet(e)}>
-            Insertar
-          </Button>
-          <Button className="btn btn-danger" onClick={() => closeDiet()}>
-            Cancelar
-          </Button>
-        </ModalFooter>
-      </Modal>
+      </Button>
+      <FormCreator
+        modal={modal}
+        input={input}
+        handlerProduct={handlerProduct}
+        c={c}
+        d={d}
+        handlerCategories={handlerCategories}
+        handlerDiets={handlerDiets}
+        handlerSubmitProduct={handlerSubmitProduct}
+        closeProduct={closeProduct}
+        handlerSubmitCategory={handlerSubmitCategory}
+        category={category}
+        diet={diet}
+        handlerCategory={handlerCategory}
+        closeCategory={closeCategory}
+        handlerSubmitDiet={handlerSubmitDiet}
+        handlerDiet={handlerDiet}
+        closeDiet={closeDiet}
+      />
+      {/* 
+      Modales de Edicion 
+      
+      */}
+      <FormEdit
+        d={d}
+        c={c}
+        editModal={editModal}
+        input={input}
+        handlerProduct={handlerProduct}
+        handlerCategories={handlerCategories}
+        handlerDiets={handlerDiets}
+        handlerSubmitProduct={handlerSubmitProductEdit}
+        editProductClose={editProductClose}
+      />
       <Container>
         <Table>
           <thead>
             <tr>
               <th>Imagen</th>
               <th>Producto</th>
-          
               <th>Precio</th>
               <th>Stock</th>
               <th>Acción</th>
             </tr>
           </thead>
+
           {p.map((e) => (
-            <Tables
-          
-              id={e.id}
-              product={e.name}
-              stock={e.stock}
-              price={e.price}
-              stock={e.stock}
-              img={e.image}
-            />
+            <tbody key={e.id}>
+              <td>
+                <img src={e.image} height="60" width="80" />
+              </td>
+              <td>{e.name}</td>
+              <td>{e.price}</td>
+              <td>{e.stock}</td>
+              <td>
+                <Button color="primary" onClick={() => editProductOpen(e)}>
+                  ✏
+                </Button>
+                <Button color="danger" onClick={() => openDeleteProduct(e)}>
+                  🗑
+                </Button>
+              </td>
+            </tbody>
           ))}
         </Table>
       </Container>
+      <Modal isOpen={deleteModal.product}>
+        <ModalHeader>Eliminar Producto</ModalHeader>
+        <ModalBody>
+          Desea eliminar : <strong class="badge bg-primary text-wrap  w: 10rem" > {input.name}</strong> de la Lista ?</ModalBody>
+        <ModalFooter>
+          <Button color="primary"  onClick ={()=>deleteProduct()}> Aceptar</Button>
+          <Button  color="danger" onClick ={(e)=> closeDeleteProduct(e)}> Cancelar</Button>
+        </ModalFooter>
+      </Modal>
     </div>
-    
-
   );
 }
