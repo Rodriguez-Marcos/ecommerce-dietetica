@@ -3,7 +3,7 @@ const {addReview} = require("../controllers/addReview");
 const router = Router()
 
 
-router.post("/", addReview);
+router.post("/:id", addReview);
 
 
 export default router;

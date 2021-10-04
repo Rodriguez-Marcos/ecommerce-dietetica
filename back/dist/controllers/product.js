@@ -18,6 +18,8 @@ var _Diet = _interopRequireDefault(require("../models/Diet.js"));
 
 var _Category = _interopRequireDefault(require("../models/Category.js"));
 
+var _Review = _interopRequireDefault(require("../models/Review.js"));
+
 var _sequelize = require("sequelize");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
@@ -335,6 +337,8 @@ function _getById() {
                 model: _Category["default"]
               }, {
                 model: _Diet["default"]
+              }, {
+                model: _Review["default"]
               }]
             });
 
