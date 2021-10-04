@@ -3,6 +3,7 @@ import Clientbygoogle from '../models/Clientbygoogle.js';
 import Cart from '../models/Cart.js';
 import Favorite from '../models/Favorite.js';
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 export async function createClient(req, res) {
     let { name, lastname, email, password, address, phone } = req.body;
@@ -24,6 +25,11 @@ export async function createClient(req, res) {
             fields: ['name', 'lastname', 'email', 'password', 'address', 'phone']
         }
         )
+        let token = ''
+        const {id} = newClient
+        const userToken = {id,email}
+        token = jwt.sign(userToken, 'juanelmascapo' )
+
         if (newClient) {
             let client_id = await Client.findOne({where: {name: newClient.name},attributes:['id']})
             await Cart.create({
@@ -34,7 +40,8 @@ export async function createClient(req, res) {
             })
             return res.json({
                 message: 'Client created successfully',
-                data: newClient
+                data: newClient,
+                token
             })
 
         } else {
@@ -94,9 +101,14 @@ export async function loginUser(req, res) {
     })
     password = await bcrypt.compare(password, dateBaseByClient.password)
     try { if (password) {
+        let token = ''
+        const {id} = dateBaseByClient
+        const userToken = {id,email}
+        token = jwt.sign(userToken, 'juanelmascapo' )
         return res.json({
             message: 'User Login',
             data: dateBaseByClient,
+            token
         })
     } else {
         return res.json({

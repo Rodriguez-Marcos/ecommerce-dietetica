@@ -26,13 +26,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 var bcrypt = require('bcrypt');
 
+var jwt = require('jsonwebtoken');
+
 function createClient(_x, _x2) {
   return _createClient.apply(this, arguments);
 }
 
 function _createClient() {
   _createClient = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(req, res) {
-    var _req$body, name, lastname, email, password, address, phone, dateBaseByClient, newClient, client_id;
+    var _req$body, name, lastname, email, password, address, phone, dateBaseByClient, newClient, token, id, userToken, client_id;
 
     return regeneratorRuntime.wrap(function _callee$(_context) {
       while (1) {
@@ -55,7 +57,7 @@ function _createClient() {
             dateBaseByClient = _context.sent;
 
             if (dateBaseByClient) {
-              _context.next = 32;
+              _context.next = 36;
               break;
             }
 
@@ -74,13 +76,20 @@ function _createClient() {
 
           case 11:
             newClient = _context.sent;
+            token = '';
+            id = newClient.id;
+            userToken = {
+              id: id,
+              email: email
+            };
+            token = jwt.sign(userToken, 'juanelmascapo');
 
             if (!newClient) {
-              _context.next = 23;
+              _context.next = 27;
               break;
             }
 
-            _context.next = 15;
+            _context.next = 19;
             return _Client["default"].findOne({
               where: {
                 name: newClient.name
@@ -88,36 +97,37 @@ function _createClient() {
               attributes: ['id']
             });
 
-          case 15:
+          case 19:
             client_id = _context.sent;
-            _context.next = 18;
+            _context.next = 22;
             return _Cart["default"].create({
               id_client: client_id.dataValues.id
             });
 
-          case 18:
-            _context.next = 20;
+          case 22:
+            _context.next = 24;
             return _Favorite["default"].create({
               id_client: client_id.dataValues.id
             });
 
-          case 20:
+          case 24:
             return _context.abrupt("return", res.json({
               message: 'Client created successfully',
-              data: newClient
+              data: newClient,
+              token: token
             }));
 
-          case 23:
+          case 27:
             return _context.abrupt("return", res.json({
               message: 'Usuario ya creado'
             }));
 
-          case 24:
-            _context.next = 30;
+          case 28:
+            _context.next = 34;
             break;
 
-          case 26:
-            _context.prev = 26;
+          case 30:
+            _context.prev = 30;
             _context.t0 = _context["catch"](8);
             console.log(_context.t0);
             res.status(500).json({
@@ -125,21 +135,21 @@ function _createClient() {
               data: {}
             });
 
-          case 30:
-            _context.next = 33;
+          case 34:
+            _context.next = 37;
             break;
 
-          case 32:
+          case 36:
             return _context.abrupt("return", res.json({
               message: 'Usuario ya creado'
             }));
 
-          case 33:
+          case 37:
           case "end":
             return _context.stop();
         }
       }
-    }, _callee, null, [[8, 26]]);
+    }, _callee, null, [[8, 30]]);
   }));
   return _createClient.apply(this, arguments);
 }
@@ -234,7 +244,7 @@ function loginUser(_x7, _x8) {
 
 function _loginUser() {
   _loginUser = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4(req, res) {
-    var _req$query, email, password, dateBaseByClient;
+    var _req$query, email, password, dateBaseByClient, token, id, userToken;
 
     return regeneratorRuntime.wrap(function _callee4$(_context4) {
       while (1) {
@@ -258,36 +268,44 @@ function _loginUser() {
             _context4.prev = 7;
 
             if (!password) {
-              _context4.next = 12;
+              _context4.next = 16;
               break;
             }
 
+            token = '';
+            id = dateBaseByClient.id;
+            userToken = {
+              id: id,
+              email: email
+            };
+            token = jwt.sign(userToken, 'juanelmascapo');
             return _context4.abrupt("return", res.json({
               message: 'User Login',
-              data: dateBaseByClient
+              data: dateBaseByClient,
+              token: token
             }));
 
-          case 12:
+          case 16:
             return _context4.abrupt("return", res.json({
               message: 'User Login failed'
             }));
 
-          case 13:
-            _context4.next = 19;
+          case 17:
+            _context4.next = 23;
             break;
 
-          case 15:
-            _context4.prev = 15;
+          case 19:
+            _context4.prev = 19;
             _context4.t0 = _context4["catch"](7);
             res.status(404).send(_context4.t0);
             console.log(_context4.t0);
 
-          case 19:
+          case 23:
           case "end":
             return _context4.stop();
         }
       }
-    }, _callee4, null, [[7, 15]]);
+    }, _callee4, null, [[7, 19]]);
   }));
   return _loginUser.apply(this, arguments);
 }

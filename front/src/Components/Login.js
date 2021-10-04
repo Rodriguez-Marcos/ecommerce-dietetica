@@ -6,7 +6,7 @@ import {loginUser} from '../Actions/index'
 import './Login.css'
 
 
-function Login({respuesta, loginUser,message}) {
+function Login({respuesta, loginUser}) {
 
     const history = useHistory();
     const [input, setInput] = useState({
