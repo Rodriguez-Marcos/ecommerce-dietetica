@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import GoogleLogin from 'react-google-login';
 import { validate } from '../Utils/ValidateUser'
@@ -117,15 +117,23 @@ function CreateUser({ respuesta, createUser }) {
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicEmail">
                 <Form.Label>Apellidos</Form.Label>
-                <Form.Control type="text" placeholder="Apellidos" />
+                <Form.Control type="text" placeholder="Apellidos" onChange={handlerUser}  />
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicPassword">
                 <Form.Label>Contraseña</Form.Label>
-                <Form.Control type="password" placeholder="Password" />
+                <Form.Control type="password" placeholder="Password" onChange={handlerUser} />
             </Form.Group>
-            <Button variant="primary" type="submit">
+            <Button variant="primary" type="submit" onClick={handelSubmit}>
                 Crear Cuenta
             </Button>
+            
+            <GoogleLogin
+                clientId="908895428836-kaesjl71puimi31fjbffca9t4nvl7v6r.apps.googleusercontent.com"
+                buttonText="Login"
+                onSuccess={responseGoogle}
+                onFailure={responseGoogle}
+                cookiePolicy={'single_host_origin'}
+            />,
         </Form>
 
 
