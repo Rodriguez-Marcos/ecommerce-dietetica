@@ -32,9 +32,7 @@ function createClient(_x, _x2) {
 
 function _createClient() {
   _createClient = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(req, res) {
-
     var _req$body, name, lastname, email, password, address, phone, dateBaseByClient, newClient, client_id;
-
 
     return regeneratorRuntime.wrap(function _callee$(_context) {
       while (1) {
@@ -74,17 +72,11 @@ function _createClient() {
             newClient = _context.sent;
 
             if (!newClient) {
-
               _context.next = 21;
               break;
             }
 
-<<<<<<< HEAD
             _context.next = 13;
-=======
-            _context.next = 12;
-
->>>>>>> ec2dfa031f8f9d78a74ca24cc1d694d7505d17de
             return _Client["default"].findOne({
               where: {
                 name: newClient.name
@@ -92,34 +84,24 @@ function _createClient() {
               attributes: ['id']
             });
 
-<<<<<<< HEAD
           case 13:
-=======
-
-          case 12:
->>>>>>> ec2dfa031f8f9d78a74ca24cc1d694d7505d17de
             client_id = _context.sent;
             _context.next = 16;
-
             return _Cart["default"].create({
               id_client: client_id.dataValues.id
             });
 
-
           case 16:
             _context.next = 18;
-
             return _Favorite["default"].create({
               id_client: client_id.dataValues.id
             });
 
           case 18:
-
             return _context.abrupt("return", res.json({
               message: 'Client created successfully',
               data: newClient
             }));
-
 
           case 21:
             return _context.abrupt("return", res.json({
@@ -132,18 +114,12 @@ function _createClient() {
 
           case 24:
             _context.prev = 24;
-<<<<<<< HEAD
             _context.t0 = _context["catch"](6);
-=======
-            _context.t0 = _context["catch"](5);
-
->>>>>>> ec2dfa031f8f9d78a74ca24cc1d694d7505d17de
             console.log(_context.t0);
             res.status(500).json({
               message: 'Something goes Wrong',
               data: {}
             });
-
 
           case 28:
             _context.next = 31;
@@ -155,18 +131,11 @@ function _createClient() {
             }));
 
           case 31:
-
           case "end":
             return _context.stop();
         }
       }
-<<<<<<< HEAD
     }, _callee, null, [[6, 24]]);
-=======
-
-    }, _callee, null, [[5, 24]]);
-
->>>>>>> ec2dfa031f8f9d78a74ca24cc1d694d7505d17de
   }));
   return _createClient.apply(this, arguments);
 }
@@ -259,11 +228,9 @@ function loginUser(_x7, _x8) {
   return _loginUser.apply(this, arguments);
 }
 
-
 function _loginUser() {
   _loginUser = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4(req, res) {
     var _req$body2, email, password, dateBaseByClient;
-
 
     return regeneratorRuntime.wrap(function _callee4$(_context4) {
       while (1) {
@@ -429,7 +396,6 @@ function _createClientGoogle() {
               googleId: googleId
             });
 
-
           case 11:
             newClient = _context6.sent;
 
@@ -439,7 +405,6 @@ function _createClientGoogle() {
             }
 
             _context6.next = 15;
-
             return _Clientbygoogle["default"].findOne({
               where: {
                 givenName: newClient.givenName
@@ -477,14 +442,11 @@ function _createClientGoogle() {
             console.error(_context6.t0);
 
           case 27:
-
           case "end":
             return _context6.stop();
         }
       }
-
     }, _callee6, null, [[3, 24]]);
-
   }));
   return _createClientGoogle.apply(this, arguments);
 }
