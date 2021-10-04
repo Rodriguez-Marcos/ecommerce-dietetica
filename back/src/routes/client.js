@@ -5,7 +5,7 @@ const router = Router()
 
 router.post('/',createClient);
 router.post('/bygoogle', createClientGoogle)
-router.get('/loginUser', loginUser)
+router.get('', loginUser)
 router.get('/loginbygoogle', loginBygoogle)
 router.get('/',getClients)
 router.delete('/:id',deleteClient)

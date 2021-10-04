@@ -48,7 +48,7 @@ export default function reducerPablo(state = InitialState, action) {
         case GET_BY_ID_DIET:
             return {
                 ...state,
-                products: action.payload
+                productsFiltered: action.payload
             };
 
         case GET_BY_DIET_AND_CATEGORY:
@@ -62,6 +62,7 @@ export default function reducerPablo(state = InitialState, action) {
                 ...state,
                 products: action.payload.slice()
             }
+
         case GET_PRODUCTS_FILTERED:
             return {
                 ...state,

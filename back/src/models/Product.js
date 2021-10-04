@@ -3,6 +3,7 @@ import { sequelize } from '../database/db.js';
 import Order from './Order.js';
 import Diet from './Diet.js';
 import Category from './Category.js'
+import Review from './Review.js'
 
 const Product = sequelize.define('product', {
     id: {
@@ -64,5 +65,7 @@ Category.belongsToMany(Product,{through: 'product_category',
 name: 'id_category' 
 }
 });
+Product.hasMany(Review,{foreignKey:'id_product',sourceKey:'id'})
+Review.belongsTo(Product,{foreignKey:'id_product',sourceKey:'id'})
 
 export default Product
