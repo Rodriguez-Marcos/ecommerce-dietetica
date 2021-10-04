@@ -4,6 +4,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.addReview = addReview;
+exports.getReview = getReview;
 
 var _Review = _interopRequireDefault(require("../models/Review.js"));
 
@@ -58,3 +59,59 @@ function _addReview() {
 }
 
 ;
+
+function getReview(_x4, _x5) {
+  return _getReview.apply(this, arguments);
+}
+
+function _getReview() {
+  _getReview = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(req, res) {
+    var id, reviews;
+    return regeneratorRuntime.wrap(function _callee2$(_context2) {
+      while (1) {
+        switch (_context2.prev = _context2.next) {
+          case 0:
+            id = req.params.id;
+            _context2.prev = 1;
+            _context2.next = 4;
+            return _Review["default"].findAll({
+              where: {
+                id_product: id
+              }
+            });
+
+          case 4:
+            reviews = _context2.sent;
+
+            if (!reviews) {
+              _context2.next = 7;
+              break;
+            }
+
+            return _context2.abrupt("return", res.json({
+              message: 'Reviews found',
+              data: reviews
+            }));
+
+          case 7:
+            _context2.next = 13;
+            break;
+
+          case 9:
+            _context2.prev = 9;
+            _context2.t0 = _context2["catch"](1);
+            console.log(_context2.t0);
+            res.status(500).json({
+              message: 'Something goes Wrong',
+              data: {}
+            });
+
+          case 13:
+          case "end":
+            return _context2.stop();
+        }
+      }
+    }, _callee2, null, [[1, 9]]);
+  }));
+  return _getReview.apply(this, arguments);
+}

@@ -42,7 +42,7 @@ function Detail({ match }) {
       function handleSubmit(e) {
         e.preventDefault();
         return axios
-          .post(REVIEW_URL, input)
+          .post(REVIEW_URL+id, input)
           .then((r) => {
             e.target.reset();
             setInput({
