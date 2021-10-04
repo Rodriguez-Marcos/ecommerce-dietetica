@@ -1,3 +1,10 @@
 .divuser{
-    margin: 20%;
+    height: 50vh;
+    width: 50vw;
+    margin: auto;
+    bottom: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    position: absolute;
 }

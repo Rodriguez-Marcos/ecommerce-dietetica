@@ -4,9 +4,10 @@ import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import './Navbar.css';
 import { getProductbyName, setLoading } from '../Actions/index'
-import { Navbar, Nav, NavDropdown, Form, FormControl, Button } from 'react-bootstrap'
+import { Navbar, Nav, NavDropdown, Form, FormControl, Button, Image } from 'react-bootstrap'
 import Logo from '../image/SALVATORE-grande.png'
 import lupa from '../image/buscar.png'
+import Sesion from '../image/usuario.png'
 
 
 
@@ -65,9 +66,12 @@ function NavBar({ getProductbyName, setLoading, login_user, user }) {
               />
               <button id="lupabtn" onSubmit={(e) => handleSubmit(e)} onClick={(e) => handleSubmit(e)}><img id="lupaimg" src={lupa} /></button>
             </Form>
-            {user.data  || login_user.data ? <div> <p> Bienvendido {user.data?.name ? user.data.name : login_user.data.name} </p> <button onClick> Salir </button> </div> 
-            :  <div><NavLink to='/CreateUser'> Crear Cuenta  </NavLink> <NavLink to='/Login'> Login </NavLink> </div> }
-            
+            {user.data || login_user.data ? <div> <p> Bienvendido {user.data?.name ? user.data.name : login_user.data.name} </p> <button onClick> Salir </button> </div>
+              : <div id="btnsSesionRegistro">
+                <NavLink id="btnRegistro" to='/CreateUser'>Registrate</NavLink>
+                <NavLink id="btnSesion" to='/Login'><Image id="imgSesion" src={Sesion}/><span>Inicia Sesion</span> </NavLink>
+              </div>}
+
 
           </Nav>
         </Navbar.Collapse>

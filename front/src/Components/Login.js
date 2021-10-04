@@ -4,6 +4,7 @@ import { useHistory } from "react-router-dom";
 import { connect } from 'react-redux';
 import {loginUser} from '../Actions/index'
 import './Login.css'
+import {Form, Button} from 'react-bootstrap'
 
 
 function Login({respuesta, loginUser}) {
@@ -54,14 +55,29 @@ function Login({respuesta, loginUser}) {
     }
 
     return (
-        <div className="divuser">
+        <Form className="divuser">
+        <Form.Group className="mb-3" controlId="formBasicEmail" >
+            <Form.Label>Email</Form.Label>
+            <Form.Control  placeholder="ejemplo@email.com" type="text" name="email" value={input.email} onChange={handleEmail}/>
+            <Form.Text className="text-muted">
+                Nunca compartiremos su correo electrónico con nadie más.
+            </Form.Text>
+        </Form.Group>
+        <Form.Group className="mb-3" controlId="formBasicEmail" >
+            <Form.Label>Contraseña</Form.Label>
+            <Form.Control  placeholder="Contraseña" type="password" name='password' value={input.password} onChange={handleEmail}/>
+            <Form.Text className="text-muted">
+                Escriba su contraseña registrada
+            </Form.Text>
+        </Form.Group>
+        <Button onClick={handleSubmit}> Aceptar </Button>
         
-        <p>Email</p>
+        {/* <p>Email</p>
         <input type='text' name='email' value={input.email} onChange={handleEmail} />
         <p>Password</p>
         <input type='password' name='password' value={input.password} onChange={handleEmail} />
         <button onClick={handleSubmit}> Aceptar </button>
-        
+         */}
 
 
         
@@ -73,7 +89,7 @@ function Login({respuesta, loginUser}) {
                 cookiePolicy={'single_host_origin'}
             />,
     
-        </div>
+        </Form>
 
     )
 }
