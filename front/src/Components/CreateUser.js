@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import GoogleLogin from 'react-google-login';
@@ -7,24 +6,29 @@ import { useHistory } from "react-router-dom";
 import { createUser } from '../Actions/index';
 import { connect } from 'react-redux';
 import './CreateUser.css'
+import useUser from '../Hooks/UseUser';
 import { Form, Button } from 'react-bootstrap'
 
-function CreateUser({ respuesta, createUser }) {
+ function CreateUser() {
+    const { isLogin, login } = useUser();
+
 
     const history = useHistory();
+    useEffect(() => {
+        if (isLogin) history.push('/home');
+    }, [isLogin, history])
 
-
-/*     async function createUser(payload) {
+    async function createUser(payload) {
         await axios.post("http://localhost:3001/clients", payload)
             .then((response) => { console.log(response) })
             .catch((err) => console.error(err))
 
-    }; */
-
+    };
     async function createUserByGoogle(payload) {
         await axios.post("http://localhost:3001/clients/bygoogle", payload)
             .then((response) => { console.log(response) })
             .catch((err) => console.error(err))
+
     };
 
 
@@ -67,15 +71,15 @@ function CreateUser({ respuesta, createUser }) {
             alert('Debes llenar todos los campos')
         }
         else {
+            /* login(input.email,input.password ); */
             createUser(input)
-
             alert('Se creo usuario exitosamente')
-            history.push('/home')
+            login(input.email,input.password)
         }
     }
 
         
-    useEffect(() => {
+   /*  useEffect(() => {
         
             if (respuesta.message === 'Usuario ya creado') {
                 alert('Email ya registrado')
@@ -91,7 +95,7 @@ function CreateUser({ respuesta, createUser }) {
 
     }, [respuesta]
     )
-
+ */
 
 
     const responseGoogle = (response) => {

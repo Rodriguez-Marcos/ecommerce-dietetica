@@ -5,11 +5,23 @@ import { connect } from 'react-redux';
 import {loginUser} from '../Actions/index'
 import './Login.css'
 import {Form, Button} from 'react-bootstrap'
+import useUser from '../Hooks/UseUser';
+
 
 
 function Login({respuesta, loginUser}) {
-
+    
+    const { isLogin, login } = useUser();
     const history = useHistory();
+
+    const [state, setState ] = useState({
+        username: '',
+        password: ''
+    })
+    useEffect(()=>{
+        if(isLogin)history.push('/home');
+    },[isLogin])
+
     const [input, setInput] = useState({
         email: '',
         password:'',
@@ -28,7 +40,9 @@ function Login({respuesta, loginUser}) {
             alert('Debes llenar todos los campos')
         }
         else{
-           return loginUser(input.email, input.password)
+            loginUser(input.email, input.password)
+            login(input.email,input.password)
+
         }
     }
 
@@ -38,7 +52,6 @@ function Login({respuesta, loginUser}) {
                 alert('Usuario no encontrado')
             }
             else if (respuesta.message === 'User Login') {
-                alert('Se Inicio Sesion')
                 history.push('/home')
             }
             else {}

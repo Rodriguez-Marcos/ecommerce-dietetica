@@ -9,8 +9,8 @@ function Search() {
 
     if (!error && !loading)
         return (<>
-            {productsFiltered.length || <h1>No se encontro ningun resultado</h1>}
-            <div className='home'>
+            {productsFiltered.length || <h1 style={{marginTop: '79px'}}>No se encontro ningun resultado</h1>}
+            <div style={{marginTop: '79px'}} className='home'>
                 <ProductsCards
                     products={productsFiltered} />
             </div>
@@ -18,11 +18,11 @@ function Search() {
         )
     if (loading)
         return (
-            <h1>Cargando...</h1>
+            <h1 style={{marginTop: '79px'}}>Cargando...</h1>
         )
     if (error && !loading)
             return(
-                <h1>Error interno</h1>
+                <h1 style={{marginTop: '79px'}}>Error interno</h1>
             )
 }
 

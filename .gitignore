@@ -1,1 +1,5 @@
 back/package-lock.json
+back/dist
+back/node_modules
+front/package-lock.json
+front/node_modules
