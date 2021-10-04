@@ -3,10 +3,12 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.createCart = createCart;
+exports.addToCart = addToCart;
 exports.getCarts = getCarts;
 
 var _Cart = _interopRequireDefault(require("../models/Cart.js"));
+
+var _Product = _interopRequireDefault(require("../models/Product.js"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
@@ -14,43 +16,41 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
-function createCart(_x, _x2) {
-  return _createCart.apply(this, arguments);
+function addToCart(_x, _x2) {
+  return _addToCart.apply(this, arguments);
 }
 
-function _createCart() {
-  _createCart = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(req, res) {
-    var id_client, newCart;
+function _addToCart() {
+  _addToCart = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(req, res) {
+    var _req$params, id_client, id_product, cart, product;
+
     return regeneratorRuntime.wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
-            id_client = req.params.id_client;
+            _req$params = req.params, id_client = _req$params.id_client, id_product = _req$params.id_product;
             _context.prev = 1;
             _context.next = 4;
-            return _Cart["default"].create({
-              'id_client': id_client
-            });
+            return _Cart["default"].findByPk(id_client);
 
           case 4:
-            newCart = _context.sent;
-
-            if (!newCart) {
-              _context.next = 7;
-              break;
-            }
-
-            return _context.abrupt("return", res.json({
-              message: 'Cart created successfully',
-              data: newCart
-            }));
+            cart = _context.sent;
+            _context.next = 7;
+            return _Product["default"].findByPk(id_product);
 
           case 7:
-            _context.next = 13;
-            break;
+            product = _context.sent;
+            _context.next = 10;
+            return cart.addProduct(product);
 
-          case 9:
-            _context.prev = 9;
+          case 10:
+            return _context.abrupt("return", res.json({
+              message: 'Product added successfully',
+              data: product
+            }));
+
+          case 13:
+            _context.prev = 13;
             _context.t0 = _context["catch"](1);
             console.log(_context.t0);
             res.status(500).json({
@@ -58,14 +58,14 @@ function _createCart() {
               data: {}
             });
 
-          case 13:
+          case 17:
           case "end":
             return _context.stop();
         }
       }
-    }, _callee, null, [[1, 9]]);
+    }, _callee, null, [[1, 13]]);
   }));
-  return _createCart.apply(this, arguments);
+  return _addToCart.apply(this, arguments);
 }
 
 function getCarts(_x3, _x4) {
