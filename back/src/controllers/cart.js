@@ -1,19 +1,19 @@
 import Cart from '../models/Cart.js';
+import Product from '../models/Product.js';
 
-export async function createCart(req, res) {
-    const { id_client } = req.params;
+export async function addToCart(req, res) {
+    const { id_client,id_product } = req.params;
+  
     try {
-        let newCart = await Cart.create({
+        let cart = await Cart.findByPk(id_client)
+        let product = await Product.findByPk(id_product)
+          await cart.addProduct(product)  
             
-            'id_client':id_client
-        }
-        )
-        if (newCart) {
             return res.json({
-                message: 'Cart created successfully',
-                data: newCart
+                message: 'Product added successfully',
+                data: product
             })
-        }
+        
 
     } catch (err) {
         console.log(err)
