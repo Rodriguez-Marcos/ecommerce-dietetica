@@ -14,10 +14,8 @@ export const FAIL_TO_LOAD = 'FAIL_TO_LOAD'
 export const SET_LOADING = 'SET_LOADING';
 export const REVIEW_URL = "REVIEW_URL";
 export const GET_ID = "GET_ID";
-
 export const SET_NEW_USER = 'SET_NEW_USER';
 export const SET_LOGIN_USER = 'SET_LOGIN_USER';
-
 
 
 
@@ -238,7 +236,6 @@ export function getByPrice(priceL, priceH) {
     };
 };
 
-
 export function review(payload) {
     return async function (dispatch) {
         await axios.post("http://localhost:3001/review", payload);
@@ -272,4 +269,3 @@ export function loginUser(value) {
         } catch (err) { console.log(err) }
     }
 };
-
