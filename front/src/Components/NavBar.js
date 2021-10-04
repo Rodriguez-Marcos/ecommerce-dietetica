@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -19,6 +19,11 @@ function NavBar({ getProductbyName, setLoading, login_user, user }) {
 
   const [ActualState, setActualState] = useState('')
   const {isLogin, logout} = useUser()
+
+  useEffect(()=>{
+    console.log('se recargo el nav');
+
+  },[isLogin])
 
 
 
@@ -70,7 +75,7 @@ function NavBar({ getProductbyName, setLoading, login_user, user }) {
               <button id="lupabtn" onSubmit={(e) => handleSubmit(e)} onClick={(e) => handleSubmit(e)}><img id="lupaimg" src={lupa} /></button>
             </Form>
             {console.log(isLogin)}
-            {isLogin && (user.data  || login_user.data) ? <div> <p> Bienvendido {user.data?.name ? user.data.name : login_user.data.name} </p> <button onClick={logout}> Salir </button> </div> 
+            {isLogin || (user.data  || login_user.data) ? <div> <p> Bienvendido {user.data?.name ? user.data?.name : login_user.data?.name } </p> <button onClick={logout}> Salir </button> </div> 
             :  <div><NavLink to='/CreateUser'> Crear Cuenta  </NavLink> <NavLink to='/Login'> Login </NavLink> </div> }
             
 

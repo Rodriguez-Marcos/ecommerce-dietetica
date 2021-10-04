@@ -75,7 +75,6 @@ import { Form, Button } from 'react-bootstrap'
             createUser(input)
             alert('Se creo usuario exitosamente')
             login(input.email,input.password)
-            history.push('/home')
         }
     }
 
