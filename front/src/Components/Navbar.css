@@ -1,6 +1,7 @@
 :root{
     --colorCafe: #99642C;
     --hoverColorText:rgb(175, 172, 172);
+    --colorverde:#849836
 }
 .navbar{
     background-color: var(--colorCafe);
@@ -76,7 +77,7 @@
     width: 10vw;
 }
 .Logo:hover{
-    background-color: rgb(18, 121, 18);
+    background-color: var(--colorverde);
     border-radius: 20px;
 }
 #lupabtn{
@@ -94,12 +95,40 @@
     border: none;
 }
 #lupabtn:hover{
-    background-color: #849836;;
+    background-color: var(--colorverde);
     border-radius: 36px;
 }
 #lupaimg{
     width: 5vw;
 }
+#btnsSesionRegistro{
+    width: 50%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+}
+#imgSesion{
+   width: 3vw; 
+}
+#imgSesion:hover{
+    width: 4vw;
+}
+#btnSesion{
+    text-decoration: none;
+    color: white;
+}
+#btnSesion span{
+    display: none;
+}
+#btnRegistro{
+    text-decoration: none;
+    color: white; 
+}
+#btnRegistro:hover{
+    color:var(--hoverColorText) ;
+}
+
 @media only screen and (max-width: 700px) {
     .Logo{
         width: 20vw;
@@ -107,6 +136,12 @@
     #lupaimg{
         width: 10vw;
     }
+    #btnSesion span{
+        display:initial;
+    }
+    #imgSesion{
+        display: none; 
+     }
   }
 /* Movil */
 .navbar-nav{
