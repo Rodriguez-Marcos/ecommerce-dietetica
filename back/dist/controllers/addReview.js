@@ -25,32 +25,34 @@ function addReview(_x, _x2, _x3) {
 
 function _addReview() {
   _addReview = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(req, res, next) {
-    var review, newReview;
+    var review, id, newReview;
     return regeneratorRuntime.wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
-            review = req.body; // let {id} = req.params
+            review = req.body;
+            id = req.params.id;
+            _context.prev = 2;
+            _context.next = 5;
+            return _Review["default"].create(_objectSpread(_objectSpread({}, review), {}, {
+              id_product: id
+            }));
 
-            _context.prev = 1;
-            _context.next = 4;
-            return _Review["default"].create(_objectSpread({}, review));
-
-          case 4:
+          case 5:
             newReview = _context.sent;
             return _context.abrupt("return", res.status(200).json(newReview));
 
-          case 8:
-            _context.prev = 8;
-            _context.t0 = _context["catch"](1);
+          case 9:
+            _context.prev = 9;
+            _context.t0 = _context["catch"](2);
             return _context.abrupt("return", res.json(_context.t0));
 
-          case 11:
+          case 12:
           case "end":
             return _context.stop();
         }
       }
-    }, _callee, null, [[1, 8]]);
+    }, _callee, null, [[2, 9]]);
   }));
   return _addReview.apply(this, arguments);
 }
