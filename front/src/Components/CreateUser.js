@@ -14,12 +14,12 @@ function CreateUser({ respuesta, createUser }) {
     const history = useHistory();
 
 
-    async function createUser(payload) {
+/*     async function createUser(payload) {
         await axios.post("http://localhost:3001/clients", payload)
             .then((response) => { console.log(response) })
             .catch((err) => console.error(err))
 
-    };
+    }; */
 
     async function createUserByGoogle(payload) {
         await axios.post("http://localhost:3001/clients/bygoogle", payload)
@@ -117,11 +117,16 @@ function CreateUser({ respuesta, createUser }) {
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicEmail">
                 <Form.Label>Apellidos</Form.Label>
-                <Form.Control type="text" placeholder="Apellidos" onChange={handlerUser}  />
+                <Form.Control type="text" placeholder="Apellidos" value={input.lastname}
+                    name="lastname" onChange={handlerUser}  />
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicPassword">
                 <Form.Label>Contraseña</Form.Label>
-                <Form.Control type="password" placeholder="Password" onChange={handlerUser} />
+                <Form.Control type="password" placeholder="Password" value={input.password}
+                    name="password" onChange={handlerUser} />
+                <Form.Label>Email</Form.Label>
+                <Form.Control type="text" placeholder="Email" value={input.email}
+                    name="email" onChange={handlerUser} />
             </Form.Group>
             <Button variant="primary" type="submit" onClick={handelSubmit}>
                 Crear Cuenta
