@@ -15,6 +15,8 @@ var _Diet = _interopRequireDefault(require("./Diet.js"));
 
 var _Category = _interopRequireDefault(require("./Category.js"));
 
+var _Review = _interopRequireDefault(require("./Review.js"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 var Product = _db.sequelize.define('product', {
@@ -87,6 +89,16 @@ _Category["default"].belongsToMany(Product, {
   foreignKey: {
     name: 'id_category'
   }
+});
+
+Product.hasMany(_Review["default"], {
+  foreignKey: 'id_product',
+  sourceKey: 'id'
+});
+
+_Review["default"].belongsTo(Product, {
+  foreignKey: 'id_product',
+  sourceKey: 'id'
 });
 
 var _default = Product;

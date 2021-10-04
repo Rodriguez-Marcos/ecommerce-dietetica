@@ -21,11 +21,12 @@ export function ProductCard({ product }) {
 
   function handleClickTrolley(e) {
     e.preventDefault();
-    let trolley = Array.isArray(cookies.get('trolley')) ? [...cookies.get('trolley')] : [];
+    let trolley = Array.isArray(cookies.get('trolley')) ? [...cookies.get('trolley')] : []; /// trolley : []
     if (!trolley.find(x => x.id === product.id))
       trolley.push(product);
     cookies.set('trolley', trolley)
   }
+
   function handleClose(e) {
     e.preventDefault();
     let trolley = Array.isArray(cookies.get('trolley')) ? [...cookies.get('trolley')] : [];
@@ -36,7 +37,7 @@ export function ProductCard({ product }) {
   }
 
   return (
-    <Card style={{ width: '18rem' }} id="a">
+    <Card style={{ width: '18rem' }} id="a" key={product.id}>
       <Card.Title>{product.name}</Card.Title>
       <Card id="divImg">
         <Card.Img id="img" variant="top" src={product.image?  product.image: defaultimg} />

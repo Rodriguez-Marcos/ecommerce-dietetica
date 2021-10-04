@@ -6,11 +6,17 @@ Object.defineProperty(exports, "__esModule", {
 exports.createClient = createClient;
 exports.getClients = getClients;
 exports.deleteClient = deleteClient;
+exports.loginUser = loginUser;
+exports.loginBygoogle = loginBygoogle;
 exports.createClientGoogle = createClientGoogle;
 
 var _Client = _interopRequireDefault(require("../models/Client.js"));
 
 var _Clientbygoogle = _interopRequireDefault(require("../models/Clientbygoogle.js"));
+
+var _Cart = _interopRequireDefault(require("../models/Cart.js"));
+
+var _Favorite = _interopRequireDefault(require("../models/Favorite.js"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
@@ -18,21 +24,45 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+var bcrypt = require('bcrypt');
+
+var jwt = require('jsonwebtoken');
+
 function createClient(_x, _x2) {
   return _createClient.apply(this, arguments);
 }
 
 function _createClient() {
   _createClient = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(req, res) {
-    var _req$body, name, lastname, email, password, address, phone, newClient;
+    var _req$body, name, lastname, email, password, address, phone, dateBaseByClient, newClient, token, id, userToken, client_id;
 
     return regeneratorRuntime.wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
             _req$body = req.body, name = _req$body.name, lastname = _req$body.lastname, email = _req$body.email, password = _req$body.password, address = _req$body.address, phone = _req$body.phone;
-            _context.prev = 1;
-            _context.next = 4;
+            _context.next = 3;
+            return bcrypt.hash(password, 10);
+
+          case 3:
+            password = _context.sent;
+            _context.next = 6;
+            return _Client["default"].findOne({
+              where: {
+                email: email
+              }
+            });
+
+          case 6:
+            dateBaseByClient = _context.sent;
+
+            if (dateBaseByClient) {
+              _context.next = 36;
+              break;
+            }
+
+            _context.prev = 8;
+            _context.next = 11;
             return _Client["default"].create({
               name: name,
               lastname: lastname,
@@ -44,38 +74,82 @@ function _createClient() {
               fields: ['name', 'lastname', 'email', 'password', 'address', 'phone']
             });
 
-          case 4:
+          case 11:
             newClient = _context.sent;
+            token = '';
+            id = newClient.id;
+            userToken = {
+              id: id,
+              email: email
+            };
+            token = jwt.sign(userToken, 'juanelmascapo');
 
             if (!newClient) {
-              _context.next = 7;
+              _context.next = 27;
               break;
             }
 
+            _context.next = 19;
+            return _Client["default"].findOne({
+              where: {
+                name: newClient.name
+              },
+              attributes: ['id']
+            });
+
+          case 19:
+            client_id = _context.sent;
+            _context.next = 22;
+            return _Cart["default"].create({
+              id_client: client_id.dataValues.id
+            });
+
+          case 22:
+            _context.next = 24;
+            return _Favorite["default"].create({
+              id_client: client_id.dataValues.id
+            });
+
+          case 24:
             return _context.abrupt("return", res.json({
               message: 'Client created successfully',
-              data: newClient
+              data: newClient,
+              token: token
             }));
 
-          case 7:
-            _context.next = 13;
+          case 27:
+            return _context.abrupt("return", res.json({
+              message: 'Usuario ya creado'
+            }));
+
+          case 28:
+            _context.next = 34;
             break;
 
-          case 9:
-            _context.prev = 9;
-            _context.t0 = _context["catch"](1);
+          case 30:
+            _context.prev = 30;
+            _context.t0 = _context["catch"](8);
             console.log(_context.t0);
             res.status(500).json({
               message: 'Something goes Wrong',
               data: {}
             });
 
-          case 13:
+          case 34:
+            _context.next = 37;
+            break;
+
+          case 36:
+            return _context.abrupt("return", res.json({
+              message: 'Usuario ya creado'
+            }));
+
+          case 37:
           case "end":
             return _context.stop();
         }
       }
-    }, _callee, null, [[1, 9]]);
+    }, _callee, null, [[8, 30]]);
   }));
   return _createClient.apply(this, arguments);
 }
@@ -164,31 +238,178 @@ function _deleteClient() {
   return _deleteClient.apply(this, arguments);
 }
 
-function createClientGoogle(_x7, _x8) {
-  return _createClientGoogle.apply(this, arguments);
+function loginUser(_x7, _x8) {
+  return _loginUser.apply(this, arguments);
 }
 
-function _createClientGoogle() {
-  _createClientGoogle = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4(req, res) {
-    var _req$body2, givenName, familyName, email, googleId, clientbygoogle;
+function _loginUser() {
+  _loginUser = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4(req, res) {
+    var _req$query, email, password, dateBaseByClient, token, id, userToken;
 
     return regeneratorRuntime.wrap(function _callee4$(_context4) {
       while (1) {
         switch (_context4.prev = _context4.next) {
           case 0:
-            _req$body2 = req.body, givenName = _req$body2.givenName, familyName = _req$body2.familyName, email = _req$body2.email, googleId = _req$body2.googleId;
+            _req$query = req.query, email = _req$query.email, password = _req$query.password;
+            _context4.next = 3;
+            return _Client["default"].findOne({
+              where: {
+                email: email
+              }
+            });
 
-            if (!(!givenName || !familyName || !email || !googleId)) {
-              _context4.next = 3;
+          case 3:
+            dateBaseByClient = _context4.sent;
+            _context4.next = 6;
+            return bcrypt.compare(password, dateBaseByClient.password);
+
+          case 6:
+            password = _context4.sent;
+            _context4.prev = 7;
+
+            if (!password) {
+              _context4.next = 16;
               break;
             }
 
-            return _context4.abrupt("return", res.status(404).send('Faltan datos'));
+            token = '';
+            id = dateBaseByClient.id;
+            userToken = {
+              id: id,
+              email: email
+            };
+            token = jwt.sign(userToken, 'juanelmascapo');
+            return _context4.abrupt("return", res.json({
+              message: 'User Login',
+              data: dateBaseByClient,
+              token: token
+            }));
+
+          case 16:
+            return _context4.abrupt("return", res.json({
+              message: 'User Login failed'
+            }));
+
+          case 17:
+            _context4.next = 23;
+            break;
+
+          case 19:
+            _context4.prev = 19;
+            _context4.t0 = _context4["catch"](7);
+            res.status(404).send(_context4.t0);
+            console.log(_context4.t0);
+
+          case 23:
+          case "end":
+            return _context4.stop();
+        }
+      }
+    }, _callee4, null, [[7, 19]]);
+  }));
+  return _loginUser.apply(this, arguments);
+}
+
+function loginBygoogle(_x9, _x10) {
+  return _loginBygoogle.apply(this, arguments);
+}
+
+function _loginBygoogle() {
+  _loginBygoogle = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee5(req, res) {
+    var _req$body2, googleId, email, dateBaseByGoogle;
+
+    return regeneratorRuntime.wrap(function _callee5$(_context5) {
+      while (1) {
+        switch (_context5.prev = _context5.next) {
+          case 0:
+            _req$body2 = req.body, googleId = _req$body2.googleId, email = _req$body2.email;
+            _context5.next = 3;
+            return _Clientbygoogle["default"].findOne({
+              where: {
+                email: email,
+                googleId: googleId
+              }
+            });
 
           case 3:
-            _context4.prev = 3;
+            dateBaseByGoogle = _context5.sent;
+            _context5.prev = 4;
+
+            if (!dateBaseByGoogle) {
+              _context5.next = 9;
+              break;
+            }
+
+            return _context5.abrupt("return", res.json({
+              message: 'User Login',
+              data: dateBaseByGoogle
+            }));
+
+          case 9:
+            return _context5.abrupt("return", res.json({
+              message: 'User Login failed'
+            }));
+
+          case 10:
+            _context5.next = 16;
+            break;
+
+          case 12:
+            _context5.prev = 12;
+            _context5.t0 = _context5["catch"](4);
+            res.status(404).send(_context5.t0);
+            console.log(_context5.t0);
+
+          case 16:
+          case "end":
+            return _context5.stop();
+        }
+      }
+    }, _callee5, null, [[4, 12]]);
+  }));
+  return _loginBygoogle.apply(this, arguments);
+}
+
+function createClientGoogle(_x11, _x12) {
+  return _createClientGoogle.apply(this, arguments);
+}
+
+function _createClientGoogle() {
+  _createClientGoogle = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee6(req, res) {
+    var _req$body3, givenName, familyName, email, googleId, dateBaseByGoogle, newClient, client_id;
+
+    return regeneratorRuntime.wrap(function _callee6$(_context6) {
+      while (1) {
+        switch (_context6.prev = _context6.next) {
+          case 0:
+            _req$body3 = req.body, givenName = _req$body3.givenName, familyName = _req$body3.familyName, email = _req$body3.email, googleId = _req$body3.googleId;
+
+            if (!(!givenName || !familyName || !email || !googleId)) {
+              _context6.next = 3;
+              break;
+            }
+
+            return _context6.abrupt("return", res.status(404).send('Faltan datos'));
+
+          case 3:
+            _context6.prev = 3;
+            _context6.next = 6;
+            return _Clientbygoogle["default"].findOne({
+              where: {
+                email: email
+              }
+            });
+
+          case 6:
+            dateBaseByGoogle = _context6.sent;
+
+            if (dateBaseByGoogle) {
+              _context6.next = 22;
+              break;
+            }
+
             console.log(googleId);
-            _context4.next = 7;
+            _context6.next = 11;
             return _Clientbygoogle["default"].create({
               givenName: givenName,
               familyName: familyName,
@@ -196,26 +417,57 @@ function _createClientGoogle() {
               googleId: googleId
             });
 
-          case 7:
-            clientbygoogle = _context4.sent;
-            res.status(200).send({
-              message: 'user by google create',
-              data: clientbygoogle
+          case 11:
+            newClient = _context6.sent;
+
+            if (!newClient) {
+              _context6.next = 22;
+              break;
+            }
+
+            _context6.next = 15;
+            return _Clientbygoogle["default"].findOne({
+              where: {
+                givenName: newClient.givenName
+              },
+              attributes: ['googleId']
             });
-            _context4.next = 14;
+
+          case 15:
+            client_id = _context6.sent;
+            console.log(client_id);
+            _context6.next = 19;
+            return _Cart["default"].create({
+              id_clientGoogle: client_id.dataValues.googleId
+            });
+
+          case 19:
+            _context6.next = 21;
+            return _Favorite["default"].create({
+              id_clientGoogle: client_id.dataValues.googleId
+            });
+
+          case 21:
+            return _context6.abrupt("return", res.status(200).send({
+              message: 'user by google create',
+              data: newClient
+            }));
+
+          case 22:
+            _context6.next = 27;
             break;
 
-          case 11:
-            _context4.prev = 11;
-            _context4.t0 = _context4["catch"](3);
-            console.error(_context4.t0);
+          case 24:
+            _context6.prev = 24;
+            _context6.t0 = _context6["catch"](3);
+            console.error(_context6.t0);
 
-          case 14:
+          case 27:
           case "end":
-            return _context4.stop();
+            return _context6.stop();
         }
       }
-    }, _callee4, null, [[3, 11]]);
+    }, _callee6, null, [[3, 24]]);
   }));
   return _createClientGoogle.apply(this, arguments);
 }

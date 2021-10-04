@@ -18,6 +18,8 @@ var _Diet = _interopRequireDefault(require("../models/Diet.js"));
 
 var _Category = _interopRequireDefault(require("../models/Category.js"));
 
+var _Review = _interopRequireDefault(require("../models/Review.js"));
+
 var _sequelize = require("sequelize");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
@@ -131,13 +133,13 @@ function getProducts(_x3, _x4) {
 
 function _getProducts() {
   _getProducts = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(req, res) {
-    var _req$query, name, id_category, id_diet, priceL, priceH, products, productsName, productsFound;
+    var _req$query, name, id_category, id_diet, priceL, priceH, sortby, products, productsName, productsFound;
 
     return regeneratorRuntime.wrap(function _callee2$(_context2) {
       while (1) {
         switch (_context2.prev = _context2.next) {
           case 0:
-            _req$query = req.query, name = _req$query.name, id_category = _req$query.id_category, id_diet = _req$query.id_diet, priceL = _req$query.priceL, priceH = _req$query.priceH;
+            _req$query = req.query, name = _req$query.name, id_category = _req$query.id_category, id_diet = _req$query.id_diet, priceL = _req$query.priceL, priceH = _req$query.priceH, sortby = _req$query.sortby;
             _context2.prev = 1;
 
             if (!(!id_category && !name && !id_diet)) {
@@ -271,10 +273,31 @@ function _getProducts() {
 
           case 38:
             productsFound = _context2.sent;
+
+            if (sortby) {
+              if (sortby === 'AscendentName') {
+                productsFound.sort(function (a, b) {
+                  return a.name.localeCompare(b.name);
+                });
+              } else if (sortby === 'DescendentName') {
+                productsFound.sort(function (a, b) {
+                  return b.name.localeCompare(a.name);
+                });
+              } else if (sortby === 'AscendentPrice') {
+                productsFound.sort(function (a, b) {
+                  return a.price - b.price;
+                });
+              } else if (sortby === 'DescendentPrice') {
+                productsFound.sort(function (a, b) {
+                  return b.price - a.price;
+                });
+              }
+            }
+
             return _context2.abrupt("return", res.status(200).send(productsFound));
 
-          case 42:
-            _context2.prev = 42;
+          case 43:
+            _context2.prev = 43;
             _context2.t0 = _context2["catch"](1);
             console.log(_context2.t0);
             res.status(500).json({
@@ -282,12 +305,12 @@ function _getProducts() {
               data: {}
             });
 
-          case 46:
+          case 47:
           case "end":
             return _context2.stop();
         }
       }
-    }, _callee2, null, [[1, 42]]);
+    }, _callee2, null, [[1, 43]]);
   }));
   return _getProducts.apply(this, arguments);
 }
@@ -314,6 +337,8 @@ function _getById() {
                 model: _Category["default"]
               }, {
                 model: _Diet["default"]
+              }, {
+                model: _Review["default"]
               }]
             });
 

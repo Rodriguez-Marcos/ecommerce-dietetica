@@ -1,14 +1,18 @@
+
 import React, { useState } from 'react';
 import axios from 'axios';
 import GoogleLogin from 'react-google-login';
 import { validate } from '../Utils/ValidateUser'
 import { useHistory } from "react-router-dom";
+import { createUser } from '../Actions/index';
+import { connect } from 'react-redux';
 import './CreateUser.css'
 import { Form, Button } from 'react-bootstrap'
 
-export default function CreateUser() {
+function CreateUser({ respuesta, createUser }) {
 
     const history = useHistory();
+
 
     async function createUser(payload) {
         await axios.post("http://localhost:3001/clients", payload)
@@ -16,14 +20,16 @@ export default function CreateUser() {
             .catch((err) => console.error(err))
 
     };
+
     async function createUserByGoogle(payload) {
         await axios.post("http://localhost:3001/clients/bygoogle", payload)
             .then((response) => { console.log(response) })
             .catch((err) => console.error(err))
-
     };
 
 
+
+    const [click, setClick] = useState(0)
 
     const [input, setInput] = useState({
         name: '',
@@ -62,10 +68,30 @@ export default function CreateUser() {
         }
         else {
             createUser(input)
+
             alert('Se creo usuario exitosamente')
             history.push('/home')
         }
     }
+
+        
+    useEffect(() => {
+        
+            if (respuesta.message === 'Usuario ya creado') {
+                alert('Email ya registrado')
+            }
+            else if (respuesta.message === 'Client created successfully') {
+                alert('Se creo usuario exitosamente')
+                history.push('/home')
+            }
+            else {
+                
+            }
+    
+
+    }, [respuesta]
+    )
+
 
 
     const responseGoogle = (response) => {
@@ -77,6 +103,7 @@ export default function CreateUser() {
     }
 
     return (
+
         <Form className="divuser">
             <Form.Group className="mb-3" controlId="formBasicEmail" >
                 <Form.Label>Nombre</Form.Label>
@@ -102,50 +129,15 @@ export default function CreateUser() {
         </Form>
 
 
-        // <div className="divuser">
-        // <p>Nombre</p>
-        // <input
-        //       type="text"
-        //       value={input.name}
-        //       name="name"
-        //       onChange={handlerUser}
-        //     /> 
 
-        // <p>Apellido</p>
-        // <input
-        //       type="text"
-        //       value={input.lastname}
-        //       name="lastname"
-        //       onChange={handlerUser}
-        //     /> 
-
-        // <p>Password</p>
-        // <input
-        //       type="password"
-        //       value={input.password}
-        //       name="password"
-        //       onChange={handlerUser}
-        //     /> 
-
-        // <p>Email</p>
-        // <input
-        //       type="text"
-        //       value={input.email}
-        //       name="email"
-        //       onChange={handlerUser}
-        //     /> 
-
-        // <button onClick={handelSubmit}> Crear cuenta </button>
-
-
-
-        // <GoogleLogin
-        // clientId="908895428836-kaesjl71puimi31fjbffca9t4nvl7v6r.apps.googleusercontent.com"
-        // buttonText="Login"
-        // onSuccess={responseGoogle}
-        // onFailure={responseGoogle}
-        // cookiePolicy={'single_host_origin'}
-        // />,
-        // </div>
     )
 }
+
+function mapStateToProps(state) {
+    return { respuesta: state.reducerPablo.user }
+}
+function mapDispatchToProps(dispatch) {
+    return { createUser: (value) => dispatch(createUser(value)) }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CreateUser)
