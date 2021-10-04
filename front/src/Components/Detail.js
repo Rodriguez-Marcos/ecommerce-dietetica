@@ -5,6 +5,7 @@ import { REVIEW_URL } from "../Actions/index";
 import { useSelector, useDispatch } from 'react-redux'
 import {  getById } from '../Actions/index'
 import styles from './Detail.module.css'
+
 // import { DiscussionEmbed } from 'disqus-react';
 
 
@@ -108,7 +109,8 @@ function Detail({ match }) {
 
                 <p className={styles.title}>Stock:
                 <p className={styles.producto}> {producto?.stock} unidades</p></p>
-                <p className={styles.title}>Categorias:{producto?.ids_category}</p>
+                <p className={styles.title}>Categorias:{producto?.categories.map(category=>{return <p>{category.name}</p>})}</p>
+                <p className={styles.title}>Reviews:{producto?.reviews.map(review=>{return <p>{review.title}</p>})}</p>
                 <button type="button" class="btn btn-secondary">Agregar a favoritos</button>
             <br />
             <br />
