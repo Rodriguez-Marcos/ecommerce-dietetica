@@ -14,12 +14,11 @@ export default function reducerRocio(state = InitialState, action)  {
                 ...state,
                 detail: action.payload
             }
-        case REVIEW_URL:
-            return{
-                ...state,
-                comentario: action.payload
-                
-            }
+            case REVIEW_URL:
+                return{
+                    ...state,
+                    
+                }
             default:
                 return {
                     state

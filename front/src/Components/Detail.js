@@ -38,27 +38,26 @@ function Detail({ match }) {
         });
       }
 
+      
       function handleSubmit(e) {
         e.preventDefault();
-        return axios.post( REVIEW_URL, input)
-        .then((r) => {
-        e.target.reset();
-        setInput({
-        title: "",
-        description: "",
-        });
-        alert('review enviada')
-        // swal("Creado", "Review creada con éxito", "success")
-        .then( () => window.location.href="/" );
+        return axios
+          .post(REVIEW_URL, input)
+          .then((r) => {
+            e.target.reset();
+            setInput({
+              title: "",
+              description: "",
+              calification: "",
+            });
+            swal("Creado", "Comentario enviado con éxito!", "success")
+            // .then( () => window.location.href="/" );
           })
-          .catch((error) => 
-        //   swal("Error", error, "error"));
-        alert("REVISAR base de datos algo salio mal")
-        (error));
+          .catch((error) => swal("Error", error, "error"));
       }
       
 
-    //   const classes = useStyles();
+    
     return (
         <div className={styles.fondo}>
         <div className={styles.container}>
@@ -118,7 +117,7 @@ function Detail({ match }) {
                 
     <div className={styles.main}>
       
-        <form onSubmit={handleSubmit} className={styles.root}>
+        <form onSubmit={e => {handleSubmit(e)}} className={styles.root}>
         {console.log(handleSubmit)}
 
           <div className={styles.titles}>

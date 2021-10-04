@@ -30,7 +30,7 @@ app.use('/clients', Clientroutes);
 app.use('/orders', Orderroutes);
 app.use('/categories', Categoryroutes);
 app.use('/diets', Dietroutes);
-app.use('/reviews',Reviewroutes)
+app.use('/reviews', Reviewroutes)
 app.use('/favorite',Favoriteroutes)
 app.use('/cart',Cartroutes)
 
