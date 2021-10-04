@@ -1,12 +1,20 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { postProduct, postCategory, postDiet , putProduct} from "../Actions";
+import { postProduct, postCategory, postDiet, putProduct } from "../Actions";
 import "bootstrap/dist/css/bootstrap.min.css";
 import FormEdit from "./FormEdit";
 import FormCreator from "./FormCreator";
-import { getProducts, getCategories, getDiets } from "../Actions";
-import { Table, Button, Container } from "reactstrap";
+import { getProducts, getCategories, getDiets, deleteProductByID } from "../Actions";
+import {
+  Table,
+  Button,
+  Container,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+} from "reactstrap";
 
 export default function Creator() {
   //estados
@@ -19,7 +27,7 @@ export default function Creator() {
     dispatch(getProducts());
     dispatch(getCategories());
     dispatch(getDiets());
-  }, []);
+  }, [dispatch, deleteProductByID]);
 
   // estados locales
   const [input, setInput] = useState({
@@ -124,18 +132,37 @@ export default function Creator() {
       input.stock &&
       input.description &&
       input.image &&
-      input.ids_diets.length !=0 &
-      input.ids_categories.length !=0
+      (input.ids_diets.length != 0) & (input.ids_categories.length != 0)
     ) {
-
-      dispatch(putProduct(input, input.id ));
-      alert('Modificacion exitosa');
+      dispatch(putProduct(input, input.id));
+      alert("Modificacion exitosa");
       editProductClose();
     } else {
       alert("falta informacion requerida en el formulario");
     }
   }
-  console.log(input)
+  console.log(input);
+
+  // Eliminar
+
+  function deleteProduct() {
+ 
+   
+  dispatch(deleteProductByID(input.id))
+
+  setInput({
+    ...input,
+    name: '',
+    id: ''
+  });
+  setDeleteModal({
+    ...deleteModal,
+    product: false,
+  });
+
+  dispatch(getProducts())
+  
+  }
 
   // handlers de submit
 
@@ -147,10 +174,10 @@ export default function Creator() {
       input.stock &&
       input.description &&
       input.image &&
-      input.ids_diets.length !=0 &&
-      input.ids_categories.length !=0
+      input.ids_diets.length != 0 &&
+      input.ids_categories.length != 0
     ) {
-      console.log(input)
+      console.log(input);
       dispatch(postProduct(input));
       alert(" Producto creado con exito");
       closeProduct();
@@ -193,6 +220,11 @@ export default function Creator() {
     diet: false,
   });
   const [editModal, setEditModal] = useState({
+    product: false,
+    category: false,
+    diet: false,
+  });
+  const [deleteModal, setDeleteModal] = useState({
     product: false,
     category: false,
     diet: false,
@@ -251,6 +283,31 @@ export default function Creator() {
       ids_diets: [],
     });
   }
+
+  function openDeleteProduct(e) {
+    setDeleteModal({
+      ...deleteModal,
+      product: true,
+    });
+    setInput({
+      ...input,
+      name: e.name,
+      id: e.id
+    });
+  }
+  function closeDeleteProduct(){
+    setDeleteModal({
+      ...deleteModal,
+      product: false,
+    });
+    setInput({
+      ...input,
+      name: '',
+      id: '',
+    });
+  }
+
+  
   // Modales de Categoria
 
   function openCategory() {
@@ -366,12 +423,23 @@ export default function Creator() {
                 <Button color="primary" onClick={() => editProductOpen(e)}>
                   ✏
                 </Button>
-                <Button color="danger">🗑</Button>
+                <Button color="danger" onClick={() => openDeleteProduct(e)}>
+                  🗑
+                </Button>
               </td>
             </tbody>
           ))}
         </Table>
       </Container>
+      <Modal isOpen={deleteModal.product}>
+        <ModalHeader>Eliminar Producto</ModalHeader>
+        <ModalBody>
+          Desea eliminar : <strong class="badge bg-primary text-wrap  w: 10rem" > {input.name}</strong> de la Lista ?</ModalBody>
+        <ModalFooter>
+          <Button color="primary"  onClick ={()=>deleteProduct()}> Aceptar</Button>
+          <Button  color="danger" onClick ={(e)=> closeDeleteProduct(e)}> Cancelar</Button>
+        </ModalFooter>
+      </Modal>
     </div>
   );
 }

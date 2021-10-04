@@ -119,8 +119,8 @@ export default function FormEdit({
           ))}
         </div>
         <FormGroup>
-          <label> Imagen actual:  </label>
-          {'                                     '}
+          <label> Imagen actual:       </label>
+          {"               "}
           {!input.image ? (
             <output> ✏</output>
           ) : (
