@@ -117,11 +117,11 @@ function CreateUser({ respuesta, createUser }) {
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicEmail">
                 <Form.Label>Apellidos</Form.Label>
-                <Form.Control type="text" placeholder="Apellidos" />
+                <Form.Control type="text" placeholder="Apellidos" onChange={handlerUser}  />
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicPassword">
                 <Form.Label>Contraseña</Form.Label>
-                <Form.Control type="password" placeholder="Password" />
+                <Form.Control type="password" placeholder="Password" onChange={handlerUser} />
             </Form.Group>
             <Button variant="primary" type="submit" onClick={handelSubmit}>
                 Crear Cuenta
