@@ -160,7 +160,9 @@ try {
                data: newClient})
         }
         
+
     }}catch (err) {
+
         console.error(err)
     }
 }
