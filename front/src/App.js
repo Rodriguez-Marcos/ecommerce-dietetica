@@ -20,11 +20,11 @@ function App() {
     <Switch>
     <Route exact path='/home' component={Home}/>
     <Route exact path='/Detail/:id' component={Detail}/>
-    <Route exact path='/Admin' component={Creator}/>
     <Route exact path='/search' component={Search}/>
     <Route exact path='/trolley' component={Trolley}/>
     <Route exact path='/CreateUser' component={CreateUser}/>
     <Route exact path='/Login' component={Login}/>
+    <Route exact path='/Admin' component={Creator}/>
     </Switch>
     {/* <Footer/> */}
     </BrowserRouter>

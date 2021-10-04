@@ -25,6 +25,10 @@ export default function reducerDavid(state = InitialState, action) {
                 ...state,
                 products: action.payload, 
             }
+            case 'PUT_ PRODUCTS':
+                return{
+                    ...state
+                }
             
         default:
             return {...state}

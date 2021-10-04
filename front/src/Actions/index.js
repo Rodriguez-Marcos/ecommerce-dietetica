@@ -12,10 +12,10 @@ export const GET_BY_DIET_AND_CATEGORY = 'GET_BY_DIET_AND_CATEGORY';
 export const PAGINATE = 'PAGINATE';
 export const FAIL_TO_LOAD = 'FAIL_TO_LOAD'
 export const SET_LOADING = 'SET_LOADING';
-export const REVIEW_URL = "REVIEW_URL";
 export const GET_ID = "GET_ID";
 export const SET_NEW_USER = 'SET_NEW_USER';
 export const SET_LOGIN_USER = 'SET_LOGIN_USER';
+export const REVIEW_URL = "http://localhost:3001/reviews";
 
 
 
@@ -25,6 +25,7 @@ export const paginate = (recipes) => {
         payload: recipes,
     };
 };
+
 
 export function getProducts() {
 
@@ -89,13 +90,25 @@ export function getById(id) {
 export function postProduct(payload) {
     return async function (dispatch) {
         await axios.post("http://localhost:3001/products", payload);
+       
+           return dispatch({
+             type: "POST_PRODUCTS",
+             payload,
+           });
+         };
+       }
+export function putProduct(payload, id ){
+        return async function (dispatch) {
+            await axios.put("http://localhost:3001/products/"+ id, payload);
+           
+               return dispatch({
+                 type: "PUT_PRODUCTS",
+                 payload,
+                 id,
+               });
+             };
+           }
 
-        return dispatch({
-            type: "POST_PRODUCTS",
-            payload,
-        });
-    };
-}
 
 
 
