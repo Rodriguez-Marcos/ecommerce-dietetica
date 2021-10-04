@@ -9,7 +9,7 @@ export async function createClient(req, res) {
 
     password = await bcrypt.hash(password,10);
 
-    let dateBaseByClient =  Client.findOne({ where: { email: email } })
+    let dateBaseByClient = await Client.findOne({ where: { email: email } })
 
     if(!dateBaseByClient){
     try {
@@ -86,22 +86,21 @@ export async function deleteClient(req, res) {
 }
 
 export async function loginUser(req, res) {
-    let { email, password } = req.body
-    password = await bcrypt.hash(password,10);
+    let { email, password } = req.query
     let dateBaseByClient = await Client.findOne({
         where: {
-            email: email,
-            password: password
+            email: email
         }
     })
-    try {        if (dateBaseByClient) {
+    password = await bcrypt.compare(password, dateBaseByClient.password)
+    try { if (password) {
         return res.json({
             message: 'User Login',
             data: dateBaseByClient,
         })
     } else {
         return res.json({
-            message: 'User Login failed'
+            message: 'User Login failed',
         })
     }
 } catch (err) {
