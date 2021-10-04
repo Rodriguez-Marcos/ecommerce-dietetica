@@ -12,6 +12,6 @@ var _require2 = require("../controllers/addReview"),
     addReview = _require2.addReview;
 
 var router = Router();
-router.post("/", addReview);
+router.post("/:id", addReview);
 var _default = router;
 exports["default"] = _default;

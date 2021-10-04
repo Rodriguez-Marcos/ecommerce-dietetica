@@ -21,7 +21,7 @@ var _category = _interopRequireDefault(require("./routes/category.js"));
 
 var _diet = _interopRequireDefault(require("./routes/diet.js"));
 
-var _reviews = _interopRequireDefault(require("./routes/reviews.js"));
+var _review = _interopRequireDefault(require("./routes/review.js"));
 
 var _favorite = _interopRequireDefault(require("./routes/favorite.js"));
 
@@ -55,7 +55,7 @@ app.use('/clients', _client["default"]);
 app.use('/orders', _order["default"]);
 app.use('/categories', _category["default"]);
 app.use('/diets', _diet["default"]);
-app.use('/reviews', _reviews["default"]);
+app.use('/reviews', _review["default"]);
 app.use('/favorite', _favorite["default"]);
 app.use('/cart', _cart["default"]);
 var _default = app;

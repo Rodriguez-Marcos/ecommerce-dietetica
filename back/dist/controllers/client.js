@@ -80,7 +80,7 @@ function _createClient() {
               break;
             }
 
-            _context.next = 13;
+            _context.next = 15;
             return _Client["default"].findOne({
               where: {
                 name: newClient.name
@@ -88,15 +88,15 @@ function _createClient() {
               attributes: ['id']
             });
 
-          case 13:
+          case 15:
             client_id = _context.sent;
-            _context.next = 16;
+            _context.next = 18;
             return _Cart["default"].create({
               id_client: client_id.dataValues.id
             });
 
-          case 16:
-            _context.next = 18;
+          case 18:
+            _context.next = 20;
             return _Favorite["default"].create({
               id_client: client_id.dataValues.id
             });
@@ -113,8 +113,12 @@ function _createClient() {
             }));
 
           case 24:
-            _context.prev = 24;
-            _context.t0 = _context["catch"](6);
+            _context.next = 30;
+            break;
+
+          case 26:
+            _context.prev = 26;
+            _context.t0 = _context["catch"](8);
             console.log(_context.t0);
             res.status(500).json({
               message: 'Something goes Wrong',
@@ -135,7 +139,7 @@ function _createClient() {
             return _context.stop();
         }
       }
-    }, _callee, null, [[6, 24]]);
+    }, _callee, null, [[8, 26]]);
   }));
   return _createClient.apply(this, arguments);
 }
@@ -230,7 +234,7 @@ function loginUser(_x7, _x8) {
 
 function _loginUser() {
   _loginUser = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4(req, res) {
-    var _req$body2, email, password, dateBaseByClient;
+    var _req$query, email, password, dateBaseByClient;
 
     return regeneratorRuntime.wrap(function _callee4$(_context4) {
       while (1) {

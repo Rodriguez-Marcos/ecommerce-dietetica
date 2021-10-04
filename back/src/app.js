@@ -8,9 +8,10 @@ import Clientroutes from './routes/client.js'
 import Orderroutes from './routes/order.js'
 import Categoryroutes from './routes/category.js'
 import Dietroutes from './routes/diet.js'
-import Reviewroutes from './routes/reviews.js'
+import Reviewroutes from './routes/review.js'
 import Favoriteroutes from './routes/favorite.js'
 import Cartroutes from './routes/cart.js'
+
 
 const app = express()
 
