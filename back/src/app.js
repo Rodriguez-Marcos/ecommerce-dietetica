@@ -9,6 +9,7 @@ import Orderroutes from './routes/order.js'
 import Categoryroutes from './routes/category.js'
 import Dietroutes from './routes/diet.js'
 import Login from './routes/login.js';
+import Cart from './routes/cart.js';
 
 const app = express()
 
@@ -29,6 +30,7 @@ app.use('/orders', Orderroutes);
 app.use('/categories', Categoryroutes);
 app.use('/diets', Dietroutes);
 app.use('/login', Login);
+app.use('/addCart',Cart)
 
 
 

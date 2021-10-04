@@ -18,6 +18,8 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+var bcrypt = require('bcrypt');
+
 function createClient(_x, _x2) {
   return _createClient.apply(this, arguments);
 }
@@ -31,8 +33,13 @@ function _createClient() {
         switch (_context.prev = _context.next) {
           case 0:
             _req$body = req.body, name = _req$body.name, lastname = _req$body.lastname, email = _req$body.email, password = _req$body.password, address = _req$body.address, phone = _req$body.phone;
-            _context.prev = 1;
-            _context.next = 4;
+            _context.next = 3;
+            return bcrypt.hash(password, 10);
+
+          case 3:
+            password = _context.sent;
+            _context.prev = 4;
+            _context.next = 7;
             return _Client["default"].create({
               name: name,
               lastname: lastname,
@@ -44,11 +51,11 @@ function _createClient() {
               fields: ['name', 'lastname', 'email', 'password', 'address', 'phone']
             });
 
-          case 4:
+          case 7:
             newClient = _context.sent;
 
             if (!newClient) {
-              _context.next = 7;
+              _context.next = 10;
               break;
             }
 
@@ -57,25 +64,25 @@ function _createClient() {
               data: newClient
             }));
 
-          case 7:
-            _context.next = 13;
+          case 10:
+            _context.next = 16;
             break;
 
-          case 9:
-            _context.prev = 9;
-            _context.t0 = _context["catch"](1);
+          case 12:
+            _context.prev = 12;
+            _context.t0 = _context["catch"](4);
             console.log(_context.t0);
             res.status(500).json({
               message: 'Something goes Wrong',
               data: {}
             });
 
-          case 13:
+          case 16:
           case "end":
             return _context.stop();
         }
       }
-    }, _callee, null, [[1, 9]]);
+    }, _callee, null, [[4, 12]]);
   }));
   return _createClient.apply(this, arguments);
 }
@@ -177,18 +184,23 @@ function _createClientGoogle() {
         switch (_context4.prev = _context4.next) {
           case 0:
             _req$body2 = req.body, givenName = _req$body2.givenName, familyName = _req$body2.familyName, email = _req$body2.email, googleId = _req$body2.googleId;
+            _context4.next = 3;
+            return bcrypt.hash(googleId, 10);
+
+          case 3:
+            googleId = _context4.sent;
 
             if (!(!givenName || !familyName || !email || !googleId)) {
-              _context4.next = 3;
+              _context4.next = 6;
               break;
             }
 
             return _context4.abrupt("return", res.status(404).send('Faltan datos'));
 
-          case 3:
-            _context4.prev = 3;
+          case 6:
+            _context4.prev = 6;
             console.log(googleId);
-            _context4.next = 7;
+            _context4.next = 10;
             return _Clientbygoogle["default"].create({
               givenName: givenName,
               familyName: familyName,
@@ -196,26 +208,26 @@ function _createClientGoogle() {
               googleId: googleId
             });
 
-          case 7:
+          case 10:
             clientbygoogle = _context4.sent;
             res.status(200).send({
               message: 'user by google create',
               data: clientbygoogle
             });
-            _context4.next = 14;
+            _context4.next = 17;
             break;
 
-          case 11:
-            _context4.prev = 11;
-            _context4.t0 = _context4["catch"](3);
+          case 14:
+            _context4.prev = 14;
+            _context4.t0 = _context4["catch"](6);
             console.error(_context4.t0);
 
-          case 14:
+          case 17:
           case "end":
             return _context4.stop();
         }
       }
-    }, _callee4, null, [[3, 11]]);
+    }, _callee4, null, [[6, 14]]);
   }));
   return _createClientGoogle.apply(this, arguments);
 }

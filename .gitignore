@@ -1,3 +1,8 @@
 back/package-lock.json
 back/dist
 back/node_modules
+front/package-lock.json
+front/dist
+front/node_modules
+back/dist/app.js
+back/dist/models/Diet.js

@@ -1,15 +1,20 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useHistory } from "react-router";
 import useUser from "../Hooks/UseUser";
 
 
 
 export default function Login() {
     const { isLogin, login } = useUser();
+    const history = useHistory();
 
     const [state, setState ] = useState({
         username: '',
         password: ''
     })
+    useEffect(()=>{
+        if(isLogin)history.push('/home');
+    },[isLogin])
     
     function onSubmit(e){
     e.preventDefault();
