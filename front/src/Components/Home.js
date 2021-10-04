@@ -18,8 +18,7 @@ function ProductsHome({ products, getProducts }) {
     return (
         <div >
             <Image id="banner" src={banner} fluid />
-      <ProductsFilters/>
-            
+            <ProductsFilters />
             <div className='home'>
                 <ProductsCards
                     products={products} />

@@ -2,6 +2,7 @@ import Product from '../models/Product.js';
 import Order from '../models/Order.js';
 import Diet from '../models/Diet.js';
 import Category from '../models/Category.js';
+import Review from '../models/Review.js';
 import { Sequelize, Op } from 'sequelize';
 
 export async function createProduct(req, res) {
@@ -18,11 +19,11 @@ export async function createProduct(req, res) {
         }
         )
         if (ids_categories) {
-            let categories = await Category.findAll({ where: { name: ids_categories } })
+            let categories = await Category.findAll({ where: { id: ids_categories } })
             await newProduct.addCategory(categories)
         }
         if (ids_diets) {
-            let diets = await Diet.findAll({ where: { name: ids_diets } })
+            let diets = await Diet.findAll({ where: { id: ids_diets } })
             await newProduct.addDiet(diets)
         }
 
@@ -43,10 +44,8 @@ export async function createProduct(req, res) {
     }
 }
 
-
-
 export async function getProducts(req, res) {
-    let { name, id_category, id_diet, priceL, priceH } = req.query
+    let { name, id_category, id_diet, priceL, priceH, sortby } = req.query
     try {
         if (!id_category && !name && !id_diet) {
 
@@ -101,7 +100,20 @@ export async function getProducts(req, res) {
         if (!priceL) priceL = 0;
         if (!priceH) priceH = await Product.max("price")
         let productsName = products.map(product => product.name)
-        let productsFound = await Product.findAll({ where: { name: productsName, price: { [Op.between]: [parseInt(priceL), parseInt(priceH)], } } })
+        var productsFound = await Product.findAll({ where: { name: productsName, price: { [Op.between]: [parseInt(priceL), parseInt(priceH)], } } })
+        if (sortby) {
+            if (sortby === 'AscendentName') {
+                productsFound.sort((a, b) => a.name.localeCompare(b.name))
+            } else if (sortby === 'DescendentName') {
+                productsFound.sort((a, b) => b.name.localeCompare(a.name))
+            } else if (sortby === 'AscendentPrice') {
+            productsFound.sort((a, b) => a.price - b.price)
+            } else if (sortby === 'DescendentPrice') {
+                productsFound.sort((a, b) => b.price - a.price)
+            } 
+        }
+
+
         return res.status(200).send(productsFound)
 
 
@@ -114,12 +126,10 @@ export async function getProducts(req, res) {
     }
 }
 
-
-
 export async function getById(req, res) {
     const { id } = req.params
     try {
-        let products = await Product.findOne({ where: { id: id }, include: [{ model: Category }, { model: Diet }] })
+        let products = await Product.findOne({ where: { id: id }, include: [{ model: Category }, { model: Diet },{model:Review}] })
         return res.json(products)
     }
     catch (err) {
@@ -127,8 +137,6 @@ export async function getById(req, res) {
         res.json(err)
     }
 }
-
-
 
 export async function deleteProduct(req, res) {
     const { id } = req.params

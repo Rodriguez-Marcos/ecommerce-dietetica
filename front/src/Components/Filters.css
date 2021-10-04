@@ -1,33 +1,97 @@
 :root{
     
     --hoverColorText:rgb(175, 172, 172);
-    --hoverVerde:rgba(16, 112, 16, 0.795);
+    --hoverVerde:#849836;
     --colorCafe: #99642C;
 
 }
-.Selects{
+.nav{
+   justify-content: center;
+}
+
+.tab-content{
     display: flex;
-    background-color: #849836;
+    flex-wrap: wrap;
+    justify-content: center;
 }
-#select{
+.form-check-input[type=radio] {
+    background: var(--hoverVerde);
+    border: 3px solid;
+    border-color: var(--colorCafe);
+}
+
+#titleFilter{
+    color: var(--colorCafe);
     background-color: transparent;
-    border: none;
-    color: white;
+    margin-bottom: 10px;
+}
+#titleFilter:hover{
+    color: var(--hoverVerde);
+}
+#title{
+    color: var(--hoverVerde);
+    background-color: transparent;
+    margin-bottom: 10px;
+}
+
+#range{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 50vw;
+    height: 20vw;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+    
+}
+#rangeMinMax{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    
+}
+#rangeMinMax input{
+    margin-right: 10px;
+}
+#customRange1{
+    background: #99642C;
+    border-radius: 5px;
+}
+.enviarformulario {
+    background-color: #99642C !important;
+    border:none !important;
+}
+.enviarformulario:hover{
+    background-color: var(--hoverVerde) !important;
+}
+#min-max{
     text-align: center;
+    width: 70%;
+    outline: none;
+    border: none;
+    background-color: transparent;
 }
-#select:hover{
-    appearance: none;
-}
-#op{
-    background-color:  #849836;
-}
-
-
-
-
-
 @media only screen and (max-width: 600px) {
     #op{
        font-size: 13px;
     }
+    #range{
+        align-items: center;
+        width: 50vw;
+        height: 20vw;
+        justify-content: space-between;
+        flex-direction: row;
+        justify-content: center;
+        margin-bottom: 110px;
+    }
+    #rangeMinMax{
+        flex-direction: column;
+        
+    }
+    .mb-3{
+        display: flex !important;
+        flex-direction: column !important;
+    }
+    
   }

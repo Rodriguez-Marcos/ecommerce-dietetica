@@ -3,16 +3,20 @@ import axios from 'axios';
 import GoogleLogin from 'react-google-login';
 import { validate } from '../Utils/ValidateUser'
 import { useHistory } from "react-router-dom";
+import { createUser } from '../Actions/index';
+import { connect } from 'react-redux';
 import './CreateUser.css'
 import useUser from '../Hooks/UseUser';
+import { Form, Button } from 'react-bootstrap'
 
-export default function CreateUser() {
+ function CreateUser() {
     const { isLogin, login } = useUser();
 
+
     const history = useHistory();
-    /* useEffect(() => {
+    useEffect(() => {
         if (isLogin) history.push('/home');
-    }, [isLogin, history]) */
+    }, [isLogin, history])
 
     async function createUser(payload) {
         await axios.post("http://localhost:3001/clients", payload)
@@ -28,6 +32,8 @@ export default function CreateUser() {
     };
 
 
+
+    const [click, setClick] = useState(0)
 
     const [input, setInput] = useState({
         name: '',
@@ -68,9 +74,29 @@ export default function CreateUser() {
             /* login(input.email,input.password ); */
             createUser(input)
             alert('Se creo usuario exitosamente')
+            login(input.email,input.password)
             history.push('/home')
         }
     }
+
+        
+   /*  useEffect(() => {
+        
+            if (respuesta.message === 'Usuario ya creado') {
+                alert('Email ya registrado')
+            }
+            else if (respuesta.message === 'Client created successfully') {
+                alert('Se creo usuario exitosamente')
+                history.push('/home')
+            }
+            else {
+                
+            }
+    
+
+    }, [respuesta]
+    )
+ */
 
 
     const responseGoogle = (response) => {
@@ -82,43 +108,35 @@ export default function CreateUser() {
     }
 
     return (
-        <div className="divuser">
-            <p>Nombre</p>
-            <input
-                type="text"
-                value={input.name}
-                name="name"
-                onChange={handlerUser}
-            />
 
-            <p>Apellido</p>
-            <input
-                type="text"
-                value={input.lastname}
-                name="lastname"
-                onChange={handlerUser}
-            />
-
-            <p>Password</p>
-            <input
-                type="password"
-                value={input.password}
-                name="password"
-                onChange={handlerUser}
-            />
-
-            <p>Email</p>
-            <input
-                type="text"
-                value={input.email}
-                name="email"
-                onChange={handlerUser}
-            />
-
-            <button onClick={handelSubmit}> Crear cuenta </button>
-
-
-
+        <Form className="divuser">
+            <Form.Group className="mb-3" controlId="formBasicEmail" >
+                <Form.Label>Nombre</Form.Label>
+                <Form.Control type="text" placeholder="Nombre" type="text"
+                    value={input.name}
+                    name="name"
+                    onChange={handlerUser} />
+                <Form.Text className="text-muted">
+                    Nunca compartiremos su correo electrónico con nadie más.
+                </Form.Text>
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="formBasicEmail">
+                <Form.Label>Apellidos</Form.Label>
+                <Form.Control type="text" placeholder="Apellidos" value={input.lastname}
+                    name="lastname" onChange={handlerUser}  />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="formBasicPassword">
+                <Form.Label>Contraseña</Form.Label>
+                <Form.Control type="password" placeholder="Password" value={input.password}
+                    name="password" onChange={handlerUser} />
+                <Form.Label>Email</Form.Label>
+                <Form.Control type="text" placeholder="Email" value={input.email}
+                    name="email" onChange={handlerUser} />
+            </Form.Group>
+            <Button variant="primary" type="submit" onClick={handelSubmit}>
+                Crear Cuenta
+            </Button>
+            
             <GoogleLogin
                 clientId="908895428836-kaesjl71puimi31fjbffca9t4nvl7v6r.apps.googleusercontent.com"
                 buttonText="Login"
@@ -126,6 +144,18 @@ export default function CreateUser() {
                 onFailure={responseGoogle}
                 cookiePolicy={'single_host_origin'}
             />,
-        </div>
+        </Form>
+
+
+
     )
 }
+
+function mapStateToProps(state) {
+    return { respuesta: state.reducerPablo.user }
+}
+function mapDispatchToProps(dispatch) {
+    return { createUser: (value) => dispatch(createUser(value)) }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CreateUser)

@@ -12,6 +12,12 @@ export const GET_BY_DIET_AND_CATEGORY = 'GET_BY_DIET_AND_CATEGORY';
 export const PAGINATE = 'PAGINATE';
 export const FAIL_TO_LOAD = 'FAIL_TO_LOAD'
 export const SET_LOADING = 'SET_LOADING';
+export const GET_ID = "GET_ID";
+export const SET_NEW_USER = 'SET_NEW_USER';
+export const SET_LOGIN_USER = 'SET_LOGIN_USER';
+export const REVIEW_URL = "http://localhost:3001/reviews";
+
+
 
 export const paginate = (recipes) => {
     return {
@@ -19,6 +25,7 @@ export const paginate = (recipes) => {
         payload: recipes,
     };
 };
+
 
 export function getProducts() {
 
@@ -42,7 +49,7 @@ export function getProductbyName(name) {
                     payload: response.data
                 })
             })
-            .catch(err=>{
+            .catch(err => {
                 dispatch({
                     type: FAIL_TO_LOAD,
                 })
@@ -50,7 +57,7 @@ export function getProductbyName(name) {
     }
 }
 export function deleteProductByID(id) {
-    return async function(dispatch) {
+    return async function (dispatch) {
         try {
             const res = await axios.delete('http://localhost:3001/products/' + id);
             console.log(res)
@@ -66,7 +73,7 @@ export function deleteProductByID(id) {
 
 
 export function getById(id) {
-    return async function(dispatch) {
+    return async function (dispatch) {
         try {
             const res = await axios.get('http://localhost:3001/products/' + id);
             console.log(res)
@@ -80,7 +87,7 @@ export function getById(id) {
     };
 };
 
-export function postProduct(payload){
+export function postProduct(payload) {
     return async function (dispatch) {
         await axios.post("http://localhost:3001/products", payload);
        
@@ -90,20 +97,31 @@ export function postProduct(payload){
            });
          };
        }
+export function putProduct(payload, id ){
+        return async function (dispatch) {
+            await axios.put("http://localhost:3001/products/"+ id, payload);
+           
+               return dispatch({
+                 type: "PUT_PRODUCTS",
+                 payload,
+                 id,
+               });
+             };
+           }
 
-   
 
-export function postCategory(payload){
+
+
+export function postCategory(payload) {
     return async function (dispatch) {
-        await axios.post("http://localhost:3001/categories", payload);
-       
+        await axios.post("http://localhost:3001/categories", payload);   
            return dispatch({
              type: "POST_CATEGORY",
              payload,
            });
          };
        }
-       export function postDiet(payload){
+export function postDiet(payload){
         return async function (dispatch) {
             await axios.post("http://localhost:3001/diets", payload);
            
@@ -131,8 +149,8 @@ export function getByIdCategory(id){
 
 
 
-export function getByIdDiet(id){
-    return async function(dispatch) {
+export function getByIdDiet(id) {
+    return async function (dispatch) {
         try {
             const res = await axios.get(`http://localhost:3001/products?id_diet=${id}`);
             console.log(res)
@@ -147,10 +165,12 @@ export function getByIdDiet(id){
 };
 
 
-export function getByIdDietAndCategory(CategoryId,DietId){
+
+export function getProductsFiltered(CategoryId,DietId,priceL,priceH,sortby){
     return async function(dispatch) {
+
         try {
-            const res = await axios.get(`http://localhost:3001/products?id_category=${CategoryId}&id_diet=${DietId}`);
+            const res = await axios.get(`http://localhost:3001/products?id_category=${CategoryId}&id_diet=${DietId}&priceL=${priceL}&priceH=${priceH}&sortby=${sortby}`);
             return dispatch({
                 type: GET_BY_DIET_AND_CATEGORY,
                 payload: res.data
@@ -190,11 +210,14 @@ export function getDiets() {
 }
 
 
-export function orderPrice(orderTarget, product) {
+export function orderPrice(orderTarget, products) {
     return async function (dispatch) {
-        OrderByPrice(orderTarget, product)
+        console.log(orderTarget,products)
+        OrderByPrice(orderTarget, products)
+        
         .then((orderTarget) => {
             return dispatch({
+
                     type: ORDER_PRICE,
                     payload: orderTarget,
                 })
@@ -203,8 +226,8 @@ export function orderPrice(orderTarget, product) {
 }
 
 
-export function setLoading(){
-    return function(dispatch) {
+export function setLoading() {
+    return function (dispatch) {
         return dispatch({
             type: SET_LOADING,
         })
@@ -212,8 +235,8 @@ export function setLoading(){
 }
 
 
-export function getByPrice(priceL,priceH){
-    return async function(dispatch) {
+export function getByPrice(priceL, priceH) {
+    return async function (dispatch) {
         try {
             const res = await axios.get(`http://localhost:3001/products?priceL=${priceL}&priceH=${priceH}`);
             return dispatch({
@@ -226,3 +249,37 @@ export function getByPrice(priceL,priceH){
     };
 };
 
+export function review(payload) {
+    return async function (dispatch) {
+        await axios.post("http://localhost:3001/review", payload);
+
+        return dispatch({
+            type: "REVIEW_URL",
+            payload,
+        });
+    };
+}
+export function createUser(value) {
+    return async function (dispatch) {
+        try {
+            let res = await axios.post("http://localhost:3001/clients", value)
+            return dispatch({
+                type: SET_NEW_USER,
+                payload: res.data,
+            })
+        } catch (err) { console.log(err) }
+    }
+};
+
+export function loginUser(email,password) {
+    return async function (dispatch) {
+        try {
+            let res = await axios.get(`http://localhost:3001/clients/login?email=${email}&password=${password}`)
+            console.log(res.data)
+            return dispatch({
+                type: 'SET_LOGIN_USER',
+                payload: res.data,
+            })
+        } catch (err) { console.log(err) }
+    }
+};
