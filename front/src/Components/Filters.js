@@ -218,78 +218,33 @@ function ProductsFilters({ getDiets, getCategories, getProducts, categories, die
                 {/* </Form> */}
             </Tab>
             <Tab id="titleFilter" eventKey="Pri" title="Rango de Precio">
-                <Form onSubmit={HandleChangeOnSubmit}>
+            <Form id="range" onSubmit={HandleChangeOnSubmit}>
                     <label>Buscar por rango de precio</label>
-                    <input
-                        type="text"
-                        placeholder='Min'
-                        value={priceL}
-                        onChange={handleByPriceMin}
-                    />
-                    <input
-                        type="text"
-                        placeholder='Max'
-                        value={priceH}
-                        onChange={handleByPriceMax}
-                    />
-                    <input type="submit" value='Buscar' className='enviarformulario' />
-
+                    <div id="rangeMinMax">
+                        <label>Valor Minimo</label>
+                        <input id="min-max"
+                            type="text"
+                            placeholder='Min'
+                            value={priceL}
+                            onChange={handleByPriceMin}
+                        />
+                        <input onChange={handleByPriceMin} type="range" min="0" max="1000" step="100" class="form-range" id="customRange1"></input>
+                    </div>
+                    <div id="rangeMinMax">
+                    <label>Valor Maximo</label>
+                        <input
+                            id="min-max"
+                            type="text"
+                            placeholder='Max'
+                            value={priceH}
+                            onChange={handleByPriceMax}
+                        />
+                        <input onChange={handleByPriceMax} type="range" min="0" max="1000" step="100" class="form-range" id="customRange1"></input>
+                    </div>
+                    <Button type="submit" value='Search' className='enviarformulario' >Buscar</Button>
                 </Form>
             </Tab>
         </Tabs>
-
-        // <div className="Selects">
-        //      <Form.Control id="select" size="sm" as="select"     onChange={handleCategory}>
-        //      <option id="op" label='Categories' value='Categories'></option>
-        //         {categories.map((cat, i) => (
-        //                 <option id="op" key={i} value={cat.id} label={cat.name}></option>
-        //             )) }   
-
-        //     </Form.Control>
-
-        //     <Form.Control id="select" size="sm" as="select" onChange={handleDiet}>
-        //     <option id="op" label='Diets' value='Diets'></option>
-        //         {diets.map((diet, i) => (
-        //                 <option id="op" key={i} value={diet.id} label={diet.name}></option>
-        //             )) }
-        //     </Form.Control>
-
-        //     <Form.Control id="select" size="sm" as="select" onChange={handleName}>
-        //     <option id="op" label='Order By Name' value='Order By Name'></option>
-        //             <option id="op" value='Ascendent' >Ascendent</option>
-        //             <option id="op" value='Descendent' >Descendent</option>
-        //     </Form.Control>
-
-        //     <Form.Control id="select" size="sm" as="select" onChange={handlePrice}>
-        //     <option id="op" label='Price' value='Price'></option>
-        //             <option id="op" value='Ascendent' >Ascendent</option>
-        //             <option id="op" value='Descendent' >Descendent</option>
-        //     </Form.Control>
-
-        //     <div className="range-slider">
-
-
-        //     <form onSubmit={HandleChangeOnSubmit}>
-        //         <label>Search By Price Range</label>
-        //        <input
-        //            type="text"
-        //            placeholder='Min'
-        //            value={sliderValmin}
-        //            onChange={handleByPriceMin}
-        //        />
-
-        //        <input
-        //            type="text"
-        //            placeholder='Max'
-        //            value={sliderValmax}
-        //            onChange={handleByPriceMax}
-        //        />
-        //      <input type="submit" value='Search' className='enviarformulario'/>
-
-        //        </form>
-        //    </div>
-
-        // </div>
     )
 }
 
