@@ -62,18 +62,18 @@ function CreateUser({ respuesta, createUser }) {
         }
     }
     useEffect(() => {
-        console.log(respuesta)
-        if (respuesta === '0') {
-            console.log('bienvenido amiguito')
-        } else {
-            if (respuesta === 'Usuario ya creado') {
+        
+            if (respuesta.message === 'Usuario ya creado') {
                 alert('Email ya registrado')
             }
-            else {
+            else if (respuesta.message === 'Client created successfully') {
                 alert('Se creo usuario exitosamente')
                 history.push('/home')
             }
-        }
+            else {
+                
+            }
+    
 
     }, [respuesta]
     )

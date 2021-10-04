@@ -1,11 +1,15 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import GoogleLogin from 'react-google-login';
 import { useHistory } from "react-router-dom";
+import { connect } from 'react-redux';
+import {loginUser} from '../Actions/index'
+import './Login.css'
 
 
-export default function Login() {
+function Login({respuesta, loginUser,message}) {
 
-    [input, setInput] = useState({
+    const history = useHistory();
+    const [input, setInput] = useState({
         email: '',
         password:'',
     });
@@ -23,31 +27,44 @@ export default function Login() {
             alert('Debes llenar todos los campos')
         }
         else{
-            loginUser(input)
-            history.push('/home')
+           return loginUser(input.email, input.password)
         }
     }
+
+    useEffect(() => {
+        
+            if (respuesta.message === 'User Login failed') {
+                alert('Usuario no encontrado')
+            }
+            else if (respuesta.message === 'User Login') {
+                alert('Se Inicio Sesion')
+                history.push('/home')
+            }
+            else {}
+        
+
+    }, [respuesta]
+    )
     
 
     
 
     const responseGoogle = (response) => {
-        createUserByGoogle(response.profileObj)
+       /*  createUserByGoogle(response.profileObj) */
     }
 
     return (
-        <div>
-        <div>
+        <div className="divuser">
+        
         <p>Email</p>
-        <input type='text' name='email' value={input.mail} onChange={handleEmail} />
+        <input type='text' name='email' value={input.email} onChange={handleEmail} />
         <p>Password</p>
         <input type='password' name='password' value={input.password} onChange={handleEmail} />
-        <button onClick={handleSubmit}/>
-        </div>
+        <button onClick={handleSubmit}> Aceptar </button>
         
 
 
-        <div>
+        
             <GoogleLogin
                 clientId="908895428836-kaesjl71puimi31fjbffca9t4nvl7v6r.apps.googleusercontent.com"
                 buttonText="Login"
@@ -55,8 +72,19 @@ export default function Login() {
                 onFailure={responseGoogle}
                 cookiePolicy={'single_host_origin'}
             />,
-        </div>
+    
         </div>
 
     )
 }
+function mapStateToProps(state) {
+    return { respuesta: state.reducerPablo.login_user,
+    }
+}
+
+function mapDispatchToProps(dispatch) {
+    return { loginUser: (email,password) => dispatch(loginUser(email,password)) }
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login)

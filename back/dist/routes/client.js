@@ -19,7 +19,7 @@ var _require2 = require('../controllers/client'),
 var router = Router();
 router.post('/', createClient);
 router.post('/bygoogle', createClientGoogle);
-router.get('', loginUser);
+router.get('/login', loginUser);
 router.get('/loginbygoogle', loginBygoogle);
 router.get('/', getClients);
 router["delete"]('/:id', deleteClient);

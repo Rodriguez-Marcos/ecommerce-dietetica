@@ -10,7 +10,8 @@ const InitialState = {
     error: false,
     productsbyprice: [],
     comodin: false,
-    user: '0',
+    user: {},
+    login_user: {},
 }
 
 
@@ -23,7 +24,7 @@ export default function reducerPablo(state = InitialState, action) {
                 ...state,
                 products: action.payload,
                 productsFiltered: action.payload,
-                user: '0',
+            
             };
 
 
@@ -100,12 +101,12 @@ export default function reducerPablo(state = InitialState, action) {
         case SET_NEW_USER:
             return {
                 ...state,
-                user: action.payload.message
+                user: action.payload
             }
         case SET_LOGIN_USER:
             return {
                 ...state,
-                user: action.payload.message
+                login_user: action.payload,
             }
         default:
             return { ...state }

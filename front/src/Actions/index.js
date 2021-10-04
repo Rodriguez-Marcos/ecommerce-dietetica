@@ -271,12 +271,13 @@ export function createUser(value) {
     }
 };
 
-export function loginUser(value) {
+export function loginUser(email,password) {
     return async function (dispatch) {
         try {
-            let res = await axios.get("http://localhost:3001/clients", value)
+            let res = await axios.get(`http://localhost:3001/clients/login?email=${email}&password=${password}`)
+            console.log(res.data)
             return dispatch({
-                type: SET_LOGIN_USER,
+                type: 'SET_LOGIN_USER',
                 payload: res.data,
             })
         } catch (err) { console.log(err) }
