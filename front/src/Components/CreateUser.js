@@ -7,11 +7,11 @@ import { createUser } from '../Actions/index';
 import { connect } from 'react-redux';
 import './CreateUser.css'
 
- function CreateUser({respuesta,createUser}) {
+function CreateUser({ respuesta, createUser }) {
 
     const history = useHistory();
-    
-    
+
+
 
     async function createUserByGoogle(payload) {
         await axios.post("http://localhost:3001/clients/bygoogle", payload)
@@ -20,7 +20,7 @@ import './CreateUser.css'
 
     };
 
-    const [click,setClick] = useState(0)
+    const [click, setClick] = useState(0)
 
     const [input, setInput] = useState({
         name: '',
@@ -52,31 +52,31 @@ import './CreateUser.css'
         })
     }
 
- function handelSubmit(event) {
+    function handelSubmit(event) {
         event.preventDefault()
         if (!input.name || !input.lastname || !input.password || !input.email) {
             alert('Debes llenar todos los campos')
         }
         else {
-           createUser(input)
-            setClick(click + 1)
-          }
+            createUser(input)
+        }
     }
-        useEffect( () => {
-            console.log(respuesta)
-            if(respuesta === undefined){
-                console.log('primera vuelta')
-            }else { 
-                if (respuesta === 'Usuario ya creado') {
-                    alert('Email ya registrado')
-                }
-                else {
-                    alert('Se creo usuario exitosamente')
-                    history.push('/home')
-                }}
-           
-        }, [click + 1] 
-        )
+    useEffect(() => {
+        console.log(respuesta)
+        if (respuesta === '0') {
+            console.log('bienvenido amiguito')
+        } else {
+            if (respuesta === 'Usuario ya creado') {
+                alert('Email ya registrado')
+            }
+            else {
+                alert('Se creo usuario exitosamente')
+                history.push('/home')
+            }
+        }
+
+    }, [respuesta]
+    )
 
 
     const responseGoogle = (response) => {
@@ -136,11 +136,11 @@ import './CreateUser.css'
     )
 }
 
-function mapStateToProps(state){
-   return {respuesta: state.user}
+function mapStateToProps(state) {
+    return { respuesta: state.reducerPablo.user }
 }
 function mapDispatchToProps(dispatch) {
-    return {createUser:  (value)=> dispatch(createUser(value))}
+    return { createUser: (value) => dispatch(createUser(value)) }
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(CreateUser)
+export default connect(mapStateToProps, mapDispatchToProps)(CreateUser)

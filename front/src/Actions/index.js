@@ -12,7 +12,8 @@ export const GET_BY_DIET_AND_CATEGORY = 'GET_BY_DIET_AND_CATEGORY';
 export const PAGINATE = 'PAGINATE';
 export const FAIL_TO_LOAD = 'FAIL_TO_LOAD'
 export const SET_LOADING = 'SET_LOADING';
-export const SET_NEW_USER = 'SET_NEW_USER'
+export const SET_NEW_USER = 'SET_NEW_USER';
+export const SET_LOGIN_USER = 'SET_LOGIN_USER';
 
 export const paginate = (recipes) => {
     return {
@@ -233,6 +234,17 @@ export function createUser(value) {
     let res = await axios.post("http://localhost:3001/clients", value)
        return dispatch({
             type:SET_NEW_USER,
+            payload: res.data,
+        })}catch (err) {console.log(err)}
+    }
+};
+
+export function loginUser(value) {
+    return async function(dispatch) {
+    try{
+    let res = await axios.get("http://localhost:3001/clients", value)
+       return dispatch({
+            type:SET_LOGIN_USER,
             payload: res.data,
         })}catch (err) {console.log(err)}
     }

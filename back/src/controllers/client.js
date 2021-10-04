@@ -4,31 +4,31 @@ import Clientbygoogle from '../models/Clientbygoogle.js';
 export async function createClient(req, res) {
     const { name, lastname, email, password, address, phone } = req.body;
 
-    let dateBaseByClient = Client.findOne({where : {email : email}})
-    
+    let dateBaseByClient = await Client.findOne({ where: { email: email } })
+
 
     try {
-        if(!dateBaseByClient){
-        let newClient = await Client.create({
-            name, 
-            lastname, 
-            email, 
-            password, 
-            address, 
-            phone
-        }, {
-            fields: ['name', 'lastname', 'email', 'password', 'address', 'phone']
-        }
-        )
-       
+        if (!dateBaseByClient) {
+            let newClient = await Client.create({
+                name,
+                lastname,
+                email,
+                password,
+                address,
+                phone
+            }, {
+                fields: ['name', 'lastname', 'email', 'password', 'address', 'phone']
+            }
+            )
+
             return res.json({
                 message: 'Client created successfully',
                 data: newClient
             })
-        
-    }else {
-       return res.send( 'Usuario ya creado' )
-    }
+
+        } else {
+            return res.json({ message: 'Usuario ya creado' })
+        }
     } catch (err) {
         console.log(err)
         res.status(500).json({
@@ -40,60 +40,111 @@ export async function createClient(req, res) {
     }
 }
 export async function getClients(req, res) {
-    try{
-    let clients = await Client.findAll()
-    return res.status(200).send(clients)
-    }catch (err) {
-        console.log(err)
-        res.status(500).json({
-            message: 'Something goes Wrong',
-            data: {}
-
-        })
-
-    }
-}
-export async function deleteClient(req,res){
-    const {id}=req.params
-    try{
-    let client = await Client.destroy({where: {id:id}})
-    return res.json({
-        message: 'Client deleted successfully',
-        data: client
-    })
-    }catch (err) {
-        console.log(err)
-        res.status(500).json({
-            message: 'Something goes Wrong',
-            data: {}
-
-        })
-
-    }
-}
-
-export async function createClientGoogle(req,res){
-    let {givenName, familyName , email, googleId} = req.body;
-    if(!givenName || !familyName || !email || !googleId)
-    {return res.status(404).send('Faltan datos')}
     try {
-        let dateBaseByGoogle = Clientbygoogle.findOne({where : {email : email}})
+        let clients = await Client.findAll()
+        return res.status(200).send(clients)
+    } catch (err) {
+        console.log(err)
+        res.status(500).json({
+            message: 'Something goes Wrong',
+            data: {}
 
-        if(!dateBaseByGoogle){
-
-        let clientbygoogle = await Clientbygoogle.create({
-             givenName,
-             familyName, 
-             email, 
-             googleId
         })
-        res.status(200).send({
-            message: 'user by google create',
-           data: clientbygoogle})
-        }else {
+
+    }
+}
+export async function deleteClient(req, res) {
+    const { id } = req.params
+    try {
+        let client = await Client.destroy({ where: { id: id } })
+        return res.json({
+            message: 'Client deleted successfully',
+            data: client
+        })
+    } catch (err) {
+        console.log(err)
+        res.status(500).json({
+            message: 'Something goes Wrong',
+            data: {}
+
+        })
+
+    }
+}
+
+export async function loginUser(req, res) {
+    const { email, password } = req.body
+    let dateBaseByClient = await Client.findOne({
+        where: {
+            email: email,
+            password: password
+        }
+    })
+    try {
+        if (dateBaseByClient) {
+            return res.json({
+                message: 'User Login',
+                data: dateBaseByClient,
+            })
+        } else {
+            return res.json({
+                message: 'User Login failed'
+            })
+        }
+    } catch (err) {
+        res.status(404).send(err)
+        console.log(err)
+    }
+}
+
+export async function loginBygoogle (req,res){
+    let {googleId,email} = req.body;
+    let dateBaseByGoogle = await Clientbygoogle.findOne({ 
+        where: { 
+            email: email,
+            googleId: googleId
+         } })
+         try {
+            if (dateBaseByGoogle) {
+                return res.json({
+                    message: 'User Login',
+                    data: dateBaseByGoogle,
+                })
+            } else {
+                return res.json({
+                    message: 'User Login failed'
+                })
+            }
+        } catch (err) {
+            res.status(404).send(err)
+            console.log(err)
+        }
+}
+
+
+
+export async function createClientGoogle(req, res) {
+    let { givenName, familyName, email, googleId } = req.body;
+    if (!givenName || !familyName || !email || !googleId) { return res.status(404).send('Faltan datos') }
+    try {
+        let dateBaseByGoogle = await Clientbygoogle.findOne({ where: { email: email } })
+
+        if (!dateBaseByGoogle) {
+
+            let clientbygoogle = await Clientbygoogle.create({
+                givenName,
+                familyName,
+                email,
+                googleId
+            })
+            res.status(200).send({
+                message: 'user by google create',
+                data: clientbygoogle
+            })
+        } else {
             res.status(200).send('Usuario ya creado')
         }
-    }catch (err) {
+    } catch (err) {
         console.error(err)
     }
 }
