@@ -65,7 +65,8 @@ function NavBar({ getProductbyName, setLoading, login_user, user }) {
               />
               <button id="lupabtn" onSubmit={(e) => handleSubmit(e)} onClick={(e) => handleSubmit(e)}><img id="lupaimg" src={lupa} /></button>
             </Form>
-            {user.data  || login_user.data ? <div> <p> Bienvendido puto {user.data.name ? user.data.name : login_user.data.name} </p> <button> Salir  </button> </div> :  <div><NavLink to='/CreateUser'> Crear Cuenta  </NavLink> <NavLink to='/Login'> Login </NavLink> </div> }
+            {user.data  || login_user.data ? <div> <p> Bienvendido {user.data?.name ? user.data.name : login_user.data.name} </p> <button onClick> Salir </button> </div> 
+            :  <div><NavLink to='/CreateUser'> Crear Cuenta  </NavLink> <NavLink to='/Login'> Login </NavLink> </div> }
             
 
           </Nav>
