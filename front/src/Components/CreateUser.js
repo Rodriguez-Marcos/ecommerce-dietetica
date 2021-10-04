@@ -112,7 +112,7 @@ function CreateUser({ respuesta, createUser }) {
                     name="name"
                     onChange={handlerUser} />
                 <Form.Text className="text-muted">
-                    We'll never share your email with anyone else.
+                    Nunca compartiremos su correo electrónico con nadie más.
                 </Form.Text>
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicEmail">
