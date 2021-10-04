@@ -101,27 +101,26 @@ export function postProduct(payload) {
 
 export function postCategory(payload) {
     return async function (dispatch) {
-        await axios.post("http://localhost:3001/categories", payload);
+        await axios.post("http://localhost:3001/categories", payload);   
+           return dispatch({
+             type: "POST_CATEGORY",
+             payload,
+           });
+         };
+       }
+export function postDiet(payload){
+        return async function (dispatch) {
+            await axios.post("http://localhost:3001/diets", payload);
+           
+               return dispatch({
+                 type: "POST_DIET",
+                 payload,
+               });
+             };
+           }
 
-        return dispatch({
-            type: "POST_CATEGORY",
-            payload,
-        });
-    };
-}
-export function postDiet(payload) {
-    return async function (dispatch) {
-        await axios.post("http://localhost:3001/diets", payload);
-
-        return dispatch({
-            type: "POST_DIET",
-            payload,
-        });
-    };
-}
-
-export function getByIdCategory(id) {
-    return async function (dispatch) {
+export function getByIdCategory(id){
+    return async function(dispatch) {
         try {
             const res = await axios.get(`http://localhost:3001/products?id_category=${id}`);
             console.log(res)
@@ -153,8 +152,10 @@ export function getByIdDiet(id) {
 };
 
 
-export function getProductsFiltered(CategoryId, DietId, priceL, priceH, sortby) {
-    return async function (dispatch) {
+
+export function getProductsFiltered(CategoryId,DietId,priceL,priceH,sortby){
+    return async function(dispatch) {
+
         try {
             const res = await axios.get(`http://localhost:3001/products?id_category=${CategoryId}&id_diet=${DietId}&priceL=${priceL}&priceH=${priceH}&sortby=${sortby}`);
             return dispatch({
@@ -198,11 +199,12 @@ export function getDiets() {
 
 export function orderPrice(orderTarget, products) {
     return async function (dispatch) {
-        console.log(orderTarget, products)
+        console.log(orderTarget,products)
         OrderByPrice(orderTarget, products)
+        
+        .then((orderTarget) => {
+            return dispatch({
 
-            .then((orderTarget) => {
-                return dispatch({
                     type: ORDER_PRICE,
                     payload: orderTarget,
                 })
