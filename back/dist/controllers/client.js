@@ -24,6 +24,8 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+var bcrypt = require('bcrypt');
+
 function createClient(_x, _x2) {
   return _createClient.apply(this, arguments);
 }
@@ -38,22 +40,23 @@ function _createClient() {
           case 0:
             _req$body = req.body, name = _req$body.name, lastname = _req$body.lastname, email = _req$body.email, password = _req$body.password, address = _req$body.address, phone = _req$body.phone;
             _context.next = 3;
-            return _Client["default"].findOne({
+            return bcrypt.hash(password, 10);
+
+          case 3:
+            password = _context.sent;
+            dateBaseByClient = _Client["default"].findOne({
               where: {
                 email: email
               }
             });
-
-          case 3:
-            dateBaseByClient = _context.sent;
 
             if (dateBaseByClient) {
               _context.next = 30;
               break;
             }
 
-            _context.prev = 5;
-            _context.next = 8;
+            _context.prev = 6;
+            _context.next = 9;
             return _Client["default"].create({
               name: name,
               lastname: lastname,
@@ -65,7 +68,7 @@ function _createClient() {
               fields: ['name', 'lastname', 'email', 'password', 'address', 'phone']
             });
 
-          case 8:
+          case 9:
             newClient = _context.sent;
 
             if (!newClient) {
@@ -73,7 +76,7 @@ function _createClient() {
               break;
             }
 
-            _context.next = 12;
+            _context.next = 13;
             return _Client["default"].findOne({
               where: {
                 name: newClient.name
@@ -81,9 +84,8 @@ function _createClient() {
               attributes: ['id']
             });
 
-          case 12:
+          case 13:
             client_id = _context.sent;
-            console.log(client_id.dataValues.id);
             _context.next = 16;
             return _Cart["default"].create({
               id_client: client_id.dataValues.id
@@ -112,7 +114,7 @@ function _createClient() {
 
           case 24:
             _context.prev = 24;
-            _context.t0 = _context["catch"](5);
+            _context.t0 = _context["catch"](6);
             console.log(_context.t0);
             res.status(500).json({
               message: 'Something goes Wrong',
@@ -133,7 +135,7 @@ function _createClient() {
             return _context.stop();
         }
       }
-    }, _callee, null, [[5, 24]]);
+    }, _callee, null, [[6, 24]]);
   }));
   return _createClient.apply(this, arguments);
 }
@@ -236,6 +238,11 @@ function _loginUser() {
           case 0:
             _req$body2 = req.body, email = _req$body2.email, password = _req$body2.password;
             _context4.next = 3;
+            return bcrypt.hash(password, 10);
+
+          case 3:
+            password = _context4.sent;
+            _context4.next = 6;
             return _Client["default"].findOne({
               where: {
                 email: email,
@@ -243,12 +250,12 @@ function _loginUser() {
               }
             });
 
-          case 3:
+          case 6:
             dateBaseByClient = _context4.sent;
-            _context4.prev = 4;
+            _context4.prev = 7;
 
             if (!dateBaseByClient) {
-              _context4.next = 9;
+              _context4.next = 12;
               break;
             }
 
@@ -257,27 +264,27 @@ function _loginUser() {
               data: dateBaseByClient
             }));
 
-          case 9:
+          case 12:
             return _context4.abrupt("return", res.json({
               message: 'User Login failed'
             }));
 
-          case 10:
-            _context4.next = 16;
+          case 13:
+            _context4.next = 19;
             break;
 
-          case 12:
-            _context4.prev = 12;
-            _context4.t0 = _context4["catch"](4);
+          case 15:
+            _context4.prev = 15;
+            _context4.t0 = _context4["catch"](7);
             res.status(404).send(_context4.t0);
             console.log(_context4.t0);
 
-          case 16:
+          case 19:
           case "end":
             return _context4.stop();
         }
       }
-    }, _callee4, null, [[4, 12]]);
+    }, _callee4, null, [[7, 15]]);
   }));
   return _loginUser.apply(this, arguments);
 }

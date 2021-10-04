@@ -2,11 +2,15 @@ import Client from '../models/Client.js';
 import Clientbygoogle from '../models/Clientbygoogle.js';
 import Cart from '../models/Cart.js';
 import Favorite from '../models/Favorite.js';
+const bcrypt = require('bcrypt');
 
 export async function createClient(req, res) {
-    const { name, lastname, email, password, address, phone } = req.body;
+    let { name, lastname, email, password, address, phone } = req.body;
 
-    let dateBaseByClient = await Client.findOne({ where: { email: email } })
+    password = await bcrypt.hash(password,10);
+
+    let dateBaseByClient =  Client.findOne({ where: { email: email } })
+
     if(!dateBaseByClient){
     try {
         let newClient = await Client.create({
@@ -22,7 +26,6 @@ export async function createClient(req, res) {
         )
         if (newClient) {
             let client_id = await Client.findOne({where: {name: newClient.name},attributes:['id']})
-            console.log(client_id.dataValues.id)
             await Cart.create({
                 id_client: client_id.dataValues.id
             })
@@ -83,7 +86,8 @@ export async function deleteClient(req, res) {
 }
 
 export async function loginUser(req, res) {
-    const { email, password } = req.body
+    let { email, password } = req.body
+    password = await bcrypt.hash(password,10);
     let dateBaseByClient = await Client.findOne({
         where: {
             email: email,
