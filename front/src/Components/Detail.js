@@ -95,8 +95,6 @@ function Detail({ match }) {
                 <p className={styles.titulo}>Detalle del producto</p>
                 <p className={styles.title}>
                  </p> <p className={styles.producto}>{producto?.name.toUpperCase()}</p>
-            
-                <br />
 
                 <div className={styles.title}>
                     Precio:  
@@ -109,8 +107,12 @@ function Detail({ match }) {
 
                 <p className={styles.title}>Stock:
                 <p className={styles.producto}> {producto?.stock} unidades</p></p>
-                <p className={styles.title}>Categorias:{producto?.categories.map(category=>{return <p>{category.name}</p>})}</p>
-                <p className={styles.title}>Reviews:{producto?.reviews.map(review=>{return <p>{review.title}</p>})}</p>
+
+                <p className={styles.title}>Categorias:
+                <p className={styles.producto}> {producto?.categories.map(category=>{return <p>{category.name}</p>})}</p></p>
+
+
+             
                 <button type="button" class="btn btn-secondary">Agregar a favoritos</button>
             <br />
             <br />
@@ -168,6 +170,34 @@ function Detail({ match }) {
        
         
         </form>
+        <div className={styles.mainanterior}>
+          <div className={styles.rootanterior}>
+        <p className={styles.titles}>Comentarios anteriores:
+
+                <p className={styles.titles}>
+                  Título: </p>
+                <p className={styles.productoanterior}> {producto?.reviews.map(review=>{return <p>{review.title.toUpperCase()}</p>})}</p></p>
+
+        <div className={styles.calif}>Calificación</div>
+        <Rating
+                id="simple-controlled"
+                name="calification"
+                value = {input.calification}
+                // value={producto?.reviews.map(review=>{return <p>{review.calification}</p>})}
+              />
+              {/* {producto?.reviews.map(review=>{return <p>{review.calification}</p>})} */}
+
+        <p className={styles.productoanterior}> 
+                  Descripción: </p>
+                <p className={styles.inputsdecomentario}> {producto?.reviews.map(review=>{return <p>{review.description}</p>})}</p>
+
+
+
+                </div>
+
+
+
+                </div>
     
          
                 </div>
