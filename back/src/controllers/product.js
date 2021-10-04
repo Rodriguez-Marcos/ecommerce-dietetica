@@ -2,6 +2,7 @@ import Product from '../models/Product.js';
 import Order from '../models/Order.js';
 import Diet from '../models/Diet.js';
 import Category from '../models/Category.js';
+import Review from '../models/Review.js';
 import { Sequelize, Op } from 'sequelize';
 
 export async function createProduct(req, res) {
@@ -128,7 +129,7 @@ export async function getProducts(req, res) {
 export async function getById(req, res) {
     const { id } = req.params
     try {
-        let products = await Product.findOne({ where: { id: id }, include: [{ model: Category }, { model: Diet }] })
+        let products = await Product.findOne({ where: { id: id }, include: [{ model: Category }, { model: Diet },{model:Review}] })
         return res.json(products)
     }
     catch (err) {

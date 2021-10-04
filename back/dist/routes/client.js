@@ -12,7 +12,8 @@ var _require2 = require('../controllers/client'),
     createClient = _require2.createClient,
     createClientGoogle = _require2.createClientGoogle,
     getClients = _require2.getClients,
-    deleteClient = _require2.deleteClient;
+    deleteClient = _require2.deleteClient,
+    clientLogin = _require2.clientLogin;
 
 var router = Router();
 router.post('/', createClient);
