@@ -15,7 +15,7 @@ export const SET_LOADING = 'SET_LOADING';
 export const GET_ID = "GET_ID";
 export const SET_NEW_USER = 'SET_NEW_USER';
 export const SET_LOGIN_USER = 'SET_LOGIN_USER';
-export const REVIEW_URL = "http://localhost:3001/reviews";
+export const REVIEW_URL = "http://localhost:3001/reviews/";
 
 
 
