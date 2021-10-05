@@ -8,7 +8,7 @@ const styles = {
     background: "rgb(3, 3, 3) radial-gradient(circle, rgb(255, 255, 255) 0%, rgb(90, 54, 12) 61%)",
     minHeight: 150,
     textAlign: "center",
-    padding: 100,
+    padding: 37,
     justifyContent: "center",
   },
   btn: {
