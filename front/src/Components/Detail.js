@@ -158,34 +158,25 @@ function Detail({ match }) {
       </Row>
       <hr />
       <Row>
-        <Col md={6}>
+        <Col>
           <Card id="titulosComentario">
             <Card.Body>
-              <Card.Title>Comentarios anteriores: </Card.Title>
-              <Card.Title>Títulos: </Card.Title>
-              <ListGroup>
-                {producto?.reviews.map(review => { return <ListGroupItem>{review.title.toUpperCase()}</ListGroupItem> })}
-              </ListGroup>
-            </Card.Body>
-          </Card>
-        </Col>
-        <Col>
-          <Card id="textoComentario">
-            <Card.Body>
-              <Card.Title>Calificación</Card.Title>
-              <Rating
-                id="simple-controlled"
-                name="calification"
-                value={input.calification}
-              // value={producto?.reviews.map(review=>{return <p>{review.calification}</p>})}
-              />
-              {/* {producto?.reviews.map(review=>{return <p>{review.calification}</p>})} */}
-
-              <Card.Title>Descripción: </Card.Title>
-              <ListGroup>
-                {producto?.reviews.map(review => { return <ListGroupItem>{review.description}</ListGroupItem> })}
-              </ListGroup>
-            </Card.Body>
+                  <Card.Title>Comentarios anteriores:</Card.Title>
+                  <ListGroup>
+                    {producto?.reviews.map((elemento) =>{
+                      return(
+                      <ListGroupItem>
+                         <Card.Title> Calificación: </Card.Title>
+                          <Rating
+                            id="simple-controlled"
+                            name="calification"
+                            value={elemento.calification}/>
+                          <Card.Title>{elemento.title} </Card.Title>
+                            <p>{elemento.description}</p>
+                          </ListGroupItem>
+                      )})}
+                      </ListGroup>
+              </Card.Body>  
           </Card>
         </Col>
       </Row>
