@@ -44,20 +44,12 @@
     outline: 3px solid var(--colorCafe);
     outline-offset: 7px; 
     -webkit-box-shadow: -1px -2px 16px 8px rgba(153,100,44,0.69); 
-box-shadow: -1px -2px 16px 8px rgba(153,100,44,0.69);
+    box-shadow: -1px -2px 16px 8px rgba(153,100,44,0.69);
 }
 #titulosComentario{
     border-radius: 10px;   
     outline: 3px solid var(--colorCafe);
     outline-offset: 7px; 
     -webkit-box-shadow: -1px -2px 16px 8px rgba(153,100,44,0.69); 
-box-shadow: -1px -2px 16px 8px rgba(153,100,44,0.69);
-}
-#textoComentario{
-    border-radius: 10px;   
-    outline: 3px solid var(--colorCafe);
-    outline-offset: 7px; 
-    -webkit-box-shadow: -1px -2px 16px 8px rgba(153,100,44,0.69); 
     box-shadow: -1px -2px 16px 8px rgba(153,100,44,0.69);
-    margin-bottom: 20px;
 }
