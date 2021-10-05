@@ -6,6 +6,7 @@ import ProductsCards from './Products'
 import { Image, Button, Overlay, Tooltip, OverlayTrigger } from 'react-bootstrap'
 import banner from '../image/BANNER-SALVATORE.jpg'
 import ProductsFilters from './Filters'
+import Example from './PromosHome'
 
 
 function ProductsHome({ products, getProducts }) {
@@ -17,6 +18,7 @@ function ProductsHome({ products, getProducts }) {
 
     return (
         <div >
+            <Example></Example>
             <Image id="banner" src={banner} fluid />
             <ProductsFilters />
             <div className='home'>

@@ -52,10 +52,10 @@ function Detail({ match }) {
               calification: "",
             });
             swal("Creado", "Comentario enviado con éxito!", "success")
-            // .then( () => window.location.href="/" );
+            .then( () => window.location.reload() );
           })
           .catch((error) => swal("Error", error, "error"));
-      }
+        }
       
 
     
