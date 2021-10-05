@@ -64,6 +64,7 @@ function Detail({ match }) {
         });
         swal("Creado", "Comentario enviado con éxito!", "success")
         // .then( () => window.location.href="/" );
+        console.log('rompieste todo juancito')
       })
       .catch((error) => swal("Error", error, "error"));
   }
