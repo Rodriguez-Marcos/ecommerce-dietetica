@@ -198,30 +198,10 @@ function Detail({ match }) {
                             <p className={styles.productoanterior}>
                             Descripción: {elemento.description}</p>
                             <hr></hr>
-                      </div>
-  )})}
-                    {/* <p className={styles.titles}>
-                      Título: </p>
-                    <p className={styles.productoanterior}> {producto?.reviews.map(review => { return <p>{review.title.toUpperCase()}</p> })}</p></p> */}
-
-                  {/* <div className={styles.calif}>Calificación</div>
-                  <Rating
-                    id="simple-controlled"
-                    name="calification"
-                    value={input.calification} */}
-                  {/* // value={producto?.reviews.map(review=>{return <p>{review.calification}</p>})}
-                  /> */}
-                  {/* {producto?.reviews.map(review=>{return <p>{review.calification}</p>})} */}
-
-                  {/* <p className={styles.productoanterior}>
-                    Descripción: </p>
-                  <p className={styles.inputsdecomentario}> {producto?.reviews.map(review => { return <p>{review.description}</p> })} */}
-
+                      </div>)})}
                 </p>
 
                 </div>
-
-{console.log(producto)}
               </div>
 
 
