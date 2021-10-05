@@ -10,8 +10,8 @@ export default function  TableProducts({p, editProductOpen, openDeleteProduct  }
  
 
   return (
-
-    <div className= {`${s.content} container`} >
+    <div className='container'>
+    <div className= {s.content}  >
     <table className={` ${s.TableProducts} table`}>
       <thead>
         <tr>
@@ -42,6 +42,7 @@ export default function  TableProducts({p, editProductOpen, openDeleteProduct  }
         </tbody>
       ))}
     </table>
+  </div>
   </div>
 
   )

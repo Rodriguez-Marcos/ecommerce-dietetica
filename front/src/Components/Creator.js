@@ -353,9 +353,15 @@ console.log('input', input)
   // INICIO DEL COMPONENTE
   return (
     <div>
+
+    
       <h1>.</h1>
       <h1>.</h1>
-      <h1>.</h1>
+      <h1>.</h1> 
+       <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark">
+        Hola mundo
+
+      </div>
       <Button color="success" onClick={() => openProduct()}>
         Insertar Producto
       </Button>{" "}
