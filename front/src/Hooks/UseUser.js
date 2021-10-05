@@ -1,26 +1,26 @@
 import { useCallback, useContext } from "react";
-import Context from "../Contexts/UserContext";
+import { useDispatch } from "react-redux";
 import loginService from '../Utils/LoginService'
 
 
 export default function useUser() {
-    const { jwt, setJWT } = useContext(Context);
-
+    const dispatch = useDispatch();
+    let myStorage = window.localStorage;
     const login = useCallback((username, password) => {
-        console.log(username)
         loginService(username, password)
             .then(jwt => {
-                console.log("jwt:", jwt)
-                setJWT(jwt)
+                console.log('logueado con exito')
+                myStorage.jwt = jwt;
+                dispatch({type: 'LOGIN', payload: jwt})
             })
             .catch(err => { alert(err); console.error(err) })
-    }, [setJWT]);
-
-    const logout = useCallback(() => {
-        setJWT(null);
-    }, [setJWT]);
+        }, []);
+        
+        const logout = useCallback(() => {
+            console.log('deslogueado con exito')
+        dispatch({type: 'LOGOUT'})
+    }, []);
     return {
-        isLogin: Boolean(jwt),
         login,
         logout
     }

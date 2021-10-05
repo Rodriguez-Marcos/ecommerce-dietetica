@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
-import { connect } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import './Navbar.css';
 import { getProductbyName, setLoading } from '../Actions/index'
 import { Navbar, Nav, NavDropdown, Form, FormControl, Button, Image } from 'react-bootstrap'
@@ -10,26 +10,26 @@ import useUser from '../Hooks/UseUser'; //hook para loguearse y ver si esta logu
 import Logo from '../image/SALVATORE-grande.png'
 import lupa from '../image/buscar.png'
 import Sesion from '../image/usuario.png'
+const jwt = require('jsonwebtoken')
 
 
 
 
 
-function NavBar({ getProductbyName, setLoading, login_user, user }) {
-
+function NavBar({ getProductbyName, setLoading, isLogin, token }) {
+  const dispatch = useDispatch();
   const [ActualState, setActualState] = useState('')
-  const {isLogin, logout} = useUser()
-
+  const {logout} = useUser();
+  const myStorage = window.localStorage;
   useEffect(()=>{
-    console.log('se recargo el nav');
-
-  },[isLogin])
-
+    const jwt = myStorage.jwt;
+    if (!!jwt){
+      dispatch({type: 'LOGIN', payload: jwt})
+    }    
+  },[])
 
 
   let history = useHistory();
-
-
 
 
   function handleSubmit(e) {
@@ -76,7 +76,7 @@ function NavBar({ getProductbyName, setLoading, login_user, user }) {
             </Form>
 
             {console.log(isLogin)}
-           {isLogin || (user.data  || login_user.data) ? <div> <p> Bienvendido {user.data?.name ? user.data?.name : login_user.data?.name } </p> <button onClick> Salir </button> </div>
+           {isLogin ? <div> <p> Bienvendido {jwt?.decode(token)?.name } </p> <button onClick={logout}> Salir </button> </div>
             : <div id="btnsSesionRegistro">
             <NavLink id="btnRegistro" to='/CreateUser'>Registrate</NavLink>
             <NavLink id="btnSesion" to='/Login'><Image id="imgSesion" src={Sesion}/><span>Inicia Sesion</span> </NavLink>
@@ -95,8 +95,8 @@ const mapStateToProps = (state) => {
   return {
     product: state.product,
     loading: state.reducerPablo.loading,
-    user: state.reducerPablo.user,
-    login_user: state.reducerPablo.login_user,
+    token: state.reducerPablo.token,
+    isLogin: state.reducerPablo.isLogin,
   }
 }
 const mapDispatchToProps = (dispatch) => {

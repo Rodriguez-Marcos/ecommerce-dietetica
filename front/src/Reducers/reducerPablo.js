@@ -12,6 +12,8 @@ const InitialState = {
     comodin: false,
     user: {},
     login_user: {},
+    isLogin: false,
+    token: '',
 }
 
 
@@ -107,6 +109,18 @@ export default function reducerPablo(state = InitialState, action) {
             return {
                 ...state,
                 login_user: action.payload,
+            }
+        case 'LOGIN':
+            return{
+                ...state,
+                isLogin: true,
+                token: action.payload,
+            }
+        case 'LOGOUT':
+            return{
+                ...state,
+                token: '',
+                isLogin: false,
             }
         default:
             return { ...state }

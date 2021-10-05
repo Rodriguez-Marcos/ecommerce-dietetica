@@ -9,9 +9,9 @@ import useUser from '../Hooks/UseUser';
 
 
 
-function Login({respuesta, loginUser}) {
+function Login({respuesta, loginUser, isLogin}) {
     
-    const { isLogin, login } = useUser();
+    const { login } = useUser();
     const history = useHistory();
 
     const [state, setState ] = useState({
@@ -19,7 +19,9 @@ function Login({respuesta, loginUser}) {
         password: ''
     })
     useEffect(()=>{
+        console.log('hola')
         if(isLogin)history.push('/home');
+        
     },[isLogin])
 
     const [input, setInput] = useState({
@@ -40,7 +42,6 @@ function Login({respuesta, loginUser}) {
             alert('Debes llenar todos los campos')
         }
         else{
-            loginUser(input.email, input.password)
             login(input.email,input.password)
 
         }
@@ -52,7 +53,6 @@ function Login({respuesta, loginUser}) {
                 alert('Usuario no encontrado')
             }
             else if (respuesta.message === 'User Login') {
-                history.push('/home')
             }
             else {}
         
@@ -108,6 +108,7 @@ function Login({respuesta, loginUser}) {
 }
 function mapStateToProps(state) {
     return { respuesta: state.reducerPablo.login_user,
+        isLogin: state.reducerPablo.isLogin,
     }
 }
 
