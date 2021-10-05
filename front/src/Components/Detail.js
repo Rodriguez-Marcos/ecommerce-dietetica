@@ -53,60 +53,24 @@ function Detail({ match }) {
   }
 
 
-  function handleSubmit(e) {
-    e.preventDefault();
-    return axios
-      .post(REVIEW_URL + id, input)
-      .then((r) => {
-        e.target.reset();
-        setInput({
-          title: "",
-          description: "",
-          calification: "",
-        });
-        swal("Creado", "Comentario enviado con éxito!", "success")
-        // .then( () => window.location.href="/" );
-        console.log('rompieste todo juancito')
-      })
-      .catch((error) => swal("Error", error, "error"));
-  }
-
-
-
-  const [input, setInput] = useState({
-    title: "",
-    description: "",
-    calification: 4,
-    productId: id
-  });
-
-  function handleInputChange(e) {
-    setInput({
-      ...input,
-      [e.target.name]: e.target.value,
-    });
-  }
-
-
-  function handleSubmit(e) {
-    e.preventDefault();
-    return axios
-      .post(REVIEW_URL + id, input)
-      .then((r) => {
-        e.target.reset();
-        setInput({
-          title: "",
-          description: "",
-          calification: "",
-        });
-
-
+  // function handleSubmit(e) {
+  //   e.preventDefault();
+  //   return axios
+  //     .post(REVIEW_URL + id, input)
+  //     .then((r) => {
+  //       e.target.reset();
+  //       setInput({
+  //         title: "",
+  //         description: "",
+  //         calification: "",
+  //       });
+  //       swal("Creado", "Comentario enviado con éxito!", "success")
+  //       .then( () => window.location.href="/" );
+  //       console.log('rompieste todo juancito')
+  //     })
+  //     .catch((error) => swal("Error", error, "error"));
+  // }
   
-        {/* <section className={styles.comentarios}> 
-
-      }
-
-      
       function handleSubmit(e) {
         e.preventDefault()
         return axios.post(REVIEW_URL+id, input)
@@ -122,23 +86,8 @@ function Detail({ match }) {
           })
           .catch((error) => swal("Error", error, "error"));
         }
-      
 
-    
-    return (
-        <div className={styles.fondo}>
-        <div className={styles.container}>
-           
-            </div>
-                
-            <div className={styles.detail}>
-                <div ></div>
-                <div >
-                <img className={styles.Image} src={producto?.image } alt='none'/>
-                </div>
-                {/* <section className={styles.comentarios}> 
-
-                
+        {/*             
                 <DiscussionEmbed
                    shortname='salvatoredietetica'
                    config={
