@@ -6,12 +6,16 @@ import { useSelector, useDispatch } from 'react-redux'
 import { getById } from '../Actions/index'
 import styles from './Detail.css'
 import { Container, Row, Col, Image, Form, Button, ListGroup, ListGroupItem, Card } from 'react-bootstrap'
+import Cookies from 'universal-cookie';
+
+
 
 // import { DiscussionEmbed } from 'disqus-react';
 
 
 import { Rating } from "@material-ui/lab";
 import swal from "sweetalert";
+const cookies = new Cookies();
 
 
 function Detail({ match }) {
@@ -24,6 +28,14 @@ function Detail({ match }) {
   }, [dispatch])
 
   const producto = useSelector(state => state.reducerRocio.detail)
+
+  function handleClickTrolley(e) {
+    e.preventDefault();
+    let add = Array.isArray(cookies.get('trolley')) ? [...cookies.get('trolley')] : []; /// trolley : []
+    if (!add.find(x => x.id === producto.id))
+      add.push(producto);
+    cookies.set('trolley', add)
+  }
 
 
   const [input, setInput] = useState({
@@ -53,21 +65,79 @@ function Detail({ match }) {
           calification: "",
         });
         swal("Creado", "Comentario enviado con éxito!", "success")
-          .then(() => window.location.reload());
+        // .then( () => window.location.href="/" );
+        console.log('rompieste todo juancito')
       })
       .catch((error) => swal("Error", error, "error"));
   }
 
 
 
-  return (
-    <Container>
-      <Row id="row1">
-        <div id="nameProduct"><h1>{producto?.name.toUpperCase()}</h1></div>
-        <Col id="img" md={6}>
-          <Image id="imgProduct" src={producto?.image} alt='none' fluid />
-        </Col>
+  const [input, setInput] = useState({
+    title: "",
+    description: "",
+    calification: 4,
+    productId: id
+  });
+
+  function handleInputChange(e) {
+    setInput({
+      ...input,
+      [e.target.name]: e.target.value,
+    });
+  }
+
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    return axios
+      .post(REVIEW_URL + id, input)
+      .then((r) => {
+        e.target.reset();
+        setInput({
+          title: "",
+          description: "",
+          calification: "",
+        });
+
+
+  
         {/* <section className={styles.comentarios}> 
+
+      }
+
+      
+      function handleSubmit(e) {
+        e.preventDefault()
+        return axios.post(REVIEW_URL+id, input)
+          .then((r) => {
+            e.target.reset()
+            setInput({
+              title: "",
+              description: "",
+              calification: "",
+            });
+            swal("Creado", "Comentario enviado con éxito!", "success")
+            .then( () => window.location.reload() );
+          })
+          .catch((error) => swal("Error", error, "error"));
+        }
+      
+
+    
+    return (
+        <div className={styles.fondo}>
+        <div className={styles.container}>
+           
+            </div>
+                
+            <div className={styles.detail}>
+                <div ></div>
+                <div >
+                <img className={styles.Image} src={producto?.image } alt='none'/>
+                </div>
+                {/* <section className={styles.comentarios}> 
+
                 
                 <DiscussionEmbed
                    shortname='salvatoredietetica'
@@ -84,6 +154,13 @@ function Detail({ match }) {
              
               
                </section>  */}
+      return (
+    <Container>
+      <Row id="row1">
+        <div id="nameProduct"><h1>{producto?.name.toUpperCase()}</h1></div>
+        <Col id="img" md={6}>
+          <Image id="imgProduct" src={producto?.image} alt='none' fluid />
+        </Col>
         <Col md={6}>
           <Row>
             <Col>
@@ -184,7 +261,5 @@ function Detail({ match }) {
     </Container>
   )
 }
-
-
 
 export default Detail;

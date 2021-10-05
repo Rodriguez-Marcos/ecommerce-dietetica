@@ -76,7 +76,6 @@ export function getById(id) {
     return async function (dispatch) {
         try {
             const res = await axios.get('http://localhost:3001/products/' + id);
-            console.log(res)
             return dispatch({
                 type: 'GET_ID',
                 payload: res.data
