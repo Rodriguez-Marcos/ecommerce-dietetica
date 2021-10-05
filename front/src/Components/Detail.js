@@ -69,19 +69,44 @@ function Detail({ match }) {
   }
 
 
+      function handleInputChange(e) {
+        setInput({
+          ...input,
+          [e.target.name]: e.target.value,
+        });
+      }
 
-  return (
-    <div className={styles.fondo}>
-      <div className={styles.container}>
+      
+      function handleSubmit(e) {
+        e.preventDefault()
+        return axios.post(REVIEW_URL+id, input)
+          .then((r) => {
+            e.target.reset()
+            setInput({
+              title: "",
+              description: "",
+              calification: "",
+            });
+            swal("Creado", "Comentario enviado con éxito!", "success")
+            .then( () => window.location.reload() );
+          })
+          .catch((error) => swal("Error", error, "error"));
+        }
+      
 
-      </div>
-
-      <div className={styles.detail}>
-        <div ></div>
-        <div >
-          <img className={styles.Image} src={producto?.image} alt='none' />
-        </div>
-        {/* <section className={styles.comentarios}> 
+    
+    return (
+        <div className={styles.fondo}>
+        <div className={styles.container}>
+           
+            </div>
+                
+            <div className={styles.detail}>
+                <div ></div>
+                <div >
+                <img className={styles.Image} src={producto?.image } alt='none'/>
+                </div>
+                {/* <section className={styles.comentarios}> 
                 
                 <DiscussionEmbed
                    shortname='salvatoredietetica'
