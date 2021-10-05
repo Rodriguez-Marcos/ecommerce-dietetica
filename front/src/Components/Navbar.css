@@ -141,7 +141,10 @@
     }
     #imgSesion{
         display: none; 
-     }
+    }
+    #Links{
+        flex-direction: row;
+    }
   }
 /* Movil */
 .navbar-nav{
