@@ -1,0 +1,9 @@
+.content{
+    overflow:scroll;
+    height:400px;
+    width:700px;
+}
+.tableproducs{
+    width:700px;
+    background-color:lightgray;
+}
