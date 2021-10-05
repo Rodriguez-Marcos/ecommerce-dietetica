@@ -24,10 +24,6 @@ const Order = sequelize.define('order', {
         values:["creada","procesando","cancelada","completa"],
         defaultValue: "creada"
     },
-    id_client: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-    },
 }, {
     timestamps: false
 })
