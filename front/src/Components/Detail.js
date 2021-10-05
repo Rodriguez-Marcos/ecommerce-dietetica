@@ -3,8 +3,9 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { REVIEW_URL } from "../Actions/index";
 import { useSelector, useDispatch } from 'react-redux'
-import {  getById } from '../Actions/index'
-import styles from './Detail.module.css'
+import { getById } from '../Actions/index'
+import styles from './Detail.css'
+import { Container, Row, Col, Image, Form, Button, ListGroup, ListGroupItem, Card } from 'react-bootstrap'
 
 // import { DiscussionEmbed } from 'disqus-react';
 
@@ -14,63 +15,59 @@ import swal from "sweetalert";
 
 
 function Detail({ match }) {
-    const { id } = match.params
-    const dispatch = useDispatch()
-    
+  const { id } = match.params
+  const dispatch = useDispatch()
 
-    useEffect(() => {
-        dispatch(getById(id))
-    }, [dispatch] )
 
-    const producto = useSelector(state => state.reducerRocio.detail)
-  
+  useEffect(() => {
+    dispatch(getById(id))
+  }, [dispatch])
 
-    const [input, setInput] = useState({
-        title: "",
-        description: "",
-        calification: 4,
-        productId: id
-      });
+  const producto = useSelector(state => state.reducerRocio.detail)
 
-      function handleInputChange(e) {
+
+  const [input, setInput] = useState({
+    title: "",
+    description: "",
+    calification: 4,
+    productId: id
+  });
+
+  function handleInputChange(e) {
+    setInput({
+      ...input,
+      [e.target.name]: e.target.value,
+    });
+  }
+
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    return axios
+      .post(REVIEW_URL + id, input)
+      .then((r) => {
+        e.target.reset();
         setInput({
-          ...input,
-          [e.target.name]: e.target.value,
+          title: "",
+          description: "",
+          calification: "",
         });
-      }
+        swal("Creado", "Comentario enviado con éxito!", "success")
+          .then(() => window.location.reload());
+      })
+      .catch((error) => swal("Error", error, "error"));
+  }
 
-      
-      function handleSubmit(e) {
-        e.preventDefault();
-        return axios
-          .post(REVIEW_URL+id, input)
-          .then((r) => {
-            e.target.reset();
-            setInput({
-              title: "",
-              description: "",
-              calification: "",
-            });
-            swal("Creado", "Comentario enviado con éxito!", "success")
-            .then( () => window.location.reload() );
-          })
-          .catch((error) => swal("Error", error, "error"));
-        }
-      
 
-    
-    return (
-        <div className={styles.fondo}>
-        <div className={styles.container}>
-           
-            </div>
-                
-            <div className={styles.detail}>
-                <div ></div>
-                <div >
-                <img className={styles.Image} src={producto?.image } alt='none'/>
-                </div>
-                {/* <section className={styles.comentarios}> 
+
+  return (
+    <Container>
+      <Row id="row1">
+        <div id="nameProduct"><h1>{producto?.name.toUpperCase()}</h1></div>
+        <Col id="img" md={6}>
+          <Image id="imgProduct" src={producto?.image} alt='none' fluid />
+        </Col>
+        {/* <section className={styles.comentarios}> 
                 
                 <DiscussionEmbed
                    shortname='salvatoredietetica'
@@ -87,126 +84,116 @@ function Detail({ match }) {
              
               
                </section>  */}
-                
-              
-                <div className={styles.detalles}>
-                <div class = "col-md-20">
-               
-                <p className={styles.titulo}>Detalle del producto</p>
-                <p className={styles.title}>
-                 </p> <p className={styles.producto}>{producto?.name.toUpperCase()}</p>
+        <Col md={6}>
+          <Row>
+            <Col>
+              <label>Precio:</label>
+              <p>${producto?.price} </p>
+              <label>Sobre este producto:</label>
+              <p> {producto?.description} </p>
 
-                <div className={styles.title}>
-                    Precio:  
-                    </div>
-                    <p className={styles.producto}>${producto?.price} </p>
-          
+              <label>Stock:</label>
+              <p> {producto?.stock} unidades</p>
 
-                <p className={styles.title}>Sobre este producto:  
-                <p className={styles.producto}> {producto?.description} </p></p>
+              <label>Categorias:</label>
+              {producto?.categories.map(category => { return <p>{category.name}</p> })}
+            </Col>
+          </Row>
+        </Col>
+        <Row>
+          <Col id="btnsProduct">
+            <button type="button" class="btn btn-secondary">Agregar a favoritos</button>
+            <button type="button" class="btn btn-success">Agregar al carrito</button>
+          </Col>
+        </Row>
+      </Row>
+      <hr />
+      <Row>
+        <Col>
+          <Card id="CrearComentario">
+            <Card.Body >
+              <Form onSubmit={e => { handleSubmit(e) }} >
+                {console.log(handleSubmit)}
+                <Card.Title id="titleOpinion">¡Dejanos tu opinión!</Card.Title>
+                <Card.Title>Calificanos    
+                  <Rating
+                    id="simple-controlled"
+                    name="calification"
+                    value={input.calification}
+                    onChange={handleInputChange}
+                  />
+                </Card.Title>
+                <Form.Group >
+                  <Form.Label>Título</Form.Label>
+                  <Form.Control rows={3}
+                    name="title"
+                    placeholder="Escribe un título..."
+                    value={input.title}
+                    required={true}
+                    onChange={handleInputChange}
+                    label="Titulo"
+                  />
+                </Form.Group>
+                <Form.Group>
+                  <Form.Label>Descripción</Form.Label>
+                  <Form.Control as="textarea" rows={3}
+                    placeholder="Escribe una descripción"
+                    label="Descripción"
+                    name="description"
+                    onChange={handleInputChange}
+                    required={true}
 
-                <p className={styles.title}>Stock:
-                <p className={styles.producto}> {producto?.stock} unidades</p></p>
+                  />
+                </Form.Group>
+                <Form.Group id="btnComentario">
+                  <Button type='submit' class="btn btn-outline-success">
+                    Enviar
+                  </Button>
+                </Form.Group>
 
-                <p className={styles.title}>Categorias:
-                <p className={styles.producto}> {producto?.categories.map(category=>{return <p>{category.name}</p>})}</p></p>
-
-
-             
-                <button type="button" class="btn btn-secondary">Agregar a favoritos</button>
-            <br />
-            <br />
-                <button type="button" class="btn btn-success">Agregar al carrito</button>
-                
-                
-    <div className={styles.main}>
-      
-        <form onSubmit={e => {handleSubmit(e)}} className={styles.root}>
-        {console.log(handleSubmit)}
-
-          <div className={styles.titles}>
-            ¡Dejanos tu opinión!
-          </div>
-          <div >
-            
-              <div className={styles.calif}>Calificación</div>
+              </Form>
+            </Card.Body>
+          </Card>
+        </Col>
+      </Row>
+      <hr />
+      <Row>
+        <Col md={6}>
+          <Card id="titulosComentario">
+            <Card.Body>
+              <Card.Title>Comentarios anteriores: </Card.Title>
+              <Card.Title>Títulos: </Card.Title>
+              <ListGroup>
+                {producto?.reviews.map(review => { return <ListGroupItem>{review.title.toUpperCase()}</ListGroupItem> })}
+              </ListGroup>
+            </Card.Body>
+          </Card>
+        </Col>
+        <Col>
+          <Card id="textoComentario">
+            <Card.Body>
+              <Card.Title>Calificación</Card.Title>
               <Rating
                 id="simple-controlled"
                 name="calification"
                 value={input.calification}
-                onChange={handleInputChange}
-              />
-            
-            <br />
-            
-
-            <div className={styles.aca}>Título</div>
-            <input
-              name="title"
-              placeholder= "Escribe un título..."
-              value={input.title}
-              onChange={handleInputChange}
-              label="Titulo"
-              className={styles.campotitulo}
-              required={true}
-              
-            />
-          </div>
-
-
-        <div className={styles.aca}>Descripción</div>                   
-          <input
-            className={styles.inputs}
-            placeholder= "Escribe una descripción"
-            label="Descripción"
-            name="description"
-            onChange={handleInputChange}
-            required={true}
-            
-          />
-          
-          <button type='submit' class="btn btn-outline-success">
-              Enviar</button>
-       
-        
-        </form>
-        <div className={styles.mainanterior}>
-          <div className={styles.rootanterior}>
-        <p className={styles.titles}>Comentarios anteriores:
-
-                <p className={styles.titles}>
-                  Título: </p>
-                <p className={styles.productoanterior}> {producto?.reviews.map(review=>{return <p>{review.title.toUpperCase()}</p>})}</p></p>
-
-        <div className={styles.calif}>Calificación</div>
-        <Rating
-                id="simple-controlled"
-                name="calification"
-                value = {input.calification}
-                // value={producto?.reviews.map(review=>{return <p>{review.calification}</p>})}
+              // value={producto?.reviews.map(review=>{return <p>{review.calification}</p>})}
               />
               {/* {producto?.reviews.map(review=>{return <p>{review.calification}</p>})} */}
 
-        <p className={styles.productoanterior}> 
-                  Descripción: </p>
-                <p className={styles.inputsdecomentario}> {producto?.reviews.map(review=>{return <p>{review.description}</p>})}</p>
+              <Card.Title>Descripción: </Card.Title>
+              <ListGroup>
+                {producto?.reviews.map(review => { return <ListGroupItem>{review.description}</ListGroupItem> })}
+              </ListGroup>
+            </Card.Body>
+          </Card>
+        </Col>
+      </Row>
+
+    </Container>
+  )
+}
 
 
 
-                </div>
-
-
-
-                </div>
-    
-         
-                </div>
-            </div>
-         </div>
-    </div>
-</div>
-)}
-
-    
-    
 export default Detail;

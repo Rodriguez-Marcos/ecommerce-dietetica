@@ -72,18 +72,17 @@
     border: none;
     background-color: transparent;
 }
-@media only screen and (max-width: 600px) {
+@media only screen and (min-width:100px) and (max-width: 700px) {
     #op{
        font-size: 13px;
     }
     #range{
         align-items: center;
-        width: 50vw;
-        height: 20vw;
+        width: 35vw;
+        height: 40vh;
         justify-content: space-between;
         flex-direction: row;
         justify-content: center;
-        margin-bottom: 110px;
     }
     #rangeMinMax{
         flex-direction: column;
