@@ -1,7 +1,8 @@
 import Favorite from '../models/Favorite.js';
 
 export async function createFavorite(req, res) {
-    const { id_client } = req.params;
+    const {  id } = req;
+    const id_client= id;
     try {
         let newFavorite = await Favorite.create({
             

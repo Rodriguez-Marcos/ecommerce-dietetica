@@ -1,3 +1,5 @@
+import { useGoogleLogout } from 'react-google-login';
+import { GoogleLogout } from 'react-google-login';
 import React, { useState, useEffect } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
@@ -16,17 +18,24 @@ const jwt = require('jsonwebtoken')
 
 
 
+
 function NavBar({ getProductbyName, setLoading, isLogin, token }) {
+  function onLogoutSuccess() {
+    console.log("logout success")
+  }
+  function onFailure() {
+    console.log("algo fallo")
+  }
   const dispatch = useDispatch();
   const [ActualState, setActualState] = useState('')
-  const {logout} = useUser();
+  const { logout } = useUser();
   const myStorage = window.localStorage;
-  useEffect(()=>{
+  useEffect(() => {
     const jwt = myStorage.jwt;
-    if (!!jwt){
-      dispatch({type: 'LOGIN', payload: jwt})
-    }    
-  },[])
+    if (!!jwt) {
+      dispatch({ type: 'LOGIN', payload: jwt })
+    }
+  }, [])
 
 
   let history = useHistory();
@@ -76,11 +85,17 @@ function NavBar({ getProductbyName, setLoading, isLogin, token }) {
             </Form>
 
             {console.log(isLogin)}
-           {isLogin ? <div> <p> Bienvendido {jwt?.decode(token)?.name } </p> <button onClick={logout}> Salir </button> </div>
-            : <div id="btnsSesionRegistro">
-            <NavLink id="btnRegistro" to='/CreateUser'>Registrate</NavLink>
-            <NavLink id="btnSesion" to='/Login'><Image id="imgSesion" src={Sesion}/><span>Inicia Sesion</span> </NavLink>
-            </div>}
+            {isLogin ? <div> <p> Bienvendido {jwt?.decode(token)?.name} </p><GoogleLogout
+              clientId="908895428836-kaesjl71puimi31fjbffca9t4nvl7v6r.apps.googleusercontent.com"
+              buttonText="Logout"
+              onLogoutSuccess={logout}
+              onFailure={()=>{console.log('fallo')}}
+            >
+            </GoogleLogout> {/* <button onClick={()=>{logout(),signOut()}}> Salir </button> */} </div>
+              : <div id="btnsSesionRegistro">
+                <NavLink id="btnRegistro" to='/CreateUser'>Registrate</NavLink>
+                <NavLink id="btnSesion" to='/Login'><Image id="imgSesion" src={Sesion} /><span>Inicia Sesion</span> </NavLink>
+              </div>}
 
           </Nav>
         </Navbar.Collapse>

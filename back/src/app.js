@@ -12,7 +12,7 @@ import Login from './routes/login.js';
 import Cart from './routes/cart.js';
 import Reviewroutes from './routes/review.js'
 import Favoriteroutes from './routes/favorite.js'
-import Cartroutes from './routes/cart.js'
+const useExtractor = require('./middleware/useExtractor')
 
 
 const app = express()
@@ -34,10 +34,9 @@ app.use('/orders', Orderroutes);
 app.use('/categories', Categoryroutes);
 app.use('/diets', Dietroutes);
 app.use('/login', Login);
-app.use('/addCart',Cart)
-app.use('/reviews', Reviewroutes)
-app.use('/favorite',Favoriteroutes)
-app.use('/cart',Cartroutes)
+app.use('/addCart',useExtractor, Cart)
+app.use('/reviews',useExtractor, Reviewroutes)
+app.use('/favorite',useExtractor,Favoriteroutes)
 
 
 

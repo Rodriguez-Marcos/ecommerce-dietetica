@@ -19,6 +19,7 @@ export default function useUser() {
 
         const loginGoogle = useCallback((res)=>{
             myStorage.jwt = res.$b.id_token;
+            console.log(res);
             dispatch({type: 'LOGIN', payload: myStorage.jwt})
         })
         
