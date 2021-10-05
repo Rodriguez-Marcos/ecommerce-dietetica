@@ -17,15 +17,16 @@ const Order = sequelize.define('order', {
     },
     createDate: {
         type: Sequelize.DATE,
-        allowNull: false,
+        defaultValue: Sequelize.fn('NOW')
     },
     status: {
         type: Sequelize.TEXT,
-        allowNull: false,
+        values:["creada","procesando","cancelada","completa"],
+        defaultValue: "creada"
     },
     id_client: {
         type: Sequelize.INTEGER,
-        allowNull: false, 
+        allowNull: false,
     },
 }, {
     timestamps: false

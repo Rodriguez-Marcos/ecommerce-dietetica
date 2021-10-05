@@ -4,6 +4,7 @@ import Order from './Order.js';
 import Diet from './Diet.js';
 import Category from './Category.js'
 import Review from './Review.js'
+import Product_Order from './Product_Order.js'
 
 const Product = sequelize.define('product', {
     id: {
@@ -35,12 +36,12 @@ const Product = sequelize.define('product', {
     timestamps: false
 })
 
-Product.belongsToMany(Order, {through: 'product_order',
+Product.belongsToMany(Order, {through: Product_Order,
 foreignKey:{
 name:'id_product'
 }
 });
-Order.belongsToMany(Product,{through: 'product_order',
+Order.belongsToMany(Product,{through: Product_Order,
   foreignKey:{
 name: 'id_order' 
 }
