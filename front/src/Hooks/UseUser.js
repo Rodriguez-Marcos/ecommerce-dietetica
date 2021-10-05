@@ -1,3 +1,4 @@
+import { decode } from "jsonwebtoken";
 import { useCallback, useContext } from "react";
 import { useDispatch } from "react-redux";
 import loginService from '../Utils/LoginService'
@@ -15,13 +16,20 @@ export default function useUser() {
             })
             .catch(err => { alert(err); console.error(err) })
         }, []);
+
+        const loginGoogle = useCallback((res)=>{
+            myStorage.jwt = res.$b.id_token;
+            dispatch({type: 'LOGIN', payload: myStorage.jwt})
+        })
         
         const logout = useCallback(() => {
             console.log('deslogueado con exito')
+            myStorage.jwt = '';
         dispatch({type: 'LOGOUT'})
     }, []);
     return {
         login,
+        loginGoogle,
         logout
     }
 }

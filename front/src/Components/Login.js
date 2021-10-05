@@ -11,7 +11,7 @@ import useUser from '../Hooks/UseUser';
 
 function Login({respuesta, loginUser, isLogin}) {
     
-    const { login } = useUser();
+    const { login, loginGoogle } = useUser();
     const history = useHistory();
 
     const [state, setState ] = useState({
@@ -64,7 +64,7 @@ function Login({respuesta, loginUser, isLogin}) {
     
 
     const responseGoogle = (response) => {
-       /*  createUserByGoogle(response.profileObj) */
+
     }
 
     return (
@@ -97,7 +97,7 @@ function Login({respuesta, loginUser, isLogin}) {
             <GoogleLogin
                 clientId="908895428836-kaesjl71puimi31fjbffca9t4nvl7v6r.apps.googleusercontent.com"
                 buttonText="Login"
-                onSuccess={responseGoogle}
+                onSuccess={loginGoogle}
                 onFailure={responseGoogle}
                 cookiePolicy={'single_host_origin'}
             />,
