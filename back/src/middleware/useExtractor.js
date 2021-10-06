@@ -3,7 +3,8 @@ const { OAuth2Client } = require('google-auth-library');
 const CLIENT_ID ='908895428836-kaesjl71puimi31fjbffca9t4nvl7v6r.apps.googleusercontent.com';
 
 
-module.exports = (req,res,next)=>{
+function useExtractor (req,res,next){
+
     const authorization = req.get('authorization');
     console.log(authorization)
     let token = null;
@@ -31,8 +32,6 @@ module.exports = (req,res,next)=>{
         }
         verify().catch(console.error);
         //..........---------------------------------------- */
-
-        addToCart(req, res, decodeToken.id, id_product);
     } catch (error) {
         console.log(error);
     }
@@ -43,3 +42,5 @@ module.exports = (req,res,next)=>{
     next();
 
 }
+
+export default useExtractor;

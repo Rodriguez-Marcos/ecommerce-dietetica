@@ -1,7 +1,7 @@
 const { Router } = require('express')
 const { createProduct,getProducts , getById, deleteProduct ,postOrder,updateProduct} = require('../controllers/product')
 const router = Router()
-const useExtractor = require('./middleware/useExtractor')
+import useExtractor from '../middleware/useExtractor'
 
 
 
