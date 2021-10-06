@@ -10,7 +10,7 @@ import borrar from '../image/cancelar.png'
 import compras from '../image/carrito.png'
 import postCarrito from '../Utils/postCarrito';
 import removePC from '../Utils/removePC';
-
+import {RemoveShoppingCart } from '@material-ui/icons';
 
 const cookies = new Cookies();
 
@@ -61,7 +61,7 @@ export function ProductCard({ product }) {
         </ListGroupItem>
         <ListGroupItem id="btns">
           {location.pathname !== '/trolley' ? <Button id="carrito" onClick={(e) => handleClickTrolley(e)} >Agregar  <Card.Img id="carritoimg" src={compras} /></Button> : false}
-          {location.pathname === '/trolley' ? <Button id="borrarBtn" onClick={e => handleClose(e)}><Card.Img id="borrarimg" src={borrar} /></Button> : false}
+          {location.pathname === '/trolley' ? <Button id="borrarBtn" onClick={e => handleClose(e)}><RemoveShoppingCart id="borrarimg"/></Button> : false}
         </ListGroupItem>
       </ListGroup>
     </Card>
