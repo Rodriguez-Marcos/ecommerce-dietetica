@@ -9,6 +9,7 @@ import defaultimg from '../image/salvatore-grande-color.png'
 import borrar from '../image/cancelar.png'
 import compras from '../image/carrito.png'
 import postCarrito from '../Utils/postCarrito';
+import removePC from '../Utils/removePC';
 
 
 const cookies = new Cookies();
@@ -29,12 +30,16 @@ export function ProductCard({ product }) {
       if(isLogin)postCarrito(token, [product.id]);
     }
     cookies.set('trolley', trolley)
+    dispatch({
+      type: 'COMODIN',
+    })
   }
 
   function handleClose(e) {
     e.preventDefault();
     let trolley = Array.isArray(cookies.get('trolley')) ? [...cookies.get('trolley')] : [];
     cookies.set('trolley', trolley.filter(x => x.id !== product.id))
+    if(isLogin)removePC(token,[product.id]);
     dispatch({
       type: 'COMODIN',
     })

@@ -3,7 +3,7 @@ import { GoogleLogout } from 'react-google-login';
 import React, { useState, useEffect } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
-import { connect, useDispatch } from 'react-redux';
+import { connect, useDispatch, useSelector } from 'react-redux';
 import './Navbar.css';
 import { getProductbyName, setLoading } from '../Actions/index'
 import { Navbar, Nav, NavDropdown, Form, FormControl, Button, Image } from 'react-bootstrap'
@@ -25,6 +25,7 @@ const cookies = new Cookies();
 
 
 function NavBar({ getProductbyName, setLoading, isLogin, token }) {
+  let comodin = useSelector(state=>state.reducerPablo.comodin);
   function onLogoutSuccess() {
     console.log("logout success")
   }
@@ -40,7 +41,10 @@ function NavBar({ getProductbyName, setLoading, isLogin, token }) {
     if (!!jwt) {
       dispatch({ type: 'LOGIN', payload: jwt })
     }
-  }, [])
+  }, [myStorage])
+  useEffect(()=>{
+
+  },[comodin])
 
 
   let history = useHistory();

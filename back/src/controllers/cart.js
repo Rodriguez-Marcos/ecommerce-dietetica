@@ -59,7 +59,7 @@ export async function removeFromCart(req, res, next) {
 export async function getCart(req, res) {
     const id_client = req.id;
     try {
-        let cart = await Cart.findOne({where: {id_client: id_client}, include:[{model:Product}]})
+        let cart = await Cart.findAll({where: {id_client: id_client}, include:[{model:Product}]})
         return res.status(200).send(cart)
         
     } catch (err) {

@@ -6,7 +6,7 @@ function postCarrito(token, id_products){
       
       var config = {
         method: 'post',
-        url: 'http://localhost:3001/addCart',
+        url: 'http://localhost:3001/cart',
         headers: { 
           'Authorization': 'Bearer '+ token, 
           'Content-Type': 'application/json'
