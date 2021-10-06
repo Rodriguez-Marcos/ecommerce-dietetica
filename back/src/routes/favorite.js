@@ -3,7 +3,7 @@ const { createFavorite, getFavorites } = require('../controllers/favorite')
 const router = Router()
 
 
-router.post('/id_client', createFavorite);
+router.post('/', createFavorite);
 router.get('/',getFavorites)
 
 
