@@ -4,17 +4,17 @@ import Product from '../models/Product.js';
 export async function addToCart(req, res, next) {
     const id_client = req.id;
     const {
-        id_product
+        id_products
     } = req.body;
 
     try {
         let cart = await Cart.findByPk(id_client)
-        let product = await Product.findByPk(id_product)
-        await cart.addProduct(product)
+        let products = await Product.findAll({where:{id: id_products}})
+        await cart.addProduct(products)
 
         return res.json({
             message: 'Product added successfully',
-            data: product
+            data: products
         })
 
 
