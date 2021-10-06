@@ -1,5 +1,7 @@
 import { useSelector } from 'react-redux'
 import ProductsCards from './Products';
+import { Spinner } from 'react-bootstrap'
+import './Search.css'
 
 
 function Search() {
@@ -8,22 +10,35 @@ function Search() {
     const error = useSelector(state => state.reducerPablo.error)
 
     if (!error && !loading)
-        return (<>
-            {productsFiltered.length || <h1 style={{marginTop: '79px'}}>No se encontro ningun resultado</h1>}
-            <div style={{marginTop: '79px'}} className='home'>
+        return (
+        <div id="contenedor">
+            <div id="s">
+            {productsFiltered.length || <h1>No se encontro ningun resultado</h1>}
+            </div>
+            <div id="s1">
                 <ProductsCards
                     products={productsFiltered} />
             </div>
-        </>
+        </div>
         )
     if (loading)
         return (
-            <h1 style={{marginTop: '79px'}}>Cargando...</h1>
+            <div id="contenedor">
+                <div id="s">
+                    <h3> Cargando..
+                        <Spinner animation="border" variant="success" />
+                        <Spinner animation="border" variant="danger" />
+                        <Spinner animation="border" variant="warning" />
+                    </h3>
+
+                </div>
+            </div>
+
         )
     if (error && !loading)
-            return(
-                <h1 style={{marginTop: '79px'}}>Error interno</h1>
-            )
+        return (
+            <h1 style={{ marginTop: '79px' }}>Error interno</h1>
+        )
 }
 
 export default Search;
