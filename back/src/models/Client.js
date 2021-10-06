@@ -33,6 +33,10 @@ const Client = sequelize.define('client', {
         allowNull: true,
         defaultValue: null,
     },
+    isAdmin: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false,
+    },
 }, {
     timestamps: false
 })

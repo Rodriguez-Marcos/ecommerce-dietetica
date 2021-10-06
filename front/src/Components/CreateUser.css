@@ -1,7 +1,7 @@
 .divuser{
     height: 50vh;
     width: 50vw;
-    margin: auto;
+    margin: auto !important;
     bottom: 0;
     top: 0;
     left: 0;

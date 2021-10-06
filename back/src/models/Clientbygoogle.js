@@ -28,6 +28,10 @@ const Clientbygoogle = sequelize.define('clientbygoogle', {
         allowNull: true,
         defaultValue: null,
     },
+    isAdmin: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false,
+    },
 }, {
     timestamps: false
 })
