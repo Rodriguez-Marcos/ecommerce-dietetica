@@ -16,6 +16,10 @@
 .navlink1{
     color:white;
     text-decoration: none;
+    width: 33px;
+    height: 32px;
+    display: flex;
+    justify-content: center;
 }
 .navlink1:hover{
     color: var(--hoverColorText)
@@ -128,6 +132,15 @@
 #btnRegistro:hover{
     color:var(--hoverColorText) ;
 }
+#ContCarrito{
+    color: rgb(230, 28, 55);
+    border-radius: 50px 50px 50px 50px;
+    z-index: 1;
+}
+#iconoCarrito{
+    position: absolute;
+}
+
 
 @media only screen and (max-width: 700px) {
     .Logo{

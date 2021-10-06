@@ -136,7 +136,6 @@ function Detail({ match }) {
       <hr />
       <Row>
         <Col>
-        <Accordion defaultActiveKey="0">
           <Card id="CrearComentario">
             <Card.Body >
               <Form onSubmit={e => { handleSubmit(e) }} >
@@ -181,7 +180,6 @@ function Detail({ match }) {
               </Form>
             </Card.Body>
           </Card>
-            </Accordion>
         </Col>
       </Row>
       <hr />
