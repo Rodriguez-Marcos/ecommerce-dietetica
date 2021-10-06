@@ -25,7 +25,7 @@ import { Form, Button } from 'react-bootstrap'
 
     };
     async function createUserByGoogle(payload) {
-        await axios.post("http://localhost:3001/clients/bygoogle", payload)
+        await axios.post("http://localhost:3001/clients", payload)
             .then((response) => { console.log(response) })
             .catch((err) => console.error(err))
 
