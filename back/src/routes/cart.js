@@ -1,13 +1,13 @@
 const { Router } = require('express')
-const {  addCart } = require('../controllers/cart.js')
-const {addToCart, getCarts  } = require('../controllers/cart')
+const {addToCart, getCart, removeFromCart,  } = require('../controllers/cart')
 const router = Router()
 
 
 router.post('/', addToCart);
 
+router.get('/',getCart);
 
-router.get('/',getCarts)
+router.delete('/', removeFromCart);
 
 
 export default router;

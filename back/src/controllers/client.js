@@ -2,6 +2,7 @@ import Client from '../models/Client.js';
 import Clientbygoogle from '../models/Clientbygoogle.js';
 import Cart from '../models/Cart.js';
 import Favorite from '../models/Favorite.js';
+import Product from '../models/Product.js';
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
@@ -76,7 +77,10 @@ export async function getClients(req, res) {
 export async function deleteClient(req, res) {
     const { id } = req.params
     try {
+        await Cart.destroy({where:{id_client:id}})
+        await Favorite.destroy({where:{id_client:id}, include:[{model:Product}]})
         let client = await Client.destroy({ where: { id: id } })
+        
         return res.json({
             message: 'Client deleted successfully',
             data: client
