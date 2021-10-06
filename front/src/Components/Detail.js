@@ -5,7 +5,7 @@ import { REVIEW_URL } from "../Actions/index";
 import { useSelector, useDispatch } from 'react-redux'
 import { getById } from '../Actions/index'
 import styles from './Detail.css'
-import { Container, Row, Col, Image, Form, Button, ListGroup, ListGroupItem, Card } from 'react-bootstrap'
+import { Container, Row, Col, Image, Form, Button, ListGroup, ListGroupItem, Card, Accordion } from 'react-bootstrap'
 import Cookies from 'universal-cookie';
 
 
@@ -136,6 +136,7 @@ function Detail({ match }) {
       <hr />
       <Row>
         <Col>
+        <Accordion defaultActiveKey="0">
           <Card id="CrearComentario">
             <Card.Body >
               <Form onSubmit={e => { handleSubmit(e) }} >
@@ -180,6 +181,7 @@ function Detail({ match }) {
               </Form>
             </Card.Body>
           </Card>
+            </Accordion>
         </Col>
       </Row>
       <hr />
