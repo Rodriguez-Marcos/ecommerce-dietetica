@@ -5,11 +5,16 @@ import { postProduct, postCategory, postDiet, putProduct } from "../Actions";
 import "bootstrap/dist/css/bootstrap.min.css";
 import FormEdit from "./FormEdit";
 import FormCreator from "./FormCreator";
-import { getProducts, getCategories, getDiets, deleteProductByID } from "../Actions";
+import TableProducts from "./TableProducts";
 import {
-  Table,
+  getProducts,
+  getCategories,
+  getDiets,
+  deleteProductByID,
+} from "../Actions";
+import {
+  
   Button,
-  Container,
   Modal,
   ModalHeader,
   ModalBody,
@@ -54,7 +59,7 @@ export default function Creator() {
   // handlers de seteo
 
   async function handlerProduct(e) {
-    if (e.target.name == "image") {
+    if (e.target.name === "image") {
       let file = e.target.files;
 
       let formData = new FormData();
@@ -82,7 +87,7 @@ export default function Creator() {
   }
 
   function handlerCategories(e) {
-    if (e.target.checked) {
+    if (e.target.value) {
       setInput({
         ...input,
         ids_categories: [...input.ids_categories, e.target.value],
@@ -96,7 +101,7 @@ export default function Creator() {
   }
 
   function handlerDiets(e) {
-    if (e.target.checked) {
+    if (e.target.value) {
       setInput({
         ...input,
         ids_diets: [...input.ids_diets, e.target.value],
@@ -132,7 +137,7 @@ export default function Creator() {
       input.stock &&
       input.description &&
       input.image &&
-      (input.ids_diets.length != 0) & (input.ids_categories.length != 0)
+      (input.ids_diets.length !== 0) & (input.ids_categories.length !== 0)
     ) {
       dispatch(putProduct(input, input.id));
       alert("Modificacion exitosa");
@@ -146,22 +151,19 @@ export default function Creator() {
   // Eliminar
 
   function deleteProduct() {
- 
-   
-  dispatch(deleteProductByID(input.id))
+    dispatch(deleteProductByID(input.id));
 
-  setInput({
-    ...input,
-    name: '',
-    id: ''
-  });
-  setDeleteModal({
-    ...deleteModal,
-    product: false,
-  });
+    setInput({
+      ...input,
+      name: "",
+      id: "",
+    });
+    setDeleteModal({
+      ...deleteModal,
+      product: false,
+    });
 
-  dispatch(getProducts())
-  
+    dispatch(getProducts());
   }
 
   // handlers de submit
@@ -180,7 +182,7 @@ export default function Creator() {
       console.log(input);
       dispatch(postProduct(input));
       alert(" Producto creado con exito");
-      dispatch(getProducts())
+      dispatch(getProducts());
       closeProduct();
     } else {
       alert("falta informacion requerida en el formulario");
@@ -293,22 +295,21 @@ export default function Creator() {
     setInput({
       ...input,
       name: e.name,
-      id: e.id
+      id: e.id,
     });
   }
-  function closeDeleteProduct(){
+  function closeDeleteProduct() {
     setDeleteModal({
       ...deleteModal,
       product: false,
     });
     setInput({
       ...input,
-      name: '',
-      id: '',
+      name: "",
+      id: "",
     });
   }
 
-  
   // Modales de Categoria
 
   function openCategory() {
@@ -348,13 +349,19 @@ export default function Creator() {
       description: "",
     });
   }
-
+console.log('input', input)
   // INICIO DEL COMPONENTE
   return (
     <div>
-      <h1> .</h1>
+
+    
       <h1>.</h1>
       <h1>.</h1>
+      <h1>.</h1> 
+       <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark">
+        Hola mundo
+
+      </div>
       <Button color="success" onClick={() => openProduct()}>
         Insertar Producto
       </Button>{" "}
@@ -400,47 +407,36 @@ export default function Creator() {
         handlerSubmitProduct={handlerSubmitProductEdit}
         editProductClose={editProductClose}
       />
-      <Container>
-        <Table>
-          <thead>
-            <tr>
-              <th>Imagen</th>
-              <th>Producto</th>
-              <th>Precio</th>
-              <th>Stock</th>
-              <th>Acción</th>
-            </tr>
-          </thead>
-
-          {p.map((e) => (
-            <tbody key={e.id}>
-              <td>
-                <img src={e.image} height="60" width="80" />
-              </td>
-              <td>{e.name}</td>
-              <td>{e.price}</td>
-              <td>{e.stock}</td>
-              <td>
-                <Button color="primary" onClick={() => editProductOpen(e)}>
-                  ✏
-                </Button>
-                <Button color="danger" onClick={() => openDeleteProduct(e)}>
-                  🗑
-                </Button>
-              </td>
-            </tbody>
-          ))}
-        </Table>
-      </Container>
-      <Modal isOpen={deleteModal.product}>
-        <ModalHeader>Eliminar Producto</ModalHeader>
-        <ModalBody>
-          Desea eliminar : <strong class="badge bg-primary text-wrap  w: 10rem" > {input.name}</strong> de la Lista ?</ModalBody>
-        <ModalFooter>
-          <Button color="primary"  onClick ={()=>deleteProduct()}> Aceptar</Button>
-          <Button  color="danger" onClick ={(e)=> closeDeleteProduct(e)}> Cancelar</Button>
-        </ModalFooter>
-      </Modal>
+      <div>
+        <TableProducts
+          p={p}
+          editProductOpen={editProductOpen}
+          openDeleteProduct={openDeleteProduct}
+        />
+      </div>
+      <div>
+        <Modal isOpen={deleteModal.product}>
+          <ModalHeader>Eliminar Producto</ModalHeader>
+          <ModalBody>
+            Desea eliminar :{" "}
+            <strong class="badge bg-primary text-wrap  w: 10rem">
+              {" "}
+              {input.name}
+            </strong>{" "}
+            de la Lista ?
+          </ModalBody>
+          <ModalFooter>
+            <Button color="primary" onClick={() => deleteProduct()}>
+              {" "}
+              Aceptar
+            </Button>
+            <Button color="danger" onClick={(e) => closeDeleteProduct(e)}>
+              {" "}
+              Cancelar
+            </Button>
+          </ModalFooter>
+        </Modal>
+      </div>
     </div>
   );
 }
