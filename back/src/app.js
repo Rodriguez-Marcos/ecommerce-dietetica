@@ -10,7 +10,6 @@ import Categoryroutes from './routes/category.js'
 import Dietroutes from './routes/diet.js'
 import Login from './routes/login.js';
 import Cart from './routes/cart.js';
-import RemoveProductCart from './routes/removeProductCart.js';
 import Reviewroutes from './routes/review.js';
 import Favoriteroutes from './routes/favorite.js';
 import useExtractor from './middleware/useExtractor';
@@ -35,8 +34,7 @@ app.use('/orders', Orderroutes);
 app.use('/categories', Categoryroutes);
 app.use('/diets', Dietroutes);
 app.use('/login', Login);
-app.use('/addCart',useExtractor,Cart);
-app.use('/removeCart',useExtractor,RemoveProductCart)
+app.use('/cart',useExtractor,Cart);
 app.use('/reviews',useExtractor, Reviewroutes)
 app.use('/favorite',useExtractor,Favoriteroutes)
 
