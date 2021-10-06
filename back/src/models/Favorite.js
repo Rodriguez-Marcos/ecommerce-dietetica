@@ -2,7 +2,7 @@ import Sequelize from 'sequelize';
 import { sequelize } from '../database/db.js'
 import Product from './Product.js'
 import Client from './Client.js'
-import Clientbygoogle from './Clientbygoogle.js'
+
 
 const Favorite = sequelize.define('favorite', {
     id: {
@@ -26,6 +26,4 @@ name: 'id_favorite'
 });
 Client.hasOne(Favorite,{foreignKey:'id_client',sourceKey:'id'})
 Favorite.belongsTo(Client,{foreignKey:'id_client',sourceKey:'id'})
-Clientbygoogle.hasOne(Favorite,{foreignKey:'id_clientGoogle',sourceKey:'googleId'})
-Favorite.belongsTo(Clientbygoogle,{foreignKey:'id_clientGoogle',sourceKey:'googleId'})
 export default Favorite
