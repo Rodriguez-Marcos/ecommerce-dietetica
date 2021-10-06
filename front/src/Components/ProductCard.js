@@ -54,9 +54,6 @@ export function ProductCard({ product }) {
       </Card>
       <ListGroup className="list-group-flush">
         <ListGroupItem>
-        
-          
-
           <Link id="detalles" to={`/Detail/${product.id}`} >Ver este producto</Link>
         </ListGroupItem>
         <ListGroupItem id="btns">
