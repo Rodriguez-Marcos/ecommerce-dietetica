@@ -11,8 +11,13 @@ import { Navbar, Nav, NavDropdown, Form, FormControl, Button, Image } from 'reac
 import useUser from '../Hooks/UseUser'; //hook para loguearse y ver si esta logueado el usuario
 import Logo from '../image/SALVATORE-grande.png'
 import lupa from '../image/buscar.png'
+import {ShoppingCart} from '@material-ui/icons';
+import Cookies from "universal-cookie";
 import Sesion from '../image/usuario.png'
+
 const jwt = require('jsonwebtoken')
+const cookies = new Cookies();
+
 
 
 
@@ -69,7 +74,16 @@ function NavBar({ getProductbyName, setLoading, isLogin, token }) {
             id="Links"
           >
             <Nav.Link ><NavLink to="/home" className='navlink1' >Inicio</NavLink></Nav.Link>
-            <Nav.Link ><NavLink to="/trolley" className='navlink1' >Carrito</NavLink></Nav.Link>
+            
+            <Nav.Link ><NavLink to="/trolley" className='navlink1'>
+             Carrito
+              
+              <ShoppingCart fontSize="large" />
+              {cookies.get('trolley').length}
+              
+        
+              
+                </NavLink></Nav.Link>
             <Nav.Link>About</Nav.Link>
           </Nav>
           <Nav id="busqueda">

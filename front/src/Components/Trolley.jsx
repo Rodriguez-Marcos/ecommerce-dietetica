@@ -4,6 +4,7 @@ import Cookies from "universal-cookie";
 import './Trolley.css'
 import { Link } from "react-router-dom";
 
+
 const cookies = new Cookies();
 
 export default function Trolley() {
@@ -23,6 +24,7 @@ export default function Trolley() {
                 {!isLogin?<h1><Link to='/Login'>Logueate para empezar a comprar </Link></h1>:false}
             <h1>Productos agregados</h1>
             <ProductsCards id="card" products={cookies.get('trolley')} />
+         
             </div>
     )
 }
