@@ -13,6 +13,7 @@ import {
   
 } from "@material-ui/icons";
 import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 export default function Sidebar({openProduct, openCategory, openDiet}) {
   return (
@@ -69,7 +70,7 @@ export default function Sidebar({openProduct, openCategory, openDiet}) {
             </li>
             <li className="sidebarListItem">
               <DynamicFeed className="sidebarIcon" />
-              Lista de Usuarios
+              <NavLink to='/Admin/user'>Lista de Usuarios</NavLink>
             </li>
             <li className="sidebarListItem">
               <ChatBubbleOutline className="sidebarIcon" />
