@@ -3,31 +3,35 @@ import Product_Order from '../models/Product_Order.js';
 import Product from '../models/Product.js';
 
 export async function createOrder(req, res) {
-    const { ammount, shippingAddress, id_client, products } = req.body;
+    const { shippingAddress, id_client, products } = req.body;
 
     try {
         let newOrder = await Order.create({
-            ammount,
+            
             shippingAddress,
             id_client
         }, {
-            fields: ['ammount', 'shippingAddress', 'id_client']
+            fields: [ 'shippingAddress', 'id_client']
         }
         )
-        let newOrderId = await Order.findOne({ where: { ammount: ammount, id_client: id_client }, attributes: ["id"], order:[["createDate","DESC"]], limit:1 })
+        let newOrderId = await Order.findOne({ where: { id_client: id_client }, attributes: ["id"], order:[["createDate","DESC"]], limit:1 })
         let promises = Promise.all(products.map(async product => {
-            let quantity = await Product.findOne({where:{id:product.id}, attributes: ["stock"]})
+            let quantity = await Product.findOne({where:{id:product.id}, attributes: ["stock","price"]})
+            
+            let newProduct_Order = await Product_Order.create({ total:product.quantity*quantity.dataValues.price,quantity: product.quantity, id_product: product.id, id_order: newOrderId.dataValues.id })
+            
             let newQuantity = quantity.dataValues.stock-product.quantity
             await Product.update({stock:newQuantity},{where:{id:product.id}})
-            let newProduct_Order = await Product_Order.create({ quantity: product.quantity, id_product: product.id, id_order: newOrderId.dataValues.id })
             return newProduct_Order
         }))
         let promisesResolved = await promises
         
         if (promisesResolved) {
+            let totalValue = await Product_Order.sum('total', { where: { id_order: newOrderId.dataValues.id} })
+            let updateOrder = await Order.update({ ammount: totalValue},{where: { id: newOrderId.dataValues.id}})
             return res.json({
                 message: 'Order created successfully',
-                data: newOrder
+                data: updateOrder
             })
         }
 
@@ -43,7 +47,7 @@ export async function createOrder(req, res) {
 }
 export async function getOrders(req, res) {
     try {
-        let orders = await Order.findAll()
+        let orders = await Order.findAll({include:{model:Product_Order}})
         return res.status(200).send(orders)
     } catch (err) {
         console.log(err)

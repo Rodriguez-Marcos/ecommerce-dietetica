@@ -26,7 +26,7 @@ const Client = sequelize.define('client', {
     address: {
         type: Sequelize.TEXT,
         allowNull: true,
-        defaultValue: null,
+       
     },
     phone: {
         type: Sequelize.TEXT,
