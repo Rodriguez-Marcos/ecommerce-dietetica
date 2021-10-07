@@ -162,14 +162,7 @@ export async function updateProduct(req, res) {
     const { name, price, description, image, stock, ids_categories, ids_diets } = req.body
 
     try {
-        // await Product.update({
-        //     name:name,
-        //     price:price,
-        //     description:description,
-        //     image:image,
-        //     stock:stock,
-        // },{where:{id:id}}
-        // )
+       
         await Product.update({
             name: name,
             price: price,

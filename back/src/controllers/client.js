@@ -142,6 +142,26 @@ export async function deleteClient(req, res) {
 
     }
 }
+export async function updateClientToAdmin(req,res){
+   let {id} = req.params
+   try{
+    let isAdmin = await Client.findOne({where: {id:id}, attribute:["isAdmin"]})
+    if (isAdmin.dataValues.isAdmin===false){
+    await Client.update({isAdmin:true},{where:{id:id}})
+} else {await Client.update({isAdmin:false},{where:{id:id}})}
+let user = await Client.findOne({where: {id:id}})
+return res.json({
+    message: 'Client deleted successfully',
+    data: user
+})
+} catch (err) {
+console.log(err)
+res.status(500).json({
+    message: 'Something goes Wrong',
+    data: {}
+})
+}  
+}
 export async function loginUser(req, res) {
     let { email, password, googleId } = req.body
     if(!googleId){

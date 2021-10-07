@@ -31,7 +31,7 @@ export async function addToCart(req, res, next) {
         if (promisesResolved) {
             let totalValue = await Product_Cart.sum('total', { where: { id_cart: cart.dataValues.id } })
             await Cart.update({ totalAmount: totalValue }, { where: { id: cart.dataValues.id } })
-            let updatedCart = await Cart.findOne({ where: { id_client: id_client }, include:[{model:Product}] })
+            let updatedCart = await Cart.findOne({ where: { id_client: id_client }, include: [{ model: Product }] })
             return res.json({
                 message: 'Cart uploaded successfully',
                 data: updatedCart
