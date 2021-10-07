@@ -5,23 +5,21 @@ import Product_Cart from '../models/Product_Cart.js';
 export async function addToCart(req, res, next) {
     const id_client = req.id;
     let products= [];
-
-    req.body.products.map((x)=>{
-        products.push({...x,quantity: 1})
-    })
-    console.log(products)
+    if(!Array.isArray(req.body.products))
+        products.push(req.body.products)
+    else products = req.body.products;
+    console.log("products",req.body.products)
     console.log(id_client)
 
     try {
         let cart = await Cart.findOne({ where: { id_client: id_client } })
         console.log(cart)
-
         let promises = Promise.all(products.map(async product => {
             let productEx = await Product_Cart.findOne({ where: { id_cart: cart.dataValues.id, id_product: product.id } })
             let quantity = await Product.findOne({ where: { id: product.id }, attributes: ["stock", "price"] })
             if (quantity.dataValues.stock <= 0) { return ("producto no disponible por el momento") }
             if (!productEx) {
-                let newProduct_Cart = await Product_Cart.create({ total: product.quantity * quantity.dataValues.price, quantity: product.quantity, id_product: product.id, id_cart: cart.dataValues.id })
+                let newProduct_Cart = await Product_Cart.findOrCreate({ total: product.quantity * quantity.dataValues.price, quantity: product.quantity, id_product: product.id, id_cart: cart.dataValues.id })
                 return newProduct_Cart
             } else {
                 let newProduct_Cart = await Product_Cart.update({
@@ -41,7 +39,7 @@ export async function addToCart(req, res, next) {
             return res.json({
                 message: 'Cart uploaded successfully',
                 data: updatedCart
-            })
+            }) 
         }
     } catch (err) {
         console.log(err)
@@ -58,7 +56,7 @@ export async function removeFromCart(req, res, next) {
     const id_client = req.id;
     const {
         id_products
-    } = req.body;
+    } = req.body;{}
 
     try {
         let cart = await Cart.findByPk(id_client)

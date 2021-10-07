@@ -3,6 +3,7 @@ function postCarrito(token, products){
     var data = JSON.stringify({
         "products": products,
       });
+      console.log('data: ',products)
       
       var config = {
         method: 'post',

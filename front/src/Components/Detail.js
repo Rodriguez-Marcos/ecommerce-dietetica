@@ -44,7 +44,7 @@ function Detail({ match }) {
       let quantity = 1;
       let { id } = producto;
       trolley.push({id, quantity});
-      if (isLogin) postCarrito(token, [...trolley]);
+      if (isLogin) postCarrito(token, {id,quantity});
     }
     cookies.set('trolley', trolley)
     dispatch({
