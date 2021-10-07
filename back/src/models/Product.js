@@ -1,10 +1,12 @@
 import Sequelize from 'sequelize';
 import { sequelize } from '../database/db.js';
 import Order from './Order.js';
+import Cart from './Cart.js';
 import Diet from './Diet.js';
 import Category from './Category.js'
 import Review from './Review.js'
 import Product_Order from './Product_Order.js'
+import Product_Cart from './Product_Cart.js'
 
 const Product = sequelize.define('product', {
     id: {
@@ -46,6 +48,16 @@ Order.belongsToMany(Product,{through: Product_Order,
 name: 'id_order' 
 }
 });
+Product.belongsToMany(Cart, {through: Product_Cart,
+    foreignKey:{
+    name:'id_product'
+    }
+    });
+Cart.belongsToMany(Product,{through: Product_Cart,
+      foreignKey:{
+    name: 'id_cart' 
+    }
+    });
 Product.belongsToMany(Diet, {through: 'product_diet',
 foreignKey:{
 name:'id_product'

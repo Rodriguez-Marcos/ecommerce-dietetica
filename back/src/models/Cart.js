@@ -10,20 +10,15 @@ const Cart = sequelize.define('cart', {
         primaryKey: true,
         autoIncrement: true,
     },
+    totalAmount: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+        defaultValue: null}
 }, {
     timestamps: false
 })
 
-Product.belongsToMany(Cart, {through: 'product_cart',
-foreignKey:{
-name:'id_product'
-}
-});
-Cart.belongsToMany(Product,{through: 'product_cart',
-  foreignKey:{
-name: 'id_cart' 
-}
-});
+
 Client.hasOne(Cart,{foreignKey:'id_client',sourceKey:'id'})
 Cart.belongsTo(Client,{foreignKey:'id_client',sourceKey:'id'})
 export default Cart

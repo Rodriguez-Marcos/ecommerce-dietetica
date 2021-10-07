@@ -1,7 +1,7 @@
 import Sequelize from 'sequelize';
 import { sequelize } from '../database/db.js'
 
-const Product_Order = sequelize.define('products_order', {
+const Product_Cart = sequelize.define('products_cart', {
     quantity: {
         type: Sequelize.INTEGER,
         allowNull: false
@@ -9,9 +9,9 @@ const Product_Order = sequelize.define('products_order', {
     total: {
         type: Sequelize.INTEGER,
         allowNull: false
-    }
+    },
 }, {
     timestamps: false
 })
 
-export default Product_Order
+export default Product_Cart
