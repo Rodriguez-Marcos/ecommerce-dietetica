@@ -352,17 +352,7 @@ export default function Creator() {
       <div className="creator">
         <Sidebar />
         <div className="others">
-          <Button color="success" onClick={() => openProduct()}>
-            Insertar Producto
-          </Button>{" "}
-          {"    "}
-          <Button color="warning" onClick={() => openCategory()}>
-            Insertar Categoria
-          </Button>
-          {"    "}
-          <Button color="info" onClick={() => openDiet()}>
-            Insertar Dieta
-          </Button>
+         
           <FormCreator
             modal={modal}
             input={input}
@@ -427,6 +417,17 @@ export default function Creator() {
               </ModalFooter>
             </Modal>
           </div>
+          <Button color="success" onClick={() => openProduct()}>
+            Insertar Producto
+          </Button>{" "}
+          {"    "}
+          <Button color="warning" onClick={() => openCategory()}>
+            Insertar Categoria
+          </Button>
+          {"    "}
+          <Button color="info" onClick={() => openDiet()}>
+            Insertar Dieta
+          </Button>
         </div>
       </div>
     </div>
