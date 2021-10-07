@@ -15,7 +15,7 @@ export default function  TableProducts({p, editProductOpen, openDeleteProduct  }
     <table className={` ${s.TableProducts} table`}>
       <thead>
         <tr>
-          <th>Imagen</th>
+          <th>Imagen:</th>
           <th>Producto</th>
           <th>Precio</th>
           <th>Stock</th>
