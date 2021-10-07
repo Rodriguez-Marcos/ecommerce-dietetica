@@ -63,7 +63,6 @@ export default function UserDetail() {
         dispatch()
         alert("Modificacion exitosa");
         setEditModal({...editModal,name:false})
-  
       }
 
 
