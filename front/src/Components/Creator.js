@@ -349,82 +349,84 @@ export default function Creator() {
   return (
     <div>
       <Topbar />
-      <Sidebar />
-      <div className="others">
-        <Button color="success" onClick={() => openProduct()}>
-          Insertar Producto
-        </Button>{" "}
-        {"    "}
-        <Button color="warning" onClick={() => openCategory()}>
-          Insertar Categoria
-        </Button>
-        {"    "}
-        <Button color="info" onClick={() => openDiet()}>
-          Insertar Dieta
-        </Button>
-        <FormCreator
-          modal={modal}
-          input={input}
-          handlerProduct={handlerProduct}
-          c={c}
-          d={d}
-          handlerCategories={handlerCategories}
-          handlerDiets={handlerDiets}
-          handlerSubmitProduct={handlerSubmitProduct}
-          closeProduct={closeProduct}
-          handlerSubmitCategory={handlerSubmitCategory}
-          category={category}
-          diet={diet}
-          handlerCategory={handlerCategory}
-          closeCategory={closeCategory}
-          handlerSubmitDiet={handlerSubmitDiet}
-          handlerDiet={handlerDiet}
-          closeDiet={closeDiet}
-        />
-        {/* 
+      <div className="creator">
+        <Sidebar />
+        <div className="others">
+          <Button color="success" onClick={() => openProduct()}>
+            Insertar Producto
+          </Button>{" "}
+          {"    "}
+          <Button color="warning" onClick={() => openCategory()}>
+            Insertar Categoria
+          </Button>
+          {"    "}
+          <Button color="info" onClick={() => openDiet()}>
+            Insertar Dieta
+          </Button>
+          <FormCreator
+            modal={modal}
+            input={input}
+            handlerProduct={handlerProduct}
+            c={c}
+            d={d}
+            handlerCategories={handlerCategories}
+            handlerDiets={handlerDiets}
+            handlerSubmitProduct={handlerSubmitProduct}
+            closeProduct={closeProduct}
+            handlerSubmitCategory={handlerSubmitCategory}
+            category={category}
+            diet={diet}
+            handlerCategory={handlerCategory}
+            closeCategory={closeCategory}
+            handlerSubmitDiet={handlerSubmitDiet}
+            handlerDiet={handlerDiet}
+            closeDiet={closeDiet}
+          />
+          {/* 
       Modales de Edicion 
       
       */}
-        <FormEdit
-          d={d}
-          c={c}
-          editModal={editModal}
-          input={input}
-          handlerProduct={handlerProduct}
-          handlerCategories={handlerCategories}
-          handlerDiets={handlerDiets}
-          handlerSubmitProduct={handlerSubmitProductEdit}
-          editProductClose={editProductClose}
-        />
-        <div>
-          <TableProducts
-            p={p}
-            editProductOpen={editProductOpen}
-            openDeleteProduct={openDeleteProduct}
+          <FormEdit
+            d={d}
+            c={c}
+            editModal={editModal}
+            input={input}
+            handlerProduct={handlerProduct}
+            handlerCategories={handlerCategories}
+            handlerDiets={handlerDiets}
+            handlerSubmitProduct={handlerSubmitProductEdit}
+            editProductClose={editProductClose}
           />
-        </div>
-        <div>
-          <Modal isOpen={deleteModal.product}>
-            <ModalHeader>Eliminar Producto</ModalHeader>
-            <ModalBody>
-              Desea eliminar :{" "}
-              <strong class="badge bg-primary text-wrap  w: 10rem">
-                {" "}
-                {input.name}
-              </strong>{" "}
-              de la Lista ?
-            </ModalBody>
-            <ModalFooter>
-              <Button color="primary" onClick={() => deleteProduct()}>
-                {" "}
-                Aceptar
-              </Button>
-              <Button color="danger" onClick={(e) => closeDeleteProduct(e)}>
-                {" "}
-                Cancelar
-              </Button>
-            </ModalFooter>
-          </Modal>
+          <div>
+            <TableProducts
+              p={p}
+              editProductOpen={editProductOpen}
+              openDeleteProduct={openDeleteProduct}
+            />
+          </div>
+          <div>
+            <Modal isOpen={deleteModal.product}>
+              <ModalHeader>Eliminar Producto</ModalHeader>
+              <ModalBody>
+                Desea eliminar :{" "}
+                <strong class="badge bg-primary text-wrap  w: 10rem">
+                  {" "}
+                  {input.name}
+                </strong>{" "}
+                de la Lista ?
+              </ModalBody>
+              <ModalFooter>
+                <Button color="primary" onClick={() => deleteProduct()}>
+                  {" "}
+                  Aceptar
+                </Button>
+                <Button color="danger" onClick={(e) => closeDeleteProduct(e)}>
+                  {" "}
+                  Cancelar
+                </Button>
+              </ModalFooter>
+            </Modal>
+          </div>
         </div>
       </div>
     </div>
