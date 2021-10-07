@@ -11,6 +11,7 @@ import compras from '../image/carrito.png'
 import postCarrito from '../Utils/postCarrito';
 import removePC from '../Utils/removePC';
 import {RemoveShoppingCart } from '@material-ui/icons';
+import Contador from './Contador';
 
 const cookies = new Cookies();
 
@@ -57,6 +58,7 @@ export function ProductCard({ product }) {
           <Link id="detalles" to={`/Detail/${product.id}`} >Ver este producto</Link>
         </ListGroupItem>
         <ListGroupItem id="btns">
+          <Contador></Contador>
           {location.pathname !== '/trolley' ? <Button id="carrito" onClick={(e) => handleClickTrolley(e)} >Agregar  <Card.Img id="carritoimg" src={compras} /></Button> : false}
           {location.pathname === '/trolley' ? <Button id="borrarBtn" onClick={e => handleClose(e)}><RemoveShoppingCart id="borrarimg"/></Button> : false}
         </ListGroupItem>
