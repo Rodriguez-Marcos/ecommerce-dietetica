@@ -40,6 +40,7 @@ export default function useUser() {
         const logout = useCallback(() => {
             console.log('deslogueado con exito')
             myStorage.jwt = '';
+            cookies.set('trolley',[])
         dispatch({type: 'LOGOUT'})
     }, []);
     return {
