@@ -6,6 +6,19 @@ export async function createOrder(req, res) {
     const { shippingAddress, id_client, products } = req.body;
 
     try {
+
+        let preference = {
+            items: [
+              {
+                title: products,
+                unit_price: ammount,
+                quantity: 1,
+              }
+            ]
+          };
+
+
+
         let newOrder = await Order.create({
             
             shippingAddress,
@@ -24,6 +37,9 @@ export async function createOrder(req, res) {
             await Product.update({stock:newQuantity},{where:{id:product.id}})
             return newProduct_Order
         }))
+
+        console.log(promises)
+
         let promisesResolved = await promises
         
         if (promisesResolved) {

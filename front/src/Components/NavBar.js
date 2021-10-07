@@ -85,7 +85,8 @@ function NavBar({ getProductbyName, setLoading, isLogin, token }) {
               <NavLink to="/trolley" className='navlink1'>
                 <ShoppingCart fontSize="large" id="iconoCarrito"/>
                 <span id="ContCarrito">
-                  {cookies.get('trolley')?.length?cookies.get('trolley').length:0}
+                  {cookies.get('trolley')?.length?cookies.get('trolley').length:0
+                }
                 </span>
               </NavLink>
             </Nav.Link>
