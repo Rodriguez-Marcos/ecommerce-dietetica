@@ -347,10 +347,15 @@ export default function Creator() {
   console.log("input", input);
   // INICIO DEL COMPONENTE
   return (
-    <div>
+    <div className= 'creator' >
       <Topbar />
-      <div className="creator">
-        <Sidebar />
+      <div className="screem">
+        <Sidebar 
+        openProduct = {openProduct}
+        openCategory= {openCategory}
+        openDiet= {openDiet}/>
+        
+        </div>
         <div className="others">
          
           <FormCreator
@@ -417,19 +422,9 @@ export default function Creator() {
               </ModalFooter>
             </Modal>
           </div>
-          <Button color="success" onClick={() => openProduct()}>
-            Insertar Producto
-          </Button>{" "}
-          {"    "}
-          <Button color="warning" onClick={() => openCategory()}>
-            Insertar Categoria
-          </Button>
-          {"    "}
-          <Button color="info" onClick={() => openDiet()}>
-            Insertar Dieta
-          </Button>
+  
         </div>
       </div>
-    </div>
+  
   );
 }
