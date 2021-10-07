@@ -3,8 +3,6 @@ import {
   LineStyle,
   Timeline,
   TrendingUp,
-  PermIdentity,
-  Storefront,
   AttachMoney,
   BarChart,
   MailOutline,
@@ -12,22 +10,23 @@ import {
   ChatBubbleOutline,
   WorkOutline,
   Report,
+  
 } from "@material-ui/icons";
 import { Link } from "react-router-dom";
 
-export default function Sidebar() {
+export default function Sidebar({openProduct, openCategory, openDiet}) {
   return (
     <div className="sidebar">
       <div className="sidebarWrapper">
         <div className="sidebarMenu">
           <h3 className="sidebarTitle">Dashboard</h3>
           <ul className="sidebarList">
-            <Link to="/admin" className="link">
-              <li className="sidebarListItem active">
+            
+              {/* <li className="sidebarListItem active">
                 <LineStyle className="sidebarIcon" />
-                Panel Central
-              </li>
-            </Link>
+              < Link to="/admin" className="link"> Panel Central</Link>
+              </li> */}
+            
             <li className="sidebarListItem">
               <AttachMoney className="sidebarIcon" />
               Economia
@@ -39,23 +38,23 @@ export default function Sidebar() {
           </ul>
         </div>
         <div className="sidebarMenu">
-          <h3 className="sidebarTitle">Menu de Edicion</h3>
+          <h3 className="sidebarTitle">Agregar Elementos</h3>
           <ul className="sidebarList">
-            <li className="sidebarListItem">
+            {/* <li className="sidebarListItem">
               <PermIdentity className="sidebarIcon" />
               Usuarios
-            </li>
+            </li> */}
 
-            <li className="sidebarListItem">
-              <button className="sidebarIcon" />
+            <li className="sidebarListItem" onClick={() => openProduct()}>
+              <button className="sidebarIcon"  />
               Productos
             </li>
 
-            <li className="sidebarListItem">
+            <li className="sidebarListItem" onClick={() => openCategory()}>
               <BarChart className="sidebarIcon" />
               Categorias
             </li>
-            <li className="sidebarListItem">
+            <li className="sidebarListItem"  onClick={() => openDiet()}>
               <BarChart className="sidebarIcon" />
               Dietas
             </li>

@@ -1,5 +1,7 @@
 .creator{
-    display: contents;
+    display: flex;
+flex-direction:row-reverse; 
+
 
    
 }
