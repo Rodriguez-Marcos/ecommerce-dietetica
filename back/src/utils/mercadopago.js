@@ -1,6 +1,6 @@
 var axios = require('axios');
 
-export default async function mercadopago(cart){
+export default async function mercadopago(cart,res){
 var data ;
 var mp;
 let items = [] ;
@@ -30,7 +30,7 @@ var config = {
 
 axios(config)
 .then(function (response) {
-  console.log(JSON.stringify(response.data));
+  return res.status(200).json(response.data.init_point);
 })
 .catch(function (error) {
   console.log(error);

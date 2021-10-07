@@ -5,19 +5,68 @@ import './Trolley.css'
 import { Link } from "react-router-dom";
 import { useEffect, useState, useContext } from "react";
 import getCart from "../Utils/getCart";
-import  payment  from '../Utils/Payment'
 import CartContext from "../Contexts/UserContext"
+import { useHistory } from "react-router";
+import axios from 'axios'
 
+
+ 
 
 
 
 const cookies = new Cookies();
 
 export default function Trolley() {
-  
-    function handleSubmit(event){
+    useEffect(() =>{},[payment])
+    const history = useHistory();
+    async function  handleSubmit(event){
         event.preventDefault();
-        payment(token)
+        var data = JSON.stringify({
+            "payment": "mercadopago"
+          });
+          
+          var config = {
+            method: 'post',
+            url: 'http://localhost:3001/payment',
+            headers: { 
+              'Authorization': 'Bearer ' + token, 
+              'Content-Type': 'application/json'
+            },
+            data : data
+          };
+          
+          axios(config)
+          .then(function (response) {
+            window.location.replace(response.data);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+        
+    }
+
+    async function payment(token){
+        var data = JSON.stringify({
+            "payment": "mercadopago"
+          });
+          
+          var config = {
+            method: 'post',
+            url: 'http://localhost:3001/payment',
+            headers: { 
+              'Authorization': 'Bearer ' + token, 
+              'Content-Type': 'application/json'
+            },
+            data : data
+          };
+          
+          axios(config)
+          .then(function (response) {
+            return(JSON.stringify(response.data));
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
     }
     
 
