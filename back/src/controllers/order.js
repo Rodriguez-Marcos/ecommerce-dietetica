@@ -7,19 +7,10 @@ export async function createOrder(req, res) {
 
     try {
 
-        let preference = {
-            items: [
-              {
-                title: products,
-                unit_price: ammount,
-                quantity: 1,
-              }
-            ]
-          };
 
 
 
-        let newOrder = await Order.create({
+        await Order.create({
             
             shippingAddress,
             id_client
@@ -38,16 +29,16 @@ export async function createOrder(req, res) {
             return newProduct_Order
         }))
 
-        console.log(promises)
-
+        
         let promisesResolved = await promises
         
         if (promisesResolved) {
             let totalValue = await Product_Order.sum('total', { where: { id_order: newOrderId.dataValues.id} })
-            let updateOrder = await Order.update({ ammount: totalValue},{where: { id: newOrderId.dataValues.id}})
+            await Order.update({ ammount: totalValue},{where: { id: newOrderId.dataValues.id}})
+            let updatedOrder = await Order.findOne({ where: { id_client: id_client },include:{model:Product},  order:[["createDate","DESC"]], limit:1 })
             return res.json({
                 message: 'Order created successfully',
-                data: updateOrder
+                data: updatedOrder
             })
         }
 
@@ -63,7 +54,7 @@ export async function createOrder(req, res) {
 }
 export async function getOrders(req, res) {
     try {
-        let orders = await Order.findAll({include:{model:Product_Order}})
+        let orders = await Order.findAll({include:{model:Product}})
         return res.status(200).send(orders)
     } catch (err) {
         console.log(err)
