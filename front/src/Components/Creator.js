@@ -378,7 +378,6 @@ export default function Creator() {
             closeDiet={closeDiet}
           />
           {/* 
-          
       Modales de Edicion 
       
       */}
@@ -423,6 +422,7 @@ export default function Creator() {
               </ModalFooter>
             </Modal>
           </div>
+  
         </div>
       </div>
   

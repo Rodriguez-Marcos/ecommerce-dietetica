@@ -28,7 +28,7 @@ function App() {
     <Route exact path='/trolley' component={Trolley}/>
     <Route exact path='/CreateUser' component={CreateUser}/>
     <Route exact path='/Login' component={Login}/>
-    <Route exact path='/Admin' component={Creator}/>
+    <Route path='/Admin' component={Creator}/>
 
 
     </Switch>
