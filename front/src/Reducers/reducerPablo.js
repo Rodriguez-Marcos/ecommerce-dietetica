@@ -1,4 +1,4 @@
-import { GET_PRODUCTS, GET_BY_DIET_AND_CATEGORY, GET_BY_PRICE, GET_CATEGORIES, GET_DIETS, GET_BY_ID_CATEGORY, ORDER_PRICE, GET_BY_ID_DIET, GET_PRODUCTS_FILTERED, PAGINATE, FAIL_TO_LOAD, SET_LOADING, SET_NEW_USER, SET_LOGIN_USER } from "../Actions/index"
+import { GET_PRODUCTS, DELETE_CLIENTS, GET_CLIENTS, GET_BY_DIET_AND_CATEGORY, GET_BY_PRICE, GET_CATEGORIES, GET_DIETS, GET_BY_ID_CATEGORY, ORDER_PRICE, GET_BY_ID_DIET, GET_PRODUCTS_FILTERED, PAGINATE, FAIL_TO_LOAD, SET_LOADING, SET_NEW_USER, SET_LOGIN_USER } from "../Actions/index"
 
 
 const InitialState = {
@@ -14,6 +14,7 @@ const InitialState = {
     login_user: {},
     isLogin: false,
     token: '',
+    clients: [],
 }
 
 
@@ -26,7 +27,7 @@ export default function reducerPablo(state = InitialState, action) {
                 ...state,
                 products: action.payload,
                 productsFiltered: action.payload,
-            
+
             };
 
 
@@ -111,17 +112,28 @@ export default function reducerPablo(state = InitialState, action) {
                 login_user: action.payload,
             }
         case 'LOGIN':
-            return{
+            return {
                 ...state,
                 isLogin: true,
                 token: action.payload,
             }
         case 'LOGOUT':
-            return{
+            return {
                 ...state,
                 token: '',
                 isLogin: false,
             }
+        case GET_CLIENTS:
+            return {
+                ...state,
+                clients: action.payload,
+            };
+        case DELETE_CLIENTS:
+            return {
+                ...state,
+                clients: action.payload.data,
+            };
+
         default:
             return { ...state }
     }
