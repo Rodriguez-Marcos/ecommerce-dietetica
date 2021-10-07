@@ -5,6 +5,7 @@ import './Trolley.css'
 import { Link } from "react-router-dom";
 import { useEffect, useState, useContext } from "react";
 import getCart from "../Utils/getCart";
+import  payment  from '../Utils/Payment'
 import CartContext from "../Contexts/UserContext"
 
 
@@ -14,7 +15,11 @@ const cookies = new Cookies();
 
 export default function Trolley() {
   
-
+    function handleSubmit(event){
+        event.preventDefault();
+        payment(token)
+    }
+    
 
 
     let { isLogin, token, comodin } = useSelector(state => state.reducerPablo)
@@ -45,7 +50,7 @@ export default function Trolley() {
                 {/* {total ? <h2>Total ${total}</h2> : ''} */}
                 <p >Total: $</p>
          
-                <Link to="/form" className="btn btn-success">
+                <Link to="/form" className="btn btn-success" onClick={handleSubmit} >
                     Iniciar compra
                  </Link>
                 </div>
