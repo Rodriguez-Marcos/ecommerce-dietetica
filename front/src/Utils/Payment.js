@@ -1,7 +1,6 @@
 import axios from 'axios'
 
 
-
 export default async function payment(token){
     var data = JSON.stringify({
         "payment": "mercadopago"
