@@ -83,7 +83,8 @@ function NavBar({ getProductbyName, setLoading, isLogin, token }) {
              Carrito
               
               <ShoppingCart fontSize="large" />
-              {cookies.get('trolley').length}
+              {
+              cookies.get('trolley')?.length?cookies.get('trolley').length:0}
               
         
               

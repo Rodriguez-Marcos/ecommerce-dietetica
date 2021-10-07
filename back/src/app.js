@@ -12,7 +12,7 @@ import Login from './routes/login.js';
 import Cart from './routes/cart.js';
 import Reviewroutes from './routes/review.js';
 import Favoriteroutes from './routes/favorite.js';
-import useExtractor from './middleware/useExtractor';
+import useExtractor from './controllers/loginUser.js';
 
 
 const app = express()

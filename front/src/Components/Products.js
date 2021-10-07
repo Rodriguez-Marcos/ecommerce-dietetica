@@ -19,7 +19,7 @@ export default function ProductsCards(params) {
   }, [])
   return (
     <div className={styles.main}>
-      {products && products.map(product=>{
+      {products && products?.map(product=>{
         return <ProductCard product={product}/>
       })}
     </div>

@@ -258,17 +258,6 @@ export function review(payload) {
         });
     };
 }
-export function createUser(value) {
-    return async function (dispatch) {
-        try {
-            let res = await axios.post("http://localhost:3001/clients", value)
-            return dispatch({
-                type: SET_NEW_USER,
-                payload: res.data,
-            })
-        } catch (err) { console.log(err) }
-    }
-};
 
 export function loginUser(email,password) {
     return async function (dispatch) {

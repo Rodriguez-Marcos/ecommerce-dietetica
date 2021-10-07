@@ -6,8 +6,12 @@ import Product from '../models/Product.js';
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
+module.export = Client;
+
 export async function createClient(req, res) {
     let { name, lastname, email, password, address, phone } = req.body;
+    if (!name || !lastname || !email || !password || !address || !phone)
+        return res.status(401).json({error: 'faltan algunos campos'})
 
     password = await bcrypt.hash(password,10);
 
@@ -26,10 +30,6 @@ export async function createClient(req, res) {
             fields: ['name', 'lastname', 'email', 'password', 'address', 'phone']
         }
         )
-        let token = ''
-        const {id} = newClient
-        const userToken = {id,email}
-        token = jwt.sign(userToken, 'juanelmascapo' )
 
         if (newClient) {
             let client_id = await Client.findOne({where: {name: newClient.name},attributes:['id']})
