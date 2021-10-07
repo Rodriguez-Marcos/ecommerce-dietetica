@@ -11,7 +11,7 @@ import { Navbar, Nav, NavDropdown, Form, FormControl, Button, Image } from 'reac
 import useUser from '../Hooks/UseUser'; //hook para loguearse y ver si esta logueado el usuario
 import Logo from '../image/SALVATORE-grande.png'
 import lupa from '../image/buscar.png'
-import {ShoppingCart} from '@material-ui/icons';
+import { ShoppingCart} from '@material-ui/icons';
 import Cookies from "universal-cookie";
 import Sesion from '../image/usuario.png'
 
@@ -25,7 +25,7 @@ const cookies = new Cookies();
 
 
 function NavBar({ getProductbyName, setLoading, isLogin, token }) {
-  let comodin = useSelector(state=>state.reducerPablo.comodin);
+  let comodin = useSelector(state => state.reducerPablo.comodin);
   function onLogoutSuccess() {
     console.log("logout success")
   }
@@ -42,9 +42,9 @@ function NavBar({ getProductbyName, setLoading, isLogin, token }) {
       dispatch({ type: 'LOGIN', payload: jwt })
     }
   }, [myStorage])
-  useEffect(()=>{
+  useEffect(() => {
 
-  },[comodin])
+  }, [comodin])
 
 
   let history = useHistory();
@@ -77,18 +77,18 @@ function NavBar({ getProductbyName, setLoading, isLogin, token }) {
             navbarScroll
             id="Links"
           >
-            <Nav.Link ><NavLink to="/home" className='navlink1' >Inicio</NavLink></Nav.Link>
-            
-            <Nav.Link ><NavLink to="/trolley" className='navlink1'>
-             Carrito
-              
-              <ShoppingCart fontSize="large" />
-              {
-              cookies.get('trolley')?.length?cookies.get('trolley').length:0}
-              
-        
-              
-                </NavLink></Nav.Link>
+            <Nav.Link >
+              <NavLink to="/home" className='navlink1' >Inicio</NavLink>
+            </Nav.Link>
+
+            <Nav.Link >
+              <NavLink to="/trolley" className='navlink1'>
+                <ShoppingCart fontSize="large" id="iconoCarrito"/>
+                <span id="ContCarrito">
+                  {cookies.get('trolley')?.length?cookies.get('trolley').length:0}
+                </span>
+              </NavLink>
+            </Nav.Link>
             <Nav.Link>About</Nav.Link>
           </Nav>
           <Nav id="busqueda">
@@ -108,7 +108,7 @@ function NavBar({ getProductbyName, setLoading, isLogin, token }) {
               clientId="908895428836-kaesjl71puimi31fjbffca9t4nvl7v6r.apps.googleusercontent.com"
               buttonText="Logout"
               onLogoutSuccess={logout}
-              onFailure={()=>{console.log('fallo')}}
+              onFailure={() => { console.log('fallo') }}
             >
             </GoogleLogout> {/* <button onClick={()=>{logout(),signOut()}}> Salir </button> */} </div>
               : <div id="btnsSesionRegistro">

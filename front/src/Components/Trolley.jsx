@@ -3,13 +3,20 @@ import ProductsCards from "./Products";
 import Cookies from "universal-cookie";
 import './Trolley.css'
 import { Link } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState, useContext } from "react";
 import getCart from "../Utils/getCart";
+import CartContext from "../Contexts/UserContext"
+
+
 
 
 const cookies = new Cookies();
 
 export default function Trolley() {
+  
+
+
+
     let { isLogin, token, comodin } = useSelector(state => state.reducerPablo)
     useEffect(() => {
         console.log('hola:',isLogin)
@@ -23,16 +30,46 @@ export default function Trolley() {
             <div id="carritoCompras">
                 <a href='/home'>ir al home</a>
                 <h1>No hay nada en el carrito aun</h1>
-                {!isLogin ? <h1><Link to='/Login'>Logueate para empezar a comprar </Link></h1> : false}
+                {!isLogin ? <button><Link to='/Login' className="btn btn-success">Logueate para empezar a comprar </Link></button> : false}
             </div>)
     } else {
         return (
             <div id="cardCarrito">
-                {!isLogin ? <h1><Link to='/Login'>Logueate para empezar a comprar </Link></h1> : false}
+                {!isLogin ? <button><Link to='/Login' className="btn btn-success">Logueate para empezar a comprar </Link></button> : false}
                 <h1>Productos agregados</h1>
                 <ProductsCards id="card" products={cookies.get('trolley')} />
+                <br/>
+                <br/>
+                <br/>
+                <div >
+                {/* {total ? <h2>Total ${total}</h2> : ''} */}
+                <p >Total: $</p>
+         
+                <Link to="/form" className="btn btn-success">
+                    Iniciar compra
+                 </Link>
+                </div>
+                
 
             </div>
         )
     }
 }
+
+// import React from 'react';
+// import ProductCard from './ProductCard';
+
+// export default function Trolley ({product}) {
+// //   const { product, onAdd } = props;
+//   return (
+//     <main className="block col-2">
+//       <h2>Products</h2>
+//       <div className="row">
+//       {product && product.map(product=>{
+//         return <ProductCard product={product.id} image={product.image} price={product.price}/>
+      
+//       })}
+//       </div>
+//     </main>
+//   );
+// }

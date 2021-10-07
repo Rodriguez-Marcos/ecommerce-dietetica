@@ -13,6 +13,8 @@ import {Image} from 'react-bootstrap'
 import fondo from '../src/image/fondo1.jpg'
 import { UserContextProvider } from './Contexts/UserContext';
 import Login from './Components/Login';
+import Sidebar from './Components/AdminSideBar';
+import UsersAdminDetail from './Components/UsersAdminDetail'
 
 function App() {
   return (
@@ -28,6 +30,9 @@ function App() {
     <Route exact path='/CreateUser' component={CreateUser}/>
     <Route exact path='/Login' component={Login}/>
     <Route exact path='/Admin' component={Creator}/>
+    <Route exact path='/Admin/user' component={UsersAdminDetail}/>
+
+
     </Switch>
     {/* <Footer/> */}
     </UserContextProvider>

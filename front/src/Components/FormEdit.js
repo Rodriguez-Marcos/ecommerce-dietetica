@@ -22,15 +22,7 @@ export default function FormEdit({
   handlerSubmitProduct,
   editProductClose,
 }) {
-  const [edit, setEdit] = useState({
-    name: "",
-    image: "",
-    price: "",
-    description: "",
-    stock: "",
-    ids_categories: [],
-    ids_diets: [],
-  });
+
 
   return (
     <Modal isOpen={editModal.product}>

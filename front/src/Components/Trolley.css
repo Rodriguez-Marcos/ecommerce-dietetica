@@ -9,8 +9,15 @@
 #carritoCompras a{
     text-decoration: none;
 }
-#cardCarrito h1{
+#cardCarrito button{
     margin-top: 90px;
+    font-size: 20px;
+
+}
+#cardCarrito h1{
+    /* margin-top: 90px; */
+    font-size: 32px;
+    color: black;
 }
 #cardCarrito{
     width: 100vw;
@@ -25,4 +32,9 @@
 .product_main__1SdrO{
     margin-top: 0;
     margin-bottom: 0;
+}
+
+#cardCarrito p{
+    font-size: 40px;
+    font-weight: 800;
 }

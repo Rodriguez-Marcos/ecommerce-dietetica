@@ -8,6 +8,7 @@
     padding: 20px;
     margin :15px;
     border-radius: 30px;
+
     -webkit-box-shadow: 8px 0px 0px 0px var(--colorCafe), 0px 8px 0px 0px var(--hoverVerde), -8px 0px 0px 0px var(--colorCafe), 0px 0px 0px 8px var(--hoverVerde), 0px 0px 4px 17px rgba(158,36,8,0); 
 box-shadow: 8px 0px 0px 0px var(--colorCafe), 0px 8px 0px 0px var(--hoverVerde), -8px 0px 0px 0px var(--colorCafe), 0px 0px 0px 8px var(--hoverVerde), 0px 0px 4px 17px rgba(158,36,8,0);
 
@@ -25,10 +26,12 @@ box-shadow: 8px 0px 0px 0px var(--colorCafe), 0px 8px 0px 0px var(--hoverVerde),
     border-radius: 15px;
 }
 #borrarimg{
-    width: 5vw;
+    height: auto;
+    color: red;
+    width: 35px;
 }
 #borrarimg:hover{
-    width: 6vw;
+    color: rgba(5, 5, 5, 0.507);
 }
 #borrarBtn{
     background-color: transparent;
