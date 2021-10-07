@@ -14,9 +14,11 @@ export async function createOrder(req, res) {
             fields: ['ammount', 'shippingAddress', 'id_client']
         }
         )
-        let newOrderId = await Order.findOne({ where: { ammount: ammount, id_client: id_client }, attributes: ["id"] })
-
+        let newOrderId = await Order.findOne({ where: { ammount: ammount, id_client: id_client }, attributes: ["id"], order:[["createDate","DESC"]], limit:1 })
         let promises = Promise.all(products.map(async product => {
+            let quantity = await Product.findOne({where:{id:product.id}, attributes: ["stock"]})
+            let newQuantity = quantity.dataValues.stock-product.quantity
+            await Product.update({stock:newQuantity},{where:{id:product.id}})
             let newProduct_Order = await Product_Order.create({ quantity: product.quantity, id_product: product.id, id_order: newOrderId.dataValues.id })
             return newProduct_Order
         }))

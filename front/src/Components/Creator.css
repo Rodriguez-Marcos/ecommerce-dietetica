@@ -1,3 +1,11 @@
-.soloprueba{
-    margin: 5%;
+.creator{
+    display: flex;
+flex-direction:row-reverse; 
+
+
+   
+}
+.others{
+    flex: 4;
+    margin-right: 500px;
 }

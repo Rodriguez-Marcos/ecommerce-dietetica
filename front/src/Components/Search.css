@@ -1,0 +1,39 @@
+:root{
+    --hoverColorText:rgb(175, 172, 172);
+    --hoverVerde:rgba(16, 112, 16, 0.795);
+    --colorCafe: #99642C;
+}
+#contenedor{
+    position: relative;
+    height: 100vh;
+    width: 100vw;
+}
+#s{
+    position: absolute;
+    width: 70vw;
+    height: 10vh;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#s h3{
+    color: var(--colorCafe);
+}
+#s1{
+    position: absolute;
+    width: 100vw;
+    height: 70vh;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    margin: auto;
+}
+/* #encontrados{
+    display: none;
+} */

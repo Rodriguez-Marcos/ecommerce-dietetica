@@ -22,15 +22,7 @@ export default function FormEdit({
   handlerSubmitProduct,
   editProductClose,
 }) {
-  const [edit, setEdit] = useState({
-    name: "",
-    image: "",
-    price: "",
-    description: "",
-    stock: "",
-    ids_categories: [],
-    ids_diets: [],
-  });
+
 
   return (
     <Modal isOpen={editModal.product}>
@@ -84,42 +76,49 @@ export default function FormEdit({
           />
           {!input.stock ? <output> ✏</output> : <output> ✔</output>}
         </FormGroup>
-        <div>
-          <h4> Elegir Categorias</h4>
-          {c.map((e, i) => (
-            <div class="form-check">
-              <label key={i} class="form-check-label">
-                <input
-                  class="form-check-input"
-                  type="checkbox"
-                  name="ids_categories"
-                  value={e.id}
-                  onChange={(e) => handlerCategories(e)}
-                />
-                {e.name}
-              </label>
-            </div>
-          ))}
-        </div>
-        <div>
-          <h4> Elegir Dieta</h4>
-          {d.map((e, i) => (
-            <div class="form-check">
-              <label key={i} class="form-check-label">
-                <input
-                  class="form-check-input"
-                  type="checkbox"
-                  name="ids_diets"
-                  value={e.id}
-                  onChange={(e) => handlerDiets(e)}
-                />
-                {e.name}
-              </label>
-            </div>
-          ))}
-        </div>
         <FormGroup>
-          <label> Imagen actual:       </label>
+          <div>
+            <fieldset>
+              <h6>Seleccionar Categorias: </h6>
+              <select
+                onChange={(e) => handlerCategories(e)}
+                class="form-select"
+                multiple
+                aria-label="multiple select example"
+              >
+                {c.map((e) => (
+                  <option value={e.id}> {e.name}</option>
+                ))}
+              </select>
+              {"    "}
+              <output>
+                {" "}
+                seleccionaste: {input.ids_categories.length} categorias
+              </output>
+            </fieldset>
+          </div>
+          <br />
+          <div>
+            <fieldset>
+              <h6> Seleccionar Dietas: </h6>
+              <select
+                onChange={(e) => handlerDiets(e)}
+                class="form-select"
+                multiple
+                aria-label="multiple select example"
+              >
+                {d.map((e) => (
+                  <option value={e.id}> {e.name}</option>
+                ))}
+              </select>
+              {"    "}
+              <output> seleccionaste: {input.ids_diets.length} dietas</output>
+            </fieldset>
+          </div>
+        </FormGroup>
+        <br />
+        <FormGroup>
+          <label> Imagen actual: </label>
           {"               "}
           {!input.image ? (
             <output> ✏</output>

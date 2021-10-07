@@ -1,7 +1,9 @@
+import { useGoogleLogout } from 'react-google-login';
+import { GoogleLogout } from 'react-google-login';
 import React, { useState, useEffect } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
-import { connect, useDispatch } from 'react-redux';
+import { connect, useDispatch, useSelector } from 'react-redux';
 import './Navbar.css';
 import { getProductbyName, setLoading } from '../Actions/index'
 import { Navbar, Nav, NavDropdown, Form, FormControl, Button, Image } from 'react-bootstrap'
@@ -9,24 +11,40 @@ import { Navbar, Nav, NavDropdown, Form, FormControl, Button, Image } from 'reac
 import useUser from '../Hooks/UseUser'; //hook para loguearse y ver si esta logueado el usuario
 import Logo from '../image/SALVATORE-grande.png'
 import lupa from '../image/buscar.png'
+import { ShoppingCart} from '@material-ui/icons';
+import Cookies from "universal-cookie";
 import Sesion from '../image/usuario.png'
+
 const jwt = require('jsonwebtoken')
+const cookies = new Cookies();
+
+
 
 
 
 
 
 function NavBar({ getProductbyName, setLoading, isLogin, token }) {
+  let comodin = useSelector(state => state.reducerPablo.comodin);
+  function onLogoutSuccess() {
+    console.log("logout success")
+  }
+  function onFailure() {
+    console.log("algo fallo")
+  }
   const dispatch = useDispatch();
   const [ActualState, setActualState] = useState('')
-  const {logout} = useUser();
+  const { logout } = useUser();
   const myStorage = window.localStorage;
-  useEffect(()=>{
+  useEffect(() => {
     const jwt = myStorage.jwt;
-    if (!!jwt){
-      dispatch({type: 'LOGIN', payload: jwt})
-    }    
-  },[])
+    if (!!jwt) {
+      dispatch({ type: 'LOGIN', payload: jwt })
+    }
+  }, [myStorage])
+  useEffect(() => {
+
+  }, [comodin])
 
 
   let history = useHistory();
@@ -59,8 +77,18 @@ function NavBar({ getProductbyName, setLoading, isLogin, token }) {
             navbarScroll
             id="Links"
           >
-            <Nav.Link ><NavLink to="/home" className='navlink1' >Inicio</NavLink></Nav.Link>
-            <Nav.Link ><NavLink to="/trolley" className='navlink1' >Carrito</NavLink></Nav.Link>
+            <Nav.Link >
+              <NavLink to="/home" className='navlink1' >Inicio</NavLink>
+            </Nav.Link>
+
+            <Nav.Link >
+              <NavLink to="/trolley" className='navlink1'>
+                <ShoppingCart fontSize="large" id="iconoCarrito"/>
+                <span id="ContCarrito">
+                  {cookies.get('trolley')?.length?cookies.get('trolley').length:0}
+                </span>
+              </NavLink>
+            </Nav.Link>
             <Nav.Link>About</Nav.Link>
           </Nav>
           <Nav id="busqueda">
@@ -76,11 +104,17 @@ function NavBar({ getProductbyName, setLoading, isLogin, token }) {
             </Form>
 
             {console.log(isLogin)}
-           {isLogin ? <div> <p> Bienvendido {jwt?.decode(token)?.name } </p> <button onClick={logout}> Salir </button> </div>
-            : <div id="btnsSesionRegistro">
-            <NavLink id="btnRegistro" to='/CreateUser'>Registrate</NavLink>
-            <NavLink id="btnSesion" to='/Login'><Image id="imgSesion" src={Sesion}/><span>Inicia Sesion</span> </NavLink>
-            </div>}
+            {isLogin ? <div> <p> Bienvendido {jwt?.decode(token)?.name} </p><GoogleLogout
+              clientId="908895428836-kaesjl71puimi31fjbffca9t4nvl7v6r.apps.googleusercontent.com"
+              buttonText="Logout"
+              onLogoutSuccess={logout}
+              onFailure={() => { console.log('fallo') }}
+            >
+            </GoogleLogout> {/* <button onClick={()=>{logout(),signOut()}}> Salir </button> */} </div>
+              : <div id="btnsSesionRegistro">
+                <NavLink id="btnRegistro" to='/CreateUser'>Registrate</NavLink>
+                <NavLink id="btnSesion" to='/Login'><Image id="imgSesion" src={Sesion} /><span>Inicia Sesion</span> </NavLink>
+              </div>}
 
           </Nav>
         </Navbar.Collapse>

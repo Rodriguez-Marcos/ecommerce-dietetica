@@ -5,7 +5,7 @@ import { REVIEW_URL } from "../Actions/index";
 import { useSelector, useDispatch } from 'react-redux'
 import { getById } from '../Actions/index'
 import styles from './Detail.css'
-import { Container, Row, Col, Image, Form, Button, ListGroup, ListGroupItem, Card } from 'react-bootstrap'
+import { Container, Row, Col, Image, Form, Button, ListGroup, ListGroupItem, Card, Accordion } from 'react-bootstrap'
 import Cookies from 'universal-cookie';
 
 

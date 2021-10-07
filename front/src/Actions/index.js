@@ -15,6 +15,8 @@ export const SET_LOADING = 'SET_LOADING';
 export const GET_ID = "GET_ID";
 export const SET_NEW_USER = 'SET_NEW_USER';
 export const SET_LOGIN_USER = 'SET_LOGIN_USER';
+export const GET_CLIENTS = 'GET_CLIENTS';
+export const DELETE_CLIENTS = 'DELETE_CLIENTS';
 export const REVIEW_URL = "http://localhost:3001/reviews/";
 
 
@@ -282,3 +284,33 @@ export function loginUser(email,password) {
         } catch (err) { console.log(err) }
     }
 };
+
+
+export function getClients() {
+
+    return async function (dispatch) {
+        return axios.get(`http://localhost:3001/clients`)
+            .then((response) => {
+                dispatch({
+                    payload: response.data,
+                    type: GET_CLIENTS
+                })
+            })
+    }
+}
+
+export function deleteClients(id) {
+    return async function (dispatch) {
+        try {
+            const res = await axios.delete('http://localhost:3001/clients/' + id);
+            return dispatch({
+                type: 'DELETE_CLIENTS',
+                payload: res.data
+            });
+        } catch (err) {
+            console.log(err)
+        };
+    };
+};
+
+

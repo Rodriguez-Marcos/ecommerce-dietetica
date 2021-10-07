@@ -21,7 +21,7 @@ const Client = sequelize.define('client', {
     },
     password: {
         type: Sequelize.TEXT,
-        allowNull: false,
+        allowNull: true,
     },
     address: {
         type: Sequelize.TEXT,
@@ -36,6 +36,14 @@ const Client = sequelize.define('client', {
     isAdmin: {
         type: Sequelize.BOOLEAN,
         defaultValue: false,
+    },
+    isGoogleClient: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false,
+    },
+    googleId: {
+        type: Sequelize.TEXT,
+        defaultValue: null,
     },
 }, {
     timestamps: false
