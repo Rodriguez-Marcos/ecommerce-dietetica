@@ -125,11 +125,12 @@ export async function deleteClient(req, res) {
     try {
         await Cart.destroy({where:{id_client:id}})
         await Favorite.destroy({where:{id_client:id}, include:[{model:Product}]})
-        let client = await Client.destroy({ where: { id: id } })
+        await Client.destroy({ where: { id: id } })
+        let clients = await Client.findAll()
         
         return res.json({
             message: 'Client deleted successfully',
-            data: client
+            data: clients
         })
     } catch (err) {
         console.log(err)
