@@ -16,7 +16,7 @@ export default function  TableProducts({p, editProductOpen, openDeleteProduct  }
       <thead>
         <tr>
           <th>Imagen:</th>
-          <th>Producto</th>
+          <th>Producto:</th>
           <th>Precio</th>
           <th>Stock</th>
           <th>Acción</th>
