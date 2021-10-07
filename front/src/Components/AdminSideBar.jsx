@@ -23,56 +23,54 @@ export default function Sidebar() {
           <h3 className="sidebarTitle">Dashboard</h3>
           <ul className="sidebarList">
             <Link to="/admin" className="link">
-            <li className="sidebarListItem active">
-              <LineStyle className="sidebarIcon" />
-              Panel Central
-            </li>
+              <li className="sidebarListItem active">
+                <LineStyle className="sidebarIcon" />
+                Panel Central
+              </li>
             </Link>
             <li className="sidebarListItem">
-              <Timeline className="sidebarIcon" />
-              Analytics
+              <AttachMoney className="sidebarIcon" />
+              Economia
             </li>
             <li className="sidebarListItem">
               <TrendingUp className="sidebarIcon" />
-              Sales
+              Ventas
             </li>
           </ul>
         </div>
         <div className="sidebarMenu">
-          <h3 className="sidebarTitle">Quick Menu</h3>
+          <h3 className="sidebarTitle">Menu de Edicion</h3>
           <ul className="sidebarList">
-            <Link to="/users" className="link">
-              <li className="sidebarListItem">
-                <PermIdentity className="sidebarIcon" />
-                Users
-              </li>
-            </Link>
-          
-              <li className="sidebarListItem">
-                <button className="sidebarIcon" />
-                Products
-              </li>
-           
             <li className="sidebarListItem">
-              <AttachMoney className="sidebarIcon" />
-              Transactions
+              <PermIdentity className="sidebarIcon" />
+              Usuarios
+            </li>
+
+            <li className="sidebarListItem">
+              <button className="sidebarIcon" />
+              Productos
+            </li>
+
+            <li className="sidebarListItem">
+              <BarChart className="sidebarIcon" />
+              Categorias
             </li>
             <li className="sidebarListItem">
               <BarChart className="sidebarIcon" />
-              Reports
+              Dietas
             </li>
           </ul>
         </div>
         <div className="sidebarMenu">
-          <h3 className="sidebarTitle">Notifications</h3>
+          <h3 className="sidebarTitle">Usuarios</h3>
           <ul className="sidebarList">
             <li className="sidebarListItem">
               <MailOutline className="sidebarIcon" />
-              Mail
+              Correos
             </li>
             <li className="sidebarListItem">
               <DynamicFeed className="sidebarIcon" />
-              Feedback
+              Lista de Usuarios
             </li>
             <li className="sidebarListItem">
               <ChatBubbleOutline className="sidebarIcon" />

@@ -15,17 +15,7 @@ export default function Topbar() {
           <span className={s.logo}>Administracion Salvatore</span>
         </div>
         <div className={s.topRight}>
-          <div className={s.topbarIconContainer}>
-            <NotificationsNone />
-            <span className={s.topIconBadge}></span>
-          </div>
-          <div className={s.topbarIconContainer}>
-            <Language />
-            <span className={s.topIconBadge}></span>
-          </div>
-          <div className={s.topbarIconContainer}>
-            <Settings />
-          </div>
+       
           <img
             src="https://w7.pngwing.com/pngs/701/653/png-transparent-computer-icons-system-administrator-administrator-icon-silhouette-desktop-wallpaper-administrator-icon.png"
             alt="img No found"
