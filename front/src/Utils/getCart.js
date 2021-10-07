@@ -1,9 +1,10 @@
 import axios from "axios";
 import Cookies from "universal-cookie";
+import getTrolley from "./getTrolley";
 
 let cookies = new Cookies(); 
 
-export default async function ( token ){
+export default async function getCart( token ){
     var config = {
         method: 'get',
         url: 'http://localhost:3001/cart',
@@ -14,7 +15,9 @@ export default async function ( token ){
       
       axios(config)
       .then(function (response) {
-        cookies.set('trolley',response.data[0].products);
+        let productsId =  response.data[0].products.map(x=>x.id);
+        cookies.set('trolley',productsId);
+        getTrolley(productsId)
       })
       .catch(function (error) {
         console.log(error);

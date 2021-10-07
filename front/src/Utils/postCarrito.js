@@ -1,7 +1,7 @@
 import axios from 'axios'
-function postCarrito(token, id_products){
+function postCarrito(token, products){
     var data = JSON.stringify({
-        "id_products": id_products
+        "products": products,
       });
       
       var config = {

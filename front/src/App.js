@@ -19,7 +19,6 @@ import UsersAdminDetail from './Components/UsersAdminDetail'
 function App() {
   return (
     <BrowserRouter>
-    <UserContextProvider>
      <Image id="fondo" src={fondo} fluid />
     <NavBar/>
     <Switch>
@@ -35,7 +34,6 @@ function App() {
 
     </Switch>
     {/* <Footer/> */}
-    </UserContextProvider>
     </BrowserRouter>
     
   );
