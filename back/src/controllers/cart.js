@@ -4,12 +4,18 @@ import Product_Cart from '../models/Product_Cart.js';
 
 export async function addToCart(req, res, next) {
     const id_client = req.id;
-    const {
-        products
-    } = req.body;
+    let products= [];
+
+    req.body.products.map((x)=>{
+        products.push({...x,quantity: 1})
+    })
+    console.log(products)
+    console.log(id_client)
 
     try {
         let cart = await Cart.findOne({ where: { id_client: id_client } })
+        console.log(cart)
+
         let promises = Promise.all(products.map(async product => {
             let productEx = await Product_Cart.findOne({ where: { id_cart: cart.dataValues.id, id_product: product.id } })
             let quantity = await Product.findOne({ where: { id: product.id }, attributes: ["stock", "price"] })

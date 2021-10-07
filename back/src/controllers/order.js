@@ -2,6 +2,7 @@ import Order from '../models/Order.js';
 import Product_Order from '../models/Product_Order.js';
 import Product from '../models/Product.js';
 
+
 export async function createOrder(req, res) {
     const id_client = req.id
     const { shippingAddress, products } = req.body;
