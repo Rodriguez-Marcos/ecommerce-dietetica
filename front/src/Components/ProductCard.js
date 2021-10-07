@@ -31,7 +31,7 @@ export function ProductCard({ product }) {
       let quantity = counter;
       let { id } = product;
       trolley.push({id, quantity});
-      if (isLogin) postCarrito(token, [...trolley]);
+      if (isLogin) postCarrito(token,{id,quantity});
     }
     cookies.set('trolley', trolley)
     dispatch({
@@ -41,9 +41,10 @@ export function ProductCard({ product }) {
   function actualizateQuantity(){
     let trolley = Array.isArray(cookies.get('trolley')) ? [...cookies.get('trolley')] : []; /// trolley : []
     if (!trolley.find(x => x.id === product.id)) {
-      product.quantity = counter;
+      let quantity = counter;
+      let { id } = product;
       trolley.push(product);
-      if (isLogin) postCarrito(token, [...trolley]);
+      if (isLogin) postCarrito(token, {id,quantity});
     }
   }
 
