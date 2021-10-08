@@ -5,7 +5,7 @@ import './TableUser.css'
 import Sidebar from "./AdminSideBar";
 
 
-export default function TableUser({clients,borrar,editUserOpen}) {
+export default function TableUser({clients,borrar,handlerUpdateUser}) {
   return (
       <div className='coint'>
           <Sidebar></Sidebar>
@@ -30,9 +30,13 @@ export default function TableUser({clients,borrar,editUserOpen}) {
           <td>{e.email}</td>
           <td>{e.isAdmin ? 'Si':'No'}</td>
           <td>
-            <Button color="primary" onClick={()=>editUserOpen(e)}>
-              ✏
-            </Button>
+            {e.isAdmin ?
+            <Button color="primary" onClick={()=>handlerUpdateUser(e.id)}>
+            Quitar de admin
+            </Button> : 
+            <Button color="primary" onClick={()=>handlerUpdateUser(e.id)}>
+            Transformar en admin
+          </Button>}
             <Button color="danger"  onClick={()=>{borrar(e.id)}}>
               🗑
             </Button>

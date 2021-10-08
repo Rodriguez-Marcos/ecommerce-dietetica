@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch,useSelector } from "react-redux";
 import TableUser from "./TableUser";
-import { getClients,deleteClients } from "../Actions/index";
-import EditUser from "./EditUser";
+import { getClients,deleteClients, updateClients } from "../Actions/index";
 
 
 export default function UserDetail() {
@@ -15,14 +14,6 @@ export default function UserDetail() {
         dispatch(getClients())
     },[])
 
-    const [input, setInput] = useState({
-        isAdmin:false,
-    })
-    
-
-    const [editModal, setEditModal] = useState({
-        name: false,
-      });
 
 
     function HandleDelete(id){
@@ -30,48 +21,17 @@ export default function UserDetail() {
         alert('Usuario eliminado con exito')
     }
 
-    function editUserOpen(e) {
-        setEditModal({
-          ...editModal,
-          name: true,
-        });
-    
-        setInput({
-          ...input,
-          isAdmin: e.isAdmin,
-        });
-      }
-
-      function editUserClose() {
-        setEditModal({
-          ...editModal,
-          name: false,
-        });
-        setInput({
-            ...input,
-          isAdmin:false,
-        });
-      }
-
-      function handlerIsAdmin(event){
-          setInput({
-              ...input,
-              isAdmin: event.target.value
-          })
-      }
-
-      function handlerSubmitUser(e){
-        dispatch()
+       function handlerUpdateUser(e){
+        dispatch(updateClients(e))
         alert("Modificacion exitosa");
-        setEditModal({...editModal,name:false})
+         dispatch(getClients())
       }
 
 
 
     return(
         <div>
-            <EditUser input={input} editmodal={editModal} handlerIsAdmin={handlerIsAdmin} handlerSubmitUser={handlerSubmitUser} editUserClose={editUserClose}/>
-            <TableUser clients={clients} borrar={HandleDelete} editUserOpen={editUserOpen}/>
+            <TableUser clients={clients} borrar={HandleDelete} handlerUpdateUser={handlerUpdateUser}/>
         </div>
     )
 }
