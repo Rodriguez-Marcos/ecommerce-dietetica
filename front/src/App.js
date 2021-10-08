@@ -15,6 +15,7 @@ import { UserContextProvider } from './Contexts/UserContext';
 import Login from './Components/Login';
 import Sidebar from './Components/AdminSideBar';
 import UsersAdminDetail from './Components/UsersAdminDetail'
+import OrderAdminDetail from './Components/OrdersAdminDetail'
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
     <Route exact path='/Login' component={Login}/>
     <Route exact path='/Admin' component={Creator}/>
     <Route exact path='/Admin/user' component={UsersAdminDetail}/>
+    <Route exact path='/Admin/orders' component={OrderAdminDetail}/>
 
 
     </Switch>

@@ -18,6 +18,7 @@ export const SET_LOGIN_USER = 'SET_LOGIN_USER';
 export const GET_CLIENTS = 'GET_CLIENTS';
 export const DELETE_CLIENTS = 'DELETE_CLIENTS';
 export const REVIEW_URL = "http://localhost:3001/reviews/";
+export const GET_ORDERS = 'GET_ORDERS'
 
 
 
@@ -313,4 +314,15 @@ export function deleteClients(id) {
     };
 };
 
+export function getOrders() {
 
+    return async function (dispatch) {
+        return axios.get(`http://localhost:3001/orders`)
+            .then((response) => {
+                dispatch({
+                    type: GET_ORDERS,
+                    payload: response.data,
+                })
+            })
+    }
+}

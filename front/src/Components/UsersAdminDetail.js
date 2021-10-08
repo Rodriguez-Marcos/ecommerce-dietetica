@@ -18,6 +18,7 @@ export default function UserDetail() {
     const [input, setInput] = useState({
         isAdmin:false,
     })
+    
 
     const [editModal, setEditModal] = useState({
         name: false,
