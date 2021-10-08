@@ -134,6 +134,10 @@ export default function reducerPablo(state = InitialState, action) {
                 ...state,
                 clients: action.payload.data,
             };
+        case UPDATE_CLIENTS:
+                return {
+                    ...state,
+                };
 
         case GET_ORDERS:
                 return {

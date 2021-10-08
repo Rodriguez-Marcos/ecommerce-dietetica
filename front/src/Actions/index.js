@@ -18,6 +18,7 @@ export const GET_ID = "GET_ID";
 export const SET_NEW_USER = 'SET_NEW_USER';
 export const SET_LOGIN_USER = 'SET_LOGIN_USER';
 export const GET_CLIENTS = 'GET_CLIENTS';
+export const UPDATE_CLIENTS = 'UPDATE_CLIENTS';
 export const DELETE_CLIENTS = 'DELETE_CLIENTS';
 export const REVIEW_URL = "http://localhost:3001/reviews/";
 export const GET_ORDERS = 'GET_ORDERS'
@@ -68,7 +69,6 @@ export function deleteProductByID(id) {
     return async function (dispatch) {
         try {
             const res = await axios.delete('http://localhost:3001/products/' + id);
-            console.log(res)
             return dispatch({
                 type: 'DELETE_PRODUCT_BY_ID',
                 payload: res.data
@@ -143,7 +143,6 @@ export function getByIdCategory(id) {
     return async function (dispatch) {
         try {
             const res = await axios.get(`http://localhost:3001/products?id_category=${id}`);
-            console.log(res)
             return dispatch({
                 type: GET_BY_ID_CATEGORY,
                 payload: res.data
@@ -160,7 +159,6 @@ export function getByIdDiet(id) {
     return async function (dispatch) {
         try {
             const res = await axios.get(`http://localhost:3001/products?id_diet=${id}`);
-            console.log(res)
             return dispatch({
                 type: GET_BY_ID_DIET,
                 payload: res.data
@@ -219,7 +217,6 @@ export function getDiets() {
 
 export function orderPrice(orderTarget, products) {
     return async function (dispatch) {
-        console.log(orderTarget, products)
         OrderByPrice(orderTarget, products)
 
             .then((orderTarget) => {
@@ -269,15 +266,13 @@ export function review(payload) {
 
 export function loginUser(email, password) {
     return async function (dispatch) {
-        try {
-            let res = await axios.get(`http://localhost:3001/clients/login?email=${email}&password=${password}`)
-            console.log(res.data)
-            return dispatch({
+            return axios.get(`http://localhost:3001/clients/login?email=${email}&password=${password}`)
+            .then((response)=>{
+            dispatch({
                 type: 'SET_LOGIN_USER',
-                payload: res.data,
+                payload: response.data,
             })
-        } catch (err) { console.log(err) }
-    }
+    })}
 };
 
 
@@ -293,6 +288,19 @@ export function getClients() {
             })
     }
 }
+
+export function updateClients(id) {
+    return async function (dispatch) {
+        return axios.put(`http://localhost:3001/clients/`+id)
+            .then((response) => {
+                dispatch({
+                    payload: response.data,
+                    type: UPDATE_CLIENTS
+                })
+            })
+    }
+}
+
 
 export function deleteClients(id) {
     return async function (dispatch) {
@@ -310,7 +318,6 @@ export function deleteClients(id) {
 
 export function getOrders() {
 
-<<<<<<< HEAD
     return async function (dispatch) {
         return axios.get(`http://localhost:3001/orders`)
             .then((response) => {
@@ -321,7 +328,6 @@ export function getOrders() {
             })
     }
 }
-=======
 export default function getTrolleyAction() {
     return async function (dispatch) {
         try {
@@ -330,7 +336,6 @@ export default function getTrolleyAction() {
                 return {id}
             })
             let res = await getTrolley(cookieTrolley.map(x=>x.id))
-            console.log('action',cookieTrolley)
             return dispatch({
                 type: 'GET_PRODUCTS_CART',
                 payload: res.data
@@ -340,4 +345,3 @@ export default function getTrolleyAction() {
         };
     };
 }
->>>>>>> ad5fa837756ed562bf497b84c9806c379e0b9c25
