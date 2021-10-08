@@ -112,9 +112,8 @@ function Login({ respuesta, isLogin }) {
     if (!account) {
         return (
             <div>
-
+                <NavBar />
                 <Form className="divuser">
-                    <NavBar />
                     <Form.Group className="mb-3" controlId="formBasicEmail" >
                         <Form.Label>Email</Form.Label>
                         <Form.Control placeholder="ejemplo@email.com" type="text" name="email" value={input.email} onChange={handleEmail} />
@@ -147,9 +146,8 @@ function Login({ respuesta, isLogin }) {
     else {
         return (
             <div>
-
+                  <NavBar />
                 <Form className="divuser">
-                    <NavBar />
                     <Form.Group className="mb-3" controlId="formBasicEmail" >
                         <Form.Label>Nombre</Form.Label>
                         <Form.Control type="text" placeholder="Nombre" type="text"
