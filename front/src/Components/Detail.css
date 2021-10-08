@@ -4,29 +4,59 @@
     --colorverde:#849836
 }
 #row1{
-    margin-top: 15vh;
+    background-color: white;
+    margin: 20px;
+    padding: 20px !important;
+    border-radius: 5px;
 }
 #nameProduct{
-    display: flex;
-    justify-content: center;
+    flex: auto;
+    padding: 0;
+    margin-right: 15px;
+    margin-bottom: 8px;
+    font-size: 16px;
 }
-#img{
+#precioDetalle{
+    font-weight: 300;
+    font-size: x-large;
+}
+#detalle{
     /* width: 50; */
-    height: 50vh;
+    height: 100vh;
     display: flex;
-    justify-content: center;
-    
+    flex-direction: column;
 }
 #imgProduct{
-    max-width: 100%;
-	max-height: 100%;
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#imgProduct img{
+    max-width: 40vw;
+    max-height: 50vh;
     border-radius: 15px;
+    transition: 1.5s ease;
+    -moz-transition: 1.5s ease;
+    -webkit-transition: 1.5s ease; 
+    -o-transition: 1.5s ease; 
+}
+#imgProduct img:hover{
+    transform : scale(1);
+    -moz-transform : scale(1); /* Firefox */
+    -webkit-transform : scale(1.33); /* Chrome - Safari */
+    -o-transform : scale(1); /* Opera */
+    -ms-transform : scale(1); /* IE9 */
 }
 #btnsProduct{
     display: flex;
     justify-content: space-evenly;
     margin-bottom: 19px;
     margin-top: 19px;
+}
+#btnsProduct button{
+    font-size: 10px;
 }
 #btnComentario{
     display: flex;
@@ -40,16 +70,62 @@
     justify-content: center;
 }
 #CrearComentario{
-    border-radius: 10px;   
-    outline: 3px solid var(--colorCafe);
-    outline-offset: 7px; 
-    -webkit-box-shadow: -1px -2px 16px 8px rgba(153,100,44,0.69); 
-    box-shadow: -1px -2px 16px 8px rgba(153,100,44,0.69);
+    border: solid 0.0001px #ced4da;
+    border-radius: 10px;
+    padding: 15px;
+}
+/* ------Scroll */
+#CrearComentario::-webkit-scrollbar{
+    background-color: transparent;
+    width: 0.5vw;
+    border-radius: 10px;
+}
+#CrearComentario::-webkit-scrollbar-button{
+    background-color: transparent;
+}
+#CrearComentario::-webkit-scrollbar-button{
+    border-radius: 0px 0px 4px 4px;
+}
+#CrearComentario::-webkit-scrollbar-thumb{
+    background-color: var(--colorCafe);
+    border-radius: 10px;
+}
+/* --------------- */
+#CrearComentario1{
+    border-radius: 10px;
+    margin-bottom: 20px;
 }
 #titulosComentario{
-    border-radius: 10px;   
-    outline: 3px solid var(--colorCafe);
-    outline-offset: 7px; 
-    -webkit-box-shadow: -1px -2px 16px 8px rgba(153,100,44,0.69); 
-    box-shadow: -1px -2px 16px 8px rgba(153,100,44,0.69);
+    border-radius: 10px; 
+}
+#detallesTel{
+    display: none;
+}
+#CrearComentarioTel{
+    display:none
+}
+#titulosComentarioTel{
+    display: none;
+}
+
+
+@media only screen and (max-width: 770px) {
+    #detallesTel{
+        display:initial;
+    }
+    #CrearComentario1{
+        display: none;
+    }
+    #titulosComentario{
+        display: none;
+    }
+    #CrearComentarioTel{
+        display:initial;
+    }
+    #titulosComentarioTel{
+        display: initial;
+    }
+    #det{
+        display: none;
+    }
 }

@@ -1,13 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import RemoveIcon from "@material-ui/icons/Remove";
 import AddIcon from "@material-ui/icons/Add";
 import {Container, Segment } from 'semantic-ui-react'
 
 // import styles from "./Contador.module.css";
 import { StylesContext } from "@material-ui/styles";
+import Context from "../Contexts/UserContext";
 
-const Contador = () => {
-  const [counter, setCounter] = useState(0);
+const Contador = ({id}) => {
+  const {counter, setCounter} = useContext(Context);
   // const [contador, setContadorGramo] = useState(0);
   // const [counterKilo, setCounterKilo] = useState(0);
 
@@ -18,7 +19,7 @@ const Contador = () => {
         <div >
           <span
             
-            onClick={() => setCounter (counter - 1)}
+            onClick={() => setCounter (counter  - 1)}
           >
             <RemoveIcon />
           </span>

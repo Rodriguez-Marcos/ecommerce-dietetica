@@ -3,11 +3,12 @@ import axios from 'axios';
 import GoogleLogin from 'react-google-login';
 import { validate } from '../Utils/ValidateUser'
 import { useHistory } from "react-router-dom";
-import { createUser } from '../Actions/index';
 import { connect } from 'react-redux';
 import './CreateUser.css'
 import useUser from '../Hooks/UseUser';
 import { Form, Button } from 'react-bootstrap'
+import createUserByGoogle from '../Utils/createUser/createUserByGoogle';
+import createUser from '../Utils/createUser/createUser';
 
  function CreateUser() {
     const { isLogin, login } = useUser();
@@ -17,19 +18,6 @@ import { Form, Button } from 'react-bootstrap'
     useEffect(() => {
         if (isLogin) history.push('/home');
     }, [isLogin, history])
-
-    async function createUser(payload) {
-        await axios.post("http://localhost:3001/clients", payload)
-            .then((response) => { console.log(response) })
-            .catch((err) => console.error(err))
-
-    };
-    async function createUserByGoogle(payload) {
-        await axios.post("http://localhost:3001/clients", payload)
-            .then((response) => { console.log(response) })
-            .catch((err) => console.error(err))
-
-    };
 
 
 
@@ -77,25 +65,6 @@ import { Form, Button } from 'react-bootstrap'
             login(input.email,input.password)
         }
     }
-
-        
-   /*  useEffect(() => {
-        
-            if (respuesta.message === 'Usuario ya creado') {
-                alert('Email ya registrado')
-            }
-            else if (respuesta.message === 'Client created successfully') {
-                alert('Se creo usuario exitosamente')
-                history.push('/home')
-            }
-            else {
-                
-            }
-    
-
-    }, [respuesta]
-    )
- */
 
 
     const responseGoogle = (response) => {
@@ -157,4 +126,4 @@ function mapDispatchToProps(dispatch) {
     return { createUser: (value) => dispatch(createUser(value)) }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CreateUser)
+export default connect(mapStateToProps, null)(CreateUser)

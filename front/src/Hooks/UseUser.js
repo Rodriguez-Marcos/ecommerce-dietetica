@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import loginService from '../Utils/LoginService'
 import postCarrito from "../Utils/postCarrito";
 import Cookies from "universal-cookie";
+import createUserByGoogle from "../Utils/createUser/createUserByGoogle";
 
 const cookies = new Cookies();
 
@@ -27,12 +28,19 @@ export default function useUser() {
 
         const loginGoogle = useCallback((res)=>{
             myStorage.jwt = res.$b.id_token;
-            dispatch({type: 'LOGIN', payload: myStorage.jwt})
+            const {email , googleId} = res.profileObj;
+            console.log(email,googleId)
+            createUserByGoogle(email,googleId)
+            .then((response)=>{
+                console.log(response);
+                dispatch({type: 'LOGIN', payload: myStorage.jwt});
+            })
         })
         
         const logout = useCallback(() => {
             console.log('deslogueado con exito')
             myStorage.jwt = '';
+            cookies.set('trolley',[])
         dispatch({type: 'LOGOUT'})
     }, []);
     return {
