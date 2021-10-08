@@ -9,7 +9,7 @@ import Cookies from "universal-cookie";
 
 const cookies = new Cookies();
 
-export default function ProductsCards(params) {
+export default function ProductsCards(params, {productsCart}) {
   let location = useLocation();
 
   let products = params.products
@@ -17,9 +17,18 @@ export default function ProductsCards(params) {
   useEffect(() => {
 
   }, [])
+  if(productsCart){
+    return(
+      <div className={styles.main}>
+      {productsCart && productsCart.map(product=>{
+        return <ProductCard product={product}/>
+      })}
+    </div>
+    )
+  }
   return (
     <div className={styles.main}>
-      {products && products.map(product=>{
+      {products && products?.map(product=>{
         return <ProductCard product={product}/>
       })}
     </div>

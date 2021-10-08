@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import loginService from '../Utils/LoginService'
 import postCarrito from "../Utils/postCarrito";
 import Cookies from "universal-cookie";
+import createUserByGoogle from "../Utils/createUser/createUserByGoogle";
 
 const cookies = new Cookies();
 
@@ -17,7 +18,7 @@ export default function useUser() {
                 let id_products = [];
                 cookies.get('trolley')?.map(x=>id_products.push(x.id));
 
-                console.log('logueado con exito')
+                console.log(jwt)
                 myStorage.jwt = jwt;
                 postCarrito(jwt,id_products)
                 dispatch({type: 'LOGIN', payload: jwt})
@@ -27,12 +28,23 @@ export default function useUser() {
 
         const loginGoogle = useCallback((res)=>{
             myStorage.jwt = res.$b.id_token;
-            dispatch({type: 'LOGIN', payload: myStorage.jwt})
+            const { googleId } = res.profileObj;
+            createUserByGoogle(googleId,res.$b.id_token)
+            .then((response)=>{
+                console.log(response)
+                dispatch({type: 'LOGIN', payload: myStorage.jwt});
+            })
+            .catch ((err) => {
+                alert('Algo salio mal'+'\nEse usuario ya fue registrado en nuestra plataforma, prueba iniciar sesion con contraseña');
+                console.error(err);
+                myStorage.jwt = '';
+            })
         })
         
         const logout = useCallback(() => {
             console.log('deslogueado con exito')
             myStorage.jwt = '';
+            cookies.set('trolley',[])
         dispatch({type: 'LOGOUT'})
     }, []);
     return {

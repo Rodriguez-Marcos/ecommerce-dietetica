@@ -2,20 +2,19 @@ const jwt = require('jsonwebtoken')
 const { OAuth2Client } = require('google-auth-library');
 const CLIENT_ID ='908895428836-kaesjl71puimi31fjbffca9t4nvl7v6r.apps.googleusercontent.com';
 
-
-function useExtractor (req,res,next){
+async function useExtractor (req,res,next){
     
 
     const authorization = req.get('authorization');
-    console.log(authorization)
     let token = null;
     if (authorization && authorization.toLowerCase().startsWith('bearer')) {
         token = authorization.substring(7);
     }
     let decodeToken = {};
     try {
-       decodeToken = jwt.verify(token,'secret')
-       /*  //----------------------------------------- Google confirmation
+       if(!await jwt.decode(token)?.iss)
+       {decodeToken = jwt.verify(token,'secret')}
+       else{
         const client = new OAuth2Client(CLIENT_ID);
 
         async function verify() {
@@ -29,10 +28,10 @@ function useExtractor (req,res,next){
             const userid = payload['sub'];
             // If request specified a G Suite domain:
             // const domain = payload['hd'];
-            console.log(ticket)
+            console.log(ticket, userid)
         }
         verify().catch(console.error);
-        //..........---------------------------------------- */
+    }
     } catch (error) {
         console.log(error);
     }

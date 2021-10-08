@@ -64,6 +64,9 @@ function NavBar({ getProductbyName, setLoading, isLogin, token }) {
   function handleChange(event) {
     setActualState(event.target.value)
   }
+  if(cookies.get('trolley')){
+    var cookie = cookies.get('trolley')
+  }
 
   return (
     <div className="content">
@@ -85,7 +88,8 @@ function NavBar({ getProductbyName, setLoading, isLogin, token }) {
               <NavLink to="/trolley" className='navlink1'>
                 <ShoppingCart fontSize="large" id="iconoCarrito"/>
                 <span id="ContCarrito">
-                  {cookies.get('trolley')?.length?cookies.get('trolley').length:0}
+                  {cookie?.length
+                }
                 </span>
               </NavLink>
             </Nav.Link>
@@ -112,7 +116,6 @@ function NavBar({ getProductbyName, setLoading, isLogin, token }) {
             >
             </GoogleLogout> {/* <button onClick={()=>{logout(),signOut()}}> Salir </button> */} </div>
               : <div id="btnsSesionRegistro">
-                <NavLink id="btnRegistro" to='/CreateUser'>Registrate</NavLink>
                 <NavLink id="btnSesion" to='/Login'><Image id="imgSesion" src={Sesion} /><span>Inicia Sesion</span> </NavLink>
               </div>}
 

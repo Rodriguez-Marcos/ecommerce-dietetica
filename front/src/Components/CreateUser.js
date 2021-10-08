@@ -3,13 +3,15 @@ import axios from 'axios';
 import GoogleLogin from 'react-google-login';
 import { validate } from '../Utils/ValidateUser'
 import { useHistory } from "react-router-dom";
-import { createUser } from '../Actions/index';
 import { connect } from 'react-redux';
 import './CreateUser.css'
 import useUser from '../Hooks/UseUser';
 import { Form, Button } from 'react-bootstrap'
+import createUserByGoogle from '../Utils/createUser/createUserByGoogle';
+import createUser from '../Utils/createUser/createUser';
+import NavBar from './NavBar';
 
- function CreateUser() {
+function CreateUser() {
     const { isLogin, login } = useUser();
 
 
@@ -17,19 +19,6 @@ import { Form, Button } from 'react-bootstrap'
     useEffect(() => {
         if (isLogin) history.push('/home');
     }, [isLogin, history])
-
-    async function createUser(payload) {
-        await axios.post("http://localhost:3001/clients", payload)
-            .then((response) => { console.log(response) })
-            .catch((err) => console.error(err))
-
-    };
-    async function createUserByGoogle(payload) {
-        await axios.post("http://localhost:3001/clients", payload)
-            .then((response) => { console.log(response) })
-            .catch((err) => console.error(err))
-
-    };
 
 
 
@@ -74,28 +63,9 @@ import { Form, Button } from 'react-bootstrap'
             /* login(input.email,input.password ); */
             createUser(input)
             alert('Se creo usuario exitosamente')
-            login(input.email,input.password)
+            login(input.email, input.password)
         }
     }
-
-        
-   /*  useEffect(() => {
-        
-            if (respuesta.message === 'Usuario ya creado') {
-                alert('Email ya registrado')
-            }
-            else if (respuesta.message === 'Client created successfully') {
-                alert('Se creo usuario exitosamente')
-                history.push('/home')
-            }
-            else {
-                
-            }
-    
-
-    }, [respuesta]
-    )
- */
 
 
     const responseGoogle = (response) => {
@@ -107,44 +77,45 @@ import { Form, Button } from 'react-bootstrap'
     }
 
     return (
+        <div>
+            <NavBar />
+            <Form className="divuser">
+                <Form.Group className="mb-3" controlId="formBasicEmail" >
+                    <Form.Label>Nombre</Form.Label>
+                    <Form.Control type="text" placeholder="Nombre" type="text"
+                        value={input.name}
+                        name="name"
+                        onChange={handlerUser} />
+                    <Form.Text className="text-muted">
+                        Nunca compartiremos su correo electrónico con nadie más.
+                    </Form.Text>
+                </Form.Group>
+                <Form.Group className="mb-3" controlId="formBasicEmail">
+                    <Form.Label>Apellidos</Form.Label>
+                    <Form.Control type="text" placeholder="Apellidos" value={input.lastname}
+                        name="lastname" onChange={handlerUser} />
+                </Form.Group>
+                <Form.Group className="mb-3" controlId="formBasicPassword">
+                    <Form.Label>Contraseña</Form.Label>
+                    <Form.Control type="password" placeholder="Password" value={input.password}
+                        name="password" onChange={handlerUser} />
+                    <Form.Label>Email</Form.Label>
+                    <Form.Control type="text" placeholder="Email" value={input.email}
+                        name="email" onChange={handlerUser} />
+                </Form.Group>
+                <Button variant="primary" type="submit" onClick={handelSubmit}>
+                    Crear Cuenta
+                </Button>
 
-        <Form className="divuser">
-            <Form.Group className="mb-3" controlId="formBasicEmail" >
-                <Form.Label>Nombre</Form.Label>
-                <Form.Control type="text" placeholder="Nombre" type="text"
-                    value={input.name}
-                    name="name"
-                    onChange={handlerUser} />
-                <Form.Text className="text-muted">
-                    Nunca compartiremos su correo electrónico con nadie más.
-                </Form.Text>
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="formBasicEmail">
-                <Form.Label>Apellidos</Form.Label>
-                <Form.Control type="text" placeholder="Apellidos" value={input.lastname}
-                    name="lastname" onChange={handlerUser}  />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="formBasicPassword">
-                <Form.Label>Contraseña</Form.Label>
-                <Form.Control type="password" placeholder="Password" value={input.password}
-                    name="password" onChange={handlerUser} />
-                <Form.Label>Email</Form.Label>
-                <Form.Control type="text" placeholder="Email" value={input.email}
-                    name="email" onChange={handlerUser} />
-            </Form.Group>
-            <Button variant="primary" type="submit" onClick={handelSubmit}>
-                Crear Cuenta
-            </Button>
-            
-            <GoogleLogin
-                clientId="908895428836-kaesjl71puimi31fjbffca9t4nvl7v6r.apps.googleusercontent.com"
-                buttonText="Login"
-                onSuccess={responseGoogle}
-                onFailure={responseGoogle}
-                cookiePolicy={'single_host_origin'}
-            />,
-        </Form>
-
+                <GoogleLogin
+                    clientId="908895428836-kaesjl71puimi31fjbffca9t4nvl7v6r.apps.googleusercontent.com"
+                    buttonText="Login"
+                    onSuccess={responseGoogle}
+                    onFailure={responseGoogle}
+                    cookiePolicy={'single_host_origin'}
+                />,
+            </Form>
+        </div>
 
 
     )
@@ -157,4 +128,4 @@ function mapDispatchToProps(dispatch) {
     return { createUser: (value) => dispatch(createUser(value)) }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CreateUser)
+export default connect(mapStateToProps, null)(CreateUser)

@@ -2,6 +2,7 @@ import { useSelector } from 'react-redux'
 import ProductsCards from './Products';
 import { Spinner } from 'react-bootstrap'
 import './Search.css'
+import NavBar from './NavBar';
 
 
 function Search() {
@@ -12,6 +13,7 @@ function Search() {
     if (!error && !loading)
         return (
         <div id="contenedor">
+            <NavBar/>
             <div id="s">
             {productsFiltered.length || <h1>No se encontro ningun resultado</h1>}
             </div>

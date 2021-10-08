@@ -45,8 +45,16 @@ export async function createProduct(req, res) {
 }
 
 export async function getProducts(req, res) {
-    let { name, id_category, id_diet, priceL, priceH, sortby } = req.query
+    let { name, id_category, id_diet, priceL, priceH, sortby } = req.query;
+    let { id } = req.body;
+
     try {
+        console.log(id)
+        if (id){
+            id = id.map(({id})=>id)
+            let products = await Product.findAll({where:{id}})
+            return res.status(200).json(products)
+        }
         if (!id_category && !name && !id_diet) {
 
             var products = await Product.findAll()
@@ -129,7 +137,7 @@ export async function getProducts(req, res) {
 export async function getById(req, res) {
     const { id } = req.params
     try {
-        let products = await Product.findOne({ where: { id: id }, include: [{ model: Category }, { model: Diet },{model:Review}] })
+        let products = await Product.findAll({ where: { id: id }, include: [{ model: Category }, { model: Diet },{model:Review}] })
         return res.json(products)
     }
     catch (err) {
@@ -162,14 +170,7 @@ export async function updateProduct(req, res) {
     const { name, price, description, image, stock, ids_categories, ids_diets } = req.body
 
     try {
-        // await Product.update({
-        //     name:name,
-        //     price:price,
-        //     description:description,
-        //     image:image,
-        //     stock:stock,
-        // },{where:{id:id}}
-        // )
+       
         await Product.update({
             name: name,
             price: price,

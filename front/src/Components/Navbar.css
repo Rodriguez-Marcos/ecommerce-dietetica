@@ -8,10 +8,10 @@
     padding: 10px;
 }
 .content{
-    position: fixed;
     width: 100vw;
     top: 0;
-    z-index: 3
+    z-index: 3;
+    position: sticky;
 }
 .navlink1{
     color:white;
