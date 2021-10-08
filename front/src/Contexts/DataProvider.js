@@ -9,12 +9,15 @@ export const DataProvider = (props) => {
 	// const [menu, setMenu] = useState(false)
 	const [carrito, setCarrito] =useState([])
 	const [total, setTotal] = useState(0)
-	const {productsCard} = useSelector(selector => selector.cart)
+	const {productsCart} = useSelector(selector => selector.cart)
 
-	console.log(carrito)
+	 console.log(carrito)
+	useEffect(()=>{
+		setCarrito(productsCart)
+	}) 
 
   useEffect(() => {
-		const producto = productsCard;
+		const producto = productsCart;
 		if(producto){
 			setProductos(producto)
 		}else{
@@ -36,12 +39,6 @@ export const DataProvider = (props) => {
 			alert("El producto se ha añadido al carrito")
 		}
 	}
-	useEffect(() =>{
-		const dataCarrito = productsCard;
-		if(dataCarrito){
-			setCarrito(dataCarrito)
-		}
-	},[])
 
 	useEffect(() =>{
 		localStorage.setItem('dataCarrito', JSON.stringify(carrito))

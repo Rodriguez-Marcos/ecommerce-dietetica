@@ -23,9 +23,6 @@ export default function Trolley () {
     // const show1 = menu ? "carritos show" : "carritos";
     // const show2 = menu ? "carrito show" : "carrito";
 
-    useEffect(() =>{
-      setCarrito(productsCard)
-    },[])
 
 
     const reduce = id =>{
@@ -157,13 +154,13 @@ export default function Trolley () {
                 <div className="carrito__item" key="">
                 <img src={producto.image} alt=""></img>
                 <div >
-                    <h3>{producto.title}</h3>
+                    <h3>{producto.name}</h3>
                     <p className="price">${producto.price}</p>
                 </div>
                 <div>
                 
                     <box-icon onClick={() => increase(producto.id)}name="up-arrow" type="solid"></box-icon>
-                    <p className="cantidad">1</p>
+                    <p className="cantidad">{producto.cantidad}</p>
                     <box-icon onClick={() => reduce(producto.id)}name="down-arrow" type="solid"></box-icon>
                 </div>
                 <div className="remove__item">
