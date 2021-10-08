@@ -11,6 +11,6 @@ export default function loginService(username, password) {
             if (!response.ok)
                 throw new Error('email o contraseña incorrecta');
                
-            return response;
+            return response.text();
         })
 }
