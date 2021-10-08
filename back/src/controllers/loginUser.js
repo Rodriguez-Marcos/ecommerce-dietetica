@@ -24,7 +24,7 @@ export async function loginUser(req, res) {
     const token = jwt.sign(userForToken, 'secret')
 console.log(user.dataValues)
     res.send(
-    user.dataValues
+    token
     )
 }
 
