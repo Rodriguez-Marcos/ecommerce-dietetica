@@ -2,48 +2,56 @@ import Order from '../models/Order.js';
 import Product_Order from '../models/Product_Order.js';
 import Product from '../models/Product.js';
 
-export async function createOrder(req, res) {
-    const { ammount, shippingAddress, id_client, products } = req.body;
 
+export async function createOrder(req, res) {
+    const id_client = req.id
+    const { shippingAddress, products } = req.body;
+    console.log(id_client)
     try {
-        let newOrder = await Order.create({
-            ammount,
-            shippingAddress,
-            id_client
-        }, {
-            fields: ['ammount', 'shippingAddress', 'id_client']
+        await Order.create({
+
+            shippingAddress:shippingAddress,
+            id_client:id_client
         }
         )
-        let newOrderId = await Order.findOne({ where: { ammount: ammount, id_client: id_client }, attributes: ["id"], order:[["createDate","DESC"]], limit:1 })
+        let newOrderId = await Order.findOne({ where: { id_client: id_client }, attributes: ["id"], order: [["createDate", "DESC"]], limit: 1 })
         let promises = Promise.all(products.map(async product => {
-            let quantity = await Product.findOne({where:{id:product.id}, attributes: ["stock"]})
-            let newQuantity = quantity.dataValues.stock-product.quantity
-            await Product.update({stock:newQuantity},{where:{id:product.id}})
-            let newProduct_Order = await Product_Order.create({ quantity: product.quantity, id_product: product.id, id_order: newOrderId.dataValues.id })
+            let quantity = await Product.findOne({ where: { id: product.id }, attributes: ["stock", "price"] })
+
+            let newProduct_Order = await Product_Order.create({ total: product.quantity * quantity.dataValues.price, quantity: product.quantity, id_product: product.id, id_order: newOrderId.dataValues.id })
+
+            let newQuantity = quantity.dataValues.stock - product.quantity
+            await Product.update({ stock: newQuantity }, { where: { id: product.id } })
             return newProduct_Order
         }))
         let promisesResolved = await promises
-        
         if (promisesResolved) {
+            let totalValue = await Product_Order.sum('total', { where: { id_order: newOrderId.dataValues.id } })
+            await Order.update({ ammount: totalValue }, { where: { id: newOrderId.dataValues.id } })
+            let updatedOrder = await Order.findOne({ where: { id_client: id_client }, include: { model: Product }, order: [["createDate", "DESC"]], limit: 1 })
             return res.json({
                 message: 'Order created successfully',
-                data: newOrder
+                data: updatedOrder
             })
         }
-
     } catch (err) {
         console.log(err)
         res.status(500).json({
             message: 'Something goes Wrong',
             data: {}
-
         })
-
     }
 }
 export async function getOrders(req, res) {
+    let { id_client, id_order } = req.query
     try {
-        let orders = await Order.findAll()
+        if (!id_client && !id_order) {
+            var orders = await Order.findAll({ include: { model: Product } })
+        } else if (id_client && !id_order) {
+            var orders = await Order.findAll({ where: { id_client: id_client }, include: [{ model: Product }] })
+        } else if (!id_client && id_order) {
+            var orders = await Order.findOne({ where: { id: id_order }, include: [{ model: Product }] })
+        }
         return res.status(200).send(orders)
     } catch (err) {
         console.log(err)
@@ -73,17 +81,18 @@ export async function deleteOrder(req, res) {
 
     }
 }
-export async function getOrderbyId(req, res) {
-   let {id}=req.params
+export async function changeOrderStatus(req, res) {
+    let { id } = req.params
+    let { status } = req.body
     try {
-        let orders = await Order.findOne({ where: { id: id }, include: [{ model: Product}] })
-        return res.status(200).send(orders)
+        await Order.update({ status: status }, { where: { id: id } })
+        let order = await Order.findOne({ where: { id: id }, include: [{ model: Product }] })
+        return res.status(200).send(order)
     } catch (err) {
         console.log(err)
         res.status(500).json({
             message: 'Something goes Wrong',
             data: {}
-
         })
 
     }

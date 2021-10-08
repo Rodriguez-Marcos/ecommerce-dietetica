@@ -10,7 +10,8 @@
 .content{
     width: 100vw;
     top: 0;
-    z-index: 3
+    z-index: 3;
+    padding-bottom: 100px;
 }
 .navlink1{
     color:white;

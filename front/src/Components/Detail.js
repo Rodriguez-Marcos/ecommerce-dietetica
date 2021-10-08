@@ -15,6 +15,7 @@ import Cookies from 'universal-cookie';
 
 import { Rating } from "@material-ui/lab";
 import swal from "sweetalert";
+import postCarrito from '../Utils/postCarrito';
 const cookies = new Cookies();
 
 
@@ -28,13 +29,27 @@ function Detail({ match }) {
   }, [dispatch])
 
   const producto = useSelector(state => state.reducerRocio.detail)
+  const {isLogin, token} = useSelector(state=> state.reducerPablo)
 
   function handleClickTrolley(e) {
     e.preventDefault();
-    let add = Array.isArray(cookies.get('trolley')) ? [...cookies.get('trolley')] : []; /// trolley : []
+    /* let add = Array.isArray(cookies.get('trolley')) ? [...cookies.get('trolley')] : []; /// trolley : []
     if (!add.find(x => x.id === producto.id))
       add.push(producto);
     cookies.set('trolley', add)
+
+  --------------- */
+  let trolley = Array.isArray(cookies.get('trolley')) ? [...cookies.get('trolley')] : []; /// trolley : []
+    if (!trolley.find(x => x.id === producto.id)) {
+      let quantity = 1;
+      let { id } = producto;
+      trolley.push({id, quantity});
+      if (isLogin) postCarrito(token, {id,quantity});
+    }
+    cookies.set('trolley', trolley)
+    dispatch({
+      type: 'COMODIN',
+    })
   }
 
 

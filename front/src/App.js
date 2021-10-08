@@ -35,7 +35,6 @@ function App() {
 
     </Switch>
     {/* <Footer/> */}
-    </UserContextProvider>
     </BrowserRouter>
     
   );

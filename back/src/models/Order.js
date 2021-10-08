@@ -9,7 +9,8 @@ const Order = sequelize.define('order', {
     },
     ammount: {
         type: Sequelize.INTEGER,
-        allowNull: false,
+        allowNull: true,
+        defaultValue: null
     },
     shippingAddress: {
         type: Sequelize.TEXT,

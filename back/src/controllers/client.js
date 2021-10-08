@@ -5,8 +5,13 @@ import Product from '../models/Product.js';
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
+module.export = Client;
+
 export async function createClient(req, res) {
     let { name, lastname, email, password, address, phone,givenName, familyName, googleId } = req.body;
+    if (!name || !lastname || !email || !password || !address || !phone)
+        return res.status(401).json({error: 'faltan algunos campos'})
+
     if (!googleId){
     password = await bcrypt.hash(password,10);
 
@@ -25,10 +30,6 @@ export async function createClient(req, res) {
             fields: ['name', 'lastname', 'email', 'password', 'address', 'phone']
         }
         )
-        let token = ''
-        const {id} = newClient
-        const userToken = {id,email}
-        token = jwt.sign(userToken, 'juanelmascapo' )
 
         if (newClient) {
             let client_id = await Client.findOne({where: {name: newClient.name},attributes:['id']})
@@ -125,11 +126,12 @@ export async function deleteClient(req, res) {
     try {
         await Cart.destroy({where:{id_client:id}})
         await Favorite.destroy({where:{id_client:id}, include:[{model:Product}]})
-        let client = await Client.destroy({ where: { id: id } })
+        await Client.destroy({ where: { id: id } })
+        let clients = await Client.findAll()
         
         return res.json({
             message: 'Client deleted successfully',
-            data: client
+            data: clients
         })
     } catch (err) {
         console.log(err)
@@ -140,6 +142,26 @@ export async function deleteClient(req, res) {
         })
 
     }
+}
+export async function updateClientToAdmin(req,res){
+   let {id} = req.params
+   try{
+    let isAdmin = await Client.findOne({where: {id:id}, attribute:["isAdmin"]})
+    if (isAdmin.dataValues.isAdmin===false){
+    await Client.update({isAdmin:true},{where:{id:id}})
+} else {await Client.update({isAdmin:false},{where:{id:id}})}
+let user = await Client.findOne({where: {id:id}})
+return res.json({
+    message: 'Client deleted successfully',
+    data: user
+})
+} catch (err) {
+console.log(err)
+res.status(500).json({
+    message: 'Something goes Wrong',
+    data: {}
+})
+}  
 }
 export async function loginUser(req, res) {
     let { email, password, googleId } = req.body
