@@ -32,7 +32,7 @@ export async function createClient(req, res) {
         )
 
         if (newClient) {
-            let client_id = await Client.findOne({where: {name: newClient.name},attributes:['id']})
+            let client_id = await Client.findOne({where: {email: newClient.email},attributes:['id']})
             await Cart.create({
                 id_client: client_id.dataValues.id
             })
@@ -219,7 +219,7 @@ export async function loginUser(req, res) {
 export async function RegOrCreateGaccount (req, res){
     try{
         console.log('hola')
-    let user = await Client.findOrCreate({
+    let newClient = await Client.findOrCreate({
         where:{
             email: req.email,
             isGoogleClient: true,
@@ -228,7 +228,21 @@ export async function RegOrCreateGaccount (req, res){
             lastname:req.lastname
         }
     })
-        return res.status(200).json('Logueado con exito')
+    if (newClient) {
+        let client_id = await Client.findOne({where: {email: req.email},attributes:['id']})
+        await Cart.create({
+            id_client: client_id.dataValues.id
+        })
+        await Favorite.create({
+            id_client: client_id.dataValues.id
+        })
+        return res.json({
+            message: 'Client created successfully',
+        })
+
+    } else {
+        return res.json({ message: 'Usuario ya creado' })
+    }
 }
 catch(err){
     console.log(err)
