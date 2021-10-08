@@ -146,7 +146,7 @@ function Login({ respuesta, isLogin }) {
     else {
         return (
             <div>
-                  <NavBar />
+                <NavBar />
                 <Form className="divuser">
                     <Form.Group className="mb-3" controlId="formBasicEmail" >
                         <Form.Label>Nombre</Form.Label>

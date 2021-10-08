@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { postProduct, postCategory, postDiet, putProduct } from "../Actions";
 import "bootstrap/dist/css/bootstrap.min.css";
+import './Creator.css'
 import FormEdit from "./FormEdit";
 import FormCreator from "./FormCreator";
 import TableProducts from "./TableProducts";
@@ -347,84 +348,83 @@ export default function Creator() {
   console.log("input", input);
   // INICIO DEL COMPONENTE
   return (
-    <div className= 'creator' >
+    <div className='creator' >
       <Topbar />
-      <div className="screem">
-        <Sidebar 
-        openProduct = {openProduct}
-        openCategory= {openCategory}
-        openDiet= {openDiet}/>
-        
+      <div className="others">
+        <div className="screem">
+          <Sidebar
+            openProduct={openProduct}
+            openCategory={openCategory}
+            openDiet={openDiet} />
+
         </div>
-        <div className="others">
-         
-          <FormCreator
-            modal={modal}
-            input={input}
-            handlerProduct={handlerProduct}
-            c={c}
-            d={d}
-            handlerCategories={handlerCategories}
-            handlerDiets={handlerDiets}
-            handlerSubmitProduct={handlerSubmitProduct}
-            closeProduct={closeProduct}
-            handlerSubmitCategory={handlerSubmitCategory}
-            category={category}
-            diet={diet}
-            handlerCategory={handlerCategory}
-            closeCategory={closeCategory}
-            handlerSubmitDiet={handlerSubmitDiet}
-            handlerDiet={handlerDiet}
-            closeDiet={closeDiet}
-          />
-          {/* 
+        <FormCreator
+          modal={modal}
+          input={input}
+          handlerProduct={handlerProduct}
+          c={c}
+          d={d}
+          handlerCategories={handlerCategories}
+          handlerDiets={handlerDiets}
+          handlerSubmitProduct={handlerSubmitProduct}
+          closeProduct={closeProduct}
+          handlerSubmitCategory={handlerSubmitCategory}
+          category={category}
+          diet={diet}
+          handlerCategory={handlerCategory}
+          closeCategory={closeCategory}
+          handlerSubmitDiet={handlerSubmitDiet}
+          handlerDiet={handlerDiet}
+          closeDiet={closeDiet}
+        />
+        {/* 
       Modales de Edicion 
       
       */}
-          <FormEdit
-            d={d}
-            c={c}
-            editModal={editModal}
-            input={input}
-            handlerProduct={handlerProduct}
-            handlerCategories={handlerCategories}
-            handlerDiets={handlerDiets}
-            handlerSubmitProduct={handlerSubmitProductEdit}
-            editProductClose={editProductClose}
+        <FormEdit
+          d={d}
+          c={c}
+          editModal={editModal}
+          input={input}
+          handlerProduct={handlerProduct}
+          handlerCategories={handlerCategories}
+          handlerDiets={handlerDiets}
+          handlerSubmitProduct={handlerSubmitProductEdit}
+          editProductClose={editProductClose}
+        />
+        <div>
+          <TableProducts
+            p={p}
+            editProductOpen={editProductOpen}
+            openDeleteProduct={openDeleteProduct}
           />
-          <div>
-            <TableProducts
-              p={p}
-              editProductOpen={editProductOpen}
-              openDeleteProduct={openDeleteProduct}
-            />
-          </div>
-          <div>
-            <Modal isOpen={deleteModal.product}>
-              <ModalHeader>Eliminar Producto</ModalHeader>
-              <ModalBody>
-                Desea eliminar :{" "}
-                <strong class="badge bg-primary text-wrap  w: 10rem">
-                  {" "}
-                  {input.name}
-                </strong>{" "}
-                de la Lista ?
-              </ModalBody>
-              <ModalFooter>
-                <Button color="primary" onClick={() => deleteProduct()}>
-                  {" "}
-                  Aceptar
-                </Button>
-                <Button color="danger" onClick={(e) => closeDeleteProduct(e)}>
-                  {" "}
-                  Cancelar
-                </Button>
-              </ModalFooter>
-            </Modal>
-          </div>
-  
         </div>
+        <div>
+          <Modal isOpen={deleteModal.product}>
+            <ModalHeader>Eliminar Producto</ModalHeader>
+            <ModalBody>
+              Desea eliminar :{" "}
+              <strong class="badge bg-primary text-wrap  w: 10rem">
+                {" "}
+                {input.name}
+              </strong>{" "}
+              de la Lista ?
+            </ModalBody>
+            <ModalFooter>
+              <Button color="primary" onClick={() => deleteProduct()}>
+                {" "}
+                Aceptar
+              </Button>
+              <Button color="danger" onClick={(e) => closeDeleteProduct(e)}>
+                {" "}
+                Cancelar
+              </Button>
+            </ModalFooter>
+          </Modal>
+        </div>
+
       </div>
-  
+    </div>
+
   );
 }
