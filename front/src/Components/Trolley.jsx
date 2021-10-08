@@ -10,6 +10,8 @@ import getCart from "../Utils/getCart";
 import { useHistory } from "react-router";
 import axios from 'axios'
 import getTrolleyAction from "../Actions";
+import NavBar from "./NavBar";
+
 
 export default function Trolley() {
   const value = useContext(DataContext)

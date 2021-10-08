@@ -117,7 +117,6 @@ function NavBar({ getProductbyName, setLoading, isLogin, token }) {
             >
             </GoogleLogout> {/* <button onClick={()=>{logout(),signOut()}}> Salir </button> */} </div>
               : <div id="btnsSesionRegistro">
-                <NavLink id="btnRegistro" to='/CreateUser'>Registrate</NavLink>
                 <NavLink id="btnSesion" to='/Login'><Image id="imgSesion" src={Sesion} /><span>Inicia Sesion</span> </NavLink>
               </div>}
 
