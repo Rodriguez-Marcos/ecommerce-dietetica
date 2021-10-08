@@ -12,9 +12,7 @@ export const DataProvider = (props) => {
 	const {productsCart} = useSelector(selector => selector.cart)
 
 	 console.log(carrito)
-	useEffect(()=>{
-		setCarrito(productsCart)
-	}) 
+	
 
   useEffect(() => {
 		const producto = productsCart;
@@ -25,11 +23,11 @@ export const DataProvider = (props) => {
 		}
 	}, []);
 
-	const addCarrito = (id) =>{
+	/* const addCarrito = (id) =>{
 		const check = carrito.every(item =>{
 			return item.id !== id
 			
-		})
+		}) 
 		if(check){
 			const data = productos.filter(producto =>{
 				return producto.id === id
@@ -38,28 +36,23 @@ export const DataProvider = (props) => {
 		}else{
 			alert("El producto se ha añadido al carrito")
 		}
-	}
+	} */
 
 	useEffect(() =>{
-		localStorage.setItem('dataCarrito', JSON.stringify(carrito))
-	},[carrito])
-
-	useEffect(() =>{
-		// const getTotal = () =>{
-		// 	const res = carrito.reduce((prev, item) =>{
-		// 		return prev + (item.price * item.cantidad)
-		// 	},0)
-		// 	setTotal(res)
-		// }
-		// getTotal()
-		console.log(carrito)
+		 const getTotal = () =>{
+		 	const res = carrito.reduce((prev, item) =>{
+		 		return prev + (item.price * item.cantidad)
+		 	},0)
+		 	setTotal(res)
+		 }
+		 getTotal()
 	},[carrito])
 	
 	const value = {
 		productos : [productos],
 		// menu: [menu, setMenu],
 		carrito: [carrito, setCarrito],
-		addCarrito: addCarrito,
+		/* addCarrito: addCarrito, */
 		total: [total, setTotal]
 	}
 	return (

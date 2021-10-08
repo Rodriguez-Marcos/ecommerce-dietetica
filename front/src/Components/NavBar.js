@@ -26,6 +26,7 @@ const cookies = new Cookies();
 
 function NavBar({ getProductbyName, setLoading, isLogin, token }) {
   let comodin = useSelector(state => state.reducerPablo.comodin);
+  let { productCart} = useSelector(state=>state.cart)// no sacar, sirve para contar la cantidad en el carrito
   function onLogoutSuccess() {
     console.log("logout success")
   }
@@ -42,12 +43,12 @@ function NavBar({ getProductbyName, setLoading, isLogin, token }) {
       dispatch({ type: 'LOGIN', payload: jwt })
     }
   }, [myStorage])
+  let history = useHistory();
   useEffect(() => {
 
-  }, [comodin])
+  }, [comodin,])
 
 
-  let history = useHistory();
 
 
   function handleSubmit(e) {

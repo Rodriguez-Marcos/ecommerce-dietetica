@@ -136,7 +136,7 @@ function Login({ respuesta, isLogin }) {
                     onFailure={responseGoogle}
                     cookiePolicy={'single_host_origin'}
                 />
-                <h6>No tienes una cuenta? <h6 onClick={setAccount(true)}>Registrate</h6></h6>
+                <h6 onClick={e=>setAccount(true)}>No tienes una cuenta? <h6 >Registrate</h6></h6>
 
             </Form>
 
@@ -179,7 +179,9 @@ function Login({ respuesta, isLogin }) {
                     onSuccess={responseGoogle}
                     onFailure={responseGoogle}
                     cookiePolicy={'single_host_origin'}
-                />,
+                />
+                <h6 onClick={e=>setAccount(false)}>No tienes una cuenta? <h6 >Registrate</h6></h6>
+
             </Form>
 
 

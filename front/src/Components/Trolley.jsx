@@ -1,29 +1,26 @@
 import 'boxicons';
 import './Trolley.css'
-import ImgPrueba from './img/nuez.jpg';
-import { DataProvider, DataContext } from "../Contexts/DataProvider"
-import React, { useEffect, useState, useContext } from "react";
+import { DataContext } from "../Contexts/DataProvider"
+import React, { useEffect, useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
-// import ProductsCards from "./Products";
 import Cookies from "universal-cookie";
 import './Trolley.css'
 import { Link } from "react-router-dom";
 import getCart from "../Utils/getCart";
 import { useHistory } from "react-router";
 import axios from 'axios'
-import getTrolley from "../Utils/getTrolley";
 import getTrolleyAction from "../Actions";
 
 export default function Trolley() {
   const value = useContext(DataContext)
   const [carrito, setCarrito] = value.carrito;
-  const { productsCard } = useSelector(selector => selector.cart)
-  // const [menu, setMenu] = value.menu
+  const [total, setTotal] = value.total;
+  let { isLogin, token, comodin } = useSelector(state => state.reducerPablo)
+  let { productsCart } = useSelector(state => state.cart)
 
-  // const show1 = menu ? "carritos show" : "carritos";
-  // const show2 = menu ? "carrito show" : "carrito";
-
-
+  useEffect(()=>{
+		setCarrito(productsCart)
+	},[productsCart])
 
   const reduce = id => {
     carrito.forEach(item => {
@@ -53,6 +50,18 @@ export default function Trolley() {
       setCarrito([...carrito])
     })
   }
+  const handleClose = id=>{
+        let handle = []
+        dispatch({type:'REMOVE', payload: id})
+        cookies.get('trolley').forEach(x => {
+          if (x.id !== id) {
+            handle.push({ ...x });
+          }
+        })
+        cookies.set('trolley', handle)
+        
+      setCarrito([...carrito.filter(x=>x.id!==id)])
+    }
 
 
 
@@ -117,8 +126,6 @@ export default function Trolley() {
       });
   }
 
-  let { isLogin, token, comodin } = useSelector(state => state.reducerPablo)
-  let { productsCart } = useSelector(state => state.cart)
 
   useEffect(() => {
     console.log('hola:', isLogin)
@@ -133,7 +140,7 @@ export default function Trolley() {
       <div className="carritos show">
         <div className="carrito show"></div>
         <div id="carritoCompras">
-          <a href='/home'>ir al home</a>
+          <Link to='/home'>ir al home</Link>
           <h2 style={{
             textAlign: "center",
             fontSize: "3rem"
@@ -148,10 +155,6 @@ export default function Trolley() {
     return (
       <div className="carritos show">
         <div className="carrito show">
-          {/* <div id="card" products={productsCart}></div> */}
-          {/* <div id="card" products={productsCart} /> */}
-
-          <br /> <br /> <br />
           <div className="carrito__close">
             <box-icon name="x"></box-icon>
           </div>
@@ -176,7 +179,7 @@ export default function Trolley() {
                   <box-icon onClick={() => reduce(producto.id)} name="down-arrow" type="solid"></box-icon>
                 </div>
                 <div className="remove__item">
-                  <box-icon name="trash"></box-icon>
+                  <box-icon onClick={()=>handleClose(producto.id)} name="trash"></box-icon>
                 </div>
               </div>
 
@@ -184,10 +187,10 @@ export default function Trolley() {
             </div>
           ))}
           <div className="carrito__footer">
-            <h3>Total: $</h3>
+            <h3>Total: ${total}</h3>
             {!isLogin ? <button className="btn"><Link to='/Login' className="btn btn-success">Inicia sesión para iniciar su compra </Link></button> : false}
             <br /> <br />
-            <button className="btn" onClick={handleSubmit}>Comprar</button>
+            {isLogin ? <button className="btn" onClick={handleSubmit}>Comprar</button>:false}
           </div>
 
 

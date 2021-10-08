@@ -71,31 +71,7 @@ export function ProductCard({ product }) {
           <Link id="detalles" to={`/Detail/${product.id}`} >Ver este producto</Link>
         </ListGroupItem>
         <ListGroupItem id="btns">
-
-          {(location.pathname === '/trolley') ? <div  >
-            <div >
-              <div >
-                <span
-
-                  onClick={(e) =>{ setCounter(counter - 1);actualizateQuantity(e)}}
-                >
-                  <RemoveIcon />
-                </span>
-                <span className="counter__content-controls-value">  {counter} </span>
-                <span
-                  className="counter__content-controls-add"
-                  onClick={(e) =>{ setCounter(counter + 1);actualizateQuantity(e)}}
-
-                >
-                  <AddIcon />
-
-
-                </span>
-              </div>
-            </div>
-          </div>: false}
           {location.pathname !== '/trolley' ? <Button id="carrito" onClick={(e) => handleClickTrolley(e)} >Agregar  <Card.Img id="carritoimg" src={compras} /></Button> : false}
-          {location.pathname === '/trolley' ? <Button id="borrarBtn" onClick={e => handleClose(e)}><RemoveShoppingCart id="borrarimg" /></Button> : false}
         </ListGroupItem>
       </ListGroup>
     </Card>
