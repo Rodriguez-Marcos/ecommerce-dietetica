@@ -7,6 +7,8 @@ import { getById } from '../Actions/index'
 import styles from './Detail.css'
 import { Container, Row, Col, Image, Form, Button, ListGroup, ListGroupItem, Card, Accordion } from 'react-bootstrap'
 import Cookies from 'universal-cookie';
+import NavBar from './NavBar'
+
 
 
 
@@ -123,6 +125,8 @@ function Detail({ match }) {
 
 
   return (
+    <div>
+      <NavBar/>
     <Container>
       <Row id="row1">
         <Col id="detalle" md={8} xs={12}>
@@ -326,6 +330,7 @@ function Detail({ match }) {
         </Col>
       </Row>
     </Container>
+    </div>
   )
 }
 

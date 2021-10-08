@@ -7,7 +7,7 @@ import { Image, Button, Overlay, Tooltip, OverlayTrigger } from 'react-bootstrap
 import banner from '../image/BANNER-SALVATORE.jpg'
 import ProductsFilters from './Filters'
 import Example from './PromosHome'
-
+import NavBar from './NavBar'
 
 function ProductsHome({ products, getProducts }) {
 
@@ -18,7 +18,7 @@ function ProductsHome({ products, getProducts }) {
 
     return (
         <div >
-          
+            <NavBar />
             <Image id="banner" src={banner} fluid />
             <Example></Example>
             <ProductsFilters />

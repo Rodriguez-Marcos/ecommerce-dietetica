@@ -9,8 +9,9 @@ import useUser from '../Hooks/UseUser';
 import { Form, Button } from 'react-bootstrap'
 import createUserByGoogle from '../Utils/createUser/createUserByGoogle';
 import createUser from '../Utils/createUser/createUser';
+import NavBar from './NavBar';
 
- function CreateUser() {
+function CreateUser() {
     const { isLogin, login } = useUser();
 
 
@@ -62,7 +63,7 @@ import createUser from '../Utils/createUser/createUser';
             /* login(input.email,input.password ); */
             createUser(input)
             alert('Se creo usuario exitosamente')
-            login(input.email,input.password)
+            login(input.email, input.password)
         }
     }
 
@@ -76,44 +77,45 @@ import createUser from '../Utils/createUser/createUser';
     }
 
     return (
+        <div>
+            <NavBar />
+            <Form className="divuser">
+                <Form.Group className="mb-3" controlId="formBasicEmail" >
+                    <Form.Label>Nombre</Form.Label>
+                    <Form.Control type="text" placeholder="Nombre" type="text"
+                        value={input.name}
+                        name="name"
+                        onChange={handlerUser} />
+                    <Form.Text className="text-muted">
+                        Nunca compartiremos su correo electrónico con nadie más.
+                    </Form.Text>
+                </Form.Group>
+                <Form.Group className="mb-3" controlId="formBasicEmail">
+                    <Form.Label>Apellidos</Form.Label>
+                    <Form.Control type="text" placeholder="Apellidos" value={input.lastname}
+                        name="lastname" onChange={handlerUser} />
+                </Form.Group>
+                <Form.Group className="mb-3" controlId="formBasicPassword">
+                    <Form.Label>Contraseña</Form.Label>
+                    <Form.Control type="password" placeholder="Password" value={input.password}
+                        name="password" onChange={handlerUser} />
+                    <Form.Label>Email</Form.Label>
+                    <Form.Control type="text" placeholder="Email" value={input.email}
+                        name="email" onChange={handlerUser} />
+                </Form.Group>
+                <Button variant="primary" type="submit" onClick={handelSubmit}>
+                    Crear Cuenta
+                </Button>
 
-        <Form className="divuser">
-            <Form.Group className="mb-3" controlId="formBasicEmail" >
-                <Form.Label>Nombre</Form.Label>
-                <Form.Control type="text" placeholder="Nombre" type="text"
-                    value={input.name}
-                    name="name"
-                    onChange={handlerUser} />
-                <Form.Text className="text-muted">
-                    Nunca compartiremos su correo electrónico con nadie más.
-                </Form.Text>
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="formBasicEmail">
-                <Form.Label>Apellidos</Form.Label>
-                <Form.Control type="text" placeholder="Apellidos" value={input.lastname}
-                    name="lastname" onChange={handlerUser}  />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="formBasicPassword">
-                <Form.Label>Contraseña</Form.Label>
-                <Form.Control type="password" placeholder="Password" value={input.password}
-                    name="password" onChange={handlerUser} />
-                <Form.Label>Email</Form.Label>
-                <Form.Control type="text" placeholder="Email" value={input.email}
-                    name="email" onChange={handlerUser} />
-            </Form.Group>
-            <Button variant="primary" type="submit" onClick={handelSubmit}>
-                Crear Cuenta
-            </Button>
-            
-            <GoogleLogin
-                clientId="908895428836-kaesjl71puimi31fjbffca9t4nvl7v6r.apps.googleusercontent.com"
-                buttonText="Login"
-                onSuccess={responseGoogle}
-                onFailure={responseGoogle}
-                cookiePolicy={'single_host_origin'}
-            />,
-        </Form>
-
+                <GoogleLogin
+                    clientId="908895428836-kaesjl71puimi31fjbffca9t4nvl7v6r.apps.googleusercontent.com"
+                    buttonText="Login"
+                    onSuccess={responseGoogle}
+                    onFailure={responseGoogle}
+                    cookiePolicy={'single_host_origin'}
+                />,
+            </Form>
+        </div>
 
 
     )

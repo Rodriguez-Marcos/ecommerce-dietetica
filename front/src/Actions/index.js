@@ -318,6 +318,7 @@ export function deleteClients(id) {
 
 export function getOrders() {
 
+
     return async function (dispatch) {
         return axios.get(`http://localhost:3001/orders`)
             .then((response) => {
@@ -328,6 +329,7 @@ export function getOrders() {
             })
     }
 }
+
 export default function getTrolleyAction() {
     return async function (dispatch) {
         try {
@@ -345,3 +347,4 @@ export default function getTrolleyAction() {
         };
     };
 }
+
