@@ -14,6 +14,8 @@ export default function UserDetail() {
         dispatch(getClients())
     },[])
 
+
+
     function HandleDelete(id){
         dispatch(deleteClients(id))
         alert('Usuario eliminado con exito')

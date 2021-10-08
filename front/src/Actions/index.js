@@ -21,6 +21,7 @@ export const GET_CLIENTS = 'GET_CLIENTS';
 export const UPDATE_CLIENTS = 'UPDATE_CLIENTS';
 export const DELETE_CLIENTS = 'DELETE_CLIENTS';
 export const REVIEW_URL = "http://localhost:3001/reviews/";
+export const GET_ORDERS = 'GET_ORDERS'
 
 let cookies = new Cookies();
 
@@ -315,7 +316,20 @@ export function deleteClients(id) {
     };
 };
 
+export function getOrders() {
 
+<<<<<<< HEAD
+    return async function (dispatch) {
+        return axios.get(`http://localhost:3001/orders`)
+            .then((response) => {
+                dispatch({
+                    type: GET_ORDERS,
+                    payload: response.data,
+                })
+            })
+    }
+}
+=======
 export default function getTrolleyAction() {
     return async function (dispatch) {
         try {
@@ -333,3 +347,4 @@ export default function getTrolleyAction() {
         };
     };
 }
+>>>>>>> ad5fa837756ed562bf497b84c9806c379e0b9c25
