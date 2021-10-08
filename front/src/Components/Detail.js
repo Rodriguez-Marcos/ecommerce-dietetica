@@ -85,24 +85,24 @@ function Detail({ match }) {
   //     })
   //     .catch((error) => swal("Error", error, "error"));
   // }
-  
-      function handleSubmit(e) {
-        e.preventDefault()
-        return axios.post(REVIEW_URL+id, input)
-          .then((r) => {
-            e.target.reset()
-            setInput({
-              title: "",
-              description: "",
-              calification: "",
-            });
-            swal("Creado", "Comentario enviado con éxito!", "success")
-            .then( () => window.location.reload() );
-          })
-          .catch((error) => swal("Error", error, "error"));
-        }
 
-        {/*             
+  function handleSubmit(e) {
+    e.preventDefault()
+    return axios.post(REVIEW_URL + id, input)
+      .then((r) => {
+        e.target.reset()
+        setInput({
+          title: "",
+          description: "",
+          calification: "",
+        });
+        swal("Creado", "Comentario enviado con éxito!", "success")
+          .then(() => window.location.reload());
+      })
+      .catch((error) => swal("Error", error, "error"));
+  }
+
+  {/*             
                 <DiscussionEmbed
                    shortname='salvatoredietetica'
                    config={
@@ -118,110 +118,213 @@ function Detail({ match }) {
              
               
                </section>  */}
-      return (
+
+
+
+
+  return (
     <Container>
       <Row id="row1">
-        <div id="nameProduct"><h1>{producto?.name.toUpperCase()}</h1></div>
-        <Col id="img" md={6}>
-          <Image id="imgProduct" src={producto?.image} alt='none' fluid />
+        <Col id="detalle" md={8} xs={12}>
+          <div class="overflow-auto" id="CrearComentario">
+            <div id="imgProduct">
+              <Image src={producto?.image} alt='none' fluid />
+            </div>
+            <hr />
+            <Card id="CrearComentario1">
+              <Card.Body >
+                <Form onSubmit={e => { handleSubmit(e) }} >
+                  {console.log(handleSubmit)}
+                  <Card.Title id="titleOpinion">¡Dejanos tu opinión!</Card.Title>
+                  <Card.Title>Calificanos
+                    <Rating
+                      id="simple-controlled"
+                      name="calification"
+                      value={input.calification}
+                      onChange={handleInputChange}
+                    />
+                  </Card.Title>
+                  <Form.Group >
+                    <Form.Label>Título</Form.Label>
+                    <Form.Control rows={3}
+                      name="title"
+                      placeholder="Escribe un título..."
+                      value={input.title}
+                      required={true}
+                      onChange={handleInputChange}
+                      label="Titulo"
+                    />
+                  </Form.Group>
+                  <Form.Group>
+                    <Form.Label>Descripción</Form.Label>
+                    <Form.Control as="textarea" rows={3}
+                      placeholder="Escribe una descripción"
+                      label="Descripción"
+                      name="description"
+                      onChange={handleInputChange}
+                      required={true}
+
+                    />
+                  </Form.Group>
+                  <Form.Group id="btnComentario">
+                    <Button type='submit' class="btn btn-outline-success">
+                      Enviar
+                    </Button>
+                  </Form.Group>
+
+                </Form>
+              </Card.Body>
+            </Card>
+            <Card id="titulosComentario">
+              <Card.Body>
+                <Card.Title>Comentarios anteriores:</Card.Title>
+                <ListGroup>
+                  {producto?.reviews.map((elemento) => {
+                    return (
+                      <ListGroupItem>
+                        <Card.Title> Calificación: </Card.Title>
+                        <Rating
+                          id="simple-controlled"
+                          name="calification"
+                          value={elemento.calification} />
+                        <Card.Title>{elemento.title} </Card.Title>
+                        <p>{elemento.description}</p>
+                      </ListGroupItem>
+                    )
+                  })}
+                </ListGroup>
+              </Card.Body>
+            </Card>
+            {/* ---------------------------------Modo telefono---------------- */}
+            <Card id="detallesTel">
+              <Card.Body>
+                <Card.Title>
+                  <h1 id="nameProduct">{producto?.name.toUpperCase()}</h1>
+                </Card.Title>
+                <Card.Text>
+                  <span id="precioDetalle">${producto?.price} </span>
+                </Card.Text>
+                <hr />
+                <div id="btnsProduct">
+                  <button type="button" class="btn btn-secondary">Agregar a favoritos</button>
+                  <button type="button" class="btn btn-success">Agregar al carrito</button>
+                </div>
+                <hr />
+                <Card.Text>
+                  <Card.Subtitle className="text-muted"> Sobre este producto: </Card.Subtitle>
+                  {producto?.description}
+                </Card.Text>
+                <hr />
+                <Card.Text>
+                  <Card.Subtitle className="text-muted">Categorias: </Card.Subtitle>
+                  {producto?.categories.map(category => { return <span>/{category.name}</span> })}
+                </Card.Text>
+              </Card.Body>
+            </Card>
+            {/* -------------------------------------------------------------- */}
+          </div>
         </Col>
-        <Col md={6}>
+
+
+
+        <Col md={4} xs={12}>
           <Row>
             <Col>
-              <label>Precio:</label>
-              <p>${producto?.price} </p>
-              <label>Sobre este producto:</label>
-              <p> {producto?.description} </p>
+              <Card id="det">
+                <Card.Body>
+                  <Card.Title>
+                    <h1 id="nameProduct">{producto?.name.toUpperCase()}</h1>
+                  </Card.Title>
+                  <Card.Text>
+                    <span id="precioDetalle">${producto?.price} </span>
+                  </Card.Text>
+                  <hr />
+                  <div id="btnsProduct">
+                    <button type="button" class="btn btn-secondary">Agregar a favoritos</button>
+                    <button type="button" class="btn btn-success">Agregar al carrito</button>
+                  </div>
+                  <hr />
+                  <Card.Text>
+                    <Card.Subtitle className="text-muted"> Sobre este producto: </Card.Subtitle>
+                    {producto?.description}
+                  </Card.Text>
+                  <hr />
+                  <Card.Text>
+                    <Card.Subtitle className="text-muted">Categorias: </Card.Subtitle>
+                    {producto?.categories.map(category => { return <span>/{category.name}</span> })}
+                  </Card.Text>
+                </Card.Body>
+              </Card>
+              {/* --------------------------Modo Telefono------------------ */}
+              <Card id="CrearComentarioTel">
+                <Card.Body >
+                  <Form onSubmit={e => { handleSubmit(e) }} >
+                    {console.log(handleSubmit)}
+                    <Card.Title id="titleOpinion">¡Dejanos tu opinión!</Card.Title>
+                    <Card.Title>Calificanos
+                      <Rating
+                        id="simple-controlled"
+                        name="calification"
+                        value={input.calification}
+                        onChange={handleInputChange}
+                      />
+                    </Card.Title>
+                    <Form.Group >
+                      <Form.Label>Título</Form.Label>
+                      <Form.Control rows={3}
+                        name="title"
+                        placeholder="Escribe un título..."
+                        value={input.title}
+                        required={true}
+                        onChange={handleInputChange}
+                        label="Titulo"
+                      />
+                    </Form.Group>
+                    <Form.Group>
+                      <Form.Label>Descripción</Form.Label>
+                      <Form.Control as="textarea" rows={3}
+                        placeholder="Escribe una descripción"
+                        label="Descripción"
+                        name="description"
+                        onChange={handleInputChange}
+                        required={true}
 
-              <label>Stock:</label>
-              <p> {producto?.stock} unidades</p>
+                      />
+                    </Form.Group>
+                    <Form.Group id="btnComentario">
+                      <Button type='submit' class="btn btn-outline-success">
+                        Enviar
+                      </Button>
+                    </Form.Group>
 
-              <label>Categorias:</label>
-              {producto?.categories.map(category => { return <p>{category.name}</p> })}
-            </Col>
-          </Row>
-        </Col>
-        <Row>
-          <Col id="btnsProduct">
-            <button type="button" class="btn btn-secondary">Agregar a favoritos</button>
-            <button type="button" class="btn btn-success">Agregar al carrito</button>
-          </Col>
-        </Row>
-      </Row>
-      <hr />
-      <Row>
-        <Col>
-          <Card id="CrearComentario">
-            <Card.Body >
-              <Form onSubmit={e => { handleSubmit(e) }} >
-                {console.log(handleSubmit)}
-                <Card.Title id="titleOpinion">¡Dejanos tu opinión!</Card.Title>
-                <Card.Title>Calificanos    
-                  <Rating
-                    id="simple-controlled"
-                    name="calification"
-                    value={input.calification}
-                    onChange={handleInputChange}
-                  />
-                </Card.Title>
-                <Form.Group >
-                  <Form.Label>Título</Form.Label>
-                  <Form.Control rows={3}
-                    name="title"
-                    placeholder="Escribe un título..."
-                    value={input.title}
-                    required={true}
-                    onChange={handleInputChange}
-                    label="Titulo"
-                  />
-                </Form.Group>
-                <Form.Group>
-                  <Form.Label>Descripción</Form.Label>
-                  <Form.Control as="textarea" rows={3}
-                    placeholder="Escribe una descripción"
-                    label="Descripción"
-                    name="description"
-                    onChange={handleInputChange}
-                    required={true}
-
-                  />
-                </Form.Group>
-                <Form.Group id="btnComentario">
-                  <Button type='submit' class="btn btn-outline-success">
-                    Enviar
-                  </Button>
-                </Form.Group>
-
-              </Form>
-            </Card.Body>
-          </Card>
-        </Col>
-      </Row>
-      <hr />
-      <Row>
-        <Col>
-          <Card id="titulosComentario">
-            <Card.Body>
+                  </Form>
+                </Card.Body>
+              </Card>
+              <Card id="titulosComentarioTel">
+                <Card.Body>
                   <Card.Title>Comentarios anteriores:</Card.Title>
                   <ListGroup>
-                    {producto?.reviews.map((elemento) =>{
-                      return(
-                      <ListGroupItem>
-                         <Card.Title> Calificación: </Card.Title>
+                    {producto?.reviews.map((elemento) => {
+                      return (
+                        <ListGroupItem>
+                          <Card.Title> Calificación: </Card.Title>
                           <Rating
                             id="simple-controlled"
                             name="calification"
-                            value={elemento.calification}/>
+                            value={elemento.calification} />
                           <Card.Title>{elemento.title} </Card.Title>
-                            <p>{elemento.description}</p>
-                          </ListGroupItem>
-                      )})}
-                      </ListGroup>
-              </Card.Body>  
-          </Card>
+                          <p>{elemento.description}</p>
+                        </ListGroupItem>
+                      )
+                    })}
+                  </ListGroup>
+                </Card.Body>
+              </Card>
+              {/* --------------------------------------------------------- */}
+            </Col>
+          </Row>
         </Col>
       </Row>
-
     </Container>
   )
 }

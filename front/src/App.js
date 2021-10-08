@@ -19,7 +19,8 @@ import UsersAdminDetail from './Components/UsersAdminDetail'
 function App() {
   return (
     <BrowserRouter>
-     <Image id="fondo" src={fondo} fluid />
+    <UserContextProvider>
+     {/* <Image id="fondo" src={fondo} fluid /> */}
     <NavBar/>
     <Switch>
     <Route exact path='/home' component={Home}/>
