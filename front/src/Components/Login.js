@@ -20,7 +20,6 @@ function Login({respuesta, loginUser, isLogin}) {
         password: ''
     })
     useEffect(()=>{
-        console.log('hola')
         if(isLogin)history.push('/home');
         
     },[isLogin])
@@ -43,6 +42,7 @@ function Login({respuesta, loginUser, isLogin}) {
             alert('Debes llenar todos los campos')
         }
         else{
+            console.log('estoy aca')
             login(input.email,input.password)
 
         }
