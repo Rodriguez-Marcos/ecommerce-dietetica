@@ -7,11 +7,59 @@ import './Login.css'
 import { Form, Button } from 'react-bootstrap'
 import useUser from '../Hooks/UseUser';
 import NavBar from './NavBar';
+import createUser from '../Utils/createUser/createUser';
+import { validate } from '../Utils/ValidateUser';
 
 
 
 
-function Login({ respuesta, loginUser, isLogin }) {
+function Login({ respuesta, isLogin }) {
+    const [click, setClick] = useState(0)
+
+    const [input, setInput] = useState({
+        name: '',
+        lastname: '',
+        password: '',
+        email: '',
+        address: 'peru 30000',
+        phone: '213124124',
+    }
+    )
+
+    const [errors, setErrors] = useState({
+        name: '',
+        lastname: '',
+        password: '',
+        email: ''
+    }
+    )
+
+
+    function handlerUser(event) {
+        setErrors(validate({
+            ...input,
+            [event.target.name]: event.target.value
+        }))
+        setInput({
+            ...input,
+            [event.target.name]: event.target.value
+        })
+    }
+
+    function handelSubmit(event) {
+        event.preventDefault()
+        if (!input.name || !input.lastname || !input.password || !input.email) {
+            alert('Debes llenar todos los campos')
+        }
+        else {
+            /* login(input.email,input.password ); */
+            createUser(input)
+            alert('Se creo usuario exitosamente')
+            login(input.email, input.password)
+        }
+    }
+
+    const [account, setAccount] = useState(false)
 
     const { login, loginGoogle } = useUser();
     const history = useHistory();
@@ -25,11 +73,6 @@ function Login({ respuesta, loginUser, isLogin }) {
         if (isLogin) history.push('/home');
 
     }, [isLogin])
-
-    const [input, setInput] = useState({
-        email: '',
-        password: '',
-    });
 
     function handleEmail(event) {
         setInput({
@@ -60,56 +103,44 @@ function Login({ respuesta, loginUser, isLogin }) {
         else { }
 
 
-    }, [respuesta]
-    )
-
-
+    }, [respuesta])
 
 
     const responseGoogle = (response) => {
 
     }
+    if (!account) {
+        return (
+            <div>
+                <NavBar />
+                <Form className="divuser">
+                    <Form.Group className="mb-3" controlId="formBasicEmail" >
+                        <Form.Label>Email</Form.Label>
+                        <Form.Control placeholder="ejemplo@email.com" type="text" name="email" value={input.email} onChange={handleEmail} />
+                        <Form.Text className="text-muted">
+                            Nunca compartiremos su correo electrónico con nadie más.
+                        </Form.Text>
+                    </Form.Group>
+                    <Form.Group className="mb-3" controlId="formBasicEmail" >
+                        <Form.Label>Contraseña</Form.Label>
+                        <Form.Control placeholder="Contraseña" type="password" name='password' value={input.password} onChange={handleEmail} />
+                        <Form.Text className="text-muted">
+                            Escriba su contraseña registrada
+                        </Form.Text>
+                    </Form.Group>
+                    <Button onClick={handleSubmit}> Aceptar </Button>
+                    <GoogleLogin
+                        clientId="908895428836-kaesjl71puimi31fjbffca9t4nvl7v6r.apps.googleusercontent.com"
+                        buttonText="Login"
+                        onSuccess={loginGoogle}
+                        onFailure={responseGoogle}
+                        cookiePolicy={'single_host_origin'}
+                    />,
 
-    return (
-        <div>
-            <NavBar/>
-            <Form className="divuser">
-                <Form.Group className="mb-3" controlId="formBasicEmail" >
-                    <Form.Label>Email</Form.Label>
-                    <Form.Control placeholder="ejemplo@email.com" type="text" name="email" value={input.email} onChange={handleEmail} />
-                    <Form.Text className="text-muted">
-                        Nunca compartiremos su correo electrónico con nadie más.
-                    </Form.Text>
-                </Form.Group>
-                <Form.Group className="mb-3" controlId="formBasicEmail" >
-                    <Form.Label>Contraseña</Form.Label>
-                    <Form.Control placeholder="Contraseña" type="password" name='password' value={input.password} onChange={handleEmail} />
-                    <Form.Text className="text-muted">
-                        Escriba su contraseña registrada
-                    </Form.Text>
-                </Form.Group>
-                <Button onClick={handleSubmit}> Aceptar </Button>
-
-                {/* <p>Email</p>
-        <input type='text' name='email' value={input.email} onChange={handleEmail} />
-        <p>Password</p>
-        <input type='password' name='password' value={input.password} onChange={handleEmail} />
-        <button onClick={handleSubmit}> Aceptar </button>
-         */}
-
-
-
-                <GoogleLogin
-                    clientId="908895428836-kaesjl71puimi31fjbffca9t4nvl7v6r.apps.googleusercontent.com"
-                    buttonText="Login"
-                    onSuccess={loginGoogle}
-                    onFailure={responseGoogle}
-                    cookiePolicy={'single_host_origin'}
-                />,
-
-            </Form>
-        </div>
-    )
+                </Form>
+            </div>
+        )
+    }
 }
 function mapStateToProps(state) {
     return {
