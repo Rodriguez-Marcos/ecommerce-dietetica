@@ -18,7 +18,7 @@ export default function useUser() {
                 let id_products = [];
                 cookies.get('trolley')?.map(x=>id_products.push(x.id));
 
-                console.log('logueado con exito')
+                console.log(jwt)
                 myStorage.jwt = jwt;
                 postCarrito(jwt,id_products)
                 dispatch({type: 'LOGIN', payload: jwt})

@@ -13,7 +13,7 @@ const InitialState = {
     user: {},
     login_user: {},
     isLogin: false,
-    token: '',
+    token: {},
     clients: [],
     orders: [],
 }

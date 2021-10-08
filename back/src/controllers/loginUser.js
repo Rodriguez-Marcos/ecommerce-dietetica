@@ -22,9 +22,9 @@ export async function loginUser(req, res) {
         email: user.email
     }
     const token = jwt.sign(userForToken, 'secret')
-
+console.log(user.dataValues)
     res.send(
-        token
+    user.dataValues
     )
 }
 
