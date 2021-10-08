@@ -14,7 +14,7 @@ import { UserContextProvider } from './Contexts/UserContext';
 import Login from './Components/Login';
 import Sidebar from './Components/AdminSideBar';
 import UsersAdminDetail from './Components/UsersAdminDetail'
-import OrderAdminDetail from './Components/OrdersAdminDetail'
+import OrderAdminDetail from './Components/OrdersAdminDetail';
 
 function App() {
   return (
