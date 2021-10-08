@@ -171,6 +171,7 @@ export async function loginUser(req, res) {
             email: email
         }
     })
+    
     password = await bcrypt.compare(password, dataBaseByClient.password)
     try { 
         if (password) {

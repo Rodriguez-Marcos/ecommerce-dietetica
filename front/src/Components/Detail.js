@@ -134,7 +134,6 @@ function Detail({ match }) {
             <Card id="CrearComentario1">
               <Card.Body >
                 <Form onSubmit={e => { handleSubmit(e) }} >
-                  {console.log(handleSubmit)}
                   <Card.Title id="titleOpinion">¡Dejanos tu opinión!</Card.Title>
                   <Card.Title>Calificanos
                     <Rating
@@ -236,7 +235,7 @@ function Detail({ match }) {
                     <h1 id="nameProduct">{producto?.name.toUpperCase()}</h1>
                   </Card.Title>
                   <Card.Text>
-                    <span id="precioDetalle">${producto?.price} </span>
+                    <span id="precioDetalle"> ${producto?.price} </span>
                   </Card.Text>
                   <hr />
                   <div id="btnsProduct">

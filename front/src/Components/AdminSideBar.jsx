@@ -45,7 +45,7 @@ export default function Sidebar({openProduct, openCategory, openDiet}) {
               <PermIdentity className="sidebarIcon" />
               Usuarios
             </li> */}
-
+            
             <li className="sidebarListItem" onClick={() => openProduct()}>
               <button className="sidebarIcon"  />
               Productos
@@ -71,6 +71,10 @@ export default function Sidebar({openProduct, openCategory, openDiet}) {
             <li className="sidebarListItem">
               <DynamicFeed className="sidebarIcon" />
               <NavLink to='/Admin/user'>Lista de Usuarios</NavLink>
+            </li>
+            <li className="sidebarListItem">
+              <DynamicFeed className="sidebarIcon" />
+              <NavLink to='/Admin'>Lista de Productos</NavLink>
             </li>
             <li className="sidebarListItem">
               <ChatBubbleOutline className="sidebarIcon" />

@@ -117,6 +117,7 @@ export default function reducerPablo(state = InitialState, action) {
                 ...state,
                 isLogin: true,
                 token: action.payload,
+
             }
         case 'LOGOUT':
             return {
