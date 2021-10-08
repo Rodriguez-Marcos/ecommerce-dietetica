@@ -44,7 +44,7 @@ async function useExtractor (req,res,next){
         throw new Error('El metodo de autenticacion tiene que ser Bearer')
     }
     let decodeToken = {};
-    let iss = await jwt.decode(token).iss
+    let iss = await jwt.decode(token)?.iss
     try {
        if(!iss)
        {decodeToken = jwt.verify(token,'secret')}

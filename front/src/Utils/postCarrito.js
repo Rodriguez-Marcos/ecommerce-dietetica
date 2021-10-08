@@ -3,8 +3,6 @@ function postCarrito(token, products){
     var data = JSON.stringify({
         "products": products,
       });
-      console.log('data: ',products)
-      
       var config = {
         method: 'post',
         url: 'http://localhost:3001/cart',
@@ -12,7 +10,7 @@ function postCarrito(token, products){
           'Authorization': 'Bearer '+ token, 
           'Content-Type': 'application/json'
         },
-        data : data
+        data
       };
       
       axios(config)
