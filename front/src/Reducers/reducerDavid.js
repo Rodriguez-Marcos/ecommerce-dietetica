@@ -29,6 +29,10 @@ export default function reducerDavid(state = InitialState, action) {
                 return{
                     ...state
                 }
+                case 'PUT_ ORDERS':
+                    return{
+                        ...state
+                    }
             
         default:
             return {...state}
