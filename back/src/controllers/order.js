@@ -1,6 +1,7 @@
 import Order from '../models/Order.js';
 import Product_Order from '../models/Product_Order.js';
 import Product from '../models/Product.js';
+import Client from '../models/Client.js';
 
 
 export async function createOrder(req, res) {
@@ -10,8 +11,8 @@ export async function createOrder(req, res) {
     try {
         await Order.create({
 
-            shippingAddress:shippingAddress,
-            id_client:id_client
+            shippingAddress: shippingAddress,
+            id_client: id_client
         }
         )
         let newOrderId = await Order.findOne({ where: { id_client: id_client }, attributes: ["id"], order: [["createDate", "DESC"]], limit: 1 })
@@ -28,7 +29,19 @@ export async function createOrder(req, res) {
         if (promisesResolved) {
             let totalValue = await Product_Order.sum('total', { where: { id_order: newOrderId.dataValues.id } })
             await Order.update({ ammount: totalValue }, { where: { id: newOrderId.dataValues.id } })
-            let updatedOrder = await Order.findOne({ where: { id_client: id_client }, include: { model: Product }, order: [["createDate", "DESC"]], limit: 1 })
+            let updatedOrder = await Order.findOne(
+                {
+                    where: { id_client: id_client },
+                    attributes: ["id", "ammount", "shippingAddress", "createDate", "status"],
+                    include: [
+                        { model: Client, attributes: ["id", "name", "lastname", "email", "phone"] },
+                        {
+                            model: Product, attributes: ["id", "name", "price", "description"],
+                            through: { attributes: ["quantity", "total"] }
+                        }],
+                    order: [["createDate", "DESC"]],
+                    limit: 1
+                })
             return res.json({
                 message: 'Order created successfully',
                 data: updatedOrder
@@ -46,11 +59,41 @@ export async function getOrders(req, res) {
     let { id_client, id_order } = req.query
     try {
         if (!id_client && !id_order) {
-            var orders = await Order.findAll({ include: { model: Product } })
+            var orders = await Order.findAll(
+                {
+                    attributes: ["id", "ammount", "shippingAddress", "createDate", "status"],
+                    include: [
+                        { model: Client, attributes: ["id", "name", "lastname", "email", "phone"] },
+                        {
+                            model: Product, attributes: ["id", "name", "price", "description"],
+                            through: { attributes: ["quantity", "total"] }
+                        }],
+                    order: [["createDate", "DESC"]],
+                })
         } else if (id_client && !id_order) {
-            var orders = await Order.findAll({ where: { id_client: id_client }, include: [{ model: Product }] })
+            var orders = await Order.findAll({
+                where: { id_client: id_client },
+                attributes: ["id", "ammount", "shippingAddress", "createDate", "status"],
+                include: [
+                    { model: Client, attributes: ["id", "name", "lastname", "email", "phone"] },
+                    {
+                        model: Product, attributes: ["id", "name", "price", "description"],
+                        through: { attributes: ["quantity", "total"] }
+                    }],
+                order: [["createDate", "DESC"]],
+
+            })
         } else if (!id_client && id_order) {
-            var orders = await Order.findOne({ where: { id: id_order }, include: [{ model: Product }] })
+            var orders = await Order.findOne({
+                where: { id: id_order },
+                attributes: ["id", "ammount", "shippingAddress", "createDate", "status"],
+                include: [
+                    { model: Client, attributes: ["id", "name", "lastname", "email", "phone"] },
+                    {
+                        model: Product, attributes: ["id", "name", "price", "description"],
+                        through: { attributes: ["quantity", "total"] }
+                    }],
+            })
         }
         return res.status(200).send(orders)
     } catch (err) {
@@ -86,7 +129,16 @@ export async function changeOrderStatus(req, res) {
     let { status } = req.body
     try {
         await Order.update({ status: status }, { where: { id: id } })
-        let order = await Order.findOne({ where: { id: id }, include: [{ model: Product }] })
+        let order = await Order.findOne({
+            where: { id: id },
+            attributes: ["id", "ammount", "shippingAddress", "createDate", "status"],
+            include: [
+                { model: Client, attributes: ["id", "name", "lastname", "email", "phone"] },
+                {
+                    model: Product, attributes: ["id", "name", "price", "description"],
+                    through: { attributes: ["quantity", "total"] }
+                }],
+        })
         return res.status(200).send(order)
     } catch (err) {
         console.log(err)
