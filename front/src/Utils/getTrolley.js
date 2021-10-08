@@ -6,8 +6,6 @@ export default async function getTrolley(ids) {
     var data = JSON.stringify({
         "id": ids
       });
-    console.log('ids:',ids)
-
     var config = {
       method: 'POST',
       url: 'http://localhost:3001/products/getProducts',

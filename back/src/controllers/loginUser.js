@@ -30,11 +30,6 @@ export async function loginUser(req, res) {
 
 ///midleware xd
 
-async function comodin (email){
-    const user = await Client.findOne({where:{email}})
-    return user;
-}
-
 
 
 async function useExtractor (req,res,next){
@@ -45,9 +40,13 @@ async function useExtractor (req,res,next){
     if (authorization && authorization.toLowerCase().startsWith('bearer')) {
         token = authorization.substring(7);
     }
+    else{
+        throw new Error('El metodo de autenticacion tiene que ser Bearer')
+    }
     let decodeToken = {};
+    let iss = await jwt.decode(token).iss
     try {
-       if(!await jwt.decode(token).iss)
+       if(!iss)
        {decodeToken = jwt.verify(token,'secret')}
        else{
         const client = new OAuth2Client(CLIENT_ID);
@@ -63,18 +62,36 @@ async function useExtractor (req,res,next){
             const userid = payload['sub'];
             // If request specified a G Suite domain:
             // const domain = payload['hd'];
-            console.log(ticket, userid)
-            console.log(await comodin(ticket.payload.email))
+            console.log('tiket',ticket, userid)
+            const user = await Client.findOne({where:{email: ticket.payload.email}});
+            console.log("user", user?.id)
+            if(user?.password)
+                throw new Error('Se encontro un usuario ya registrado con ese email')
+
+                req.id = user?.id;
+                req.email = ticket.payload.email;
+                let [name, lastname] = ticket.payload.name.split(' ')
+                req.name = name
+                req.lastname = lastname?lastname:'no lastname';
+                console.log('email: ', req.email)
+
         }
-        verify().catch(console.error);
+        await verify()
     }
     } catch (error) {
-        console.log(error);
+        console.log(error)
+        return res.status(409).json({error: error});
     }
     if (!token || !decodeToken?.id) {
+        if(!iss)
         return res.status(401).json({ error: 'token invalido' })
     }
-    req.id = decodeToken.id
+    if(!req.id)
+    req.id = decodeToken.id;
+    if(!req.email)
+    req.email = decodeToken.email;
+    console.log('email: ', req.email)
+
     next();
 
 }

@@ -13,7 +13,7 @@ import Cart from './routes/cart.js';
 import Reviewroutes from './routes/review.js'
 import Favoriteroutes from './routes/favorite.js'
 import Cartroutes from './routes/cart.js'
-import useExtractor from './middleware/useExtractor.js';
+import useExtractor from './controllers/loginUser.js';
 import Payment from './routes/payment'
 
 const app = express()
