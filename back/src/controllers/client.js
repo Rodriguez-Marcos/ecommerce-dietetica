@@ -216,7 +216,25 @@ export async function loginUser(req, res) {
 }
 }
 
-
+export async function RegOrCreateGaccount (req, res){
+    try{
+        console.log('hola')
+    let user = await Client.findOrCreate({
+        where:{
+            email: req.email,
+            isGoogleClient: true,
+            googleId: req.body.googleId,
+            name: req.name,
+            lastname:req.lastname
+        }
+    })
+        return res.status(200).json('Logueado con exito')
+}
+catch(err){
+    console.log(err)
+    return res.status(507).json({err: err})
+}
+}
 
 
 
