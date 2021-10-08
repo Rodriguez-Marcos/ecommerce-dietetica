@@ -15,12 +15,13 @@ import { UserContextProvider } from './Contexts/UserContext';
 import Login from './Components/Login';
 import Sidebar from './Components/AdminSideBar';
 import UsersAdminDetail from './Components/UsersAdminDetail'
+import OrderAdminDetail from './Components/OrdersAdminDetail'
 
 function App() {
   return (
     <BrowserRouter>
     <UserContextProvider>
-     <Image id="fondo" src={fondo} fluid />
+     {/* <Image id="fondo" src={fondo} fluid /> */}
     <NavBar/>
     <Switch>
     <Route exact path='/home' component={Home}/>
@@ -31,6 +32,7 @@ function App() {
     <Route exact path='/Login' component={Login}/>
     <Route exact path='/Admin' component={Creator}/>
     <Route exact path='/Admin/user' component={UsersAdminDetail}/>
+    <Route exact path='/Admin/orders' component={OrderAdminDetail}/>
 
 
     </Switch>

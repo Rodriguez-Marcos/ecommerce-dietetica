@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import Cookies from 'universal-cookie';
@@ -10,15 +10,16 @@ import borrar from '../image/cancelar.png'
 import compras from '../image/carrito.png'
 import postCarrito from '../Utils/postCarrito';
 import removePC from '../Utils/removePC';
-import {RemoveShoppingCart } from '@material-ui/icons';
-import Contador from './Contador';
-
+import { RemoveShoppingCart } from '@material-ui/icons';
+import RemoveIcon from "@material-ui/icons/Remove";
+import AddIcon from "@material-ui/icons/Add";
 const cookies = new Cookies();
 
 
 
 
 export function ProductCard({ product }) {
+  const [ counter, setCounter ] = useState (1);
   let location = useLocation();
   let dispatch = useDispatch();
   let { isLogin, token } = useSelector(state => state.reducerPablo);
@@ -27,20 +28,32 @@ export function ProductCard({ product }) {
     e.preventDefault();
     let trolley = Array.isArray(cookies.get('trolley')) ? [...cookies.get('trolley')] : []; /// trolley : []
     if (!trolley.find(x => x.id === product.id)) {
-      trolley.push(product);
-      if(isLogin)postCarrito(token, [product.id]);
+      let quantity = counter;
+      let { id } = product;
+      trolley.push({id, quantity});
+      if (isLogin) postCarrito(token,{id,quantity});
     }
     cookies.set('trolley', trolley)
     dispatch({
       type: 'COMODIN',
     })
   }
+  function actualizateQuantity(){
+    let trolley = Array.isArray(cookies.get('trolley')) ? [...cookies.get('trolley')] : []; /// trolley : []
+    if (!trolley.find(x => x.id === product.id)) {
+      let quantity = counter;
+      let { id } = product;
+      trolley.push(product);
+      if (isLogin) postCarrito(token, {id,quantity});
+    }
+  }
 
   function handleClose(e) {
     e.preventDefault();
     let trolley = Array.isArray(cookies.get('trolley')) ? [...cookies.get('trolley')] : [];
+    console.log(trolley.filter(x => x.id !== product.id))
     cookies.set('trolley', trolley.filter(x => x.id !== product.id))
-    if(isLogin)removePC(token,[product.id]);
+    if (isLogin) removePC(token, [product.id]);
     dispatch({
       type: 'COMODIN',
     })
@@ -58,9 +71,31 @@ export function ProductCard({ product }) {
           <Link id="detalles" to={`/Detail/${product.id}`} >Ver este producto</Link>
         </ListGroupItem>
         <ListGroupItem id="btns">
-          <Contador></Contador>
+
+          {(location.pathname === '/trolley') ? <div  >
+            <div >
+              <div >
+                <span
+
+                  onClick={(e) =>{ setCounter(counter - 1);actualizateQuantity(e)}}
+                >
+                  <RemoveIcon />
+                </span>
+                <span className="counter__content-controls-value">  {counter} </span>
+                <span
+                  className="counter__content-controls-add"
+                  onClick={(e) =>{ setCounter(counter + 1);actualizateQuantity(e)}}
+
+                >
+                  <AddIcon />
+
+
+                </span>
+              </div>
+            </div>
+          </div>: false}
           {location.pathname !== '/trolley' ? <Button id="carrito" onClick={(e) => handleClickTrolley(e)} >Agregar  <Card.Img id="carritoimg" src={compras} /></Button> : false}
-          {location.pathname === '/trolley' ? <Button id="borrarBtn" onClick={e => handleClose(e)}><RemoveShoppingCart id="borrarimg"/></Button> : false}
+          {location.pathname === '/trolley' ? <Button id="borrarBtn" onClick={e => handleClose(e)}><RemoveShoppingCart id="borrarimg" /></Button> : false}
         </ListGroupItem>
       </ListGroup>
     </Card>
