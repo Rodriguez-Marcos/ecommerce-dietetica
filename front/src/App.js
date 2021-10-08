@@ -4,7 +4,6 @@ import Home from './Components/Home';
 import Detail from './Components/Detail.js';
 import Creator from './Components/Creator';
 import Search from './Components/Search';
-import NavBar from './Components/NavBar';
 import Footer from './Components/Footer';
 import CreateUser from './Components/CreateUser';
 import { Switch } from 'react-router';
@@ -21,8 +20,6 @@ function App() {
   return (
     <BrowserRouter>
     <UserContextProvider>
-     {/* <Image id="fondo" src={fondo} fluid /> */}
-    <NavBar/>
     <Switch>
     <Route exact path='/home' component={Home}/>
     <Route exact path='/Detail/:id' component={Detail}/>
