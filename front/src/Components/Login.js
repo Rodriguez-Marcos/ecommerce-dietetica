@@ -19,6 +19,7 @@ function Login({respuesta, loginUser, isLogin}) {
         username: '',
         password: ''
     })
+    
     useEffect(()=>{
         if(isLogin)history.push('/home');
         
