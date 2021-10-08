@@ -12,7 +12,7 @@ async function useExtractor (req,res,next){
     }
     let decodeToken = {};
     try {
-       if(!await jwt.decode(token).iss)
+       if(!await jwt.decode(token)?.iss)
        {decodeToken = jwt.verify(token,'secret')}
        else{
         const client = new OAuth2Client(CLIENT_ID);
