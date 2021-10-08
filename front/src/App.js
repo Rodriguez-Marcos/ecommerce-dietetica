@@ -21,7 +21,7 @@ function App() {
   return (
     <BrowserRouter>
     <UserContextProvider>
-     <Image id="fondo" src={fondo} fluid />
+     {/* <Image id="fondo" src={fondo} fluid /> */}
     <NavBar/>
     <Switch>
     <Route exact path='/home' component={Home}/>

@@ -27,8 +27,7 @@ export default function OrderAdminDetail() {
         actual: event.target.value,
         id: order.id
       });
-    } else {
-    }
+    } 
   }
 
   console.log(status);
