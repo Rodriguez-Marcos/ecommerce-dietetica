@@ -45,3 +45,12 @@
       margin-right: 5px;
       font-size: 20px !important;
   }
+  #navResponsive{
+    display: flex;
+    flex-direction: column;
+  }
+  @media only screen and (max-width: 770px) {
+    #navResponsive{
+      width: 100vw;
+    }
+  }
