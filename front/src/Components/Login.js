@@ -111,7 +111,9 @@ function Login({ respuesta, isLogin }) {
     const responseGoogle = (response) => {
 
     }
+    
     if (!account) {
+        console.log('si:',account)
         return (
             <Form className="divuser">
                 <Form.Group className="mb-3" controlId="formBasicEmail" >
@@ -136,13 +138,14 @@ function Login({ respuesta, isLogin }) {
                     onFailure={responseGoogle}
                     cookiePolicy={'single_host_origin'}
                 />
-                <h6>No tienes una cuenta? <h6 onClick={setAccount(true)}>Registrate</h6></h6>
+                <h6 onClick={e=>setAccount(true)}>No tienes una cuenta? <h6 >Registrate</h6></h6>
 
             </Form>
 
         )
     }
     else {
+        console.log('si:',account)
         return (
 
             <Form className="divuser">
@@ -180,6 +183,7 @@ function Login({ respuesta, isLogin }) {
                     onFailure={responseGoogle}
                     cookiePolicy={'single_host_origin'}
                 />,
+                <h6 onClick={e=>setAccount(false)}>ya tienes una cuenta? <h6 >Ingresa</h6></h6>
             </Form>
 
 
