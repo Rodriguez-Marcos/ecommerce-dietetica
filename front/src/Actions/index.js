@@ -268,13 +268,12 @@ export function review(payload) {
 
 export function loginUser(payload) {
     return async function (dispatch) {
-            return axios.get(`http://localhost:3001/clients/login?email=${email}&password=${password}`)
-            .then((response)=>{
-            dispatch({
+            await axios.post(`http://localhost:3001/login/`,payload)
+            return dispatch({
                 type: 'SET_LOGIN_USER',
-                payload: response.data,
+                payload
             })
-    })}
+    }
 };
 
 
