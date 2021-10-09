@@ -30,6 +30,7 @@ export default function Trolley() {
     carrito.forEach(item => {
       if (item.id === id) {
         if (item.cantidad > 1) {
+          if (isLogin) postCarrito(token,{id,quantity: -1});
           item.cantidad -= 1;
           cookies.set('trolley', cookies.get('trolley').map(x => {
             if (x.id === id) {
@@ -40,7 +41,6 @@ export default function Trolley() {
       }
       setCarrito([...carrito])
     })
-    if (isLogin) postCarrito(token,{id,quantity: 1});
 
   }
   const increase = id => {
@@ -54,7 +54,8 @@ export default function Trolley() {
         }))
       }
       setCarrito([...carrito]);
-      if (isLogin) postCarrito(token,{id,quantity:1 });
+      
+      if (isLogin) postCarrito(token,{id,quantity:-1 });
     })
   }
   const handleClose = id=>{
@@ -88,7 +89,8 @@ export default function Trolley() {
   async function handleSubmit(event) {
     event.preventDefault();
     var data = JSON.stringify({
-      "payment": "mercadopago"
+      "payment": "mercadopago",
+      items: cookies.get('trolley')
     });
 
     var config = {

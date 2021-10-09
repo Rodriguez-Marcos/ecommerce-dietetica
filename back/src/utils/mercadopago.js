@@ -4,7 +4,7 @@ export default async function mercadopago(cart,res){
 var data ;
 var mp;
 let items = [] ;
- cart.map((x) => items.push({'title': x.name, 'unit_price': x.price,'quantity': 1}))
+ cart.map((x) => items.push({'title': x.name, 'unit_price': x.price, quantity: x.quantity}))
  data = JSON.stringify({items})
  console.log(cart)
 var config = {

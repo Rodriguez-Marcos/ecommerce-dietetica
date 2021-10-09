@@ -4,10 +4,10 @@ import Product_Cart from '../models/Product_Cart.js';
 
 export async function addToCart(req, res, next) {
     const id_client = req.id;
-    let productsArray = [];
+    let productsArray =[];
 
     try {
-        if (Array.isArray(req.body.products)) {
+        if (Array.isArray(req.body.products)) {// [{id:1,quantity:1}]
             productsArray=req.body.products
             let cart = await Cart.findOne({ where: { id_client: id_client } })
             let promises = Promise.all(productsArray.map(async product => {
@@ -20,7 +20,7 @@ export async function addToCart(req, res, next) {
                 } else {
                     let newProduct_Cart = await Product_Cart.update({
                         total: (productEx.dataValues.total) + (product.quantity * quantity.dataValues.price),
-                        quantity: productEx.dataValues.quantity + product.quantity
+                        quantity: product.quantity
                     },
                         { where: { id_cart: cart.dataValues.id, id_product: product.id } })
                     return newProduct_Cart
