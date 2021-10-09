@@ -49,7 +49,6 @@ export async function getProducts(req, res) {
     let { id } = req.body;
 
     try {
-        console.log(id)
         if (id){
             id = id.map(({id})=>id)
             let products = await Product.findAll({where:{id}})

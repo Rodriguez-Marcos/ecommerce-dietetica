@@ -1,23 +1,22 @@
 import axios from 'axios'
 function postCarrito(token, products){
-    var data = JSON.stringify({
-        "products": products,
-      });
-      console.log('data: ',products)
-      
-      var config = {
-        method: 'post',
-        url: 'http://localhost:3001/cart',
-        headers: { 
-          'Authorization': 'Bearer '+ token, 
-          'Content-Type': 'application/json'
-        },
-        data : data
-      };
-      
+  var data = JSON.stringify({
+    "products": products,
+  });
+  var config = {
+    method: 'post',
+    url: 'http://localhost:3001/cart',
+    headers: { 
+      'Authorization': 'Bearer '+ token, 
+      'Content-Type': 'application/json'
+    },
+    data
+  };
+  
+  console.log('fui yo')
       axios(config)
       .then(function (response) {
-        console.log(JSON.stringify(response.data));
+        console.log('actualizado con exito');
       })
       .catch(function (error) {
         console.log(error);

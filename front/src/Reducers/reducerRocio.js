@@ -12,7 +12,7 @@ export default function reducerRocio(state = InitialState, action)  {
         case GET_ID:
             return {
                 ...state,
-                detail: action.payload
+                detail: action.payload[0]
             }
             case REVIEW_URL:
                 return{
@@ -21,7 +21,7 @@ export default function reducerRocio(state = InitialState, action)  {
                 }
             default:
                 return {
-                    state
+                    ...state
                 }
         }
     }

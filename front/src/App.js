@@ -10,7 +10,7 @@ import { Switch } from 'react-router';
 import Trolley from './Components/Trolley';
 import {Image} from 'react-bootstrap'
 import fondo from '../src/image/fondo1.jpg'
-import { UserContextProvider } from './Contexts/UserContext';
+import { DataProvider } from './Contexts/DataProvider'
 import Login from './Components/Login';
 import Sidebar from './Components/AdminSideBar';
 import UsersAdminDetail from './Components/UsersAdminDetail'
@@ -19,12 +19,13 @@ import OrderAdminDetail from './Components/OrdersAdminDetail';
 function App() {
   return (
     <BrowserRouter>
-    <UserContextProvider>
+    <DataProvider>
+     {/* <Image id="fondo" src={fondo} fluid /> */}
     <Switch>
     <Route exact path='/home' component={Home}/>
     <Route exact path='/Detail/:id' component={Detail}/>
     <Route exact path='/search' component={Search}/>
-    <Route exact path='/trolley' component={Trolley}/>
+    {/* <Route exact path='/trolley' component={Trolley}/> */}
     {/* <Route exact path='/CreateUser' component={CreateUser}/> */}
     <Route exact path='/Login' component={Login}/>
     <Route exact path='/Admin' component={Creator}/>
@@ -34,7 +35,7 @@ function App() {
 
     </Switch>
     {/* <Footer/> */}
-    </UserContextProvider>
+    </DataProvider>
     </BrowserRouter>
     
   );
