@@ -7,6 +7,8 @@ import { getById } from '../Actions/index'
 import styles from './Detail.css'
 import { Container, Row, Col, Image, Form, Button, ListGroup, ListGroupItem, Card, Accordion } from 'react-bootstrap'
 import Cookies from 'universal-cookie';
+import NavBar from './NavBar'
+
 
 
 
@@ -123,6 +125,8 @@ function Detail({ match }) {
 
 
   return (
+    <div>
+      <NavBar/>
     <Container>
       <Row id="row1">
         <Col id="detalle" md={8} xs={12}>
@@ -178,7 +182,7 @@ function Detail({ match }) {
               <Card.Body>
                 <Card.Title>Comentarios anteriores:</Card.Title>
                 <ListGroup>
-                  {producto?.reviews.map((elemento) => {
+                  {producto?.reviews?.map((elemento) => {
                     return (
                       <ListGroupItem>
                         <Card.Title> Calificación: </Card.Title>
@@ -198,7 +202,7 @@ function Detail({ match }) {
             <Card id="detallesTel">
               <Card.Body>
                 <Card.Title>
-                  <h1 id="nameProduct">{producto?.name.toUpperCase()}</h1>
+                  <h1 id="nameProduct">{producto?.name?.toUpperCase()}</h1>
                 </Card.Title>
                 <Card.Text>
                   <span id="precioDetalle">${producto?.price} </span>
@@ -216,7 +220,7 @@ function Detail({ match }) {
                 <hr />
                 <Card.Text>
                   <Card.Subtitle className="text-muted">Categorias: </Card.Subtitle>
-                  {producto?.categories.map(category => { return <span>/{category.name}</span> })}
+                  {producto?.categories?.map(category => { return <span>/{category.name}</span> })}
                 </Card.Text>
               </Card.Body>
             </Card>
@@ -232,7 +236,7 @@ function Detail({ match }) {
               <Card id="det">
                 <Card.Body>
                   <Card.Title>
-                    <h1 id="nameProduct">{producto?.name.toUpperCase()}</h1>
+                    <h1 id="nameProduct">{producto?.name?.toUpperCase()}</h1>
                   </Card.Title>
                   <Card.Text>
                     <span id="precioDetalle"> ${producto?.price} </span>
@@ -250,7 +254,7 @@ function Detail({ match }) {
                   <hr />
                   <Card.Text>
                     <Card.Subtitle className="text-muted">Categorias: </Card.Subtitle>
-                    {producto?.categories.map(category => { return <span>/{category.name}</span> })}
+                    {producto?.categories?.map(category => { return <span>/{category.name}</span> })}
                   </Card.Text>
                 </Card.Body>
               </Card>
@@ -303,7 +307,7 @@ function Detail({ match }) {
                 <Card.Body>
                   <Card.Title>Comentarios anteriores:</Card.Title>
                   <ListGroup>
-                    {producto?.reviews.map((elemento) => {
+                    {producto?.reviews?.map((elemento) => {
                       return (
                         <ListGroupItem>
                           <Card.Title> Calificación: </Card.Title>
@@ -325,6 +329,7 @@ function Detail({ match }) {
         </Col>
       </Row>
     </Container>
+    </div>
   )
 }
 

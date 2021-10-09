@@ -6,9 +6,9 @@ var mp;
 let items = [] ;
  cart.map((x) => items.push({'title': x.name, 'unit_price': x.price,'quantity': 1}))
  data = JSON.stringify({items})
- console.log(data)
+ console.log(cart)
 var config = {
-  method: 'get',
+  method: 'post',
   url: 'https://api.mercadolibre.com/checkout/preferences?access_token=TEST-5696918278609575-100703-7b51b60c619120f4ad54b55d52a30324-169898531',
   headers: { 
     'Content-Type': 'application/json'

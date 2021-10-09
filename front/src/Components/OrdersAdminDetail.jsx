@@ -1,84 +1,70 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getOrders } from "../Actions";
+import { getOrders , putOrders} from "../Actions";
+import TableOrders from "./TableOrders";
 
 // imports redireccionar
-import "bootstrap";
-import { Button } from "reactstrap";
+import  "bootstrap";
+import {
+  Button,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  FormGroup,
+  ModalFooter,
+} from "reactstrap";
+
 
 export default function OrderAdminDetail() {
-  const orders = useSelector((state) => state.reducerPablo.orders);
+
 
   let dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getOrders());
-  }, []);
+  }, [dispatch]);
 
-  const [status, setStatus] = useState({
-    actual: orders.status,
+  const orders = useSelector((state) => state.reducerPablo.orders);
+  const {client} = orders
+  const [estado, setStatus] = useState({
+    status: orders.status,
     id: "",
   });
-  function handlerStatus(event, order) {
+  function handlerStatus(event, id) {
   
-    if (event.target.value != status.actual) {
+    if (event.target.value != estado.actual) {
       setStatus({
-        ...status,
-        actual: event.target.value,
-        id: order.id
+        ...estado,
+        status: event.target.value,
+        id: id
       });
+     
+      dispatch(putOrders({status: event.target.value}, id))
     } 
+    dispatch(getOrders());
   }
 
-  console.log(status);
+
+
+
   return (
     <div className="container">
-      <h1> separacion </h1>
-      <h1> separacion </h1>
-      <h1> separacion </h1>
-      <h1> separacion </h1>
-      <table className="table">
-        <thead>
-          <tr>
-            <th>Nro: </th>
-            <th>Datos del cliente:</th>
-            <th>Dirección de envio:</th>
-            <th>Fecha de pedido:</th>
-            <th>Total:</th>
-            <th>Estado:</th>
-            <th>Detalles:</th>
-          </tr>
-        </thead>
+ <TableOrders
+ orders= {orders}
+ handlerStatus= {handlerStatus}
 
-        {orders ? (
-          orders.map((e) => (
-            <tbody>
-              <td>{e.id}</td>
-              <td>{e.id_client}</td>
-              <td>{e.shippingAddress}</td>
-              <td>{e.createDate.slice(0, 10)}</td>
-              <td> $ {e.ammount}</td>
-              <td>
-                <select
-                  className="form-select"
-                  onChange={(value) => handlerStatus(value, e)}
-                >
-                  <option value="creada"> Creada</option>
-                  <option value="procesando"> Procesando</option>
-                  <option value="cancelada"> Cancelada</option>
-                  <option value="completa"> Completa</option>
-                </select>
-              </td>
 
-              <td>
-                <Button color="primary"> Ver Mas </Button>
-              </td>
-            </tbody>
-          ))
-        ) : (
-          <div>Cargando </div>
-        )}
-      </table>
+ />
+    
+      <Modal isOpen={false}>
+        <ModalHeader>
+          <h4>Detalles de la Orden</h4>
+          <h6>Orden Numero </h6>
+        </ModalHeader>
+
+      </Modal>
+
+
     </div>
   );
 }

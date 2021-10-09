@@ -14,10 +14,16 @@ import {
 } from "@material-ui/icons";
 import { Link } from "react-router-dom";
 import { NavLink } from "react-router-dom";
+import {Navbar, Container} from 'react-bootstrap'
 
 export default function Sidebar({openProduct, openCategory, openDiet}) {
   return (
-    <div className="sidebar">
+    <Navbar bg="light" expand="lg">
+    <Container id="navResponsive">
+      <Navbar.Brand href="#home">Menu</Navbar.Brand>
+      <Navbar.Toggle aria-controls="basic-navbar-nav" />
+      <Navbar.Collapse id="basic-navbar-nav">
+      <div className="sidebar">
       <div className="sidebarWrapper">
         <div className="sidebarMenu">
           <h3 className="sidebarTitle">Dashboard</h3>
@@ -101,5 +107,9 @@ export default function Sidebar({openProduct, openCategory, openDiet}) {
         </div>
       </div>
     </div>
+      </Navbar.Collapse>
+    </Container>
+  </Navbar>
+
   );
 }

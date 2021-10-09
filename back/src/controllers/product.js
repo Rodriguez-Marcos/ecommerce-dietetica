@@ -47,12 +47,11 @@ export async function createProduct(req, res) {
 export async function getProducts(req, res) {
     let { name, id_category, id_diet, priceL, priceH, sortby } = req.query;
     let { id } = req.body;
-    console.log(req.body)
-    
+
     try {
         console.log(id)
         if (id){
-            console.log("hola")
+            id = id.map(({id})=>id)
             let products = await Product.findAll({where:{id}})
             return res.status(200).json(products)
         }

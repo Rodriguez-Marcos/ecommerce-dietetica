@@ -18,7 +18,7 @@ export default function useUser() {
                 let id_products = [];
                 cookies.get('trolley')?.map(x=>id_products.push(x.id));
 
-                console.log('logueado con exito')
+                console.log(jwt)
                 myStorage.jwt = jwt;
                 postCarrito(jwt,id_products)
                 dispatch({type: 'LOGIN', payload: jwt})
@@ -30,12 +30,16 @@ export default function useUser() {
 
         const loginGoogle = useCallback((res)=>{
             myStorage.jwt = res.$b.id_token;
-            const {email , googleId} = res.profileObj;
-            console.log(email,googleId)
-            createUserByGoogle(email,googleId)
+            const { googleId } = res.profileObj;
+            createUserByGoogle(googleId,res.$b.id_token)
             .then((response)=>{
-                console.log(response);
+                console.log(response)
                 dispatch({type: 'LOGIN', payload: myStorage.jwt});
+            })
+            .catch ((err) => {
+                alert('Algo salio mal'+'\nEse usuario ya fue registrado en nuestra plataforma, prueba iniciar sesion con contraseña');
+                console.error(err);
+                myStorage.jwt = '';
             })
         })
         

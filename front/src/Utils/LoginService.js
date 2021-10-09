@@ -7,8 +7,10 @@ export default function loginService(username, password) {
         body: JSON.stringify({ username, password })
     })
         .then(response => {
+            console.log(response)
             if (!response.ok)
                 throw new Error('email o contraseña incorrecta');
+               
             return response.text();
         })
 }

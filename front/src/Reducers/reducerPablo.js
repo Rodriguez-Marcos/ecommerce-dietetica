@@ -1,4 +1,4 @@
-import { GET_PRODUCTS, DELETE_CLIENTS,UPDATE_CLIENTS, GET_CLIENTS, GET_BY_DIET_AND_CATEGORY, GET_BY_PRICE, GET_CATEGORIES, GET_DIETS, GET_BY_ID_CATEGORY, ORDER_PRICE, GET_BY_ID_DIET, GET_PRODUCTS_FILTERED, PAGINATE, FAIL_TO_LOAD, SET_LOADING, SET_NEW_USER, SET_LOGIN_USER , GET_ORDERS} from "../Actions/index"
+import { GET_PRODUCTS,GET_ORDERS, DELETE_CLIENTS, GET_CLIENTS, GET_BY_DIET_AND_CATEGORY, GET_BY_PRICE, GET_CATEGORIES, GET_DIETS, GET_BY_ID_CATEGORY, ORDER_PRICE, GET_BY_ID_DIET, GET_PRODUCTS_FILTERED, PAGINATE, FAIL_TO_LOAD, SET_LOADING, SET_NEW_USER, SET_LOGIN_USER, PUT_ORDERS } from "../Actions/index"
 
 
 const InitialState = {
@@ -13,9 +13,9 @@ const InitialState = {
     user: {},
     IsAdmin: false,
     isLogin: false,
-    token: '',
+    token: {},
     clients: [],
-    orders: [],
+    orders: [], 
 }
 
 
@@ -135,7 +135,7 @@ export default function reducerPablo(state = InitialState, action) {
                 ...state,
                 clients: action.payload.data,
             };
-        case UPDATE_CLIENTS:
+        case 'UPDATE_CLIENTS':
                 return {
                     ...state,
                 };
@@ -145,6 +145,10 @@ export default function reducerPablo(state = InitialState, action) {
                     ...state,
                     orders: action.payload,
                 };
+                case PUT_ORDERS:
+                return{
+                    ...state
+                }
 
         default:
             return { ...state }

@@ -21,7 +21,9 @@ export const GET_CLIENTS = 'GET_CLIENTS';
 export const UPDATE_CLIENTS = 'UPDATE_CLIENTS';
 export const DELETE_CLIENTS = 'DELETE_CLIENTS';
 export const REVIEW_URL = "http://localhost:3001/reviews/";
-export const GET_ORDERS = 'GET_ORDERS'
+export const GET_ORDERS = 'GET_ORDERS';
+export const PUT_ORDERS = 'PUT_ORDERS';
+
 
 let cookies = new Cookies();
 
@@ -266,12 +268,13 @@ export function review(payload) {
 
 export function loginUser(payload) {
     return async function (dispatch) {
-            await axios.post(`http://localhost:3001/login/`,payload)
-            return dispatch({
+            return axios.get(`http://localhost:3001/clients/login?email=${email}&password=${password}`)
+            .then((response)=>{
+            dispatch({
                 type: 'SET_LOGIN_USER',
-                payload
+                payload: response.data,
             })
-    }
+    })}
 };
 
 
@@ -314,19 +317,32 @@ export function deleteClients(id) {
         };
     };
 };
-
 export function getOrders() {
 
     return async function (dispatch) {
         return axios.get(`http://localhost:3001/orders`)
             .then((response) => {
                 dispatch({
-                    type: GET_ORDERS,
                     payload: response.data,
+                    type: GET_ORDERS
                 })
             })
     }
 }
+export function putOrders(payload, id ){
+    return async function (dispatch) {
+        await axios.put("http://localhost:3001/products/"+ id, payload);
+       
+           return dispatch({
+             type: PUT_ORDERS,
+             payload,
+             id,
+           });
+         };
+       }
+
+
+
 export default function getTrolleyAction() {
     return async function (dispatch) {
         try {
@@ -344,3 +360,5 @@ export default function getTrolleyAction() {
         };
     };
 }
+
+
