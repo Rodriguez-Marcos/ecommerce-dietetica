@@ -351,9 +351,16 @@ export default function getTrolleyAction() {
                 return {id}
             })
             let res = await getTrolley(cookieTrolley.map(x=>x.id))
+            let payload = [];
+            res.data.forEach(x=>{
+                cookieTrolley.forEach(({id})=>{
+                    if(x.id===id.id)
+                    payload.push( {...x,cantidad: id.quantity})
+                })
+            })
             return dispatch({
                 type: 'GET_PRODUCTS_CART',
-                payload: res.data
+                payload
             })
         } catch (err) {
             console.log(err)

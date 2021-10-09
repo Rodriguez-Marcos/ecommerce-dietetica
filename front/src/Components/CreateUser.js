@@ -69,7 +69,6 @@ function CreateUser() {
 
 
     const responseGoogle = (response) => {
-        console.log(response.profileObj);
         createUserByGoogle(response.profileObj)
         if (response.profileObj !== undefined) {
             history.push('/home')

@@ -28,7 +28,6 @@ async function useExtractor (req,res,next){
             const userid = payload['sub'];
             // If request specified a G Suite domain:
             // const domain = payload['hd'];
-            console.log(ticket, userid)
         }
         verify().catch(console.error);
     }
