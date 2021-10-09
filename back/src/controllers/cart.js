@@ -6,9 +6,6 @@ export async function addToCart(req, res, next) {
     const id_client = req.id;
     let productsArray = [];
 
-    console.log("products", req.body.products)
-    console.log(id_client)
-
     try {
         if (Array.isArray(req.body.products)) {
             productsArray=req.body.products

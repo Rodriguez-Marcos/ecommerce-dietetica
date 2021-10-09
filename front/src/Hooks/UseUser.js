@@ -5,6 +5,7 @@ import loginService from '../Utils/LoginService'
 import postCarrito from "../Utils/postCarrito";
 import Cookies from "universal-cookie";
 import createUserByGoogle from "../Utils/createUser/createUserByGoogle";
+import getCart from "../Utils/getCart";
 
 const cookies = new Cookies();
 
@@ -14,13 +15,13 @@ export default function useUser() {
     let myStorage = window.localStorage;
     const login = useCallback((username, password) => {
         loginService(username, password)
-            .then(jwt => {
+            .then(async jwt => {
                 let id_products = [];
-                cookies.get('trolley')?.map(x=>id_products.push(x.id));
-
+                cookies.get('trolley')?.map(x=>id_products.push({id:x.id,quantity: x.quantity}));
                 console.log(jwt)
                 myStorage.jwt = jwt;
-                postCarrito(jwt,id_products)
+                postCarrito(jwt, id_products)
+                getCart(jwt)
                 dispatch({type: 'LOGIN', payload: jwt})
             })
             .catch(err => { alert(err); console.error(err) })
@@ -31,7 +32,6 @@ export default function useUser() {
             const { googleId } = res.profileObj;
             createUserByGoogle(googleId,res.$b.id_token)
             .then((response)=>{
-                console.log(response)
                 dispatch({type: 'LOGIN', payload: myStorage.jwt});
             })
             .catch ((err) => {

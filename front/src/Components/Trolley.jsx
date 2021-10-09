@@ -11,6 +11,8 @@ import { useHistory } from "react-router";
 import axios from 'axios'
 import getTrolleyAction from "../Actions";
 import NavBar from "./NavBar";
+import removePC from '../Utils/removePC';
+import postCarrito from '../Utils/postCarrito';
 
 
 export default function Trolley() {
@@ -38,6 +40,8 @@ export default function Trolley() {
       }
       setCarrito([...carrito])
     })
+    if (isLogin) postCarrito(token,{id,quantity: 1});
+
   }
   const increase = id => {
     carrito.forEach(item => {
@@ -49,7 +53,8 @@ export default function Trolley() {
           } else { return { ...x } }
         }))
       }
-      setCarrito([...carrito])
+      setCarrito([...carrito]);
+      if (isLogin) postCarrito(token,{id,quantity:1 });
     })
   }
   const handleClose = id=>{
@@ -61,6 +66,7 @@ export default function Trolley() {
           }
         })
         cookies.set('trolley', handle)
+        if (isLogin) removePC(token, [id]);
         
       setCarrito([...carrito.filter(x=>x.id!==id)])
     }
@@ -130,7 +136,6 @@ export default function Trolley() {
 
 
   useEffect(() => {
-    console.log('hola:', isLogin)
     if (isLogin) {
       getCart(token);
     }

@@ -22,7 +22,6 @@ export async function loginUser(req, res) {
         email: user.email
     }
     const token = jwt.sign(userForToken, 'secret')
-console.log(user.dataValues)
     res.send(
     token
     )
@@ -62,9 +61,7 @@ async function useExtractor (req,res,next){
             const userid = payload['sub'];
             // If request specified a G Suite domain:
             // const domain = payload['hd'];
-            console.log('tiket',ticket, userid)
             const user = await Client.findOne({where:{email: ticket.payload.email}});
-            console.log("user", user?.id)
             if(user?.password)
                 throw new Error('Se encontro un usuario ya registrado con ese email')
 
@@ -73,7 +70,6 @@ async function useExtractor (req,res,next){
                 let [name, lastname] = ticket.payload.name.split(' ')
                 req.name = name
                 req.lastname = lastname?lastname:'no lastname';
-                console.log('email: ', req.email)
 
         }
         await verify()
@@ -90,7 +86,6 @@ async function useExtractor (req,res,next){
     req.id = decodeToken.id;
     if(!req.email)
     req.email = decodeToken.email;
-    console.log('email: ', req.email)
 
     next();
 

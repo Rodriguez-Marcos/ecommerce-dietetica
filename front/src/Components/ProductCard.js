@@ -51,7 +51,6 @@ export function ProductCard({ product }) {
   function handleClose(e) {
     e.preventDefault();
     let trolley = Array.isArray(cookies.get('trolley')) ? [...cookies.get('trolley')] : [];
-    console.log(trolley.filter(x => x.id !== product.id))
     cookies.set('trolley', trolley.filter(x => x.id !== product.id))
     if (isLogin) removePC(token, [product.id]);
     dispatch({
