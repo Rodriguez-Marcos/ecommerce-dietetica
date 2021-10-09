@@ -19,6 +19,7 @@ export default function Trolley() {
   const value = useContext(DataContext)
   const [carrito, setCarrito] = value.carrito;
   const [total, setTotal] = value.total;
+  const [menu, setMenu] = value.menu;
   let { isLogin, token, comodin } = useSelector(state => state.reducerPablo)
   let { productsCart } = useSelector(state => state.cart)
 
@@ -30,7 +31,7 @@ export default function Trolley() {
     carrito.forEach(item => {
       if (item.id === id) {
         if (item.cantidad > 1) {
-          if (isLogin) postCarrito(token,{id,quantity: -1});
+          if (isLogin) postCarrito(token,{id,quantity: item.cantidad-1});
           item.cantidad -= 1;
           cookies.set('trolley', cookies.get('trolley').map(x => {
             if (x.id === id) {
@@ -47,6 +48,7 @@ export default function Trolley() {
     carrito.forEach(item => {
       if (item.id === id) {
         item.cantidad += 1;
+        if (isLogin) postCarrito(token,{id,quantity: item.cantidad });
         cookies.set('trolley', cookies.get('trolley').map(x => {
           if (x.id === id) {
             return { ...x, quantity: x.quantity + 1 }
@@ -55,7 +57,6 @@ export default function Trolley() {
       }
       setCarrito([...carrito]);
       
-      if (isLogin) postCarrito(token,{id,quantity:-1 });
     })
   }
   const handleClose = id=>{
@@ -89,8 +90,7 @@ export default function Trolley() {
   async function handleSubmit(event) {
     event.preventDefault();
     var data = JSON.stringify({
-      "payment": "mercadopago",
-      items: cookies.get('trolley')
+      "payment": "mercadopago"
     });
 
     var config = {
@@ -144,28 +144,11 @@ export default function Trolley() {
     dispatch(getTrolleyAction())
   }, [isLogin])
 
-  if (!cookies.get('trolley')?.length) {
-    return (
-      <div className="carritos show">
-        <div className="carrito show"></div>
-        <div id="carritoCompras">
-          <Link to='/home'>ir al home</Link>
-          <h2 style={{
-            textAlign: "center",
-            fontSize: "3rem"
-          }}>Agrega productos para iniciar su compra</h2>
-          {!isLogin ? <button className="btn"><Link to='/Login' className="btn btn-success">Inicia sesión para iniciar su compra </Link></button> : false}
-        </div>
-      </div>
-    )
-
-  } else {
-
     return (
       <div className="carritos show">
         <div className="carrito show">
           <div className="carrito__close">
-            <box-icon name="x"></box-icon>
+            <box-icon onClick={()=>{setMenu(false)}} name="x"></box-icon>
           </div>
           <h2>Su carrito:</h2>
           {/* const productStock = productsCart?.find(
@@ -197,7 +180,7 @@ export default function Trolley() {
           ))}
           <div className="carrito__footer">
             <h3>Total: ${total}</h3>
-            {!isLogin ? <button className="btn"><Link to='/Login' className="btn btn-success">Inicia sesión para iniciar su compra </Link></button> : false}
+            {!isLogin ? <button className="btn"><Link to='/Login' onClick={()=>{setMenu(false)}} className="btn btn-success">Inicia sesión para iniciar su compra </Link></button> : false}
             <br /> <br />
             {isLogin ? <button className="btn" onClick={handleSubmit}>Comprar</button>:false}
           </div>
@@ -214,7 +197,7 @@ export default function Trolley() {
 
     )
   }
-}
+
 
 
 

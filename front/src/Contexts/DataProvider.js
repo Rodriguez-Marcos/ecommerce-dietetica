@@ -6,7 +6,7 @@ export const DataContext = createContext();
 
 export const DataProvider = (props) => {
 	const [productos, setProductos] = useState([]);
-	// const [menu, setMenu] = useState(false)
+	const [menu, setMenu] = useState(false)
 	const [carrito, setCarrito] =useState([])
 	const [total, setTotal] = useState(0)
 	const {productsCart} = useSelector(selector => selector.cart)
@@ -48,7 +48,7 @@ export const DataProvider = (props) => {
 	
 	const value = {
 		productos : [productos],
-		// menu: [menu, setMenu],
+		menu: [menu, setMenu],
 		carrito: [carrito, setCarrito],
 		/* addCarrito: addCarrito, */
 		total: [total, setTotal]

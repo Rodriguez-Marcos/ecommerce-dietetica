@@ -1,6 +1,6 @@
 import { useGoogleLogout } from 'react-google-login';
 import { GoogleLogout } from 'react-google-login';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
 import { connect, useDispatch, useSelector } from 'react-redux';
@@ -14,6 +14,9 @@ import lupa from '../image/buscar.png'
 import { ShoppingCart} from '@material-ui/icons';
 import Cookies from "universal-cookie";
 import Sesion from '../image/usuario.png'
+import { DataContext } from "../Contexts/DataProvider"
+import Trolley from './Trolley'
+
 
 const jwt = require('jsonwebtoken')
 const cookies = new Cookies();
@@ -27,6 +30,9 @@ const cookies = new Cookies();
 function NavBar({ getProductbyName, setLoading, isLogin, token }) {
   let comodin = useSelector(state => state.reducerPablo.comodin);
   let { productCart} = useSelector(state=>state.cart)// no sacar, sirve para contar la cantidad en el carrito
+  const value = useContext(DataContext)
+  const [menu, setMenu] = value.menu;
+  
   function onLogoutSuccess() {
     console.log("logout success")
   }
@@ -86,7 +92,7 @@ function NavBar({ getProductbyName, setLoading, isLogin, token }) {
             </Nav.Link>
 
             <Nav.Link >
-              <NavLink to="/trolley" className='navlink1'>
+              <NavLink to='' onClick={e=>{e.preventDefault() ;setMenu(true) }} className='navlink1'>
                 <ShoppingCart fontSize="large" id="iconoCarrito"/>
                 <span id="ContCarrito">
                   {cookie?.length
@@ -121,6 +127,7 @@ function NavBar({ getProductbyName, setLoading, isLogin, token }) {
           </Nav>
         </Navbar.Collapse>
       </Navbar>
+      {menu?<Trolley/>:false}
 
     </div>
   )

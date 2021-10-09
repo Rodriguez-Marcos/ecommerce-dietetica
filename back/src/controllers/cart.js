@@ -50,7 +50,7 @@ export async function addToCart(req, res, next) {
             } else {
                 var newProduct_Cart = await Product_Cart.update({
                     total: (productEx.dataValues.total) + (products.quantity * quantity.dataValues.price),
-                    quantity: productEx.dataValues.quantity + products.quantity
+                    quantity: products.quantity
                 },
                     { where: { id_cart: cart.dataValues.id, id_product: products.id } })
             }
