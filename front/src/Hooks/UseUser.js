@@ -14,7 +14,7 @@ export default function useUser() {
     let myStorage = window.localStorage;
     const login = useCallback((username, password) => {
         loginService(username, password)
-            .then(jwt => {
+            .then(async jwt => {
                 let id_products = [];
                 cookies.get('trolley')?.map(x=>id_products.push(x.id));
 
@@ -22,6 +22,8 @@ export default function useUser() {
                 myStorage.jwt = jwt;
                 postCarrito(jwt,id_products)
                 dispatch({type: 'LOGIN', payload: jwt})
+                var isadmin = await decode(jwt)
+                dispatch({type: 'SET_LOGIN_USER', payload: isadmin.isAdmin})
             })
             .catch(err => { alert(err); console.error(err) })
         }, []);

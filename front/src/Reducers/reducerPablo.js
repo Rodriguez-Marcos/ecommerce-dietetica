@@ -11,7 +11,7 @@ const InitialState = {
     productsbyprice: [],
     comodin: false,
     user: {},
-    login_user: {},
+    IsAdmin: false,
     isLogin: false,
     token: '',
     clients: [],
@@ -110,7 +110,7 @@ export default function reducerPablo(state = InitialState, action) {
         case SET_LOGIN_USER:
             return {
                 ...state,
-                login_user: action.payload,
+                IsAdmin: action.payload,
             }
         case 'LOGIN':
             return {
