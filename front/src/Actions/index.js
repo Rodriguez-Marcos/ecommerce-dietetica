@@ -317,6 +317,32 @@ export function deleteClients(id) {
         };
     };
 };
+export function deleteCategory(id) {
+    return async function (dispatch) {
+        try {
+            const res = await axios.delete('http://localhost:3001/categories/' + id);
+            return dispatch({
+                type: 'DELETE_CATEGORIES',
+                payload: res.data
+            });
+        } catch (err) {
+            console.log(err)
+        };
+    };
+};
+export function deleteDiets(id) {
+    return async function (dispatch) {
+        try {
+            const res = await axios.delete('http://localhost:3001/diets/' + id);
+            return dispatch({
+                type: 'DELETE_DIETS',
+                payload: res.data
+            });
+        } catch (err) {
+            console.log(err)
+        };
+    };
+};
 export function getOrders() {
 
     return async function (dispatch) {
