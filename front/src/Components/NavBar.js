@@ -18,6 +18,7 @@ import Cookies from "universal-cookie";
 import Sesion from '../image/usuario.png'
 import { DataContext } from "../Contexts/DataProvider"
 import Trolley from './Trolley'
+import 'boxicons';
 
 
 
@@ -95,13 +96,15 @@ function NavBar({ getProductbyName, setLoading, isLogin, token }) {
             </Nav.Link>
 
             <Nav.Link >
+              
+            <div className="cart">
+            
               <NavLink to='' onClick={e=>{e.preventDefault() ;setMenu(true) }} className='navlink1'>
-                <ShoppingCart fontSize="large" id="iconoCarrito"/>
-                <span id="ContCarrito">
-                  {cookie?.length
-                }
-                </span>
+              <box-icon name="cart"></box-icon>
+                {/* <ShoppingCart fontSize="large" id="iconoCarrito"/> */}
+                <span className="item__total">{cookie?.length}</span>
               </NavLink>
+               </div>
             </Nav.Link>
             <Nav.Link>About</Nav.Link>
           </Nav>
