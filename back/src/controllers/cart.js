@@ -119,3 +119,29 @@ export async function getCart(req, res) {
 
     }
 }
+
+export async function emptyCart(req, res, next) {
+    const id_client = req.id;
+
+    try {
+        let cart = await Cart.findByPk(id_client)
+        console.log(cart)
+         let products = await Product.findAll() 
+        await cart.removeProduct(products) 
+
+        return res.json({
+            message: 'Product removed successfully',
+            data: cart
+        })
+
+
+    } catch (err) {
+        console.log(err)
+        res.status(500).json({
+            message: 'Something goes Wrong',
+            data: {}
+
+        })
+
+    }
+}

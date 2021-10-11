@@ -1,5 +1,5 @@
 import './App.css';
-import {BrowserRouter,Route} from 'react-router-dom'
+import {BrowserRouter,NavLink,Route} from 'react-router-dom'
 import Home from './Components/Home';
 import Detail from './Components/Detail.js';
 import Creator from './Components/Creator';
@@ -16,6 +16,9 @@ import Sidebar from './Components/AdminSideBar';
 import UsersAdminDetail from './Components/UsersAdminDetail'
 import OrderAdminDetail from './Components/OrdersAdminDetail';
 import AdminDietAndCategory from './Components/TableDietAndCategory';
+import Success from './Components/payment/success';
+import Pendings from './Components/payment/pending';
+import Failure from './Components/payment/failure';
 
 function App() {
   return (
@@ -33,8 +36,14 @@ function App() {
     <Route exact path='/Admin/user' component={UsersAdminDetail}/>
     <Route exact path='/Admin/orders' component={OrderAdminDetail}/>
     <Route exact path='/Admin/filters' component={AdminDietAndCategory}/>
+    
 
 
+    </Switch>
+    <Switch>
+    <Route exact path='/payment/success' component={Success}/>
+    <Route exact path='/payment/pending' component={Pendings}/>
+    <Route exact path='/payment/failure' component={Failure}/>
     </Switch>
     {/* <Footer/> */}
     </DataProvider>
