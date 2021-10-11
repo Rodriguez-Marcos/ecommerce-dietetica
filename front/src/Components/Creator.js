@@ -83,7 +83,7 @@ export default function Creator() {
   }
 
   function handlerCategories(e) {
-    if (e.target.value) {
+    if (input.ids_categories.filter((a)=> a === e.target.value)) {
       setInput({
         ...input,
         ids_categories: [...input.ids_categories, e.target.value],

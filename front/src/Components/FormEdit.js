@@ -85,12 +85,13 @@ export default function FormEdit({
                 class="form-select"
                 multiple
                 aria-label="multiple select example"
-              >
+                >
                 {c.map((e) => (
                   <option value={e.id}> {e.name}</option>
-                ))}
+                  ))}
               </select>
               {"    "}
+                  <div>{input.ids_categories?.map((a)=> a)}</div>
               <output>
                 {" "}
                 seleccionaste: {input.ids_categories.length} categorias
@@ -112,6 +113,7 @@ export default function FormEdit({
                 ))}
               </select>
               {"    "}
+              <div>{input.ids_diets?.map((a)=> a)}</div>
               <output> seleccionaste: {input.ids_diets.length} dietas</output>
             </fieldset>
           </div>
