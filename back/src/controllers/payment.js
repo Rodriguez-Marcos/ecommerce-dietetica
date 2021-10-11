@@ -10,8 +10,8 @@ export default async function payment(req,res,next){
         try {
             
             let cart = await Cart.findOne({ where: { id_client: id_client }, include: [{ model: Product }] })
-            let pago = await mercadopago(cart.products,res)
-            return pago
+            mercadopago(cart.products,res)
+            
 
 
 
