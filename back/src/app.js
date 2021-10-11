@@ -37,12 +37,19 @@ app.use('/categories', Categoryroutes);
 app.use('/diets', Dietroutes);
 app.use('/login', Login);
 app.use('/addCart',Cart)
-app.use('/orders', Orderroutes);
+app.use('/orders',useExtractor, Orderroutes);
 app.use('/reviews',useExtractor, Reviewroutes)
 app.use('/favorite',useExtractor, Favoriteroutes)
 app.use('/cart',useExtractor,Cartroutes)
 app.use('/payment', useExtractor, Payment)
-
+app.get("/feedback",(req, res) => {
+  console.log(req.query.payment_id)
+  console.log(req.query.collection_status)
+  res.json({
+    payment:req.query.payment_id,
+    status:req.query.collection_status
+  })
+})
 
 
 

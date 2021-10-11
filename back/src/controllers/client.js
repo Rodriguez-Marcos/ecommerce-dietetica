@@ -168,7 +168,6 @@ export async function loginUser(req, res) {
         }
     }
 }
-
 export async function RegOrCreateGaccount(req, res) {
 
     let client = await Client.findOne({ where: { googleId: req.params.googleId } })
@@ -203,6 +202,20 @@ export async function RegOrCreateGaccount(req, res) {
     catch (err) {
         console.log(err)
         return res.status(507).json({ err: err })
+    }
+}
+export async function resetPassword(req, res) {
+    const { id } = req.params
+    try {
+        await Client.update({ password: "12345" }, { where: { id: id } })
+    } catch (err) {
+        console.log(err)
+        res.status(500).json({
+            message: 'Something goes Wrong',
+            data: {}
+
+        })
+
     }
 }
 
