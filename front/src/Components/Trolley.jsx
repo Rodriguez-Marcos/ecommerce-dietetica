@@ -163,11 +163,11 @@ export default function Trolley() {
                   <p className="price">${producto.price}</p>
                 </div>
                 <div>
-
-                  <box-icon onClick={() => reduce(producto.id)} name="up-arrow" type="solid"></box-icon>
+                
+                  <box-icon onClick={() => increase(producto.id)}  name="up-arrow" type="solid"></box-icon>
                   <h3 className="cantidad">{producto.cantidad}</h3>
                   
-                  <box-icon onClick={() => increase(producto.id)} name="down-arrow" type="solid"></box-icon>
+                  <box-icon onClick={() => reduce(producto.id)} name="down-arrow" type="solid"></box-icon>
                 </div>
                 <div className="remove__item">
                   <box-icon onClick={()=>handleClose(producto.id)} name="trash"></box-icon>
