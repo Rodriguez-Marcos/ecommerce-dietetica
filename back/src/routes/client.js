@@ -2,7 +2,7 @@ import useExtractor from '../controllers/loginUser';
 
 const {Router} = require('express') 
 
-const {createClient, getClients, deleteClient, loginUser,updateClientToAdmin, RegOrCreateGaccount} = require('../controllers/client')
+const {createClient, getClients, deleteClient, loginUser,updateClientToAdmin, RegOrCreateGaccount, resetPassword} = require('../controllers/client')
 
 const router = Router()
 
@@ -13,6 +13,7 @@ router.get('/login', loginUser)
 router.get('/',getClients)
 router.delete('/:id',deleteClient)
 router.put('/:id',updateClientToAdmin)
+router.put('/resetpassword/:id',resetPassword)
 
 
 export default router;
