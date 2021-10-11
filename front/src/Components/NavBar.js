@@ -12,10 +12,13 @@ import useUser from '../Hooks/UseUser'; //hook para loguearse y ver si esta logu
 import Logo from '../image/SALVATORE-grande.png'
 import lupa from '../image/buscar.png'
 import { ShoppingCart} from '@material-ui/icons';
+import { AccountCircle } from '@material-ui/icons';
+import { ExitToApp } from '@material-ui/icons';
 import Cookies from "universal-cookie";
 import Sesion from '../image/usuario.png'
 import { DataContext } from "../Contexts/DataProvider"
 import Trolley from './Trolley'
+
 
 
 const jwt = require('jsonwebtoken')
@@ -113,13 +116,17 @@ function NavBar({ getProductbyName, setLoading, isLogin, token }) {
               />
               <button id="lupabtn" onSubmit={(e) => handleSubmit(e)} onClick={(e) => handleSubmit(e)}><img id="lupaimg" src={lupa} /></button>
             </Form>
-            {isLogin ? <div> <p> Bienvendido {jwt?.decode(token)?.name} </p><GoogleLogout
+            {isLogin ? <div id="sesion">
+               <p><AccountCircle/> Bienvendido {jwt?.decode(token)?.name} </p>
+               <GoogleLogout
               clientId="908895428836-kaesjl71puimi31fjbffca9t4nvl7v6r.apps.googleusercontent.com"
-              buttonText="Logout"
+              buttonText="Cerrar Sesión"
               onLogoutSuccess={logout}
               onFailure={() => { console.log('fallo') }}
             >
-            </GoogleLogout> {/* <button onClick={()=>{logout(),signOut()}}> Salir </button> */} </div>
+              <span id='cerrarSesion'><ExitToApp/> Cerrar Sesión</span>
+            </GoogleLogout> {/* <button onClick={()=>{logout(),signOut()}}> Salir </button> */} 
+            </div>
               : <div id="btnsSesionRegistro">
                 <NavLink id="btnSesion" to='/Login'><Image id="imgSesion" src={Sesion} /><span>Inicia Sesion</span> </NavLink>
               </div>}
