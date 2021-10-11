@@ -316,6 +316,32 @@ export function deleteClients(id) {
         };
     };
 };
+export function deleteCategory(id) {
+    return async function (dispatch) {
+        try {
+            const res = await axios.delete('http://localhost:3001/categories/' + id);
+            return dispatch({
+                type: 'DELETE_CATEGORIES',
+                payload: res.data
+            });
+        } catch (err) {
+            console.log(err)
+        };
+    };
+};
+export function deleteDiets(id) {
+    return async function (dispatch) {
+        try {
+            const res = await axios.delete('http://localhost:3001/diets/' + id);
+            return dispatch({
+                type: 'DELETE_DIETS',
+                payload: res.data
+            });
+        } catch (err) {
+            console.log(err)
+        };
+    };
+};
 export function getOrders() {
 
     return async function (dispatch) {
@@ -350,9 +376,16 @@ export default function getTrolleyAction() {
                 return {id}
             })
             let res = await getTrolley(cookieTrolley.map(x=>x.id))
+            let payload = [];
+            res.data.forEach(x=>{
+                cookieTrolley.forEach(({id})=>{
+                    if(x.id===id.id)
+                    payload.push( {...x,cantidad: id.quantity})
+                })
+            })
             return dispatch({
                 type: 'GET_PRODUCTS_CART',
-                payload: res.data
+                payload
             })
         } catch (err) {
             console.log(err)

@@ -88,7 +88,6 @@ function Login({ respuesta, isLogin }) {
             alert('Debes llenar todos los campos')
         }
         else {
-            console.log('estoy aca')
             login(input.email, input.password)
 
         }

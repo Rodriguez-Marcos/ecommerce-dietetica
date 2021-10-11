@@ -21,7 +21,7 @@ export default function reducerRocio(state = InitialState, action)  {
                 }
             default:
                 return {
-                    state
+                    ...state
                 }
         }
     }

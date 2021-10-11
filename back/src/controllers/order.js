@@ -7,7 +7,6 @@ import Client from '../models/Client.js';
 export async function createOrder(req, res) {
     const id_client = req.id
     const { shippingAddress, products } = req.body;
-    console.log(id_client)
     try {
         await Order.create({
 

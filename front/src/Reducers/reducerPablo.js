@@ -135,6 +135,16 @@ export default function reducerPablo(state = InitialState, action) {
                 ...state,
                 clients: action.payload.data,
             };
+            case 'DELETE_CATEGORIES':
+            return {
+                ...state,
+                
+            };
+            case 'DELETE_DIETS':
+                return {
+                    ...state,
+               
+                };
         case 'UPDATE_CLIENTS':
                 return {
                     ...state,
