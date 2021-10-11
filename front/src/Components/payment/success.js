@@ -16,7 +16,7 @@ export default function Success(){
         <div>
         <NavBar/>
         <div className={Styles.div}>
-            <h1>Gracias Por tu compra Rey</h1>
+            <h1>Gracias Por tu compra</h1>
         </div>
         </div>
     )

@@ -207,7 +207,9 @@
     #imgSesion{
         display: none; 
     }
-    
+    #sesion{
+        margin-top: 5px;
+    }
     #sesion button{
         width:24vw !important;
     }

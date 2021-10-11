@@ -2,7 +2,6 @@ var axios = require('axios');
 
 export default async function mercadopago(cart,res){
 var data ;
-var mp;
 let items = [] ;
  cart.map((x) => items.push({'title': x.name, 'unit_price': x.price, quantity: x.products_cart.quantity}))
  data = JSON.stringify({items,
@@ -23,7 +22,7 @@ var config = {
 
 axios(config)
 .then(function (response) {
-  return res.status(200).json(response.data.items.init_point);
+  return res.status(200).json(response.data.init_point);
 })
 .catch(function (error) {
   console.log(error);

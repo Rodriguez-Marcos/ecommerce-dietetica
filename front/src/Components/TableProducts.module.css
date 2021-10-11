@@ -1,9 +1,17 @@
 .content{
     overflow:scroll; 
     height:calc(95vh - 50px);
-    width:calc(80vw - 50px);
+    width:calc(79vw - 50px);
 }
 .tableproducs{
     width:700px;
     background-color:lightgray;
+}
+
+
+@media only screen and (max-width: 770px) {
+    .content{
+        width: 100vw;
+        overflow:visible;
+    }
 }
