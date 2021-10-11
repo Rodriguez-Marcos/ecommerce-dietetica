@@ -10,7 +10,7 @@ export default function Success(){
     let {token} = useSelector(state => state.reducerPablo)
     useEffect(() => {
         emptyCart(token)
-    }, [cookies.set])
+    }, [cookies])
 
     return (
         <div>

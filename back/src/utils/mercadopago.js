@@ -23,7 +23,7 @@ var config = {
 
 axios(config)
 .then(function (response) {
-  return res.status(200).json(response.data.init_point);
+  return res.status(200).json(response.data.items.init_point);
 })
 .catch(function (error) {
   console.log(error);
