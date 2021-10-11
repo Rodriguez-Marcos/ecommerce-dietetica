@@ -45,10 +45,16 @@ app.use('/payment', useExtractor, Payment)
 app.get("/feedback",(req, res) => {
   console.log(req.query.payment_id)
   console.log(req.query.collection_status)
-  res.json({
-    payment:req.query.payment_id,
-    status:req.query.collection_status
-  })
+  if(req.query.collection_status === 'approved'){
+   return res.redirect(
+    "http://localhost:3000/payment/success"
+  )}
+  if(req.query.collection_status === 'pending'){
+    return res.redirect(
+      "http://localhost:3000/payment/pending"
+    )
+  }
+   return res.redirect("http://localhost:3000/payment/failure") 
 })
 
 
