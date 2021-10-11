@@ -1,10 +1,16 @@
 .contenedor{
     overflow:scroll; 
     height:calc(95vh - 50px);
-    width:calc(80vw - 50px);
+    width:calc(79vw - 50px);
     padding: 15px;
 }
 .tab-sidebar{
     display: flex;
     flex-wrap: wrap;
+}
+
+@media only screen and (max-width: 770px) {
+    .contenedor{
+        width: 100vw;
+    }
 }
