@@ -2,11 +2,14 @@ import React, { useEffect, useState } from "react";
 import { useDispatch,useSelector } from "react-redux";
 import TableUser from "./TableUser";
 import { getClients,deleteClients, updateClients } from "../Actions/index";
+import { Redirect } from "react-router";
+
 
 
 export default function UserDetail() {
 
     const clients = useSelector((state) => state.reducerPablo.clients);
+    const isadmin= useSelector((state)=> state.reducerPablo.IsAdmin)
 
     let dispatch = useDispatch();
 
@@ -31,7 +34,8 @@ export default function UserDetail() {
 
     return(
         <div>
-            <TableUser clients={clients} borrar={HandleDelete} handlerUpdateUser={handlerUpdateUser}/>
+            {isadmin ?
+            <TableUser clients={clients} borrar={HandleDelete} handlerUpdateUser={handlerUpdateUser}/> : <Redirect to='/home'/>}
         </div>
     )
 }

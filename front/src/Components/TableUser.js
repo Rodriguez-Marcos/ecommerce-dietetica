@@ -44,7 +44,7 @@ export default function TableUser({ clients, borrar, handlerUpdateUser }) {
                   </Button>
                 </td>
               </tbody>
-            )) : console.log('hola')}
+            )) : <div>Cargando...</div>}
           </table>
         </div>
       </div>

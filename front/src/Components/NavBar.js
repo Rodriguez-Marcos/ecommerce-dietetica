@@ -16,6 +16,8 @@ import Cookies from "universal-cookie";
 import Sesion from '../image/usuario.png'
 import { DataContext } from "../Contexts/DataProvider"
 import Trolley from './Trolley'
+import { decode } from "jsonwebtoken";
+
 
 
 const jwt = require('jsonwebtoken')
@@ -45,8 +47,11 @@ function NavBar({ getProductbyName, setLoading, isLogin, token }) {
   const myStorage = window.localStorage;
   useEffect(() => {
     const jwt = myStorage.jwt;
+    var isadmin = decode(jwt)
+
     if (!!jwt) {
       dispatch({ type: 'LOGIN', payload: jwt })
+      dispatch({ type: 'SET_LOGIN_USER', payload: isadmin.isAdmin })
     }
   }, [myStorage])
   let history = useHistory();

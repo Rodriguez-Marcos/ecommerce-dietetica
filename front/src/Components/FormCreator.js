@@ -90,7 +90,7 @@ export default function FormCreator({
               <h6>Seleccionar Categorias: </h6>
               <select onChange={(e) => handlerCategories(e)} class="form-select" multiple aria-label="multiple select example">
                 {c.map((e) => (
-                  <option value={e.id}> {e.name}</option>
+                  <option value={e.id} name={e.name}> {e.name}</option>
                 ))}
               </select>{'    '}
               <output> seleccionaste:  {input.ids_categories.length}  categorias</output>
@@ -102,7 +102,7 @@ export default function FormCreator({
               <h6> Seleccionar Dietas: </h6>
               <select onChange={(e) => handlerDiets(e) } class="form-select" multiple aria-label="multiple select example">
                 {d.map((e) => (
-                  <option value={e.id}> {e.name}</option>
+                  <option value={e.id}  name={e.name}> {e.name}</option>
                 ))}
               </select>{'    '}
               <output> seleccionaste:  {input.ids_diets.length}  dietas</output>

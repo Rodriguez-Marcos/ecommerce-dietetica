@@ -1,18 +1,18 @@
-import { React } from "react"; import "bootstrap";
-import {
-  Button,
-} from "reactstrap";
-import Topbar from "./AdminTopBar";
-import Sidebar from "./AdminSideBar";
-import './TableOrders.css'
+import { React } from "react";
+import "bootstrap";
+import {Button,} from "reactstrap";
+import AdminTopBar from "./AdminTopBar";
+import AdminSideBar from "./AdminSideBar";
+import './TableUser.css'
 
 export default function TableOrders({ orders, handlerStatus }) {
   return (
-    <div className="ordersContenedor">
-      <Topbar />
-      <div className="ordersTable-Sidebar">
-        <Sidebar />
-        <table className="table1">
+    <div className='coint'>
+    <AdminTopBar />
+    <div className="tab-sidebar">
+      <AdminSideBar />
+      <div className='contenedor'  >
+      <table className={`tablaproductos`}>
           <thead>
             <tr>
               <th>Nro: </th>
@@ -58,6 +58,7 @@ export default function TableOrders({ orders, handlerStatus }) {
           )}
         </table>
       </div>
+    </div>
     </div>
   );
 }
