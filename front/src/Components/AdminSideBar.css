@@ -1,3 +1,4 @@
+
 .sidebar {
     flex: 1;
     height: 100%;
@@ -50,7 +51,16 @@
     flex-direction: column;
   }
   @media only screen and (max-width: 770px) {
+    #ContenedorNav{
+      width: 100vw;
+    }
     #navResponsive{
       width: 100vw;
+    }
+    #navResponsive a{
+      margin: 0;
+    }
+    #navResponsive button{
+      margin-bottom: 1vh;
     }
   }
