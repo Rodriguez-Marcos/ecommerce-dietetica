@@ -12,7 +12,8 @@ require('dotenv').config();
 var _process$env = process.env,
     DB_USER = _process$env.DB_USER,
     DB_PASSWORD = _process$env.DB_PASSWORD,
-    DB_HOST = _process$env.DB_HOST;
+    DB_HOST = _process$env.DB_HOST,
+    DB_NAME = _process$env.DB_NAME;
 var sequelize = process.env.NODE_ENV === "production" ? new _sequelize.Sequelize({
   database: DB_NAME,
   dialect: "postgresql",
