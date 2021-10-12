@@ -78,6 +78,7 @@ async function useExtractor (req,res,next){
         }
 
         await verify()
+        console.log(req.name)
     }
     } catch (error) {
         console.log(error)
