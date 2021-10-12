@@ -95,7 +95,7 @@ export default function Trolley() {
 
     var config = {
       method: 'post',
-      url: 'http://localhost:3001/payment',
+      url: '/payment',
       headers: {
         'Authorization': 'Bearer ' + token,
         'Content-Type': 'application/json'
@@ -119,7 +119,7 @@ export default function Trolley() {
 
     var config = {
       method: 'post',
-      url: 'http://localhost:3001/payment',
+      url: '/payment',
       headers: {
         'Authorization': 'Bearer ' + token,
         'Content-Type': 'application/json'
