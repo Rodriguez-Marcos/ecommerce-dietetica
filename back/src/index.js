@@ -1,6 +1,7 @@
 import app from './app.js';
 import { sequelize } from './database/db.js'
 import '@babel/polyfill'
+// const { DB_PORT } = process.env;
 
   
 
