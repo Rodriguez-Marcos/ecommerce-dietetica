@@ -1,6 +1,6 @@
 import app from './app.js';
 import { sequelize } from './database/db.js'
-import '@babel/polyfill'
+// import '@babel/polyfill'
 // require("babel/polyfill");
 import "core-js/stable";
 
