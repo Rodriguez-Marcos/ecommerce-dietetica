@@ -1,8 +1,30 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Styles from './payment.module.css'
 import NavBar from '../NavBar';
+import { postAdress } from '../../Actions';
+import emptycart from '../../Utils/emptycart';
 
 export default function Pending(){
+
+
+    let [input, setInput]=useState({
+        direccion: ' ',
+        altura: ' ',
+        otros: ' ',
+        ciudad: ' ',
+        provincia: ' ',
+        numero: ' ',
+    })
+
+    function handleAdress(event) {
+        setInput({
+            ...input,
+            [event.target.name]: event.target.value
+        })
+    }
+    useEffect(() => {
+        emptycart(window.localStorage.jwt)
+    }, [])
 
     async function handleSubmit(event) {
         event.preventDefault()
@@ -20,7 +42,10 @@ export default function Pending(){
             <div>
             <h1>Gracias Por tu compra Aguardamos tu pago nomas </h1>
             </div>
-            <div>
+
+
+        </div>
+        <div>
             <h1> Solo nos queda cargar los datos del envio </h1>
                 <p>Direccion</p>
                 <input type="text" name='direccion' value={input.direccion} placeholder="Direccion" onChange={handleAdress} />
@@ -38,7 +63,6 @@ export default function Pending(){
                 <button onClick={handleSubmit}> Aceptar </button>
 
             </div>
-        </div>
         </div>
     )
 
