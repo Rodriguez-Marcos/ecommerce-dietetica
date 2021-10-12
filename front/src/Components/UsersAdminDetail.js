@@ -5,17 +5,20 @@ import { getClients,deleteClients, updateClients,resetPassword } from "../Action
 import { Redirect } from "react-router";
 
 
-
 export default function UserDetail() {
 
     const clients = useSelector((state) => state.reducerPablo.clients);
     const isadmin= useSelector((state)=> state.reducerPablo.IsAdmin)
+    
 
     let dispatch = useDispatch();
 
     useEffect(()=>{
         dispatch(getClients())
     },[])
+
+    
+
 
 
 
