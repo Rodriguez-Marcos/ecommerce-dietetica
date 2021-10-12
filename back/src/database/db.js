@@ -3,6 +3,11 @@ import { Product } from '../models/Product.js';
 //import {Client} from '../models/Client.js';
 //import {Admin} from '../models/Admin.js';
 const { DB_USER, DB_PASSWORD, DB_HOST, DB_NAME, DB_PORT } = process.env;
+
+// import { dlopen } from 'process';
+// import { constants } from 'os';
+// import { fileURLToPath } from 'url';
+
 export const sequelize =
   process.env.NODE_ENV === "production"
     ? new Sequelize({
@@ -33,7 +38,8 @@ export const sequelize =
       );
 
 
-
+   
+    
 // export const sequelize = new Sequelize(
 //     // 'brxklsvjharos0qnyuiz',    // DBname
 //     // 'ulvkmebtpkm3rfqx1uak',    // User
