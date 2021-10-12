@@ -36,6 +36,7 @@ async function useExtractor (req,res,next){
     
 
     const authorization = req.get('authorization');
+ 
     let token = null;
     if (authorization && authorization.toLowerCase().startsWith('bearer')) {
         token = authorization.substring(7);
@@ -45,9 +46,11 @@ async function useExtractor (req,res,next){
     }
     let decodeToken = {};
     let iss = await jwt.decode(token)?.iss
+    console.log(token)
     try {
        if(!iss)
        {decodeToken = jwt.verify(token,'secret')}
+
        else{
         const client = new OAuth2Client(CLIENT_ID);
 
@@ -73,6 +76,7 @@ async function useExtractor (req,res,next){
                 req.lastname = lastname?lastname:'no lastname';
 
         }
+
         await verify()
     }
     } catch (error) {

@@ -9,7 +9,6 @@ import {
 } from "reactstrap";
 
 export default function AdminDetailsOrders({ input , closeModal}) {
-  console.log("input", input);
 
   return (
     <div>
