@@ -13,6 +13,7 @@ import {
   FormGroup,
   ModalFooter,
 } from "reactstrap";
+import { Redirect } from "react-router";
 
 
 export default function OrderAdminDetail() {
@@ -25,6 +26,7 @@ export default function OrderAdminDetail() {
   }, [dispatch]);
 
   const orders = useSelector((state) => state.reducerPablo.orders);
+  const isadmin = useSelector((state) => state.reducerPablo.IsAdmin);
   const {client} = orders
   const [estado, setStatus] = useState({
     status: orders.status,
@@ -49,6 +51,8 @@ export default function OrderAdminDetail() {
 
   return (
     <div className="container">
+      {isadmin?
+      <div>
  <TableOrders
  orders= {orders}
  handlerStatus= {handlerStatus}
@@ -62,7 +66,8 @@ export default function OrderAdminDetail() {
           <h6>Orden Numero </h6>
         </ModalHeader>
 
-      </Modal>
+      </Modal> </div> : <Redirect to='/home'/>};
+
 
 
     </div>

@@ -18,6 +18,7 @@ import Cookies from "universal-cookie";
 import Sesion from '../image/usuario.png'
 import { DataContext } from "../Contexts/DataProvider"
 import Trolley from './Trolley'
+import { decode } from "jsonwebtoken";
 import 'boxicons';
 
 
@@ -33,6 +34,7 @@ const cookies = new Cookies();
 
 function NavBar({ getProductbyName, setLoading, isLogin, token }) {
   let comodin = useSelector(state => state.reducerPablo.comodin);
+  let isAdmin = useSelector(state => state.reducerPablo.IsAdmin);
   let { productCart} = useSelector(state=>state.cart)// no sacar, sirve para contar la cantidad en el carrito
   const value = useContext(DataContext)
   const [menu, setMenu] = value.menu;
@@ -49,8 +51,11 @@ function NavBar({ getProductbyName, setLoading, isLogin, token }) {
   const myStorage = window.localStorage;
   useEffect(() => {
     const jwt = myStorage.jwt;
+    var isadmin = decode(jwt)
+
     if (!!jwt) {
       dispatch({ type: 'LOGIN', payload: jwt })
+      dispatch({ type: 'SET_LOGIN_USER', payload: isadmin.isAdmin })
     }
   }, [myStorage])
   let history = useHistory();
@@ -106,7 +111,8 @@ function NavBar({ getProductbyName, setLoading, isLogin, token }) {
               </NavLink>
                </div>
             </Nav.Link>
-            <Nav.Link>About</Nav.Link>
+            {isAdmin ?
+            <NavLink to='/Admin'>Admin</NavLink> : null}
           </Nav>
           <Nav id="busqueda">
             <Form className="d-flex" id="d-flex" onSubmit={(e) => handleSubmit(e)}>

@@ -2,6 +2,7 @@ import axios from 'axios'
 import { OrderByPrice } from '../Utils/OrderFunctions';
 import getTrolley from "../Utils/getTrolley";
 import Cookies from 'universal-cookie'
+import { ResponsiveEmbed } from 'react-bootstrap';
 export const GET_PRODUCTS = 'GET_PRODUCTS';
 export const GET_CATEGORIES = 'GET_CATEGORIES';
 export const GET_DIETS = 'GET_DIETS';
@@ -20,9 +21,11 @@ export const SET_LOGIN_USER = 'SET_LOGIN_USER';
 export const GET_CLIENTS = 'GET_CLIENTS';
 export const UPDATE_CLIENTS = 'UPDATE_CLIENTS';
 export const DELETE_CLIENTS = 'DELETE_CLIENTS';
+export const RESET_PASSWORD = 'RESET_PASSWORD';
 export const REVIEW_URL = "http://localhost:3001/reviews/";
 export const GET_ORDERS = 'GET_ORDERS';
 export const PUT_ORDERS = 'PUT_ORDERS';
+export const FILTER_ORDERS = 'FILTER_ORDERS';
 
 
 let cookies = new Cookies();
@@ -231,6 +234,18 @@ export function orderPrice(orderTarget, products) {
     }
 }
 
+export function orderOrders() {
+    return async function (dispatch) {
+        axios.get()
+            .then((response) => {
+                return dispatch({
+                    type: FILTER_ORDERS,
+                    payload: response.data,
+                })
+            })
+    }
+}
+
 
 export function setLoading() {
     return function (dispatch) {
@@ -266,15 +281,14 @@ export function review(payload) {
     };
 }
 
-export function loginUser(email, password) {
+export function loginUser(payload) {
     return async function (dispatch) {
-            return axios.get(`http://localhost:3001/clients/login?email=${email}&password=${password}`)
-            .then((response)=>{
-            dispatch({
+            await axios.post(`http://localhost:3001/login/`,payload)
+            return dispatch({
                 type: 'SET_LOGIN_USER',
-                payload: response.data,
+                payload
             })
-    })}
+    }
 };
 
 
@@ -298,6 +312,18 @@ export function updateClients(id) {
                 dispatch({
                     payload: response.data,
                     type: UPDATE_CLIENTS
+                })
+            })
+    }
+}
+
+export function resetPassword(id) {
+    return async function (dispatch) {
+        return axios.put(`http://localhost:3001/clients/resetpassword/${id}`)
+            .then((response) => {
+                dispatch({
+                    payload: response.data,
+                    type: RESET_PASSWORD
                 })
             })
     }
@@ -393,5 +419,7 @@ export default function getTrolleyAction() {
         };
     };
 }
+
+
 
 

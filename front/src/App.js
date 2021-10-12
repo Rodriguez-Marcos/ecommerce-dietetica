@@ -6,7 +6,7 @@ import Creator from './Components/Creator';
 import Search from './Components/Search';
 import Footer from './Components/Footer';
 import CreateUser from './Components/CreateUser';
-import { Switch } from 'react-router';
+import { Redirect, Switch } from 'react-router';
 import Trolley from './Components/Trolley';
 import {Image} from 'react-bootstrap'
 import fondo from '../src/image/fondo1.jpg'
@@ -16,11 +16,16 @@ import Sidebar from './Components/AdminSideBar';
 import UsersAdminDetail from './Components/UsersAdminDetail'
 import OrderAdminDetail from './Components/OrdersAdminDetail';
 import AdminDietAndCategory from './Components/TableDietAndCategory';
+import { useSelector } from 'react-redux';
 import Success from './Components/payment/success';
 import Pendings from './Components/payment/pending';
 import Failure from './Components/payment/failure';
+import AdminDetailsOrders from './Components/AdminDetailsOrders';
 
 function App() {
+
+  const isAdmin = useSelector((state)=> state.reducerPablo.IsAdmin)
+
   return (
     <BrowserRouter>
     <DataProvider>
@@ -32,10 +37,10 @@ function App() {
     {/* <Route exact path='/trolley' component={Trolley}/> */}
     {/* <Route exact path='/CreateUser' component={CreateUser}/> */}
     <Route exact path='/Login' component={Login}/>
-    <Route exact path='/Admin' component={Creator}/>
-    <Route exact path='/Admin/user' component={UsersAdminDetail}/>
-    <Route exact path='/Admin/orders' component={OrderAdminDetail}/>
-    <Route exact path='/Admin/filters' component={AdminDietAndCategory}/>
+    <Route exact path='/Admin' render={() => isAdmin ? <Creator></Creator>: <Redirect to='/home'/>}/>
+    <Route exact path='/Admin/user'  render={() => isAdmin ? <UsersAdminDetail/>: <Redirect to='/home'/>}/>
+    <Route exact path='/Admin/orders'  render={() => isAdmin ? <AdminDetailsOrders/>: <Redirect to='/home'/>}/>
+    <Route exact path='/Admin/filters' render={() => isAdmin ? <AdminDietAndCategory/>: <Redirect to='/home'/>}/>
     
 
 

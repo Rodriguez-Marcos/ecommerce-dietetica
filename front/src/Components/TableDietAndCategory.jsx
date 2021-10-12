@@ -2,13 +2,12 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import "bootstrap/dist/css/bootstrap.min.css";
-import {
-  getCategories,
-  getDiets,
-  deleteCategory,
-  deleteDiets,
-} from "../Actions";
+import { getCategories, getDiets,  deleteCategory,  deleteDiets,} from "../Actions";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
+import AdminSideBar from './AdminSideBar'
+import AdminTopBar from './AdminTopBar'
+import './TableUser.css'
+
 
 export default function AdminDietAndCategory() {
   const c = useSelector((state) => state.reducerPablo.categories);
@@ -72,7 +71,11 @@ export default function AdminDietAndCategory() {
     });
   }
   return (
-    <div className="container">
+    <div className='coint'>
+      <AdminTopBar />
+      <div className="tab-sidebar">
+        <AdminSideBar />
+        <div className='contenedor'  >
       <div>
         <h3>Lista de Dietas</h3>
         <table className="table">
@@ -154,5 +157,7 @@ export default function AdminDietAndCategory() {
         </Modal>
       </div>
     </div>
+   </div>
+   </div>
   );
 }

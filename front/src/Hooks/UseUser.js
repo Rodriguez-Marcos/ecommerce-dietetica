@@ -23,6 +23,8 @@ export default function useUser() {
                 postCarrito(jwt, id_products)
                 getCart(jwt)
                 dispatch({type: 'LOGIN', payload: jwt})
+                var isadmin = await decode(jwt)
+                dispatch({type: 'SET_LOGIN_USER', payload: isadmin.isAdmin})
             })
             .catch(err => { alert(err); console.error(err) })
         }, []);
