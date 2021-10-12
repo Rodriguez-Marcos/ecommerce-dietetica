@@ -45,7 +45,7 @@ function App() {
     <Route exact path='/newadress' component={CreateAdress}/>
     <Route exact path='/Admin' render={() => isAdmin ? <Creator></Creator>: <Redirect to='/home'/>}/>
     <Route exact path='/Admin/user'  render={() => isAdmin ? <UsersAdminDetail/>: <Redirect to='/home'/>}/>
-    <Route exact path='/Admin/orders'  render={() => isAdmin ? <AdminDetailsOrders/>: <Redirect to='/home'/>}/>
+    <Route exact path='/Admin/orders'  render={() => isAdmin ? <TableOrders/>: <Redirect to='/home'/>}/>
     <Route exact path='/Admin/filters' render={() => isAdmin ? <AdminDietAndCategory/>: <Redirect to='/home'/>}/>
 
     
