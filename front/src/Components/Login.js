@@ -68,6 +68,7 @@ function Login({ respuesta, isLogin }) {
         username: '',
         password: ''
     })
+ 
 
     useEffect(() => {
         if (isLogin) history.push('/home');
@@ -92,17 +93,7 @@ function Login({ respuesta, isLogin }) {
         }
     }
 
-    useEffect(() => {
 
-        if (respuesta.message === 'User Login failed') {
-            alert('Usuario no encontrado')
-        }
-        else if (respuesta.message === 'User Login') {
-        }
-        else { }
-
-
-    }, [respuesta])
 
 
     const responseGoogle = (response) => {}
@@ -189,7 +180,6 @@ function Login({ respuesta, isLogin }) {
 }
 function mapStateToProps(state) {
     return {
-        respuesta: state.reducerPablo.login_user,
         isLogin: state.reducerPablo.isLogin,
     }
 }

@@ -78,7 +78,6 @@ export async function addToCart(req, res, next) {
 
     }
 }
-
 export async function removeFromCart(req, res, next) {
     const id_client = req.id;
     const {
@@ -122,7 +121,6 @@ export async function getCart(req, res) {
 
     }
 }
-
 export async function emptyCart(req, res, next) {
     const id_client = req.id
     var shippingAddress = "Direccion de prueba"

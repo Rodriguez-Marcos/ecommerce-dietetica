@@ -5,12 +5,10 @@ import emptyCart from '../../Utils/emptycart';
 import { useSelector } from 'react-redux';
 import Cookies from 'universal-cookie'
 
-export default function Success() {
-    let cookies = new Cookies();
-    let { token } = useSelector(state => state.reducerPablo)
+export default function Success(){
     useEffect(() => {
-        emptyCart(token)
-    }, [cookies])
+        emptyCart(window.localStorage.jwt)
+    }, [])
 
     return (
         <div>

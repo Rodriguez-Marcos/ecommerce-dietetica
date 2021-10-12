@@ -119,7 +119,7 @@ export default function Trolley() {
 
     var config = {
       method: 'post',
-      url: 'http://localhost:3001/payment',
+      url: '/payment',
       headers: {
         'Authorization': 'Bearer ' + token,
         'Content-Type': 'application/json'
@@ -170,7 +170,7 @@ export default function Trolley() {
                   <box-icon onClick={() => reduce(producto.id)} name="down-arrow" type="solid"></box-icon>
                 </div>
                 <div className="remove__item">
-                  <box-icon onClick={()=>handleClose(producto.id)} name="trash"></box-icon>
+                  <box-icon id="trash" onClick={()=>handleClose(producto.id)} name="trash"></box-icon>
                 </div>
               </div>
 

@@ -16,14 +16,35 @@ import {
   deleteProductByID,
 } from "../Actions";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
+import { decode } from "jsonwebtoken";
+import { Redirect } from "react-router";
+
 
 export default function Creator() {
   //estados
   const p = useSelector((state) => state.reducerPablo.products);
   const c = useSelector((state) => state.reducerPablo.categories);
   const d = useSelector((state) => state.reducerPablo.diets);
+  const isAdmin = useSelector((state) => state.reducerPablo.IsAdmin);
+
+  
   let dispatch = useDispatch();
+
+  const jwt = require('jsonwebtoken')
+  const myStorage = window.localStorage;
+
   // Renderizados
+
+  useEffect(() => {
+    const jwt = myStorage.jwt;
+    var isadmin = decode(jwt)
+    if (!!jwt) {
+      dispatch({ type: 'LOGIN', payload: jwt })
+      dispatch({ type: 'SET_LOGIN_USER', payload: isadmin.isAdmin })
+    }
+  }, [myStorage])
+
+
   useEffect(() => {
     dispatch(getProducts());
     dispatch(getCategories());
@@ -83,7 +104,7 @@ export default function Creator() {
   }
 
   function handlerCategories(e) {
-    if (e.target.value) {
+    if (input.ids_categories.filter((a)=> a === e.target.value)) {
       setInput({
         ...input,
         ids_categories: [...input.ids_categories, e.target.value],
@@ -100,7 +121,7 @@ export default function Creator() {
     if (e.target.value) {
       setInput({
         ...input,
-        ids_diets: [...input.ids_diets, e.target.value],
+        ids_diets: [...input.ids_diets,e.target.value],
       });
     } else {
       setInput({
@@ -142,7 +163,6 @@ export default function Creator() {
       alert("falta informacion requerida en el formulario");
     }
   }
-  console.log(input);
 
   // Eliminar
 
@@ -175,7 +195,6 @@ export default function Creator() {
       input.ids_diets.length != 0 &&
       input.ids_categories.length != 0
     ) {
-      console.log(input);
       dispatch(postProduct(input));
       alert(" Producto creado con exito");
       dispatch(getProducts());
@@ -345,10 +364,11 @@ export default function Creator() {
       description: "",
     });
   }
-  console.log("input", input);
   // INICIO DEL COMPONENTE
   return (
+
     <div className='creator' >
+      
       <Topbar />
       <div className="others">
         <div className="screem">
@@ -358,6 +378,7 @@ export default function Creator() {
             openDiet={openDiet} />
 
         </div>
+        <div>
         <FormCreator
           modal={modal}
           input={input}
@@ -421,10 +442,12 @@ export default function Creator() {
               </Button>
             </ModalFooter>
           </Modal>
-        </div>
-
+        </div> 
+      
       </div>
     </div>
+    </div>
+    
 
   );
 }

@@ -6,7 +6,7 @@ import Sidebar from "./AdminSideBar";
 import Topbar from "./AdminTopBar";
 
 
-export default function TableUser({ clients, borrar, handlerUpdateUser }) {
+export default function TableUser({ clients, borrar, handlerUpdateUser, handleChangePassword }) {
   return (
     <div className='coint'>
       <Topbar />
@@ -38,13 +38,16 @@ export default function TableUser({ clients, borrar, handlerUpdateUser }) {
                     </Button> :
                     <Button color="primary" onClick={() => handlerUpdateUser(e.id)}>
                       Transformar en admin
-                    </Button>}
+                    </Button>}{'   '}
+                  <Button color="danger" onClick={() => { handleChangePassword(e.id) }}>
+                    Forzar Password Reset
+                  </Button>{'   '}
                   <Button color="danger" onClick={() => { borrar(e.id) }}>
-                    🗑
+                    🗑 Eliminar Usuario
                   </Button>
                 </td>
               </tbody>
-            )) : console.log('hola')}
+            )) : <div>Cargando...</div>}
           </table>
         </div>
       </div>

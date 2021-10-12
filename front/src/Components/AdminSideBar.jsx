@@ -26,15 +26,15 @@ export default function Sidebar({openProduct, openCategory, openDiet}) {
       <div className="sidebar">
       <div className="sidebarWrapper">
         <div className="sidebarMenu">
-          <h3 className="sidebarTitle">Dashboard</h3>
-          <ul className="sidebarList">
+          {/* <h3 className="sidebarTitle">Dashboard</h3>
+          <ul className="sidebarList"> */}
             
               {/* <li className="sidebarListItem active">
                 <LineStyle className="sidebarIcon" />
               < Link to="/admin" className="link"> Panel Central</Link>
               </li> */}
             
-            <li className="sidebarListItem">
+            {/* <li className="sidebarListItem">
               <AttachMoney className="sidebarIcon" />
               Economia
             </li>
@@ -42,7 +42,7 @@ export default function Sidebar({openProduct, openCategory, openDiet}) {
               <TrendingUp className="sidebarIcon" />
               Ventas
             </li>
-          </ul>
+          </ul> */}
         </div>
         <div className="sidebarMenu">
           <h3 className="sidebarTitle">Agregar Elementos</h3>
@@ -51,7 +51,7 @@ export default function Sidebar({openProduct, openCategory, openDiet}) {
               <PermIdentity className="sidebarIcon" />
               Usuarios
             </li> */}
-
+            
             <li className="sidebarListItem" onClick={() => openProduct()}>
               <button className="sidebarIcon"  />
               Productos
@@ -68,36 +68,40 @@ export default function Sidebar({openProduct, openCategory, openDiet}) {
           </ul>
         </div>
         <div className="sidebarMenu">
-          <h3 className="sidebarTitle">Usuarios</h3>
+          <h3 className="sidebarTitle">Navegacion</h3>
           <ul className="sidebarList">
-            <li className="sidebarListItem">
-              <MailOutline className="sidebarIcon" />
-              Correos
-            </li>
             <li className="sidebarListItem">
               <DynamicFeed className="sidebarIcon" />
               <NavLink to='/Admin/user'>Lista de Usuarios</NavLink>
             </li>
             <li className="sidebarListItem">
-              <ChatBubbleOutline className="sidebarIcon" />
-              Messages
+              <DynamicFeed className="sidebarIcon" />
+              <NavLink to='/Admin'>Lista de Productos</NavLink>
+            </li>
+            <li className="sidebarListItem">
+              <DynamicFeed className="sidebarIcon" />
+              <NavLink to='/Admin/orders'>Ordenes</NavLink>
+            </li>
+            <li className="sidebarListItem">
+              <DynamicFeed className="sidebarIcon" />
+              <NavLink to='/Admin/filters'>Categorias y Dietas</NavLink>
             </li>
           </ul>
         </div>
         <div className="sidebarMenu">
           <h3 className="sidebarTitle">Staff</h3>
           <ul className="sidebarList">
-            <li className="sidebarListItem">
+            {/* <li className="sidebarListItem">
               <WorkOutline className="sidebarIcon" />
               Manage
             </li>
             <li className="sidebarListItem">
               <Timeline className="sidebarIcon" />
               Analytics
-            </li>
+            </li> */}
             <li className="sidebarListItem">
               <Report className="sidebarIcon" />
-              Reports
+              <NavLink to='/home'>Salir</NavLink>
             </li>
           </ul>
         </div>

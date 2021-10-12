@@ -3,6 +3,9 @@
     --hoverColorText:rgb(175, 172, 172);
     --colorverde:#849836
 }
+#CantainerDetails{
+    margin: none !important;
+}
 #row1{
     background-color: white;
     margin: 20px;
