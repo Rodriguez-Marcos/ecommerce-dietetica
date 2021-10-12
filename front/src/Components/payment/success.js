@@ -12,10 +12,12 @@ export default function Success(){
 
     return (
         <div>
-        <NavBar/>
-        <div className={Styles.div}>
-            <h1>Gracias Por tu compra</h1>
-        </div>
+            <NavBar />
+            <div className={Styles.div}>
+                <div>
+                    <h1>Gracias Por tu compra</h1>
+                </div>
+            </div>
         </div>
     )
 

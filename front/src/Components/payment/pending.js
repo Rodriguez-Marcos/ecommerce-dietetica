@@ -8,7 +8,9 @@ export default function Pending(){
         <div>
         <NavBar/>
         <div className={Styles.div}>
+            <div>
             <h1>Gracias Por tu compra Aguardamos tu pago nomas </h1>
+            </div>
         </div>
         </div>
     )
