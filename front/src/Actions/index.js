@@ -31,6 +31,10 @@ export const FILTER_ORDERS = 'FILTER_ORDERS';
 
 
 
+
+let cookies = new Cookies();
+
+
 let cookies = new Cookies();
 
 export const paginate = (recipes) => {
@@ -453,4 +457,68 @@ export function getAdress() {
             })
     }
 }
+
+export function putOrders(payload, id ){
+    return async function (dispatch) {
+        await axios.put("http://localhost:3001/products/"+ id, payload);
+       
+           return dispatch({
+             type: PUT_ORDERS,
+             payload,
+             id,
+           });
+         };
+       }
+
+
+
+export default function getTrolleyAction() {
+    return async function (dispatch) {
+        try {
+            let cookieTrolley = cookies.get('trolley')?.map(x => {
+                let id = x
+                return {id}
+            })
+            let res = await getTrolley(cookieTrolley.map(x=>x.id))
+            let payload = [];
+            res.data.forEach(x=>{
+                cookieTrolley.forEach(({id})=>{
+                    if(x.id===id.id)
+                    payload.push( {...x,cantidad: id.quantity})
+                })
+            })
+            return dispatch({
+                type: 'GET_PRODUCTS_CART',
+                payload
+            })
+        } catch (err) {
+            console.log(err)
+        };
+    };
+}
+
+
+export function postAdress(payload) {
+    return async function (dispatch) {
+        await axios.post("http://localhost:3001/address", payload);
+        return dispatch({
+            type: POST_ADDRESS,
+            payload,
+        });
+    };
+}
+
+export function getAdress() {
+
+    return async function (dispatch) {
+        return axios.get(`http://localhost:3001/address`)
+            .then((response) => {
+                dispatch({
+                    payload: response.data,
+                    type: GET_ADDRESS
+                })
+            })
+    }
+}
+
 
