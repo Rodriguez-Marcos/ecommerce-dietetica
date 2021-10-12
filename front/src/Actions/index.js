@@ -25,7 +25,10 @@ export const RESET_PASSWORD = 'RESET_PASSWORD';
 export const REVIEW_URL = "http://localhost:3001/reviews/";
 export const GET_ORDERS = 'GET_ORDERS';
 export const PUT_ORDERS = 'PUT_ORDERS';
+export const POST_ADDRESS = 'POST_ADDRESS'
+export const GET_ADDRESS = 'GET_ADDRESS'
 export const FILTER_ORDERS = 'FILTER_ORDERS';
+
 
 
 let cookies = new Cookies();
@@ -421,5 +424,26 @@ export default function getTrolleyAction() {
 }
 
 
+export function postAdress(payload) {
+    return async function (dispatch) {
+        await axios.post("http://localhost:3001/address", payload);
+        return dispatch({
+            type: POST_ADDRESS,
+            payload,
+        });
+    };
+}
 
+export function getAdress() {
+
+    return async function (dispatch) {
+        return axios.get(`http://localhost:3001/address`)
+            .then((response) => {
+                dispatch({
+                    payload: response.data,
+                    type: GET_ADDRESS
+                })
+            })
+    }
+}
 
