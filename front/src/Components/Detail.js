@@ -127,7 +127,7 @@ function Detail({ match }) {
   return (
     <div>
       <NavBar/>
-    <Container>
+    <Container id="CantainerDetails">
       <Row id="row1">
         <Col id="detalle" md={8} xs={12}>
           <div class="overflow-auto" id="CrearComentario">
