@@ -33,7 +33,6 @@ export const FILTER_ORDERS = 'FILTER_ORDERS';
 
 
 
-
 let cookies = new Cookies();
 
 export const paginate = (recipes) => {
