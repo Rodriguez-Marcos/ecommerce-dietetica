@@ -26,6 +26,9 @@ export const PUT_ORDERS = 'PUT_ORDERS';
 export const POST_ADDRESS = 'POST_ADDRESS'
 export const GET_ADDRESS = 'GET_ADDRESS'
 export const FILTER_ORDERS = 'FILTER_ORDERS';
+export const RESET_PASSWORD = 'RESET_PASSWORD';
+
+
 
 
 
