@@ -14,7 +14,7 @@ import { DataProvider } from './Contexts/DataProvider'
 import Login from './Components/Login';
 import Sidebar from './Components/AdminSideBar';
 import UsersAdminDetail from './Components/UsersAdminDetail'
-import OrderAdminDetail from './Components/OrdersAdminDetail';
+import TableOrders from './Components/TableOrders';
 import AdminDietAndCategory from './Components/TableDietAndCategory';
 import { useSelector } from 'react-redux';
 import Success from './Components/payment/success';
