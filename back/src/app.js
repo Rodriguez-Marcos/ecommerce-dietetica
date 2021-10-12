@@ -15,6 +15,7 @@ import Favoriteroutes from './routes/favorite.js'
 import Cartroutes from './routes/cart.js'
 import useExtractor from './controllers/loginUser.js';
 import Payment from './routes/payment'
+import Address from './routes/address.js'
 
 const app = express()
 
@@ -42,6 +43,7 @@ app.use('/reviews',useExtractor, Reviewroutes)
 app.use('/favorite',useExtractor, Favoriteroutes)
 app.use('/cart',useExtractor,Cartroutes)
 app.use('/payment', useExtractor, Payment)
+app.use('/address', Address)
 app.get("/feedback",(req, res) => {
   console.log(req.query.payment_id)
   console.log(req.query.collection_status)
