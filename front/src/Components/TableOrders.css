@@ -3,6 +3,7 @@
     height: 100vh;
 }
 .container{
+    width: 75%;
     margin: 0;
     padding: 0;
 }
