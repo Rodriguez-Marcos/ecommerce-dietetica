@@ -1,39 +1,37 @@
 import axios from "axios";
 import { OrderByPrice } from "../Utils/OrderFunctions";
 import getTrolley from "../Utils/getTrolley";
-import Cookies from "universal-cookie";
-export const GET_PRODUCTS = "GET_PRODUCTS";
-export const GET_CATEGORIES = "GET_CATEGORIES";
-export const GET_DIETS = "GET_DIETS";
-export const GET_BY_ID_CATEGORY = "GET_BY_ID_CATEGORY";
-export const GET_BY_ID_DIET = "GET_BY_ID_DIET";
-export const ORDER_PRICE = "ORDER_PRICE";
-export const GET_PRODUCTS_FILTERED = "GET_PRODUCTS_FILTERED";
-export const GET_BY_PRICE = "GET_BY_PRICE";
-export const GET_BY_DIET_AND_CATEGORY = "GET_BY_DIET_AND_CATEGORY";
-export const PAGINATE = "PAGINATE";
-export const FAIL_TO_LOAD = "FAIL_TO_LOAD";
-export const SET_LOADING = "SET_LOADING";
+import Cookies from 'universal-cookie'
+import { ResponsiveEmbed } from 'react-bootstrap';
+export const GET_PRODUCTS = 'GET_PRODUCTS';
+export const GET_CATEGORIES = 'GET_CATEGORIES';
+export const GET_DIETS = 'GET_DIETS';
+export const GET_BY_ID_CATEGORY = 'GET_BY_ID_CATEGORY';
+export const GET_BY_ID_DIET = 'GET_BY_ID_DIET';
+export const ORDER_PRICE = 'ORDER_PRICE';
+export const GET_PRODUCTS_FILTERED = 'GET_PRODUCTS_FILTERED';
+export const GET_BY_PRICE = 'GET_BY_PRICE';
+export const GET_BY_DIET_AND_CATEGORY = 'GET_BY_DIET_AND_CATEGORY';
+export const PAGINATE = 'PAGINATE';
+export const FAIL_TO_LOAD = 'FAIL_TO_LOAD'
+export const SET_LOADING = 'SET_LOADING';
 export const GET_ID = "GET_ID";
-export const SET_NEW_USER = "SET_NEW_USER";
-export const SET_LOGIN_USER = "SET_LOGIN_USER";
-export const GET_CLIENTS = "GET_CLIENTS";
-export const UPDATE_CLIENTS = "UPDATE_CLIENTS";
-export const DELETE_CLIENTS = "DELETE_CLIENTS";
+export const SET_NEW_USER = 'SET_NEW_USER';
+export const SET_LOGIN_USER = 'SET_LOGIN_USER';
+export const GET_CLIENTS = 'GET_CLIENTS';
+export const UPDATE_CLIENTS = 'UPDATE_CLIENTS';
+export const DELETE_CLIENTS = 'DELETE_CLIENTS';
+export const RESET_PASSWORD = 'RESET_PASSWORD';
 export const REVIEW_URL = "http://localhost:3001/reviews/";
 export const GET_ORDERS = 'GET_ORDERS';
 export const PUT_ORDERS = 'PUT_ORDERS';
 export const POST_ADDRESS = 'POST_ADDRESS'
 export const GET_ADDRESS = 'GET_ADDRESS'
 export const FILTER_ORDERS = 'FILTER_ORDERS';
-export const RESET_PASSWORD = 'RESET_PASSWORD';
 
 
 
 
-
-
-let cookies = new Cookies();
 
 
 let cookies = new Cookies();
@@ -278,20 +276,16 @@ export function review(payload) {
   };
 }
 
-export function loginUser(email, password) {
-  return async function (dispatch) {
-    return axios
-      .get(
-        `http://localhost:3001/clients/login?email=${email}&password=${password}`
-      )
-      .then((response) => {
-        dispatch({
-          type: "SET_LOGIN_USER",
-          payload: response.data,
-        });
-      });
-  };
-}
+export function loginUser(payload) {
+    return async function (dispatch) {
+            await axios.post(`http://localhost:3001/login/`,payload)
+            return dispatch({
+                type: 'SET_LOGIN_USER',
+                payload
+            })
+    }
+};
+
 
 export function getClients() {
   return async function (dispatch) {
@@ -381,6 +375,7 @@ export function getOrders(token) {
       });
   };
 }
+
 export function putOrders(payload, id, token) {
   return async function (dispatch) {
 
@@ -415,6 +410,10 @@ export function putOrders(payload, id, token) {
   };
 }
 
+
+
+
+
 export default function getTrolleyAction() {
   return async function (dispatch) {
     try {
@@ -437,69 +436,6 @@ export default function getTrolleyAction() {
       console.log(err);
     }
   };
-}
-
-
-export function postAdress(payload) {
-    return async function (dispatch) {
-        await axios.post("http://localhost:3001/address", payload);
-        return dispatch({
-            type: POST_ADDRESS,
-            payload,
-        });
-    };
-}
-
-export function getAdress() {
-
-    return async function (dispatch) {
-        return axios.get(`http://localhost:3001/address`)
-            .then((response) => {
-                dispatch({
-                    payload: response.data,
-                    type: GET_ADDRESS
-                })
-            })
-    }
-}
-
-export function putOrders(payload, id ){
-    return async function (dispatch) {
-        await axios.put("http://localhost:3001/products/"+ id, payload);
-       
-           return dispatch({
-             type: PUT_ORDERS,
-             payload,
-             id,
-           });
-         };
-       }
-
-
-
-export default function getTrolleyAction() {
-    return async function (dispatch) {
-        try {
-            let cookieTrolley = cookies.get('trolley')?.map(x => {
-                let id = x
-                return {id}
-            })
-            let res = await getTrolley(cookieTrolley.map(x=>x.id))
-            let payload = [];
-            res.data.forEach(x=>{
-                cookieTrolley.forEach(({id})=>{
-                    if(x.id===id.id)
-                    payload.push( {...x,cantidad: id.quantity})
-                })
-            })
-            return dispatch({
-                type: 'GET_PRODUCTS_CART',
-                payload
-            })
-        } catch (err) {
-            console.log(err)
-        };
-    };
 }
 
 
