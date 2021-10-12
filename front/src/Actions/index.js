@@ -31,6 +31,9 @@ export const FILTER_ORDERS = 'FILTER_ORDERS';
 
 
 
+
+
+
 let cookies = new Cookies();
 
 export const paginate = (recipes) => {
@@ -406,6 +409,10 @@ export function putOrders(payload, id, token) {
   };
 }
 
+
+
+
+
 export default function getTrolleyAction() {
   return async function (dispatch) {
     try {
@@ -453,4 +460,5 @@ export function getAdress() {
             })
     }
 }
+
 
