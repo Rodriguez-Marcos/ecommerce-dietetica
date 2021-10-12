@@ -27,7 +27,8 @@ export default function Adress() {
         })
     }
 
-    useEffect(() => { }, [])
+    /* useEffect(() => { }, [payment]) */
+
     async function handleSubmit(event) {
         event.preventDefault()
         if (!input.direccion || !input.altura || !input.ciudad || !input.provincia || !input.numero) { alert('Debes llenar todos los campos') }
