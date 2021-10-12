@@ -124,7 +124,7 @@ export default function Trolley() {
         'Authorization': 'Bearer ' + token,
         'Content-Type': 'application/json'
       },
-      data: data
+      data: data,
     };
 
     axios(config)

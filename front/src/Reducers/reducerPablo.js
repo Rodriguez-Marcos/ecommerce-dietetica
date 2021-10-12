@@ -15,7 +15,10 @@ const InitialState = {
     isLogin: false,
     token: {},
     clients: [],
-    orders: [],
+
+    orders: [], 
+    address:[],
+
 }
 
 
@@ -155,18 +158,23 @@ export default function reducerPablo(state = InitialState, action) {
             };
 
         case GET_ORDERS:
-            return {
-                ...state,
-                orders: action.payload,
-            };
+                return {
+                    ...state,
+                    orders: action.payload,
+                };
         case PUT_ORDERS:
-            return {
-                ...state
-            }
-        case FILTER_ORDERS:
+                return{
+                    ...state
+                }
+        case POST_ADDRESS:
             return {
                 ...state,
-                orders: action.payload
+                address: action.payload,
+            }
+        case GET_ADDRESS:
+            return{
+                ...state,
+                address: action.payload,
             }
 
         default:
