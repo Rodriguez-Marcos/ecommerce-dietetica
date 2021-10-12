@@ -10,6 +10,7 @@ export const sequelize = new Sequelize(
     // {
     //   host:'brxklsvjharos0qnyuiz-postgresql.services.clever-cloud.com',
     //   dialect:'postgres',
+    
     //   pool:{
     //     max:5,
     //     min:0,

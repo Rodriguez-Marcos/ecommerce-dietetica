@@ -19,7 +19,8 @@ export async function loginUser(req, res) {
     const userForToken = {
         id: user.id,
         name: user.name,
-        email: user.email
+        email: user.email,
+        isAdmin: user.isAdmin,
     }
     const token = jwt.sign(userForToken, 'secret')
     res.send(
@@ -45,9 +46,11 @@ async function useExtractor (req,res,next){
     }
     let decodeToken = {};
     let iss = await jwt.decode(token)?.iss
+    console.log(token)
     try {
        if(!iss)
        {decodeToken = jwt.verify(token,'secret')}
+
        else{
         const client = new OAuth2Client(CLIENT_ID);
 
@@ -73,6 +76,7 @@ async function useExtractor (req,res,next){
                 req.lastname = lastname?lastname:'no lastname';
 
         }
+
         await verify()
     }
     } catch (error) {

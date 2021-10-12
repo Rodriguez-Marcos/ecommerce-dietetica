@@ -345,12 +345,29 @@ export function getOrders(token) {
 }
 export function putOrders(payload, id, token) {
   return async function (dispatch) {
-    await axios({
-      method: "put",
-      url: `http://localhost:3001/products/${id}`,
-      body: payload,
-      headers: { Authorization: "Bearer " + token },
-    });
+
+
+    let headersList = {
+      "Accept": "*/*",
+      "User-Agent": "Thunder Client (https://www.thunderclient.io)",
+      "Authorization": "Bearer "+ token,
+      "Content-Type": "application/json" 
+     }
+     
+
+     let reqOptions = {
+       url: "http://localhost:3001/orders/"+id,
+       method: "PUT",
+       headers: headersList,
+       data: JSON.stringify(payload),
+     }
+     
+     axios.request(reqOptions).then(function (response) {
+       console.log(response.data);
+     })
+
+
+    // await axios.put( `http://localhost:3001/products/${id}`, payload,);
 
     return dispatch({
       type: PUT_ORDERS,
