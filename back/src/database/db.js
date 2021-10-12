@@ -55,7 +55,7 @@ export const sequelize = new Sequelize(
     // }
     'postgresql://ulvkmebtpkm3rfqx1uak:CTzddK5lec538YZL0MUq@bndlhxxrg7jx3ufyrw45-postgresql.services.clever-cloud.com:6013/bndlhxxrg7jx3ufyrw45', {
     logging: false, // set to console.log to see the raw SQL queries
-
+    })
    
     
 // export const sequelize = new Sequelize(
