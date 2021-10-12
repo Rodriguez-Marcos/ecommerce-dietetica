@@ -6,11 +6,9 @@ import { useSelector } from 'react-redux';
 import Cookies from 'universal-cookie'
 
 export default function Success(){
-    let cookies = new Cookies();
-    let {token} = useSelector(state => state.reducerPablo)
     useEffect(() => {
-        emptyCart(token)
-    }, [cookies])
+        emptyCart(window.localStorage.jwt)
+    }, [])
 
     return (
         <div>

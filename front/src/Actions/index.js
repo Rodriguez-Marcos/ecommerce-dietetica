@@ -20,6 +20,7 @@ export const SET_LOGIN_USER = 'SET_LOGIN_USER';
 export const GET_CLIENTS = 'GET_CLIENTS';
 export const UPDATE_CLIENTS = 'UPDATE_CLIENTS';
 export const DELETE_CLIENTS = 'DELETE_CLIENTS';
+export const RESET_PASSWORD = 'RESET_PASSWORD';
 export const REVIEW_URL = "http://localhost:3001/reviews/";
 export const GET_ORDERS = 'GET_ORDERS';
 export const PUT_ORDERS = 'PUT_ORDERS';
@@ -297,6 +298,18 @@ export function updateClients(id) {
                 dispatch({
                     payload: response.data,
                     type: UPDATE_CLIENTS
+                })
+            })
+    }
+}
+
+export function resetPassword(id) {
+    return async function (dispatch) {
+        return axios.put(`http://localhost:3001/clients/resetpassword/${id}`)
+            .then((response) => {
+                dispatch({
+                    payload: response.data,
+                    type: RESET_PASSWORD
                 })
             })
     }

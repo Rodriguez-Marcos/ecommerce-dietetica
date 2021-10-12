@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch,useSelector } from "react-redux";
 import TableUser from "./TableUser";
-import { getClients,deleteClients, updateClients } from "../Actions/index";
+import { getClients,deleteClients, updateClients,resetPassword } from "../Actions/index";
 import { Redirect } from "react-router";
 
 
@@ -29,13 +29,18 @@ export default function UserDetail() {
         alert("Modificacion exitosa");
          dispatch(getClients())
       }
+    
+      function handleChangePassword(e){
+          dispatch(resetPassword(e))
+          alert('Se forzo un password reset')
+      }
 
 
 
     return(
         <div>
             {isadmin ?
-            <TableUser clients={clients} borrar={HandleDelete} handlerUpdateUser={handlerUpdateUser}/> : <Redirect to='/home'/>}
+            <TableUser clients={clients} borrar={HandleDelete} handlerUpdateUser={handlerUpdateUser}  handleChangePassword={handleChangePassword}/> : <Redirect to='/home'/>}
         </div>
     )
 }
