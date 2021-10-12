@@ -37,12 +37,25 @@ app.use('/categories', Categoryroutes);
 app.use('/diets', Dietroutes);
 app.use('/login', Login);
 app.use('/addCart',Cart)
-app.use('/orders', Orderroutes);
+app.use('/orders',useExtractor, Orderroutes);
 app.use('/reviews',useExtractor, Reviewroutes)
 app.use('/favorite',useExtractor, Favoriteroutes)
 app.use('/cart',useExtractor,Cartroutes)
 app.use('/payment', useExtractor, Payment)
-
+app.get("/feedback",(req, res) => {
+  console.log(req.query.payment_id)
+  console.log(req.query.collection_status)
+  if(req.query.collection_status === 'approved'){
+   return res.redirect(
+    "http://localhost:3000/payment/success"
+  )}
+  if(req.query.collection_status === 'pending'){
+    return res.redirect(
+      "http://localhost:3000/payment/pending"
+    )
+  }
+   return res.redirect("http://localhost:3000/payment/failure") 
+})
 
 
 

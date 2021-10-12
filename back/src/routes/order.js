@@ -3,7 +3,7 @@ const { createOrder,getOrders, deleteOrder,changeOrderStatus} = require('../cont
 const router = Router()
 
 
-router.post('/', createOrder);
+//router.post('/', createOrder);
 router.get('/',getOrders)
 router.delete('/:id',deleteOrder),
 router.put('/:id',changeOrderStatus)

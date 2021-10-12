@@ -18,7 +18,7 @@ import {Navbar, Container} from 'react-bootstrap'
 
 export default function Sidebar({openProduct, openCategory, openDiet}) {
   return (
-    <Navbar bg="light" expand="lg">
+    <Navbar bg="light" expand="lg" id="ContenedorNav">
     <Container id="navResponsive">
       <Navbar.Brand href="#home">Menu</Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />

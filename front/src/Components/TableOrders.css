@@ -12,9 +12,15 @@
     align-items: flex-start;
     flex-wrap: wrap;
 }
-.table1{
-    overflow:scroll; 
-    height:calc(95vh - 50px);
-    width:calc(80vw - 50px);
-    display: flex;
+
+
+@media only screen and (max-width: 770px) {
+    .table1{
+        overflow:scroll; 
+        height:calc(95vh - 50px);
+        width:calc(110vw - 50px);
+    }
+    .table1 thead tr{
+        display: flex;
+    }
 }
