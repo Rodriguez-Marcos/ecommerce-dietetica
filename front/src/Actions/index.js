@@ -20,7 +20,7 @@ export const SET_LOGIN_USER = 'SET_LOGIN_USER';
 export const GET_CLIENTS = 'GET_CLIENTS';
 export const UPDATE_CLIENTS = 'UPDATE_CLIENTS';
 export const DELETE_CLIENTS = 'DELETE_CLIENTS';
-export const REVIEW_URL = "/reviews/";
+export const REVIEW_URL = "http://localhost:3001/reviews/";
 export const GET_ORDERS = 'GET_ORDERS';
 export const PUT_ORDERS = 'PUT_ORDERS';
 
@@ -41,7 +41,7 @@ export const paginate = (recipes) => {
 export function getProducts() {
 
     return async function (dispatch) {
-        return axios.get(`/products/`)
+        return axios.get(`http://localhost:3001/products/`)
             .then((response) => {
                 dispatch({
                     payload: response.data,
@@ -53,7 +53,7 @@ export function getProducts() {
 
 export function getProductbyName(name) {
     return async function (dispatch) {
-        return axios.get(`/products?name=${name}`)
+        return axios.get(`http://localhost:3001/products?name=${name}`)
             .then((response) => {
                 dispatch({
                     type: GET_PRODUCTS_FILTERED,
@@ -70,7 +70,7 @@ export function getProductbyName(name) {
 export function deleteProductByID(id) {
     return async function (dispatch) {
         try {
-            const res = await axios.delete('/products/' + id);
+            const res = await axios.delete('http://localhost:3001/products/' + id);
             return dispatch({
                 type: 'DELETE_PRODUCT_BY_ID',
                 payload: res.data
@@ -85,7 +85,7 @@ export function deleteProductByID(id) {
 export function getById(id) {
     return async function (dispatch) {
         try {
-            const res = await axios.get('/products/' + id);
+            const res = await axios.get('http://localhost:3001/products/' + id);
             return dispatch({
                 type: 'GET_ID',
                 payload: res.data
@@ -98,7 +98,7 @@ export function getById(id) {
 
 export function postProduct(payload) {
     return async function (dispatch) {
-        await axios.post("/products", payload);
+        await axios.post("http://localhost:3001/products", payload);
 
         return dispatch({
             type: "POST_PRODUCTS",
@@ -108,7 +108,7 @@ export function postProduct(payload) {
 }
 export function putProduct(payload, id) {
     return async function (dispatch) {
-        await axios.put("/products/" + id, payload);
+        await axios.put("http://localhost:3001/products/" + id, payload);
 
         return dispatch({
             type: "PUT_PRODUCTS",
@@ -123,7 +123,7 @@ export function putProduct(payload, id) {
 
 export function postCategory(payload) {
     return async function (dispatch) {
-        await axios.post("/categories", payload);
+        await axios.post("http://localhost:3001/categories", payload);
         return dispatch({
             type: "POST_CATEGORY",
             payload,
@@ -132,7 +132,7 @@ export function postCategory(payload) {
 }
 export function postDiet(payload) {
     return async function (dispatch) {
-        await axios.post("/diets", payload);
+        await axios.post("http://localhost:3001/diets", payload);
 
         return dispatch({
             type: "POST_DIET",
@@ -144,7 +144,7 @@ export function postDiet(payload) {
 export function getByIdCategory(id) {
     return async function (dispatch) {
         try {
-            const res = await axios.get(`/products?id_category=${id}`);
+            const res = await axios.get(`http://localhost:3001/products?id_category=${id}`);
             return dispatch({
                 type: GET_BY_ID_CATEGORY,
                 payload: res.data
@@ -160,7 +160,7 @@ export function getByIdCategory(id) {
 export function getByIdDiet(id) {
     return async function (dispatch) {
         try {
-            const res = await axios.get(`/products?id_diet=${id}`);
+            const res = await axios.get(`http://localhost:3001/products?id_diet=${id}`);
             return dispatch({
                 type: GET_BY_ID_DIET,
                 payload: res.data
@@ -177,7 +177,7 @@ export function getProductsFiltered(CategoryId, DietId, priceL, priceH, sortby) 
     return async function (dispatch) {
 
         try {
-            const res = await axios.get(`/products?id_category=${CategoryId}&id_diet=${DietId}&priceL=${priceL}&priceH=${priceH}&sortby=${sortby}`);
+            const res = await axios.get(`http://localhost:3001/products?id_category=${CategoryId}&id_diet=${DietId}&priceL=${priceL}&priceH=${priceH}&sortby=${sortby}`);
             return dispatch({
                 type: GET_BY_DIET_AND_CATEGORY,
                 payload: res.data
@@ -193,7 +193,7 @@ export function getProductsFiltered(CategoryId, DietId, priceL, priceH, sortby) 
 
 export function getCategories() {
     return async function (dispatch) {
-        return axios.get(`/categories`)
+        return axios.get(`http://localhost:3001/categories`)
             .then((response) => {
                 dispatch({
                     type: GET_CATEGORIES,
@@ -206,7 +206,7 @@ export function getCategories() {
 
 export function getDiets() {
     return async function (dispatch) {
-        return axios.get(`/diets`)
+        return axios.get(`http://localhost:3001/diets`)
             .then((response) => {
                 dispatch({
                     type: GET_DIETS,
@@ -244,7 +244,7 @@ export function setLoading() {
 export function getByPrice(priceL, priceH) {
     return async function (dispatch) {
         try {
-            const res = await axios.get(`/products?priceL=${priceL}&priceH=${priceH}`);
+            const res = await axios.get(`http://localhost:3001/products?priceL=${priceL}&priceH=${priceH}`);
             return dispatch({
                 type: GET_BY_PRICE,
                 payload: res.data
@@ -257,7 +257,7 @@ export function getByPrice(priceL, priceH) {
 
 export function review(payload) {
     return async function (dispatch) {
-        await axios.post("/review", payload);
+        await axios.post("http://localhost:3001/review", payload);
 
         return dispatch({
             type: "REVIEW_URL",
@@ -268,7 +268,7 @@ export function review(payload) {
 
 export function loginUser(email, password) {
     return async function (dispatch) {
-            return axios.get(`/clients/login?email=${email}&password=${password}`)
+            return axios.get(`http://localhost:3001/clients/login?email=${email}&password=${password}`)
             .then((response)=>{
             dispatch({
                 type: 'SET_LOGIN_USER',
@@ -281,7 +281,7 @@ export function loginUser(email, password) {
 export function getClients() {
 
     return async function (dispatch) {
-        return axios.get(`/clients`)
+        return axios.get(`http://localhost:3001/clients`)
             .then((response) => {
                 dispatch({
                     payload: response.data,
@@ -293,7 +293,7 @@ export function getClients() {
 
 export function updateClients(id) {
     return async function (dispatch) {
-        return axios.put(`/clients/`+id)
+        return axios.put(`http://localhost:3001/clients/`+id)
             .then((response) => {
                 dispatch({
                     payload: response.data,
@@ -307,7 +307,7 @@ export function updateClients(id) {
 export function deleteClients(id) {
     return async function (dispatch) {
         try {
-            const res = await axios.delete('/clients/' + id);
+            const res = await axios.delete('http://localhost:3001/clients/' + id);
             return dispatch({
                 type: 'DELETE_CLIENTS',
                 payload: res.data
@@ -320,7 +320,7 @@ export function deleteClients(id) {
 export function deleteCategory(id) {
     return async function (dispatch) {
         try {
-            const res = await axios.delete('/categories/' + id);
+            const res = await axios.delete('http://localhost:3001/categories/' + id);
             return dispatch({
                 type: 'DELETE_CATEGORIES',
                 payload: res.data
@@ -333,7 +333,7 @@ export function deleteCategory(id) {
 export function deleteDiets(id) {
     return async function (dispatch) {
         try {
-            const res = await axios.delete('/diets/' + id);
+            const res = await axios.delete('http://localhost:3001/diets/' + id);
             return dispatch({
                 type: 'DELETE_DIETS',
                 payload: res.data
@@ -346,7 +346,7 @@ export function deleteDiets(id) {
 export function getOrders() {
 
     return async function (dispatch) {
-        return axios.get(`/orders`)
+        return axios.get(`http://localhost:3001/orders`)
             .then((response) => {
                 dispatch({
                     payload: response.data,
@@ -357,7 +357,7 @@ export function getOrders() {
 }
 export function putOrders(payload, id ){
     return async function (dispatch) {
-        await axios.put("/products/"+ id, payload);
+        await axios.put("http://localhost:3001/products/"+ id, payload);
        
            return dispatch({
              type: PUT_ORDERS,
