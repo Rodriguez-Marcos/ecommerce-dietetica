@@ -23,6 +23,10 @@ export const DELETE_CLIENTS = "DELETE_CLIENTS";
 export const REVIEW_URL = "http://localhost:3001/reviews/";
 export const GET_ORDERS = "GET_ORDERS";
 export const PUT_ORDERS = "PUT_ORDERS";
+export const FILTER_ORDERS = "FILTER_ORDERS";
+export const RESET_PASSWORD = "RESET_PASSWORD";
+
+
 let cookies = new Cookies();
 
 export const paginate = (recipes) => {
