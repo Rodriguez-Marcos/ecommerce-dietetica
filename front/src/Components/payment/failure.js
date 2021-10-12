@@ -8,7 +8,9 @@ export default function Failure(){
         <div>
         <NavBar/>
         <div className={Styles.div}>
+            <div>
             <h1>Algo Salio mal en la Compra</h1>
+            </div>
         </div>
         </div>
     )

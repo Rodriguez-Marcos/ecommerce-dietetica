@@ -5,19 +5,21 @@ import emptyCart from '../../Utils/emptycart';
 import { useSelector } from 'react-redux';
 import Cookies from 'universal-cookie'
 
-export default function Success(){
+export default function Success() {
     let cookies = new Cookies();
-    let {token} = useSelector(state => state.reducerPablo)
+    let { token } = useSelector(state => state.reducerPablo)
     useEffect(() => {
         emptyCart(token)
     }, [cookies])
 
     return (
         <div>
-        <NavBar/>
-        <div className={Styles.div}>
-            <h1>Gracias Por tu compra</h1>
-        </div>
+            <NavBar />
+            <div className={Styles.div}>
+                <div>
+                    <h1>Gracias Por tu compra</h1>
+                </div>
+            </div>
         </div>
     )
 
