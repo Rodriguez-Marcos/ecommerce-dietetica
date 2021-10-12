@@ -91,17 +91,17 @@ export default function Sidebar({openProduct, openCategory, openDiet}) {
         <div className="sidebarMenu">
           <h3 className="sidebarTitle">Staff</h3>
           <ul className="sidebarList">
-            <li className="sidebarListItem">
+            {/* <li className="sidebarListItem">
               <WorkOutline className="sidebarIcon" />
               Manage
             </li>
             <li className="sidebarListItem">
               <Timeline className="sidebarIcon" />
               Analytics
-            </li>
+            </li> */}
             <li className="sidebarListItem">
               <Report className="sidebarIcon" />
-              Reports
+              <NavLink to='/home'>Salir</NavLink>
             </li>
           </ul>
         </div>

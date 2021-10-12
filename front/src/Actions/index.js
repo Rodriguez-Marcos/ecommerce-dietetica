@@ -2,6 +2,7 @@ import axios from 'axios'
 import { OrderByPrice } from '../Utils/OrderFunctions';
 import getTrolley from "../Utils/getTrolley";
 import Cookies from 'universal-cookie'
+import { ResponsiveEmbed } from 'react-bootstrap';
 export const GET_PRODUCTS = 'GET_PRODUCTS';
 export const GET_CATEGORIES = 'GET_CATEGORIES';
 export const GET_DIETS = 'GET_DIETS';
@@ -24,6 +25,7 @@ export const RESET_PASSWORD = 'RESET_PASSWORD';
 export const REVIEW_URL = "http://localhost:3001/reviews/";
 export const GET_ORDERS = 'GET_ORDERS';
 export const PUT_ORDERS = 'PUT_ORDERS';
+export const FILTER_ORDERS = 'FILTER_ORDERS';
 
 
 let cookies = new Cookies();
@@ -232,6 +234,18 @@ export function orderPrice(orderTarget, products) {
     }
 }
 
+export function orderOrders() {
+    return async function (dispatch) {
+        axios.get()
+            .then((response) => {
+                return dispatch({
+                    type: FILTER_ORDERS,
+                    payload: response.data,
+                })
+            })
+    }
+}
+
 
 export function setLoading() {
     return function (dispatch) {
@@ -405,5 +419,7 @@ export default function getTrolleyAction() {
         };
     };
 }
+
+
 
 
