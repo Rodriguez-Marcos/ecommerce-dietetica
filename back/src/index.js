@@ -1,6 +1,7 @@
 import app from './app.js';
 import { sequelize } from './database/db.js'
-import '@babel/polyfill'
+import "core-js/stable";
+import "regenerator-runtime/runtime";
 
 function main() {
     sequelize.sync({ force: false }).then(() => {
