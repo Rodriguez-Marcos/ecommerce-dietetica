@@ -39,6 +39,6 @@ const Address = sequelize.define('address', {
 
 Client.hasMany(Address,{foreignKey:'id_client',sourceKey:'id'})
 Address.belongsTo(Client,{foreignKey:'id_client',sourceKey:'id'})
-Order.hasOne(Address,{foreignKey:'id_order',sourceKey:'id'})
-Address.belongsToMany(Order,{foreignKey:'id_address',sourceKey:'id'})
+Address.hasMany(Order,{foreignKey:'id_address',sourceKey:'id'})
+Order.belongsTo(Address,{foreignKey:'id_address',sourceKey:'id'})
 export default Address
