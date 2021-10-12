@@ -60,7 +60,6 @@ function CreateUser() {
             alert('Debes llenar todos los campos')
         }
         else {
-            /* login(input.email,input.password ); */
             createUser(input)
             alert('Se creo usuario exitosamente')
             login(input.email, input.password)

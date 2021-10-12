@@ -19,6 +19,7 @@ import AdminDietAndCategory from './Components/TableDietAndCategory';
 import Success from './Components/payment/success';
 import Pendings from './Components/payment/pending';
 import Failure from './Components/payment/failure';
+import CreateAdress from './Components/CreateAdress'
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
     <Route exact path='/Admin/user' component={UsersAdminDetail}/>
     <Route exact path='/Admin/orders' component={OrderAdminDetail}/>
     <Route exact path='/Admin/filters' component={AdminDietAndCategory}/>
+    <Route exact path='/newadress' component={CreateAdress}/>
     
 
 
