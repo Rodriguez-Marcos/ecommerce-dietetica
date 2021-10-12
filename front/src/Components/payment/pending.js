@@ -6,6 +6,7 @@ import emptycart from '../../Utils/emptycart';
 
 export default function Pending(){
 
+
     let [input, setInput]=useState({
         direccion: ' ',
         altura: ' ',
@@ -24,6 +25,7 @@ export default function Pending(){
     useEffect(() => {
         emptycart(window.localStorage.jwt)
     }, [])
+
     async function handleSubmit(event) {
         event.preventDefault()
         if (!input.direccion || !input.altura || !input.ciudad || !input.provincia || !input.numero) { alert('Debes llenar todos los campos') }
@@ -40,7 +42,8 @@ export default function Pending(){
             <div>
             <h1>Gracias Por tu compra Aguardamos tu pago nomas </h1>
             </div>
-          
+
+
         </div>
         <div>
             <h1> Solo nos queda cargar los datos del envio </h1>

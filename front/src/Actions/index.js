@@ -32,7 +32,9 @@ export const FILTER_ORDERS = 'FILTER_ORDERS';
 
 
 
+
 let cookies = new Cookies();
+
 
 
 let cookies = new Cookies();
@@ -376,6 +378,7 @@ export function getOrders(token) {
       });
   };
 }
+
 export function putOrders(payload, id, token) {
   return async function (dispatch) {
 
@@ -409,6 +412,10 @@ export function putOrders(payload, id, token) {
     });
   };
 }
+
+
+
+
 
 export default function getTrolleyAction() {
   return async function (dispatch) {
@@ -457,6 +464,7 @@ export function getAdress() {
             })
     }
 }
+
 
 export function putOrders(payload, id ){
     return async function (dispatch) {
@@ -520,5 +528,6 @@ export function getAdress() {
             })
     }
 }
+
 
 

@@ -43,9 +43,11 @@ export default function Success(){
                 <div>
                     <h1>Gracias Por tu compra</h1>
                 </div>
+
                
             </div>
             <div>
+
                 <h1> Solo nos queda cargar los datos del envio </h1>
                 <p>Direccion</p>
                 <input type="text" name='direccion' value={input.direccion} placeholder="Direccion" onChange={handleAdress} />
@@ -61,6 +63,11 @@ export default function Success(){
                 <input type="text" placeholder="Numero de Contacto" name='numero' value={input.numero} onChange={handleAdress} />
 
                 <button onClick={handleSubmit}> Aceptar </button> 
+
+                <button onClick={handleSubmit}> Aceptar </button>
+
+            </div>
+
             </div>
         </div>
     )
