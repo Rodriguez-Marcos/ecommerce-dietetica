@@ -35,6 +35,7 @@ async function useExtractor (req,res,next){
     
 
     const authorization = req.get('authorization');
+ 
     let token = null;
     if (authorization && authorization.toLowerCase().startsWith('bearer')) {
         token = authorization.substring(7);

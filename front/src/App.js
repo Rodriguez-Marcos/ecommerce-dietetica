@@ -14,7 +14,7 @@ import { DataProvider } from './Contexts/DataProvider'
 import Login from './Components/Login';
 import Sidebar from './Components/AdminSideBar';
 import UsersAdminDetail from './Components/UsersAdminDetail'
-import OrderAdminDetail from './Components/OrdersAdminDetail';
+import TableOrders from './Components/TableOrders';
 import AdminDietAndCategory from './Components/TableDietAndCategory';
 
 function App() {
@@ -31,7 +31,7 @@ function App() {
     <Route exact path='/Login' component={Login}/>
     <Route exact path='/Admin' component={Creator}/>
     <Route exact path='/Admin/user' component={UsersAdminDetail}/>
-    <Route exact path='/Admin/orders' component={OrderAdminDetail}/>
+    <Route exact path='/Admin/orders' component={TableOrders}/>
     <Route exact path='/Admin/filters' component={AdminDietAndCategory}/>
 
 

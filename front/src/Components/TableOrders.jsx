@@ -1,62 +1,80 @@
-import { React } from "react";
+import React, { useEffect, useState } from "react";
 import "bootstrap";
 import { Button } from "reactstrap";
 import Topbar from "./AdminTopBar";
 import Sidebar from "./AdminSideBar";
 import AdminDetailsOrders from "./AdminDetailsOrders";
 import "./TableOrders.css";
-import { useState } from "react";
 
-export default function TableOrders({ orders, handlerStatus }) {
+import { useDispatch, useSelector } from "react-redux";
+import { getOrders, putOrders } from "../Actions";
+
+export default function TableOrders() {
+  let dispatch = useDispatch();
+  const orders = useSelector((state) => state.reducerPablo.orders);
+
+  useEffect(() => {
+    dispatch(getOrders(window.localStorage.jwt));
+  }, [dispatch]);
+
+  const [estado, setStatus] = useState({
+    status: orders.status,
+    id: "",
+  });
+  function handlerStatus(event, id) {
+    if (event.target.value != estado.actual) {
+      console.log('hola mama')
+      setStatus({
+        ...estado,
+        status: event.target.value,
+        id: id,
+      });
+
+      dispatch(
+        putOrders({ status: event.target.value }, id, window.localStorage.jwt)
+      );
+    }
+    dispatch(getOrders(window.localStorage.jwt));
+  }
+
   const [state, setstate] = useState({
-
     clientName: "",
     clientLastname: "",
     clientPhone: "",
     clientMail: "",
-    productName: [], 
+    productName: [],
     direccion: "",
-    id:'', 
+    id: "",
     date: "",
-    total:'',
-    status: '', 
+    total: "",
+    status: "",
     modal: false,
   });
 
   function handlerDetails(e) {
-    console.log('esto es e',e)
-   
-
-        setstate({
-          ...state,
-         modal:true, 
-         id: e.id,
-         direccion: e.shippingAddress,
-         date: e.createDate,
-         total: e.ammount, 
-         status: e.status,
-         clientName: e.client? e.client.name : 'No Found',
-         clientLastname: e.client? e.client.lastname : 'No Found',
-         clientPhone: e.client? e.client.phone : 'No Found',
-         clientMail: e.client? e.client.email : 'No Found',
-         productName: e.products ? e.products.filter(e=> e.name) : 'No Found'
-
-        })
-
-       
-  }
-  function closeModal(e){
+    console.log("esto es e", e);
 
     setstate({
       ...state,
-     modal:false, 
-    
-
-    })
-
+      modal: true,
+      id: e.id,
+      direccion: e.shippingAddress,
+      date: e.createDate,
+      total: e.ammount,
+      status: e.status,
+      clientName: e.client ? e.client.name : "No Found",
+      clientLastname: e.client ? e.client.lastname : "No Found",
+      clientPhone: e.client ? e.client.phone : "No Found",
+      clientMail: e.client ? e.client.email : "No Found",
+      productName: e.products ? e.products.filter((e) => e.name) : "No Found",
+    });
   }
-
-  
+  function closeModal(e) {
+    setstate({
+      ...state,
+      modal: false,
+    });
+  }
 
   return (
     <div className="ordersContenedor">
@@ -110,7 +128,10 @@ export default function TableOrders({ orders, handlerStatus }) {
                 </td>
 
                 <td>
-                  <Button color="primary" onClick={()=>handlerDetails(e)}> Ver Mas </Button>
+                  <Button color="primary" onClick={() => handlerDetails(e)}>
+                    {" "}
+                    Ver Mas{" "}
+                  </Button>
                 </td>
               </tbody>
             ))
@@ -119,7 +140,7 @@ export default function TableOrders({ orders, handlerStatus }) {
           )}
         </table>
       </div>
-      <AdminDetailsOrders  input= {state} closeModal ={closeModal}  />
+      <AdminDetailsOrders input={state} closeModal={closeModal} />
     </div>
   );
 }
