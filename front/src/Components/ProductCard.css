@@ -3,7 +3,7 @@
     --hoverVerde:rgba(16, 112, 16, 0.795);
     --colorCafe: #99642C;
 }
-#a{
+/* #a{
     align-items: center;
     padding: 20px;
     margin :15px;
@@ -46,7 +46,7 @@ box-shadow: 8px 0px 0px 0px var(--colorCafe), 0px 8px 0px 0px var(--hoverVerde),
 }
 #carrito:hover{
     background-color: var(--colorCafe);
-}
+} */
 #carritoimg{
     width: 3vw;
 }
@@ -62,7 +62,7 @@ box-shadow: 8px 0px 0px 0px var(--colorCafe), 0px 8px 0px 0px var(--hoverVerde),
 #detalles:hover{
     color: var(--hoverVerde);
 }
-#precio{
+/* #precio{
     position: absolute;
     background-color: rgba(128, 128, 128, 0);
     color: transparent;
@@ -79,4 +79,73 @@ box-shadow: 8px 0px 0px 0px var(--colorCafe), 0px 8px 0px 0px var(--hoverVerde),
    background-color: rgba(5, 5, 5, 0.507);
    color: rgb(245, 239, 245);
    border-radius: 15px;
+} */
+
+#a{
+    width: 20vw;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
 }
+
+#card{
+    width: 20vw;
+    height: 40vh;
+    margin: 10px;
+    box-shadow: 0 0 5px #7bbde5;
+    border-radius: 10px;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    text-align: center;
+}
+#nombre_producto{
+    position: absolute;
+    background-color: rgba(29, 31, 31, 0.548);
+    width: 100%;
+    height: 20%;
+    color: white;
+    padding: 5px;
+    font-size: small;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#divImg{
+    
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#divImg img {
+    width: 20vw;
+    height: 20vw;
+    transition: 1.5 ease-in;
+}
+#card:hover .divImg .img{
+    width: 80%;
+}
+
+#info::before{
+    /* background-color: var(--colorCafe);
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    content: "";
+    top: -50%;
+    transform: skewY(345deg);
+    transition: 1s ease-in;
+    z-index: -1; */
+    background-color: red;
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+/* #info:hover::before{
+    top: -70;
+    transform: skewY(390deg);
+} */

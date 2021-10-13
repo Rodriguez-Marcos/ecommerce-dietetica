@@ -19,7 +19,7 @@ const cookies = new Cookies();
 
 
 export function ProductCard({ product }) {
-  const [ counter, setCounter ] = useState (1);
+  const [counter, setCounter] = useState(1);
   let location = useLocation();
   let dispatch = useDispatch();
   let { isLogin, token } = useSelector(state => state.reducerPablo);
@@ -30,21 +30,21 @@ export function ProductCard({ product }) {
     if (!trolley.find(x => x.id === product.id)) {
       let quantity = counter;
       let { id } = product;
-      trolley.push({id, quantity});
-      if (isLogin) postCarrito(token,{id,quantity});
+      trolley.push({ id, quantity });
+      if (isLogin) postCarrito(token, { id, quantity });
     }
     cookies.set('trolley', trolley)
     dispatch({
       type: 'COMODIN',
     })
   }
-  function actualizateQuantity(){
+  function actualizateQuantity() {
     let trolley = Array.isArray(cookies.get('trolley')) ? [...cookies.get('trolley')] : []; /// trolley : []
     if (!trolley.find(x => x.id === product.id)) {
       let quantity = counter;
       let { id } = product;
       trolley.push(product);
-      if (isLogin) postCarrito(token, {id,quantity});
+      if (isLogin) postCarrito(token, { id, quantity });
     }
   }
 
@@ -59,21 +59,19 @@ export function ProductCard({ product }) {
   }
 
   return (
-    <Card style={{ width: '18rem' }} id="a" key={product.id}>
-      <Card.Title>{product.name}</Card.Title>
-      <Card id="divImg">
-        <Card.Img id="img" variant="top" src={product.image ? product.image : defaultimg} />
-        <Card id="precio">Precio ${product.price}</Card>
-      </Card>
-      <ListGroup className="list-group-flush">
-        <ListGroupItem>
+    <div id="a" key={product.id}>
+      <div id="card">
+        <h5 id="nombre_producto">{product.name}</h5>
+        <div id="divImg">
+          <img  src={product.image ? product.image : defaultimg} />
+        </div>
+        <div  id="info">
+          <h4 id="precio">Precio ${product.price}</h4>
           <Link id="detalles" to={`/Detail/${product.id}`} >Ver este producto</Link>
-        </ListGroupItem>
-        <ListGroupItem id="btns">
           {location.pathname !== '/trolley' ? <Button id="carrito" onClick={(e) => handleClickTrolley(e)} >Agregar  <Card.Img id="carritoimg" src={compras} /></Button> : false}
-        </ListGroupItem>
-      </ListGroup>
-    </Card>
+        </div>
+      </div>
+    </div>
   );
 }
 
