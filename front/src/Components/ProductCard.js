@@ -10,7 +10,7 @@ import borrar from '../image/cancelar.png'
 import compras from '../image/carrito.png'
 import postCarrito from '../Utils/postCarrito';
 import removePC from '../Utils/removePC';
-import { RemoveShoppingCart } from '@material-ui/icons';
+import { Favorite, RemoveShoppingCart, ShoppingCartSharp } from '@material-ui/icons';
 import RemoveIcon from "@material-ui/icons/Remove";
 import AddIcon from "@material-ui/icons/Add";
 const cookies = new Cookies();
@@ -31,6 +31,7 @@ export function ProductCard({ product }) {
       let quantity = counter;
       let { id } = product;
       trolley.push({ id, quantity });
+      alert("Se añadio a tu carrito")
       if (isLogin) postCarrito(token, { id, quantity });
     }
     cookies.set('trolley', trolley)
@@ -39,17 +40,50 @@ export function ProductCard({ product }) {
     })
   }
 
+  function actualizateQuantity() {
+    let trolley = Array.isArray(cookies.get('trolley')) ? [...cookies.get('trolley')] : []; /// trolley : []
+    if (!trolley.find(x => x.id === product.id)) {
+      let quantity = counter;
+      let { id } = product;
+      trolley.push(product);
+      if (isLogin) postCarrito(token, { id, quantity });
+    }
+  }
+
+  function handleClose(e) {
+    e.preventDefault();
+    let trolley = Array.isArray(cookies.get('trolley')) ? [...cookies.get('trolley')] : [];
+    cookies.set('trolley', trolley.filter(x => x.id !== product.id))
+    if (isLogin) removePC(token, [product.id]);
+    dispatch({
+      type: 'COMODIN',
+    })
+  }
+  function handleFavorite() {
+    alert("Se añadio a tus favoritos")
+  }
   return (
     <div id="a" key={product.id}>
       <div id="card">
-        <h5 id="nombre_producto">{product.name}</h5>
+        <Link id="detalles" to={`/Detail/${product.id}`}>
+          <h5 id="nombre_producto">{product.name}</h5>
+        </Link>
         <div id="divImg">
-          <img  src={product.image ? product.image : defaultimg} />
+          <Link id="detalles" to={`/Detail/${product.id}`}>
+            <img src={product.image ? product.image : defaultimg} />
+          </Link>
+          <div id="favorite-carrito">
+            <div id="favorite">
+              <input className="corazon" id="heart" onClick={handleFavorite} type="checkbox" />
+              <label for="heart"><Favorite /></label>
+            </div>
+            <h5 id="precio">${product.price}</h5>
+            <div id="carroCompras">
+              {location.pathname !== '/trolley' ? <button id="carrito" onClick={(e) => handleClickTrolley(e)} ><ShoppingCartSharp id="carritoimg" /></button> : false}
+            </div>
+          </div>
         </div>
-        <div  id="info">
-          <h4 id="precio">Precio ${product.price}</h4>
-          <Link id="detalles" to={`/Detail/${product.id}`} >Ver este producto</Link>
-          {(location.pathname !== '/trolley') ? product.stock>0?<Button id="carrito" onClick={(e) => handleClickTrolley(e)} >Agregar  <Card.Img id="carritoimg" src={compras} /></Button>:<Button style={{backgroundColor: '#e3001b'}} onClick={()=>{alert('Fuera de Stok, estamos trabajando para reponerlo :)')}} id="carrito"  >Agregar  <Card.Img id="carritoimg" src={compras} /></Button> : false}
+        <div id="info">
         </div>
       </div>
     </div>
