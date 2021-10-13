@@ -10,11 +10,9 @@ export default function Mercadopago (cartItems) {
         try {
           let preference = {
             back_urls: {
-
               success: "http://localhost:3000/payment/success",
               failure: "http://localhost:3000/payment/failure",
               pending: "http://localhost:3000/payment/pending",
-
             },
             auto_return: "approved",
             items: []   
