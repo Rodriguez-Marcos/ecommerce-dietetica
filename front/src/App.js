@@ -43,6 +43,8 @@ function App() {
     <Route exact path='/Login' component={Login}/>
     <Route exact path='/Admin' component={Creator}/>
 
+  
+
     <Route exact path='/newadress' component={CreateAdress}/>
     <Route exact path='/Admin' render={() => isAdmin ? <Creator></Creator>: <Redirect to='/home'/>}/>
     <Route exact path='/Admin/user'  render={() => isAdmin ? <UsersAdminDetail/>: <Redirect to='/home'/>}/>
