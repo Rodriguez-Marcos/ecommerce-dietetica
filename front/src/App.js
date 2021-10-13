@@ -20,10 +20,7 @@ import { useSelector } from 'react-redux';
 import Success from './Components/payment/success';
 import Pendings from './Components/payment/pending';
 import Failure from './Components/payment/failure';
-import AdminDetailsOrders from './Components/AdminDetailsOrders';
-
 import CreateAdress from './Components/CreateAdress'
-
 import AdminDetailsOrders from './Components/AdminDetailsOrders';
 
 

@@ -393,7 +393,9 @@ export function putOrders(payload, id ){
          };
        }
 
-
+export function postAdress(){
+    return 0
+}
 
 export default function getTrolleyAction() {
     return async function (dispatch) {
