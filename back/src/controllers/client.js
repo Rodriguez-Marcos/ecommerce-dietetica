@@ -42,7 +42,6 @@ export async function createClient(req, res) {
                 return res.json({
                     message: 'Client created successfully',
                     data: newClient,
-                    token
                 })
 
             }

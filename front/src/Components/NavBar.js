@@ -35,7 +35,7 @@ const cookies = new Cookies();
 function NavBar({ getProductbyName, setLoading, isLogin, token }) {
   let comodin = useSelector(state => state.reducerPablo.comodin);
   let isAdmin = useSelector(state => state.reducerPablo.IsAdmin);
-  let { productCart} = useSelector(state=>state.cart)// no sacar, sirve para contar la cantidad en el carrito
+  let { productsCart } = useSelector(state=>state.cart)// no sacar, sirve para contar la cantidad en el carrito
   const value = useContext(DataContext)
   const [menu, setMenu] = value.menu;
   
@@ -60,8 +60,11 @@ function NavBar({ getProductbyName, setLoading, isLogin, token }) {
   }, [myStorage])
   let history = useHistory();
   useEffect(() => {
-
-  }, [comodin,])
+    let isArray = Array.isArray(cookies.get('trolley'))
+    if(!isArray){
+      cookies.set('trolley',[])
+    }
+  }, [])
 
 
 
