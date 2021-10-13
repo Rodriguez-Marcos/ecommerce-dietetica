@@ -3,6 +3,7 @@ import { sequelize } from './database/db.js'
 import "core-js/stable";
 import "regenerator-runtime/runtime";
 
+  
 function main() {
     sequelize.sync({ force: false }).then(() => {
         app.listen(process.env.PORT || 3001, () => {
