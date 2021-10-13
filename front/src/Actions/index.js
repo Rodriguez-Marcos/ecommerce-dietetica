@@ -99,9 +99,14 @@ export function getById(id) {
     };
 };
 
-export function postProduct(payload) {
+export function postProduct(payload,token) {
     return async function (dispatch) {
-        await axios.post("http://localhost:3001/products", payload);
+        console.log(token)
+        await axios.post("http://localhost:3001/products", payload, {
+            headers: {
+              'Authorization': `Bearer ${token}` 
+            }
+          });
 
         return dispatch({
             type: "POST_PRODUCTS",
