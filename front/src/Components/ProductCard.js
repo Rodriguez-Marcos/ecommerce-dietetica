@@ -49,12 +49,10 @@ export function ProductCard({ product }) {
         <div  id="info">
           <h4 id="precio">Precio ${product.price}</h4>
           <Link id="detalles" to={`/Detail/${product.id}`} >Ver este producto</Link>
-        </ListGroupItem>
-        <ListGroupItem id="btns">
           {(location.pathname !== '/trolley') ? product.stock>0?<Button id="carrito" onClick={(e) => handleClickTrolley(e)} >Agregar  <Card.Img id="carritoimg" src={compras} /></Button>:<Button style={{backgroundColor: '#e3001b'}} onClick={()=>{alert('Fuera de Stok, estamos trabajando para reponerlo :)')}} id="carrito"  >Agregar  <Card.Img id="carritoimg" src={compras} /></Button> : false}
-        </ListGroupItem>
-      </ListGroup>
-    </Card>
+        </div>
+      </div>
+    </div>
   );
 }
 
