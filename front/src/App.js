@@ -14,13 +14,18 @@ import { DataProvider } from './Contexts/DataProvider'
 import Login from './Components/Login';
 import Sidebar from './Components/AdminSideBar';
 import UsersAdminDetail from './Components/UsersAdminDetail'
-import OrderAdminDetail from './Components/OrdersAdminDetail';
+import TableOrders from './Components/TableOrders';
 import AdminDietAndCategory from './Components/TableDietAndCategory';
 import { useSelector } from 'react-redux';
 import Success from './Components/payment/success';
 import Pendings from './Components/payment/pending';
 import Failure from './Components/payment/failure';
 import AdminDetailsOrders from './Components/AdminDetailsOrders';
+
+import CreateAdress from './Components/CreateAdress'
+
+import AdminDetailsOrders from './Components/AdminDetailsOrders';
+
 
 function App() {
 
@@ -37,15 +42,12 @@ function App() {
     {/* <Route exact path='/trolley' component={Trolley}/> */}
     {/* <Route exact path='/CreateUser' component={CreateUser}/> */}
     <Route exact path='/Login' component={Login}/>
+    <Route exact path='/Admin' component={Creator}/>
+    <Route exact path='/newadress' component={CreateAdress}/>
     <Route exact path='/Admin' render={() => isAdmin ? <Creator></Creator>: <Redirect to='/home'/>}/>
     <Route exact path='/Admin/user'  render={() => isAdmin ? <UsersAdminDetail/>: <Redirect to='/home'/>}/>
-    <Route exact path='/Admin/orders'  render={() => isAdmin ? <AdminDetailsOrders/>: <Redirect to='/home'/>}/>
+    <Route exact path='/Admin/orders'  render={() => isAdmin ? <TableOrders/>: <Redirect to='/home'/>}/>
     <Route exact path='/Admin/filters' render={() => isAdmin ? <AdminDietAndCategory/>: <Redirect to='/home'/>}/>
-    
-
-
-    </Switch>
-    <Switch>
     <Route exact path='/payment/success' component={Success}/>
     <Route exact path='/payment/pending' component={Pendings}/>
     <Route exact path='/payment/failure' component={Failure}/>

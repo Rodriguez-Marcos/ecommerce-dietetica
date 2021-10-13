@@ -169,18 +169,20 @@ export async function loginUser(req, res) {
     }
 }
 export async function RegOrCreateGaccount(req, res) {
+    const {googleId} = req.body
+    const {name,email,lastname} = req;
+    console.log('datos: ', name,email, lastname, googleId)
 
-    let client = await Client.findOne({ where: { googleId: req.params.googleId } })
+
+    let client = await Client.findOne({ where: { googleId } })
     try {
         if (!client) {
             let newClient = await Client.create({
-                where: {
-                    email: req.email,
+                    email: email,
                     isGoogleClient: true,
-                    googleId: req.body.googleId,
-                    name: req.name,
-                    lastname: req.lastname
-                }
+                    googleId: googleId,
+                    name: name,
+                    lastname: lastname
             })
             if (newClient) {
                 let client_id = await Client.findOne({ where: { email: req.email }, attributes: ['id'] })

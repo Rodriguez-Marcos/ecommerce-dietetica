@@ -11,7 +11,7 @@
   "author": "",
   "license": "ISC",
   "engines": {
-    "node": "=14.17.3",
+    "node": "=14.15.4",
     "npm": ">=6.14.6"
   },
   "dependencies": {
@@ -30,6 +30,7 @@
     "path": "^0.12.7",
     "pg": "^8.7.1",
     "pg-hstore": "^2.3.4",
+    "regenerator-runtime": "^0.13.9",
     "sequelize": "^6.6.5"
   },
   "devDependencies": {

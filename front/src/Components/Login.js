@@ -168,7 +168,7 @@ function Login({ respuesta, isLogin }) {
                     <GoogleLogin
                         clientId="908895428836-kaesjl71puimi31fjbffca9t4nvl7v6r.apps.googleusercontent.com"
                         buttonText="Login"
-                        onSuccess={responseGoogle}
+                        onSuccess={loginGoogle}
                         onFailure={responseGoogle}
                         cookiePolicy={'single_host_origin'}
                     />,
