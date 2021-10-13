@@ -4,7 +4,8 @@ require('dotenv').config()
 const {
     DB_USER,
     DB_PASSWORD,
-    DB_HOST
+    DB_HOST,
+    DB_NAME
 } = process.env;
 
 export const sequelize = process.env.NODE_ENV === "production"
@@ -33,6 +34,3 @@ export const sequelize = process.env.NODE_ENV === "production"
         `postgresql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:6013/bndlhxxrg7jx3ufyrw45`,
         {
             logging: false, // set to console.log to see the raw SQL queries
-
-        }
-    )
