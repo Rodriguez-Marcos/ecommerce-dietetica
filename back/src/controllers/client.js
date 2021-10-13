@@ -2,7 +2,7 @@ import Client from '../models/Client.js';
 import Cart from '../models/Cart.js';
 import Favorite from '../models/Favorite.js';
 import Product from '../models/Product.js';
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 module.export = Client;
