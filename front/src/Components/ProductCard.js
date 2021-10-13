@@ -38,25 +38,6 @@ export function ProductCard({ product }) {
       type: 'COMODIN',
     })
   }
-  function actualizateQuantity(){
-    let trolley = Array.isArray(cookies.get('trolley')) ? [...cookies.get('trolley')] : []; /// trolley : []
-    if (!trolley.find(x => x.id === product.id)) {
-      let quantity = counter;
-      let { id } = product;
-      trolley.push(product);
-      if (isLogin) postCarrito(token, {id,quantity});
-    }
-  }
-
-  function handleClose(e) {
-    e.preventDefault();
-    let trolley = Array.isArray(cookies.get('trolley')) ? [...cookies.get('trolley')] : [];
-    cookies.set('trolley', trolley.filter(x => x.id !== product.id))
-    if (isLogin) removePC(token, [product.id]);
-    dispatch({
-      type: 'COMODIN',
-    })
-  }
 
   return (
     <Card style={{ width: '18rem' }} id="a" key={product.id}>
@@ -70,7 +51,7 @@ export function ProductCard({ product }) {
           <Link id="detalles" to={`/Detail/${product.id}`} >Ver este producto</Link>
         </ListGroupItem>
         <ListGroupItem id="btns">
-          {location.pathname !== '/trolley' ? <Button id="carrito" onClick={(e) => handleClickTrolley(e)} >Agregar  <Card.Img id="carritoimg" src={compras} /></Button> : false}
+          {(location.pathname !== '/trolley') ? product.stock>0?<Button id="carrito" onClick={(e) => handleClickTrolley(e)} >Agregar  <Card.Img id="carritoimg" src={compras} /></Button>:<Button style={{backgroundColor: '#e3001b'}} onClick={()=>{alert('Fuera de Stok, estamos trabajando para reponerlo :)')}} id="carrito"  >Agregar  <Card.Img id="carritoimg" src={compras} /></Button> : false}
         </ListGroupItem>
       </ListGroup>
     </Card>

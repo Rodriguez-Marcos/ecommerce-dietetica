@@ -411,6 +411,7 @@ export default function getTrolleyAction() {
             })
             let res = await getTrolley(cookieTrolley.map(x=>x.id))
             let payload = [];
+            console.log(res.data)
             res.data.forEach(x=>{
                 cookieTrolley.forEach(({id})=>{
                     if(x.id===id.id)

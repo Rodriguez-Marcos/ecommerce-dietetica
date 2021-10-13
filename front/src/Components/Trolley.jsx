@@ -44,7 +44,16 @@ export default function Trolley() {
     })
 
   }
-  const increase = id => {
+  const increase = producto => {
+    let {id, stock} = producto
+    let handle = cookies.get('trolley').find(x => {
+      if (x.id === id) {
+        if(x.quantity >= stock){
+          return true;
+        }}})
+        if(handle){
+          return 0;
+        }
     carrito.forEach(item => {
       if (item.id === id) {
         item.cantidad += 1;
@@ -141,9 +150,10 @@ export default function Trolley() {
     if (isLogin) {
       getCart(token);
     }
-    dispatch(getTrolleyAction())
   }, [isLogin])
-
+  
+  useEffect(() => {
+  dispatch(getTrolleyAction())},[])
     return (
       <div className="carritos show">
         <div className="carrito show">
@@ -164,10 +174,11 @@ export default function Trolley() {
                 </div>
                 <div>
                 
-                  <box-icon onClick={() => increase(producto.id)}  name="up-arrow" type="solid"></box-icon>
+                  <box-icon onClick={() => increase(producto)}  name="up-arrow" type="solid"></box-icon>
                   <h3 className="cantidad">{producto.cantidad}</h3>
                   
                   <box-icon onClick={() => reduce(producto.id)} name="down-arrow" type="solid"></box-icon>
+                  <h6>Stock: {producto.stock}</h6>
                 </div>
                 <div className="remove__item">
                   <box-icon id="trash" onClick={()=>handleClose(producto.id)} name="trash"></box-icon>
