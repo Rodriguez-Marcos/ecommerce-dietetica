@@ -1,5 +1,5 @@
 import Client from "../models/Client";
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken')
 const loginRouter = require('express').Router();
 const { OAuth2Client } = require('google-auth-library');

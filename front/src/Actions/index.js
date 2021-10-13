@@ -1,5 +1,5 @@
-import axios from "axios";
-import { OrderByPrice } from "../Utils/OrderFunctions";
+import axios from 'axios'
+import { OrderByPrice } from '../Utils/OrderFunctions';
 import getTrolley from "../Utils/getTrolley";
 import Cookies from 'universal-cookie'
 import { ResponsiveEmbed } from 'react-bootstrap';
@@ -25,206 +25,218 @@ export const RESET_PASSWORD = 'RESET_PASSWORD';
 export const REVIEW_URL = "http://localhost:3001/reviews/";
 export const GET_ORDERS = 'GET_ORDERS';
 export const PUT_ORDERS = 'PUT_ORDERS';
-export const POST_ADDRESS = 'POST_ADDRESS'
-export const GET_ADDRESS = 'GET_ADDRESS'
 export const FILTER_ORDERS = 'FILTER_ORDERS';
-
-
-
 
 
 let cookies = new Cookies();
 
+
+
+
 export const paginate = (recipes) => {
-  return {
-    type: PAGINATE,
-    payload: recipes,
-  };
+    return {
+        type: PAGINATE,
+        payload: recipes,
+    };
 };
 
+
 export function getProducts() {
-  return async function (dispatch) {
-    return axios.get(`http://localhost:3001/products/`).then((response) => {
-      dispatch({
-        payload: response.data,
-        type: GET_PRODUCTS,
-      });
-    });
-  };
+
+    return async function (dispatch) {
+        return axios.get(`http://localhost:3001/products/`)
+            .then((response) => {
+                dispatch({
+                    payload: response.data,
+                    type: GET_PRODUCTS
+                })
+            })
+    }
 }
 
 export function getProductbyName(name) {
-  return async function (dispatch) {
-    return axios
-      .get(`http://localhost:3001/products?name=${name}`)
-      .then((response) => {
-        dispatch({
-          type: GET_PRODUCTS_FILTERED,
-          payload: response.data,
-        });
-      })
-      .catch((err) => {
-        dispatch({
-          type: FAIL_TO_LOAD,
-        });
-      });
-  };
+    return async function (dispatch) {
+        return axios.get(`http://localhost:3001/products?name=${name}`)
+            .then((response) => {
+                dispatch({
+                    type: GET_PRODUCTS_FILTERED,
+                    payload: response.data
+                })
+            })
+            .catch(err => {
+                dispatch({
+                    type: FAIL_TO_LOAD,
+                })
+            })
+    }
 }
 export function deleteProductByID(id) {
-  return async function (dispatch) {
-    try {
-      const res = await axios.delete("http://localhost:3001/products/" + id);
-      return dispatch({
-        type: "DELETE_PRODUCT_BY_ID",
-        payload: res.data,
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  };
-}
+    return async function (dispatch) {
+        try {
+            const res = await axios.delete('http://localhost:3001/products/' + id);
+            return dispatch({
+                type: 'DELETE_PRODUCT_BY_ID',
+                payload: res.data
+            });
+        } catch (err) {
+            console.log(err)
+        };
+    };
+};
+
 
 export function getById(id) {
-  return async function (dispatch) {
-    try {
-      const res = await axios.get("http://localhost:3001/products/" + id);
-      return dispatch({
-        type: "GET_ID",
-        payload: res.data,
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  };
-}
+    return async function (dispatch) {
+        try {
+            const res = await axios.get('http://localhost:3001/products/' + id);
+            return dispatch({
+                type: 'GET_ID',
+                payload: res.data
+            });
+        } catch (err) {
+            console.log(err)
+        };
+    };
+};
 
-export function postProduct(payload) {
-  return async function (dispatch) {
-    await axios.post("http://localhost:3001/products", payload);
+export function postProduct(payload,token) {
+    return async function (dispatch) {
+        console.log(token)
+        await axios.post("http://localhost:3001/products", payload, {
+            headers: {
+              'Authorization': `Bearer ${token}` 
+            }
+          });
 
-    return dispatch({
-      type: "POST_PRODUCTS",
-      payload,
-    });
-  };
+        return dispatch({
+            type: "POST_PRODUCTS",
+            payload,
+        });
+    };
 }
 export function putProduct(payload, id) {
-  return async function (dispatch) {
-    await axios.put("http://localhost:3001/products/" + id, payload);
+    return async function (dispatch) {
+        await axios.put("http://localhost:3001/products/" + id, payload);
 
-    return dispatch({
-      type: "PUT_PRODUCTS",
-      payload,
-      id,
-    });
-  };
+        return dispatch({
+            type: "PUT_PRODUCTS",
+            payload,
+            id,
+        });
+    };
 }
+
+
+
 
 export function postCategory(payload) {
-  return async function (dispatch) {
-    await axios.post("http://localhost:3001/categories", payload);
-    return dispatch({
-      type: "POST_CATEGORY",
-      payload,
-    });
-  };
+    return async function (dispatch) {
+        await axios.post("http://localhost:3001/categories", payload);
+        return dispatch({
+            type: "POST_CATEGORY",
+            payload,
+        });
+    };
 }
 export function postDiet(payload) {
-  return async function (dispatch) {
-    await axios.post("http://localhost:3001/diets", payload);
+    return async function (dispatch) {
+        await axios.post("http://localhost:3001/diets", payload);
 
-    return dispatch({
-      type: "POST_DIET",
-      payload,
-    });
-  };
+        return dispatch({
+            type: "POST_DIET",
+            payload,
+        });
+    };
 }
 
 export function getByIdCategory(id) {
-  return async function (dispatch) {
-    try {
-      const res = await axios.get(
-        `http://localhost:3001/products?id_category=${id}`
-      );
-      return dispatch({
-        type: GET_BY_ID_CATEGORY,
-        payload: res.data,
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  };
-}
+    return async function (dispatch) {
+        try {
+            const res = await axios.get(`http://localhost:3001/products?id_category=${id}`);
+            return dispatch({
+                type: GET_BY_ID_CATEGORY,
+                payload: res.data
+            });
+        } catch (err) {
+            console.log(err)
+        };
+    };
+};
+
+
 
 export function getByIdDiet(id) {
-  return async function (dispatch) {
-    try {
-      const res = await axios.get(
-        `http://localhost:3001/products?id_diet=${id}`
-      );
-      return dispatch({
-        type: GET_BY_ID_DIET,
-        payload: res.data,
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  };
-}
+    return async function (dispatch) {
+        try {
+            const res = await axios.get(`http://localhost:3001/products?id_diet=${id}`);
+            return dispatch({
+                type: GET_BY_ID_DIET,
+                payload: res.data
+            });
+        } catch (err) {
+            console.log(err)
+        };
+    };
+};
 
-export function getProductsFiltered(
-  CategoryId,
-  DietId,
-  priceL,
-  priceH,
-  sortby
-) {
-  return async function (dispatch) {
-    try {
-      const res = await axios.get(
-        `http://localhost:3001/products?id_category=${CategoryId}&id_diet=${DietId}&priceL=${priceL}&priceH=${priceH}&sortby=${sortby}`
-      );
-      return dispatch({
-        type: GET_BY_DIET_AND_CATEGORY,
-        payload: res.data,
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  };
-}
+
+
+export function getProductsFiltered(CategoryId, DietId, priceL, priceH, sortby) {
+    return async function (dispatch) {
+
+        try {
+            const res = await axios.get(`http://localhost:3001/products?id_category=${CategoryId}&id_diet=${DietId}&priceL=${priceL}&priceH=${priceH}&sortby=${sortby}`);
+            return dispatch({
+                type: GET_BY_DIET_AND_CATEGORY,
+                payload: res.data
+            });
+        } catch (err) {
+            console.log(err)
+        };
+    };
+};
+
+
+
 
 export function getCategories() {
-  return async function (dispatch) {
-    return axios.get(`http://localhost:3001/categories`).then((response) => {
-      dispatch({
-        type: GET_CATEGORIES,
-        payload: response.data,
-      });
-    });
-  };
+    return async function (dispatch) {
+        return axios.get(`http://localhost:3001/categories`)
+            .then((response) => {
+                dispatch({
+                    type: GET_CATEGORIES,
+                    payload: response.data
+                })
+            })
+    }
 }
+
 
 export function getDiets() {
-  return async function (dispatch) {
-    return axios.get(`http://localhost:3001/diets`).then((response) => {
-      dispatch({
-        type: GET_DIETS,
-        payload: response.data,
-      });
-    });
-  };
+    return async function (dispatch) {
+        return axios.get(`http://localhost:3001/diets`)
+            .then((response) => {
+                dispatch({
+                    type: GET_DIETS,
+                    payload: response.data
+                })
+            })
+    }
 }
 
+
 export function orderPrice(orderTarget, products) {
-  return async function (dispatch) {
-    OrderByPrice(orderTarget, products).then((orderTarget) => {
-      return dispatch({
-        type: ORDER_PRICE,
-        payload: orderTarget,
-      });
-    });
-  };
+    return async function (dispatch) {
+        OrderByPrice(orderTarget, products)
+
+            .then((orderTarget) => {
+                return dispatch({
+
+                    type: ORDER_PRICE,
+                    payload: orderTarget,
+                })
+            })
+    }
 }
 
 export function orderOrders() {
@@ -241,38 +253,37 @@ export function orderOrders() {
 
 
 export function setLoading() {
-  return function (dispatch) {
-    return dispatch({
-      type: SET_LOADING,
-    });
-  };
+    return function (dispatch) {
+        return dispatch({
+            type: SET_LOADING,
+        })
+    }
 }
+
 
 export function getByPrice(priceL, priceH) {
-  return async function (dispatch) {
-    try {
-      const res = await axios.get(
-        `http://localhost:3001/products?priceL=${priceL}&priceH=${priceH}`
-      );
-      return dispatch({
-        type: GET_BY_PRICE,
-        payload: res.data,
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  };
-}
+    return async function (dispatch) {
+        try {
+            const res = await axios.get(`http://localhost:3001/products?priceL=${priceL}&priceH=${priceH}`);
+            return dispatch({
+                type: GET_BY_PRICE,
+                payload: res.data
+            });
+        } catch (err) {
+            console.log(err)
+        };
+    };
+};
 
 export function review(payload) {
-  return async function (dispatch) {
-    await axios.post("http://localhost:3001/review", payload);
+    return async function (dispatch) {
+        await axios.post("http://localhost:3001/review", payload);
 
-    return dispatch({
-      type: "REVIEW_URL",
-      payload,
-    });
-  };
+        return dispatch({
+            type: "REVIEW_URL",
+            payload,
+        });
+    };
 }
 
 export function loginUser(payload) {
@@ -287,25 +298,28 @@ export function loginUser(payload) {
 
 
 export function getClients() {
-  return async function (dispatch) {
-    return axios.get(`http://localhost:3001/clients`).then((response) => {
-      dispatch({
-        payload: response.data,
-        type: GET_CLIENTS,
-      });
-    });
-  };
+
+    return async function (dispatch) {
+        return axios.get(`http://localhost:3001/clients`)
+            .then((response) => {
+                dispatch({
+                    payload: response.data,
+                    type: GET_CLIENTS
+                })
+            })
+    }
 }
 
 export function updateClients(id) {
-  return async function (dispatch) {
-    return axios.put(`http://localhost:3001/clients/` + id).then((response) => {
-      dispatch({
-        payload: response.data,
-        type: UPDATE_CLIENTS,
-      });
-    });
-  };
+    return async function (dispatch) {
+        return axios.put(`http://localhost:3001/clients/`+id)
+            .then((response) => {
+                dispatch({
+                    payload: response.data,
+                    type: UPDATE_CLIENTS
+                })
+            })
+    }
 }
 
 export function resetPassword(id) {
@@ -322,145 +336,94 @@ export function resetPassword(id) {
 
 
 export function deleteClients(id) {
-  return async function (dispatch) {
-    try {
-      const res = await axios.delete("http://localhost:3001/clients/" + id);
-      return dispatch({
-        type: "DELETE_CLIENTS",
-        payload: res.data,
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  };
-}
-export function deleteCategory(id) {
-  return async function (dispatch) {
-    try {
-      const res = await axios.delete("http://localhost:3001/categories/" + id);
-      return dispatch({
-        type: "DELETE_CATEGORIES",
-        payload: res.data,
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  };
-}
-export function deleteDiets(id) {
-  return async function (dispatch) {
-    try {
-      const res = await axios.delete("http://localhost:3001/diets/" + id);
-      return dispatch({
-        type: "DELETE_DIETS",
-        payload: res.data,
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  };
-}
-export function getOrders(token) {
-  return async function (dispatch) {
-    return axios
-      .get(`http://localhost:3001/orders`, {
-        headers: { Authorization: "Bearer " + token },
-      })
-      .then((response) => {
-        dispatch({
-          type: GET_ORDERS,
-          payload: response.data,
-        });
-      });
-  };
-}
-
-export function putOrders(payload, id, token) {
-  return async function (dispatch) {
-
-
-    let headersList = {
-      "Accept": "*/*",
-      "User-Agent": "Thunder Client (https://www.thunderclient.io)",
-      "Authorization": "Bearer "+ token,
-      "Content-Type": "application/json" 
-     }
-     
-
-     let reqOptions = {
-       url: "http://localhost:3001/orders/"+id,
-       method: "PUT",
-       headers: headersList,
-       data: JSON.stringify(payload),
-     }
-     
-     axios.request(reqOptions).then(function (response) {
-       console.log(response.data);
-     })
-
-
-    // await axios.put( `http://localhost:3001/products/${id}`, payload,);
-
-    return dispatch({
-      type: PUT_ORDERS,
-      payload,
-      id,
-    });
-  };
-}
-
-
-
-
-
-export default function getTrolleyAction() {
-  return async function (dispatch) {
-    try {
-      let cookieTrolley = cookies.get("trolley")?.map((x) => {
-        let id = x;
-        return { id };
-      });
-      let res = await getTrolley(cookieTrolley.map((x) => x.id));
-      let payload = [];
-      res.data.forEach((x) => {
-        cookieTrolley.forEach(({ id }) => {
-          if (x.id === id.id) payload.push({ ...x, cantidad: id.quantity });
-        });
-      });
-      return dispatch({
-        type: "GET_PRODUCTS_CART",
-        payload,
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  };
-}
-
-
-
-export function postAdress(payload) {
     return async function (dispatch) {
-        await axios.post("http://localhost:3001/address", payload);
-        return dispatch({
-            type: POST_ADDRESS,
-            payload,
-        });
+        try {
+            const res = await axios.delete('http://localhost:3001/clients/' + id);
+            return dispatch({
+                type: 'DELETE_CLIENTS',
+                payload: res.data
+            });
+        } catch (err) {
+            console.log(err)
+        };
     };
-}
-
-export function getAdress() {
+};
+export function deleteCategory(id) {
+    return async function (dispatch) {
+        try {
+            const res = await axios.delete('http://localhost:3001/categories/' + id);
+            return dispatch({
+                type: 'DELETE_CATEGORIES',
+                payload: res.data
+            });
+        } catch (err) {
+            console.log(err)
+        };
+    };
+};
+export function deleteDiets(id) {
+    return async function (dispatch) {
+        try {
+            const res = await axios.delete('http://localhost:3001/diets/' + id);
+            return dispatch({
+                type: 'DELETE_DIETS',
+                payload: res.data
+            });
+        } catch (err) {
+            console.log(err)
+        };
+    };
+};
+export function getOrders() {
 
     return async function (dispatch) {
-        return axios.get(`http://localhost:3001/address`)
+        return axios.get(`http://localhost:3001/orders`)
             .then((response) => {
                 dispatch({
                     payload: response.data,
-                    type: GET_ADDRESS
+                    type: GET_ORDERS
                 })
             })
     }
 }
+export function putOrders(payload, id ){
+    return async function (dispatch) {
+        await axios.put("http://localhost:3001/products/"+ id, payload);
+       
+           return dispatch({
+             type: PUT_ORDERS,
+             payload,
+             id,
+           });
+         };
+       }
 
+export function postAdress(){
+    return 0
+}
 
-
+export default function getTrolleyAction() {
+    return async function (dispatch) {
+        try {
+            let cookieTrolley = cookies.get('trolley')?.map(x => {
+                let id = x
+                return {id}
+            })
+            let res = await getTrolley(cookieTrolley.map(x=>x.id))
+            let payload = [];
+            console.log(res.data)
+            res.data.forEach(x=>{
+                cookieTrolley.forEach(({id})=>{
+                    if(x.id===id.id)
+                    payload.push( {...x,cantidad: id.quantity})
+                })
+            })
+            return dispatch({
+                type: 'GET_PRODUCTS_CART',
+                payload
+            })
+        } catch (err) {
+            console.log(err)
+        };
+    };
+}

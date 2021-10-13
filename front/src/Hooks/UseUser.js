@@ -14,32 +14,45 @@ export default function useUser() {
     const dispatch = useDispatch();
     let myStorage = window.localStorage;
     const login = useCallback((username, password) => {
+        dispatch({type:'LOADING', payload: true})
+        dispatch({type:'ERROR', payload: false})
         loginService(username, password)
             .then(async jwt => {
                 let id_products = [];
                 cookies.get('trolley')?.map(x=>id_products.push({id:x.id,quantity: x.quantity}));
                 console.log(jwt)
                 myStorage.jwt = jwt;
-                postCarrito(jwt, id_products)
-                getCart(jwt)
+                await postCarrito(jwt, id_products)
+                .then(async (res)=>{
+                    await getCart(jwt)
+                }).catch((err)=>{console.error(err)})
                 dispatch({type: 'LOGIN', payload: jwt})
                 var isadmin = await decode(jwt)
+                dispatch({type:'LOADING', payload: false})
                 dispatch({type: 'SET_LOGIN_USER', payload: isadmin.isAdmin})
             })
-            .catch(err => { alert(err); console.error(err) })
+                .catch(err => {dispatch({type:'LOADING', payload: false}); alert(err); console.error(err) })
         }, []);
 
-        const loginGoogle = useCallback((res)=>{
+        const loginGoogle = useCallback(async (res)=>{
+            let id_products = [];
+                cookies.get('trolley')?.map(x=>id_products.push({id:x.id,quantity: x.quantity}));
             myStorage.jwt = res.$b.id_token;
             const { googleId } = res.profileObj;
-            createUserByGoogle(googleId,res.$b.id_token)
-            .then((response)=>{
-                dispatch({type: 'LOGIN', payload: myStorage.jwt});
+            await createUserByGoogle(googleId,res.$b.id_token)
+            postCarrito(myStorage.jwt, id_products)
+            .then(async (res) => {
+                    await getCart(myStorage.jwt);
+                }).catch((err)=>{console.error(err)})
+                .then((response)=>{
+                    dispatch({type: 'LOGIN', payload: myStorage.jwt});
+                    dispatch({type:'LOADING', payload: false})
             })
             .catch ((err) => {
                 alert('Algo salio mal'+'\nEse usuario ya fue registrado en nuestra plataforma, prueba iniciar sesion con contraseña');
                 console.error(err);
                 myStorage.jwt = '';
+                dispatch({type:'LOADING', payload: false});
             })
         })
         

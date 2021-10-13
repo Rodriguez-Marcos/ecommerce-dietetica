@@ -25,6 +25,7 @@ export default function Success(){
     }
 
 
+
     useEffect(() => {
         emptyCart(window.localStorage.jwt)
     }, [])
@@ -69,6 +70,7 @@ export default function Success(){
             </div>
 
             </div>
+     
     )
 
 

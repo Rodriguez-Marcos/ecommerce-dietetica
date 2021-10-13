@@ -39,6 +39,7 @@ export function ProductCard({ product }) {
       type: 'COMODIN',
     })
   }
+
   function actualizateQuantity() {
     let trolley = Array.isArray(cookies.get('trolley')) ? [...cookies.get('trolley')] : []; /// trolley : []
     if (!trolley.find(x => x.id === product.id)) {
