@@ -30,7 +30,7 @@ export async function createCategory(req, res) {
 export async function getCategories(req, res) {
     try{
     let categories = await Category.findAll()
-    console.log(categories)
+
     return res.status(200).send(categories)
     }catch (err) {
         console.log(err)
