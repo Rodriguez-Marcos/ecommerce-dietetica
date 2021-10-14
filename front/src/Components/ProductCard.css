@@ -2,6 +2,7 @@
     --hoverColorText:rgb(175, 172, 172);
     --hoverVerde:rgba(16, 112, 16, 0.795);
     --colorCafe: #99642C;
+    --colorverde1:#849836
 }
 
 #a{
@@ -26,16 +27,16 @@
 }
 #nombre_producto{
     position: absolute;
-    background-color: #99642cb6;
+    background-color: var(--colorCafe);
     width: 100%;
     height: 20%;
-    color: #442e14b6;
+    color: white;
     padding: 5px;
     font-size: small;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-weight: 900;
+    font-weight: 800;
 }
 #divImg{
     width: 100%;
@@ -80,7 +81,7 @@
     width: 35px;
     height: 35px;
     border-radius: 5px 0 0 0;
-    background-color: #99642cb6;
+    background-color:var(--colorverde1);
 }
 #carroCompras svg{
     color: white;
@@ -88,20 +89,13 @@
     width: 90%;
 }
 #carroCompras svg:hover{
-    color: var(--hoverVerde)
+    color: var(--colorCafe)
 }
 #btns{
     display: flex;
     justify-content: center;
 }
-#detalles{
-    text-decoration: none;
-    color: var(--colorCafe);
-    cursor:no-drop;
-}
-#detalles:hover{
-    color: var(--hoverVerde);
-}
+
 .corazon[type="checkbox"]{
     display: none;
 }
@@ -110,7 +104,7 @@
     width: auto;
     height: auto;
     border-radius: 0 5px 0 0;
-    background-color: #99642cb6;
+    background-color: var(--colorverde1);
 }
 
 #favorite label::before{
@@ -126,11 +120,11 @@
     transition: 1s;
 }
 #favorite label:hover{
-    color:var(--hoverVerde);
+    color:var(--colorCafe);
 }
 #precio{
     margin: 0;
-    background-color: #99642cb6;
+    background-color: var(--colorverde1);
     width: 50%;
     height: 36px;
     display: flex;
@@ -141,5 +135,5 @@
     transition: 1s;
 }
 #precio:hover{
-    color: var(--hoverVerde);
+    color: var(--colorCafe);
 }
