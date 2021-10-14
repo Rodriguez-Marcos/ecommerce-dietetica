@@ -160,7 +160,7 @@ export default function Trolley() {
           <div className="carrito__close">
             <box-icon onClick={()=>{setMenu(false)}} name="x"></box-icon>
           </div>
-          <h2>Su carrito:</h2>
+          <h2>Su carritoOOOOOOOO:</h2>
           {carrito?.map((producto) => (
 
             // {console.log(e)}
