@@ -286,7 +286,7 @@ export function getByPrice(priceL, priceH) {
 
 export function review(payload) {
     return async function (dispatch) {
-        await axios.post("http://localhost:3001/review", payload);
+        await axios.post("http://localhost:3001/reviews", payload);
 
         return dispatch({
             type: "REVIEW_URL",
