@@ -288,7 +288,7 @@ export function getByPrice(priceL, priceH) {
 
 export function review(payload) {
     return async function (dispatch) {
-        await axios.post("http://localhost:3001/review", payload);
+        await axios.post("http://localhost:3001/reviews", payload);
 
         return dispatch({
             type: "REVIEW_URL",
@@ -296,6 +296,19 @@ export function review(payload) {
         });
     };
 }
+export function allowReview(id,token) {
+    return async function (dispatch) {
+        await axios.get("http://localhost:3001/reviews/allow/"+id,{
+            headers: { Authorization: "Bearer " + token },
+          })
+          .then((response) => {
+            dispatch({
+              type: "ALLOW_REVIEW",
+              payload: response.data,
+            });
+          });
+      };
+    }
 
 export function loginUser(payload) {
     return async function (dispatch) {
