@@ -27,7 +27,7 @@ export default function Creator() {
   const d = useSelector((state) => state.reducerPablo.diets);
   const isAdmin = useSelector((state) => state.reducerPablo.IsAdmin);
 
-  
+  let token = window.localStorage.jwt
   let dispatch = useDispatch();
 
   const jwt = require('jsonwebtoken')
@@ -167,7 +167,7 @@ export default function Creator() {
   // Eliminar
 
   function deleteProduct() {
-    dispatch(deleteProductByID(input.id));
+    dispatch(deleteProductByID(input.id, token));
 
     setInput({
       ...input,
@@ -185,6 +185,7 @@ export default function Creator() {
   // handlers de submit
 
   function handlerSubmitProduct(e) {
+
     e.preventDefault();
     if (
       input.name &&
@@ -195,8 +196,9 @@ export default function Creator() {
       input.ids_diets.length != 0 &&
       input.ids_categories.length != 0
     ) {
-      dispatch(postProduct(input));
+      dispatch(postProduct(input, token));
       alert(" Producto creado con exito");
+      console.log(token ,"este es el token del action")
       dispatch(getProductsAdmin());
       closeProduct();
     } else {
