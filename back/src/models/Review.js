@@ -1,5 +1,6 @@
 import Sequelize from 'sequelize';
 import { sequelize } from '../database/db.js'
+import Client from '../models/Client.js';
 
 const Review = sequelize.define('review', {
   id: {
@@ -22,5 +23,6 @@ const Review = sequelize.define('review', {
  {
     timestamps: false
 })
-
+Client.hasMany(Review,{foreignKey:'id_client',sourceKey:'id'})
+Review.belongsTo(Client,{foreignKey:'id_client',sourceKey:'id'})
 export default Review
