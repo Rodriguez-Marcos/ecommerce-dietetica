@@ -4,6 +4,7 @@ import Product_Cart from '../models/Product_Cart.js';
 import Order from '../models/Order.js';
 import Product_Order from '../models/Product_Order.js';
 import Client from '../models/Client.js';
+const nodemailer = require('nodemailer');
 
 export async function addToCart(req, res, next) {
     const id_client = req.id;
@@ -162,13 +163,37 @@ export async function emptyCart(req, res, next) {
                     order: [["createDate", "DESC"]],
                     limit: 1
                 })
-
+                let client = await Client.findOne({where:{id:id_client}})
+                let clientMail = client.dataValues.email
                 let cart = await Cart.findByPk(id_client)
                 console.log(cart)
                  let products = await Product.findAll() 
                 await cart.removeProduct(products)
                 await Cart.update({totalAmount:0},{where:{id_client:id_client}}) 
                 
+                
+                
+                const transporter = nodemailer.createTransport({ 
+                    host:'smtp-relay.sendinblue.com',
+                    port:587, 
+                    secure:false,
+                    auth:{
+                        user:'faridsesin@gmail.com',
+                        pass:'G76d8KXDCzjT4Ew0'
+                    },
+                    tls:{
+                        rejectUnauthorized:false
+                    }
+                })
+
+                const info = await transporter.sendMail({
+                    from: "'Salvatore' <faridsesin@gmail.com>",
+                    to: clientMail,
+                    subject: 'Tu pedido ha sido creado con exito',
+                    html: 'GRACIAS POR TU COMPRA, Te damos la bienvenida a Salvatore. Tu pedido fue creado con exito. Enseguida tengamos tus productos listos te avisaremos',
+                })
+                console.log('Message sent', info.messageId)
+
 
             return res.json({
                 message: 'Order created successfully',

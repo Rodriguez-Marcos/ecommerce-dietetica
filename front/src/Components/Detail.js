@@ -18,13 +18,18 @@ import NavBar from './NavBar'
 import { Rating } from "@material-ui/lab";
 import swal from "sweetalert";
 import postCarrito from '../Utils/postCarrito';
+import postFavorites from '../Utils/postFavorites';
+import { useHistory } from 'react-router';
+import usePath from '../Hooks/UsePaths';
 const cookies = new Cookies();
 
 
 function Detail({ match }) {
   const [counter, setCounter] = useState(1);
-  const id = JSON.parse(match.params.id)
-  const dispatch = useDispatch()
+  const id = JSON.parse(match.params.id);
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const  { pushPath } = usePath();
 
 
   useEffect(() => {
@@ -35,6 +40,15 @@ function Detail({ match }) {
   const producto = useSelector(state => state.reducerRocio.detail)
   const allowR = useSelector(state => state.reducerRocio.allowR)
   const { isLogin, token } = useSelector(state => state.reducerPablo)
+
+  async function addFavorite(e){
+    console.log('hola')
+    if (!isLogin){
+      pushPath();
+      history.push('/login');
+    };
+    await postFavorites(id,token);
+  }
 
   function handleClickTrolley(e) {
     e.preventDefault();
@@ -188,7 +202,7 @@ function Detail({ match }) {
                     </Card.Text>
                     <hr />
                     <div id="btnsProduct">
-                      <button type="button" class="btn btn-secondary">Agregar a favoritos</button>
+                      <button onClick={addFavorite} type="button" class="btn btn-secondary">Agregar a favoritos</button>
                       <Card.Text>
                       <Card.Subtitle className="text-muted">Producto no disponible</Card.Subtitle>
                       
@@ -225,7 +239,7 @@ function Detail({ match }) {
                       </Card.Text>
                       <hr />
                       <div id="btnsProduct">
-                        <button type="button" class="btn btn-secondary">Agregar a favoritos</button>
+                        <button onClick={addFavorite} type="button" class="btn btn-secondary">Agregar a favoritos</button>
                         <Card.Text>
                         <Card.Subtitle className="text-muted">Producto no disponible </Card.Subtitle>
                       </Card.Text>
@@ -357,7 +371,7 @@ function Detail({ match }) {
                     </Card.Text>
                     <hr />
                     <div id="btnsProduct">
-                      <button type="button" class="btn btn-secondary">Agregar a favoritos</button>
+                      <button onClick={addFavorite} type="button" class="btn btn-secondary">Agregar a favoritos</button>
                       <Card.Text>
                       <Card.Subtitle className="text-muted">Producto no disponible</Card.Subtitle>
                       
@@ -394,7 +408,7 @@ function Detail({ match }) {
                       </Card.Text>
                       <hr />
                       <div id="btnsProduct">
-                        <button type="button" class="btn btn-secondary">Agregar a favoritos</button>
+                        <button onClick={addFavorite} type="button" class="btn btn-secondary">Agregar a favoritos</button>
                         <Card.Text>
                         <Card.Subtitle className="text-muted">Producto no disponible </Card.Subtitle>
                       </Card.Text>
@@ -528,7 +542,7 @@ function Detail({ match }) {
                     </Card.Text>
                     <hr />
                     <div id="btnsProduct">
-                      <button type="button" class="btn btn-secondary">Agregar a favoritos</button>
+                      <button onClick={addFavorite} type="button" class="btn btn-secondary">Agregar a favoritos</button>
                       <button onClick={handleClickTrolley} type="button" class="btn btn-success">Agregar al carrito</button>
                     </div>
                     <hr />
@@ -562,7 +576,7 @@ function Detail({ match }) {
                       </Card.Text>
                       <hr />
                       <div id="btnsProduct">
-                        <button type="button" class="btn btn-secondary">Agregar a favoritos</button>
+                        <button onClick={addFavorite} type="button" class="btn btn-secondary">Agregar a favoritos</button>
                         <button onClick={handleClickTrolley} type="button" class="btn btn-success">Agregar al carrito</button>
                       </div>
                       <hr />
@@ -692,7 +706,7 @@ function Detail({ match }) {
                       </Card.Text>
                       <hr />
                       <div id="btnsProduct">
-                        <button type="button" class="btn btn-secondary">Agregar a favoritos</button>
+                        <button onClick={addFavorite} type="button" class="btn btn-secondary">Agregar a favoritos</button>
                         <button onClick={handleClickTrolley} type="button" class="btn btn-success">Agregar al carrito</button>
                       </div>
                       <hr />
@@ -726,7 +740,7 @@ function Detail({ match }) {
                         </Card.Text>
                         <hr />
                         <div id="btnsProduct">
-                          <button type="button" class="btn btn-secondary">Agregar a favoritos</button>
+                          <button onClick={addFavorite} type="button" class="btn btn-secondary">Agregar a favoritos</button>
                           <button onClick={handleClickTrolley} type="button" class="btn btn-success">Agregar al carrito</button>
                         </div>
                         <hr />

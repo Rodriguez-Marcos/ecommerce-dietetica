@@ -1,31 +1,38 @@
 import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
+import { connect, useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom'
 import ProductCard from './ProductCard';
 import styles from './product.module.css';
 import { Link } from 'react-router-dom';
 
 import Cookies from "universal-cookie";
+import axios from 'axios';
+import getFavorites from '../Utils/getFavorites';
 
 const cookies = new Cookies();
 
-export default function ProductsCards(params, {productsCart}) {
+export default function ProductsCards() {
   let location = useLocation();
+  const dispatch = useDispatch();
+  let { isLogin, token, comodin, products } = useSelector(state => state.reducerPablo);
 
-  let products = params.products
+  
+  useEffect(async ()=>{
+    console.log(comodin)
+    if(isLogin)
+    {
+      let res = await getFavorites(token);
+      products.forEach(product=>{
+        res.data[0].products.forEach(x=>{
+          if(product.id=== x.id)
+            if(!product.isFavorite)
+              product.isFavorite = true
+        })
+      })
+    }
+    dispatch({type: 'GET_PRODUCTS', payload: products})
+  },[comodin])
 
-  useEffect(() => {
-
-  }, [])
-  if(productsCart){
-    return(
-      <div className={styles.main}>
-      {productsCart && productsCart.map(product=>{
-        return <ProductCard product={product}/>
-      })}
-    </div>
-    )
-  }
   return (
     <div className={styles.main}>
       {products && products?.map(product=>{
