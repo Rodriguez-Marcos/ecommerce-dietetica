@@ -6,12 +6,14 @@ import postCarrito from "../Utils/postCarrito";
 import Cookies from "universal-cookie";
 import createUserByGoogle from "../Utils/createUser/createUserByGoogle";
 import getCart from "../Utils/getCart";
+import usePath from "./UsePaths";
 
 const cookies = new Cookies();
 
 
 export default function useUser() {
     const dispatch = useDispatch();
+    const { goBack } = usePath();
     let myStorage = window.localStorage;
     const login = useCallback((username, password) => {
         dispatch({type:'LOADING', payload: true})
@@ -22,6 +24,7 @@ export default function useUser() {
                 cookies.get('trolley')?.map(x=>id_products.push({id:x.id,quantity: x.quantity}));
                 console.log(jwt)
                 myStorage.jwt = jwt;
+                goBack();
                 await postCarrito(jwt, id_products)
                 .then(async (res)=>{
                     await getCart(jwt)
@@ -47,6 +50,8 @@ export default function useUser() {
                 .then((response)=>{
                     dispatch({type: 'LOGIN', payload: myStorage.jwt});
                     dispatch({type:'LOADING', payload: false})
+                    goBack();
+
             })
             .catch ((err) => {
                 alert('Algo salio mal'+'\nEse usuario ya fue registrado en nuestra plataforma, prueba iniciar sesion con contraseña');

@@ -94,7 +94,10 @@ export default function Trolley() {
   const cookies = new Cookies();
 
   const dispatch = useDispatch();
-  useEffect(() => { }, [payment])
+  useEffect(() => { }, [payment]);
+  useEffect(()=>{
+    getCart(token)
+  },[comodin])
   const history = useHistory();
   async function handleSubmit(event) {
     event.preventDefault();
