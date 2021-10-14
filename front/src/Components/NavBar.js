@@ -50,7 +50,7 @@ function NavBar({ getProductbyName, setLoading, isLogin, token }) {
   const { logout } = useUser();
   const myStorage = window.localStorage;
   useEffect(() => {
-    const jwt = myStorage.jwt;
+    const jwt = myStorage.jwt.jwt;
     var isadmin = decode(jwt)
 
     if (!!jwt) {

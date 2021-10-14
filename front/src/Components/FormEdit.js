@@ -80,18 +80,13 @@ export default function FormEdit({
           <div>
             <fieldset>
               <h6>Seleccionar Categorias: </h6>
-              <select
-                onChange={(e) => handlerCategories(e)}
-                class="form-select"
-                multiple
-                aria-label="multiple select example"
-                >
-                {c.map((e) => (
-                  <option value={e.id}  name={e.name}> {e.name}</option>
-                  ))}
-              </select>
+                {c.map((e,i) => (
+                  <div class="form-check" key={i}>
+                    <label onChange={(e) => handlerCategories(e)} key={e.id} class="form-check-label">
+                      <input type='checkbox' value={e.id} name={e.name} class="form-check-input" />{e.name}
+                    </label>
+                  </div>                  ))}
               {"    "}
-                  <div>{input.ids_categories?.map((a)=> a)}</div>
               <output>
                 {" "}
                 seleccionaste: {input.ids_categories.length} categorias
@@ -102,19 +97,16 @@ export default function FormEdit({
           <div>
             <fieldset>
               <h6> Seleccionar Dietas: </h6>
-              <select
-                onChange={(e) => handlerDiets(e)}
-                class="form-select"
-                multiple
-                aria-label="multiple select example"
-              >
-                {d.map((e) => (
-                  <option value={e.id} name={e.name}> {e.name}</option>
+              {d.map((e,i) => (
+                  <div class="form-check" key={i}>
+                    <label onChange={(e) => handlerDiets(e)} key={e.id} class="form-check-label" >
+                      <input type='checkbox' value={e.id} name={e.name} class="form-check-input" />{e.name}
+                    </label>
+                  </div>
+
+
                 ))}
-              </select>
               {"    "}
-              <div>{input.ids_diets}</div>
-              {console.log(input.ids_diets)}
               <output> seleccionaste: {input.ids_diets.length} dietas</output>
             </fieldset>
           </div>
