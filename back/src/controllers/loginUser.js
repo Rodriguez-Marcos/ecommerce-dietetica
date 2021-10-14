@@ -1,5 +1,5 @@
 import Client from "../models/Client";
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken')
 const loginRouter = require('express').Router();
 const { OAuth2Client } = require('google-auth-library');
@@ -20,7 +20,7 @@ export async function loginUser(req, res) {
         id: user.id,
         name: user.name,
         email: user.email,
-        isAdmin: user.isAdmin,
+        isAdmin: user.isAdmin
     }
     const token = jwt.sign(userForToken, 'secret')
     res.send(

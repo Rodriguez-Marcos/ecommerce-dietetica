@@ -10,7 +10,7 @@ import borrar from '../image/cancelar.png'
 import compras from '../image/carrito.png'
 import postCarrito from '../Utils/postCarrito';
 import removePC from '../Utils/removePC';
-import { RemoveShoppingCart } from '@material-ui/icons';
+import { Favorite, RemoveShoppingCart, ShoppingCartSharp } from '@material-ui/icons';
 import RemoveIcon from "@material-ui/icons/Remove";
 import AddIcon from "@material-ui/icons/Add";
 const cookies = new Cookies();
@@ -19,7 +19,7 @@ const cookies = new Cookies();
 
 
 export function ProductCard({ product }) {
-  const [ counter, setCounter ] = useState (1);
+  const [counter, setCounter] = useState(1);
   let location = useLocation();
   let dispatch = useDispatch();
   let { isLogin, token } = useSelector(state => state.reducerPablo);
@@ -30,21 +30,23 @@ export function ProductCard({ product }) {
     if (!trolley.find(x => x.id === product.id)) {
       let quantity = counter;
       let { id } = product;
-      trolley.push({id, quantity});
-      if (isLogin) postCarrito(token,{id,quantity});
+      trolley.push({ id, quantity });
+      alert("Se añadio a tu carrito")
+      if (isLogin) postCarrito(token, { id, quantity });
     }
     cookies.set('trolley', trolley)
     dispatch({
       type: 'COMODIN',
     })
   }
-  function actualizateQuantity(){
+
+  function actualizateQuantity() {
     let trolley = Array.isArray(cookies.get('trolley')) ? [...cookies.get('trolley')] : []; /// trolley : []
     if (!trolley.find(x => x.id === product.id)) {
       let quantity = counter;
       let { id } = product;
       trolley.push(product);
-      if (isLogin) postCarrito(token, {id,quantity});
+      if (isLogin) postCarrito(token, { id, quantity });
     }
   }
 
@@ -57,23 +59,34 @@ export function ProductCard({ product }) {
       type: 'COMODIN',
     })
   }
-
+  function handleFavorite() {
+    alert("Se añadio a tus favoritos")
+  }
   return (
-    <Card style={{ width: '18rem' }} id="a" key={product.id}>
-      <Card.Title>{product.name}</Card.Title>
-      <Card id="divImg">
-        <Card.Img id="img" variant="top" src={product.image ? product.image : defaultimg} />
-        <Card id="precio">Precio ${product.price}</Card>
-      </Card>
-      <ListGroup className="list-group-flush">
-        <ListGroupItem>
-          <Link id="detalles" to={`/Detail/${product.id}`} >Ver este producto</Link>
-        </ListGroupItem>
-        <ListGroupItem id="btns">
-          {location.pathname !== '/trolley' ? <Button id="carrito" onClick={(e) => handleClickTrolley(e)} >Agregar  <Card.Img id="carritoimg" src={compras} /></Button> : false}
-        </ListGroupItem>
-      </ListGroup>
-    </Card>
+    <div id="a" key={product.id}>
+      <div id="card">
+        <Link id="detalles" to={`/Detail/${product.id}`}>
+          <h5 id="nombre_producto">{product.name}</h5>
+        </Link>
+        <div id="divImg">
+          <Link id="detalles" to={`/Detail/${product.id}`}>
+            <img src={product.image ? product.image : defaultimg} />
+          </Link>
+          <div id="favorite-carrito">
+            <div id="favorite">
+              <input className="corazon" id="heart" onClick={handleFavorite} type="checkbox" />
+              <label for="heart"><Favorite /></label>
+            </div>
+            <h5 id="precio">${product.price}</h5>
+            <div id="carroCompras">
+              {location.pathname !== '/trolley' ? <button id="carrito" onClick={(e) => handleClickTrolley(e)} ><ShoppingCartSharp id="carritoimg" /></button> : false}
+            </div>
+          </div>
+        </div>
+        <div id="info">
+        </div>
+      </div>
+    </div>
   );
 }
 

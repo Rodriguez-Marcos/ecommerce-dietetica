@@ -4,11 +4,12 @@ export default async function mercadopago(cart,res){
 var data ;
 let items = [] ;
  cart.map((x) => items.push({'title': x.name, 'unit_price': x.price, quantity: x.products_cart.quantity}))
+ console.log('items',items)
  data = JSON.stringify({items,
   back_urls: {
-    "success": "/feedback",
-    "failure": "/feedback",
-    "pending": "/feedback"
+    "success": "http://localhost:3001/feedback",
+    "failure": "http://localhost:3001/feedback",
+    "pending": "http://localhost:3001/feedback"
   },
   auto_return: "approved",})
 var config = {

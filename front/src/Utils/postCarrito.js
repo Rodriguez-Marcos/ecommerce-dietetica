@@ -13,14 +13,7 @@ function postCarrito(token, products){
     data
   };
   
-  console.log('fui yo')
-      axios(config)
-      .then(function (response) {
-        console.log('actualizado con exito');
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+      return axios(config)
 }
 
 export default postCarrito;

@@ -10,7 +10,7 @@ import TableProducts from "./TableProducts";
 import Topbar from "./AdminTopBar";
 import Sidebar from "./AdminSideBar";
 import {
-  getProducts,
+  getProductsAdmin,
   getCategories,
   getDiets,
   deleteProductByID,
@@ -46,7 +46,7 @@ export default function Creator() {
 
 
   useEffect(() => {
-    dispatch(getProducts());
+    dispatch(getProductsAdmin());
     dispatch(getCategories());
     dispatch(getDiets());
   }, [dispatch, deleteProductByID]);
@@ -179,7 +179,7 @@ export default function Creator() {
       product: false,
     });
 
-    dispatch(getProducts());
+    dispatch(getProductsAdmin());
   }
 
   // handlers de submit
@@ -197,7 +197,7 @@ export default function Creator() {
     ) {
       dispatch(postProduct(input));
       alert(" Producto creado con exito");
-      dispatch(getProducts());
+      dispatch(getProductsAdmin());
       closeProduct();
     } else {
       alert("falta informacion requerida en el formulario");

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from 'axios'
 import NavBar from './NavBar'
-import postAdress from "../Actions";
+// import {postAdress} from "../Actions";
 import { useHistory } from "react-router";
 import { useSelector } from "react-redux";
 
@@ -33,7 +33,7 @@ export default function Adress() {
         event.preventDefault()
         if (!input.direccion || !input.altura || !input.ciudad || !input.provincia || !input.numero) { alert('Debes llenar todos los campos') }
         else {
-             postAdress(input) 
+              //postAdress(input) 
              alert('Gracias por confiar en nosotros')
             /* var data = JSON.stringify({
                 "payment": "mercadopago"
