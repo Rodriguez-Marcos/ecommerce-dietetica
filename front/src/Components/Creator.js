@@ -195,7 +195,7 @@ export default function Creator() {
       input.ids_diets.length != 0 &&
       input.ids_categories.length != 0
     ) {
-      dispatch(postProduct(input));
+      dispatch(postProduct(input,window.localStorage.jwt));
       alert(" Producto creado con exito");
       dispatch(getProducts());
       closeProduct();

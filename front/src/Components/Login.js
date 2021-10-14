@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import GoogleLogin from 'react-google-login';
 import { useHistory } from "react-router-dom";
-import { connect } from 'react-redux';
+import { connect, useSelector, useDispatch } from 'react-redux';
 import { loginUser } from '../Actions/index'
 import './Login.css'
 import { Form, Button } from 'react-bootstrap'
@@ -9,12 +9,14 @@ import useUser from '../Hooks/UseUser';
 import NavBar from './NavBar';
 import createUser from '../Utils/createUser/createUser';
 import { validate } from '../Utils/ValidateUser';
-
+import gif from './img/loading-25.gif'
 
 
 
 function Login({ respuesta, isLogin }) {
+    const dispatch = useDispatch();
     const [click, setClick] = useState(0)
+    let { loading, error } = useSelector(state=>state.loading)
 
     const [input, setInput] = useState({
         name: '',
@@ -46,16 +48,22 @@ function Login({ respuesta, isLogin }) {
         })
     }
 
-    function handelSubmit(event) {
+    async function handelSubmit(event) {
         event.preventDefault()
         if (!input.name || !input.lastname || !input.password || !input.email) {
             alert('Debes llenar todos los campos')
         }
         else {
-            /* login(input.email,input.password ); */
-            createUser(input)
-            alert('Se creo usuario exitosamente')
-            login(input.email, input.password)
+            dispatch({type:'LOADING', payload: true})
+            try{
+            let res = await createUser(input)
+            console.log(res)
+            }
+            catch(err){console.error(err)}
+
+            await login(input.email, input.password)
+            dispatch({type:'LOADING', payload: false})
+
         }
     }
 
@@ -88,6 +96,7 @@ function Login({ respuesta, isLogin }) {
             alert('Debes llenar todos los campos')
         }
         else {
+            
             login(input.email, input.password)
 
         }
@@ -127,8 +136,8 @@ function Login({ respuesta, isLogin }) {
                         cookiePolicy={'single_host_origin'}
                     />
                     <h6 onClick={e => setAccount(true)}>No tienes una cuenta? <h6 >Registrate</h6></h6>
-
                 </Form>
+            {loading?<img className='imagenCargando' src={gif}></img>:false}
             </div>
 
         )
@@ -174,6 +183,8 @@ function Login({ respuesta, isLogin }) {
                     />,
                     <h6 onClick={e => setAccount(false)}>ya tienes una cuenta? <h6 >Ingresa</h6></h6>
                 </Form>
+            {loading?<img className='imagenCargando' src={gif}></img>:false}
+
             </div>
         )
     }
