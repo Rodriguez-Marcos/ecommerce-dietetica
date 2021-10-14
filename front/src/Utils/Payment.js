@@ -8,7 +8,7 @@ export default async function payment(token){
       
       var config = {
         method: 'post',
-        url: '/payment',
+        url: 'http://localhost:3001/payment',
         headers: { 
           'Authorization': 'Bearer ' + token, 
           'Content-Type': 'application/json'

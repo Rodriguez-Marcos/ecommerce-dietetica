@@ -77,9 +77,9 @@ function Login({ respuesta, isLogin }) {
         password: ''
     })
  
-
+    // VER RUTA
     useEffect(() => {
-        if (isLogin) history.push('/home');
+        if (isLogin) history.push('https://ecommerce-dietetica.vercel.app/home');
 
     }, [isLogin])
 
