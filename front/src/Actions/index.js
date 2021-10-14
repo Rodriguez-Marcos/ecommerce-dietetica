@@ -61,7 +61,7 @@ export function getProductsAdmin() {
             .then((response) => {
                 dispatch({
                     payload: response.data,
-                    type: GET_PRODUCTS_ADMIN
+                    type: 'GET_PRODUCTS_ADMIN'
                 })
             })
     }
@@ -83,6 +83,7 @@ export function getProductbyName(name) {
             })
     }
 }
+
 export function deleteProductByID(id) {
     return async function (dispatch) {
         try {
