@@ -36,7 +36,6 @@ export const RESET_PASSWORD = 'RESET_PASSWORD';
 let cookies = new Cookies();
 
 
-let cookies = new Cookies();
 
 export const paginate = (recipes) => {
   return {
