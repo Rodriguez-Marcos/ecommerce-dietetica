@@ -46,7 +46,6 @@ async function useExtractor (req,res,next){
     }
     let decodeToken = {};
     let iss = await jwt.decode(token)?.iss
-    console.log(token)
     try {
        if(!iss)
        {decodeToken = jwt.verify(token,'secret')}
@@ -78,7 +77,6 @@ async function useExtractor (req,res,next){
         }
 
         await verify()
-        console.log(req.name)
     }
     } catch (error) {
         console.log(error)
