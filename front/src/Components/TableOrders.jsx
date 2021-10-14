@@ -12,29 +12,27 @@ import { getOrders, putOrders } from "../Actions";
 export default function TableOrders() {
   let dispatch = useDispatch();
   const orders = useSelector((state) => state.reducerPablo.orders);
-  let token = window.localStorage.jwt
+  let token = window.localStorage.jwt;
 
   useEffect(() => {
     dispatch(getOrders(token));
   }, [dispatch]);
-console.log(token,'Es el Token' )
+  console.log(token, "Es el Token");
   const [estado, setStatus] = useState({
     status: orders.status,
     id: "",
   });
   function handlerStatus(event, id) {
     if (event.target.value != estado.actual) {
-      console.log('hola mama')
+      console.log("hola mama");
       setStatus({
         ...estado,
         status: event.target.value,
         id: id,
       });
 
-console.log(estado)
-      dispatch(
-        putOrders({ status: event.target.value }, id, token)
-      );
+      console.log(estado);
+      dispatch(putOrders({ status: event.target.value }, id, token));
     }
     dispatch(getOrders(window.localStorage.jwt));
   }
@@ -54,8 +52,6 @@ console.log(estado)
   });
 
   function handlerDetails(e) {
- 
-
     setstate({
       ...state,
       modal: true,
@@ -91,7 +87,20 @@ console.log(estado)
               <th>Email</th>
               <th>Fecha de pedido:</th>
               <th>Total:</th>
-              <th>Estado:</th>
+              <th>
+                <select className="form-select">
+                  <option disabled="disabled" selected="true">
+                    Estados:
+                  </option>
+                  <option value="Todos"> Todos</option>
+
+
+                  <option value="creada"> creada</option>
+                  <option value="procesando"> procesando</option>
+                  <option value="cancelada"> cancelada</option>
+                  <option value="completa"> completa</option>
+                </select>
+              </th>
 
               <th>Detalles:</th>
             </tr>
