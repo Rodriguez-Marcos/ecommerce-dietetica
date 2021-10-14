@@ -17,7 +17,7 @@ export default function TableOrders() {
   useEffect(() => {
     dispatch(getOrders(token));
   }, [dispatch]);
-console.log(token,'Es el Token' )
+  console.log(token, 'Es el Token')
   const [estado, setStatus] = useState({
     status: orders.status,
     id: "",
@@ -31,7 +31,7 @@ console.log(token,'Es el Token' )
         id: id,
       });
 
-console.log(estado)
+      console.log(estado)
       dispatch(
         putOrders({ status: event.target.value }, id, token)
       );
@@ -54,7 +54,7 @@ console.log(estado)
   });
 
   function handlerDetails(e) {
- 
+
 
     setstate({
       ...state,
@@ -83,17 +83,17 @@ console.log(estado)
       <Topbar />
       <div className="ordersTable-Sidebar">
         <Sidebar />
-        <table className={` ${"table"} `}>
+        <table className={` ${"table"} `} id="table1">
           <thead>
             <tr>
-              <th>Numero: </th>
-              <th>Datos del cliente:</th>
+              <th>N°</th>
+              <th>Datos del cliente</th>
               <th>Email</th>
-              <th>Fecha de pedido:</th>
-              <th>Total:</th>
-              <th>Estado:</th>
+              <th>Fecha de pedido</th>
+              <th>Total</th>
+              <th>Estado</th>
 
-              <th>Detalles:</th>
+              <th>Detalles</th>
             </tr>
           </thead>
 
@@ -130,7 +130,7 @@ console.log(estado)
                 </td>
 
                 <td>
-                  <Button color="primary" onClick={() => handlerDetails(e)}>
+                  <Button className="resumenCompra" color="primary" onClick={() => handlerDetails(e)}>
                     {" "}
                     Ver Mas{" "}
                   </Button>
@@ -141,8 +141,8 @@ console.log(estado)
             <div>Cargando </div>
           )}
         </table>
+        <AdminDetailsOrders input={state} closeModal={closeModal} />
       </div>
-      <AdminDetailsOrders input={state} closeModal={closeModal} />
     </div>
   );
 }

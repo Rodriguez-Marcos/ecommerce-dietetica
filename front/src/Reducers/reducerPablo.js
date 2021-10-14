@@ -19,6 +19,7 @@ const InitialState = {
     clients: [],
     orders: [], 
     address:[],
+    paths: [null,null,null],
 }
 
 
@@ -176,7 +177,11 @@ export default function reducerPablo(state = InitialState, action) {
                 ...state,
                 orders: action.payload
             }
-
+        case 'SET_PATH':
+            return{
+                ...state,
+                paths: action.payload
+            }
         default:
             return { ...state }
     }

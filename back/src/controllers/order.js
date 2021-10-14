@@ -69,7 +69,7 @@ import Cart from '../models/Cart.js';
 //     }
 // }
 export async function getOrders(req, res) {
-    let { id_client, id_order } = req.query
+    let { id_client, id_order, status } = req.query
     try {
         if (!id_client && !id_order) {
             var orders = await Order.findAll(
@@ -107,6 +107,11 @@ export async function getOrders(req, res) {
                         through: { attributes: ["quantity", "total"] }
                     }],
             })
+        }
+
+        if(status){
+            let ordersFilter = orders.filter(order=>order.dataValues.status===status)
+            return res.status(200).send(ordersFilter)
         }
         return res.status(200).send(orders)
     } catch (err) {

@@ -60,7 +60,7 @@ export async function getFavorite(req, res) {
     const id_client = req.id;
     try {
         let favorite = await Favorite.findAll({where: {id_client: id_client}, include:[{model:Product}]})
-        return res.status(200).send(cart)
+        return res.status(200).send(favorite)
         
     } catch (err) {
         console.log(err)
