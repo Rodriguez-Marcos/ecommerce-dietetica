@@ -77,7 +77,7 @@ function Login({ respuesta, isLogin }) {
         password: ''
     })
  
-
+    // VER RUTA
     useEffect(() => {
         if (isLogin) history.push('/home');
 

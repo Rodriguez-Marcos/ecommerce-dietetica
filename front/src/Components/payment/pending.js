@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Styles from './payment.module.css'
 import NavBar from '../NavBar';
-import { postAdress } from '../../Actions';
+// import { postAdress } from '../../Actions';
 import emptycart from '../../Utils/emptycart';
 
 export default function Pending(){
@@ -30,7 +30,7 @@ export default function Pending(){
         event.preventDefault()
         if (!input.direccion || !input.altura || !input.ciudad || !input.provincia || !input.numero) { alert('Debes llenar todos los campos') }
         else {
-             postAdress(input) 
+             //postAdress(input) 
              alert('Gracias por confiar en nosotros')}}
 
     return (

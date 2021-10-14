@@ -10,7 +10,7 @@ import TableProducts from "./TableProducts";
 import Topbar from "./AdminTopBar";
 import Sidebar from "./AdminSideBar";
 import {
-  getProducts,
+  getProductsAdmin,
   getCategories,
   getDiets,
   deleteProductByID,
@@ -46,7 +46,7 @@ export default function Creator() {
 
 
   useEffect(() => {
-    dispatch(getProducts());
+    dispatch(getProductsAdmin());
     dispatch(getCategories());
     dispatch(getDiets());
   }, [dispatch, deleteProductByID]);
@@ -104,7 +104,7 @@ export default function Creator() {
   }
 
   function handlerCategories(e) {
-    if (input.ids_categories.filter((a)=> a === e.target.value)) {
+    if (e.target.checked) {
       setInput({
         ...input,
         ids_categories: [...input.ids_categories, e.target.value],
@@ -112,13 +112,13 @@ export default function Creator() {
     } else {
       setInput({
         ...input,
-        ids_categories: [],
+        ids_categories: [...input.ids_categories.filter(a => a !== e.target.value)],  
       });
     }
   }
 
   function handlerDiets(e) {
-    if (e.target.value) {
+    if (e.target.checked) {
       setInput({
         ...input,
         ids_diets: [...input.ids_diets,e.target.value],
@@ -126,7 +126,7 @@ export default function Creator() {
     } else {
       setInput({
         ...input,
-        ids_diets: [],
+        ids_diets: [...input.ids_diets.filter(a => a !== e.target.value)],  
       });
     }
   }
@@ -179,7 +179,7 @@ export default function Creator() {
       product: false,
     });
 
-    dispatch(getProducts());
+    dispatch(getProductsAdmin());
   }
 
   // handlers de submit
@@ -195,9 +195,9 @@ export default function Creator() {
       input.ids_diets.length != 0 &&
       input.ids_categories.length != 0
     ) {
-      dispatch(postProduct(input,window.localStorage.jwt));
+      dispatch(postProduct(input));
       alert(" Producto creado con exito");
-      dispatch(getProducts());
+      dispatch(getProductsAdmin());
       closeProduct();
     } else {
       alert("falta informacion requerida en el formulario");
