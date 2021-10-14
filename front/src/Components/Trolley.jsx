@@ -104,7 +104,7 @@ export default function Trolley() {
 
     var config = {
       method: 'post',
-      url: '/payment',
+      url: 'http://localhost:3001/payment',
       headers: {
         'Authorization': 'Bearer ' + token,
         'Content-Type': 'application/json'
@@ -160,7 +160,7 @@ export default function Trolley() {
           <div className="carrito__close">
             <box-icon onClick={()=>{setMenu(false)}} name="x"></box-icon>
           </div>
-          <h2>Su carritoOOOOOOOO:</h2>
+          <h2>Su carrito:</h2>
           {carrito?.map((producto) => (
 
             // {console.log(e)}
