@@ -5,6 +5,7 @@
 }
 #CantainerDetails{
     margin: auto;
+    width: 100vw;
 }
 #row1{
     background-color: white;
