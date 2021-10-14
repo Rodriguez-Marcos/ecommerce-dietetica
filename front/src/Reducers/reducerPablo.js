@@ -1,9 +1,10 @@
-import { GET_PRODUCTS,GET_ORDERS,RESET_PASSWORD,FILTER_ORDERS, DELETE_CLIENTS, GET_CLIENTS, GET_BY_DIET_AND_CATEGORY, GET_BY_PRICE, GET_CATEGORIES, GET_DIETS, GET_BY_ID_CATEGORY, ORDER_PRICE, GET_BY_ID_DIET, GET_PRODUCTS_FILTERED, PAGINATE, FAIL_TO_LOAD, SET_LOADING, SET_NEW_USER, SET_LOGIN_USER, PUT_ORDERS, POST_ADDRESS,GET_ADDRESS } from "../Actions/index"
+import { GET_PRODUCTS,GET_PRODUCTS_ADMIN,GET_ORDERS,RESET_PASSWORD,FILTER_ORDERS, DELETE_CLIENTS, GET_CLIENTS, GET_BY_DIET_AND_CATEGORY, GET_BY_PRICE, GET_CATEGORIES, GET_DIETS, GET_BY_ID_CATEGORY, ORDER_PRICE, GET_BY_ID_DIET, GET_PRODUCTS_FILTERED, PAGINATE, FAIL_TO_LOAD, SET_LOADING, SET_NEW_USER, SET_LOGIN_USER, PUT_ORDERS, POST_ADDRESS,GET_ADDRESS } from "../Actions/index"
 
 
 
 const InitialState = {
     products: [],
+    productsAdmin:[],
     categories: [],
     diets: [],
     productsFiltered: [],
@@ -32,6 +33,11 @@ export default function reducerPablo(state = InitialState, action) {
                 productsFiltered: action.payload,
 
             };
+            case GET_PRODUCTS_ADMIN:
+                return {
+                    ...state,
+                    products: action.payload
+                };
 
 
         case GET_CATEGORIES:
