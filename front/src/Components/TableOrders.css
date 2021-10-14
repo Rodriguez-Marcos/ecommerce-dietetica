@@ -13,15 +13,26 @@
     align-items: flex-start;
     flex-wrap: wrap;
 }
-
-
-@media only screen and (max-width: 770px) {
-    .table1{
+#table1{
         overflow:scroll; 
         height:calc(95vh - 50px);
-        width:calc(110vw - 50px);
+        width:calc(80vw - 50px);
+        margin: 5px;
+}
+
+@media only screen and (max-width: 770px) {
+    
+    #table1{
+        overflow:scroll; 
+        height:calc(95vh - 50px);
+        width:100vw;
+        font-size: 10px;
+        margin: 5px;
     }
-    .table1 thead tr{
-        display: flex;
+    .resumenCompra{
+        font-size: 10px;
+    }
+    .form-select{
+        font-size: 10px;
     }
 }
