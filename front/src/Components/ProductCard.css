@@ -3,52 +3,92 @@
     --hoverVerde:rgba(16, 112, 16, 0.795);
     --colorCafe: #99642C;
 }
+
 #a{
+    width: 250px;
+    height: 250px;
+    display: flex;
+    justify-content: center;
     align-items: center;
-    padding: 20px;
-    margin :15px;
-    border-radius: 30px;
-
-    -webkit-box-shadow: 8px 0px 0px 0px var(--colorCafe), 0px 8px 0px 0px var(--hoverVerde), -8px 0px 0px 0px var(--colorCafe), 0px 0px 0px 8px var(--hoverVerde), 0px 0px 4px 17px rgba(158,36,8,0); 
-box-shadow: 8px 0px 0px 0px var(--colorCafe), 0px 8px 0px 0px var(--hoverVerde), -8px 0px 0px 0px var(--colorCafe), 0px 0px 0px 8px var(--hoverVerde), 0px 0px 4px 17px rgba(158,36,8,0);
-
+    background-color: transparent;
 }
-#divImg{
-    width: 200px;
-    height: 200px;
+
+#card{
+    width: 95%;
+    height: 92%;
+    margin: 10px;
+    box-shadow: 0 0 5px #7bbde5;
+    border-radius: 10px;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    text-align: center;
+}
+#nombre_producto{
+    position: absolute;
+    background-color: #99642cb6;
+    width: 100%;
+    height: 20%;
+    color: #442e14b6;
+    padding: 5px;
+    font-size: small;
+    display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 15px;
+    font-weight: 900;
 }
-#divImg img{
-    width: 200px;
-    height: 200px;
-    border-radius: 15px;
+#divImg{
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-end;
 }
-#borrarimg{
-    height: auto;
-    color: red;
-    width: 35px;
+#divImg img {
+    width: 100%;
+    height: 100%    ;
+    transition: 1.5 ease-in;
 }
-#borrarimg:hover{
-    color: rgba(5, 5, 5, 0.507);
+
+
+#card:hover .divImg .img{
+    width: 80%;
 }
-#borrarBtn{
-    background-color: transparent;
-    border: none;
-    cursor:no-drop;
-}
-#carrito{
-    background-color: #849836;
-    color: rgb(255, 255, 255);
-    border: none;
-    cursor: cell;
-}
-#carrito:hover{
-    background-color: var(--colorCafe);
-}
+
 #carritoimg{
     width: 3vw;
+    z-index: 2;
+}
+#favorite-carrito{
+    height: auto;
+    width: 100%;
+    position: absolute;
+    z-index: 2;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+#carrito{
+    background-color: transparent;
+    border: none;
+    width: 32px;
+    padding: 0;
+}
+
+#carroCompras{
+    padding: 5px;
+    width: 35px;
+    height: 35px;
+    border-radius: 5px 0 0 0;
+    background-color: #99642cb6;
+}
+#carroCompras svg{
+    color: white;
+    transition: 0.6s;
+    width: 90%;
+}
+#carroCompras svg:hover{
+    color: var(--hoverVerde)
 }
 #btns{
     display: flex;
@@ -62,21 +102,44 @@ box-shadow: 8px 0px 0px 0px var(--colorCafe), 0px 8px 0px 0px var(--hoverVerde),
 #detalles:hover{
     color: var(--hoverVerde);
 }
-#precio{
+.corazon[type="checkbox"]{
+    display: none;
+}
+#favorite{
+    padding: 5px;
+    width: auto;
+    height: auto;
+    border-radius: 0 5px 0 0;
+    background-color: #99642cb6;
+}
+
+#favorite label::before{
+    content:"";
     position: absolute;
-    background-color: rgba(128, 128, 128, 0);
-    color: transparent;
-    width: 100%;
-    height: 100%;
+    left: 0px;
+}
+/* #heart[type="checkbox"]:checked + label{
+    color: var(--hoverVerde);
+} */
+#favorite label{
+    color: rgb(232, 241, 241);
+    transition: 1s;
+}
+#favorite label:hover{
+    color:var(--hoverVerde);
+}
+#precio{
+    margin: 0;
+    background-color: #99642cb6;
+    width: 50%;
+    height: 36px;
     display: flex;
     justify-content: center;
     align-items: center;
-    transition: 0.7s;
-    border-radius: 15px;
-
+    border-radius: 5px 5px 0 0;
+    color: white;
+    transition: 1s;
 }
 #precio:hover{
-   background-color: rgba(5, 5, 5, 0.507);
-   color: rgb(245, 239, 245);
-   border-radius: 15px;
+    color: var(--hoverVerde);
 }

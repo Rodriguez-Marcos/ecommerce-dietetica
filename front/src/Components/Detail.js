@@ -22,7 +22,8 @@ const cookies = new Cookies();
 
 
 function Detail({ match }) {
-  const { id } = match.params
+  const [ counter, setCounter ] = useState (1);
+  const  id  = JSON.parse(match.params.id)
   const dispatch = useDispatch()
 
 
@@ -35,18 +36,11 @@ function Detail({ match }) {
 
   function handleClickTrolley(e) {
     e.preventDefault();
-    /* let add = Array.isArray(cookies.get('trolley')) ? [...cookies.get('trolley')] : []; /// trolley : []
-    if (!add.find(x => x.id === producto.id))
-      add.push(producto);
-    cookies.set('trolley', add)
-
-  --------------- */
-  let trolley = Array.isArray(cookies.get('trolley')) ? [...cookies.get('trolley')] : []; /// trolley : []
-    if (!trolley.find(x => x.id === producto.id)) {
-      let quantity = 1;
-      let { id } = producto;
+    let trolley = Array.isArray(cookies.get('trolley')) ? [...cookies.get('trolley')] : []; /// trolley : []
+    if (!trolley.find(x => x.id === id)) {
+      let quantity = counter;
       trolley.push({id, quantity});
-      if (isLogin) postCarrito(token, {id,quantity});
+      if (isLogin) postCarrito(token,{id,quantity});
     }
     cookies.set('trolley', trolley)
     dispatch({
@@ -69,24 +63,6 @@ function Detail({ match }) {
     });
   }
 
-
-  // function handleSubmit(e) {
-  //   e.preventDefault();
-  //   return axios
-  //     .post(REVIEW_URL + id, input)
-  //     .then((r) => {
-  //       e.target.reset();
-  //       setInput({
-  //         title: "",
-  //         description: "",
-  //         calification: "",
-  //       });
-  //       swal("Creado", "Comentario enviado con éxito!", "success")
-  //       .then( () => window.location.href="/" );
-  //       console.log('rompieste todo juancito')
-  //     })
-  //     .catch((error) => swal("Error", error, "error"));
-  // }
 
   function handleSubmit(e) {
     e.preventDefault()
@@ -210,7 +186,7 @@ function Detail({ match }) {
                 <hr />
                 <div id="btnsProduct">
                   <button type="button" class="btn btn-secondary">Agregar a favoritos</button>
-                  <button type="button" class="btn btn-success">Agregar al carrito</button>
+                  <button onClick={handleClickTrolley} type="button" class="btn btn-success">Agregar al carrito</button>
                 </div>
                 <hr />
                 <Card.Text>
@@ -244,7 +220,7 @@ function Detail({ match }) {
                   <hr />
                   <div id="btnsProduct">
                     <button type="button" class="btn btn-secondary">Agregar a favoritos</button>
-                    <button type="button" class="btn btn-success">Agregar al carrito</button>
+                    <button onClick={handleClickTrolley} type="button" class="btn btn-success">Agregar al carrito</button>
                   </div>
                   <hr />
                   <Card.Text>
@@ -262,7 +238,6 @@ function Detail({ match }) {
               <Card id="CrearComentarioTel">
                 <Card.Body >
                   <Form onSubmit={e => { handleSubmit(e) }} >
-                    {console.log(handleSubmit)}
                     <Card.Title id="titleOpinion">¡Dejanos tu opinión!</Card.Title>
                     <Card.Title>Calificanos
                       <Rating

@@ -57,7 +57,7 @@ app.get("/feedback",(req, res) => {
     )
   }
    return res.redirect("http://localhost:3000/payment/failure") 
-})
+}) 
 
 
 

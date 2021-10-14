@@ -8,7 +8,7 @@ export default async function removePC (token, id_products){
       
       var config = {
         method: 'delete',
-        url: 'http://localhost:3001/cart',
+        url: '/cart',
         headers: { 
           'Authorization': 'Bearer '+ token,
           'Content-Type': 'application/json'

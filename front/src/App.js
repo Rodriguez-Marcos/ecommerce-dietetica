@@ -20,9 +20,7 @@ import { useSelector } from 'react-redux';
 import Success from './Components/payment/success';
 import Pendings from './Components/payment/pending';
 import Failure from './Components/payment/failure';
-
 import CreateAdress from './Components/CreateAdress'
-
 import AdminDetailsOrders from './Components/AdminDetailsOrders';
 
 
@@ -42,20 +40,11 @@ function App() {
     {/* <Route exact path='/CreateUser' component={CreateUser}/> */}
     <Route exact path='/Login' component={Login}/>
     <Route exact path='/Admin' component={Creator}/>
-
-  
-
     <Route exact path='/newadress' component={CreateAdress}/>
     <Route exact path='/Admin' render={() => isAdmin ? <Creator></Creator>: <Redirect to='/home'/>}/>
     <Route exact path='/Admin/user'  render={() => isAdmin ? <UsersAdminDetail/>: <Redirect to='/home'/>}/>
     <Route exact path='/Admin/orders'  render={() => isAdmin ? <TableOrders/>: <Redirect to='/home'/>}/>
     <Route exact path='/Admin/filters' render={() => isAdmin ? <AdminDietAndCategory/>: <Redirect to='/home'/>}/>
-
-    
-
-
-    </Switch>
-    <Switch>
     <Route exact path='/payment/success' component={Success}/>
     <Route exact path='/payment/pending' component={Pendings}/>
     <Route exact path='/payment/failure' component={Failure}/>
