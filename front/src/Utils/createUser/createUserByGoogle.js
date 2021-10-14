@@ -6,7 +6,7 @@ export default async function createUserByGoogle( googleId, token) {
       
       var config = {
         method: 'post',
-        url: '/clients/bygoogle',
+        url: 'http://localhost:3001/clients/bygoogle',
         headers: { 
           'Authorization': 'Bearer '+ token, 
           'Content-Type': 'application/json'
