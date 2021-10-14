@@ -4,6 +4,7 @@ import { REVIEW_URL, GET_ID} from "../Actions/index"
 const InitialState = {
     detail: {},
     comentario: [],
+    allowR:""
 
 }
 
@@ -18,6 +19,11 @@ export default function reducerRocio(state = InitialState, action)  {
                 return{
                     ...state,
                     
+                }
+            case "ALLOW_REVIEW":
+                return {
+                    ...state,
+                    allowR: action.payload
                 }
             default:
                 return {
