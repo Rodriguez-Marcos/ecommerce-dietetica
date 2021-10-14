@@ -12,11 +12,12 @@ import { getOrders, putOrders } from "../Actions";
 export default function TableOrders() {
   let dispatch = useDispatch();
   const orders = useSelector((state) => state.reducerPablo.orders);
+  let token = window.localStorage.jwt
 
   useEffect(() => {
-    dispatch(getOrders(window.localStorage.jwt));
+    dispatch(getOrders(token));
   }, [dispatch]);
-
+console.log(token,'Es el Token' )
   const [estado, setStatus] = useState({
     status: orders.status,
     id: "",
@@ -30,8 +31,9 @@ export default function TableOrders() {
         id: id,
       });
 
+console.log(estado)
       dispatch(
-        putOrders({ status: event.target.value }, id, window.localStorage.jwt)
+        putOrders({ status: event.target.value }, id, token)
       );
     }
     dispatch(getOrders(window.localStorage.jwt));
@@ -52,7 +54,7 @@ export default function TableOrders() {
   });
 
   function handlerDetails(e) {
-    console.log("esto es e", e);
+ 
 
     setstate({
       ...state,
