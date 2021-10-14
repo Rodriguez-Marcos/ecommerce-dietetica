@@ -6,7 +6,7 @@ export default async function createUserByGoogle( googleId, token) {
       
       var config = {
         method: 'post',
-        url: '/clients/bygoogle',
+        url: 'https://ecommerce-dietetica.vercel.app/clients/bygoogle',
         headers: { 
           'Authorization': 'Bearer '+ token, 
           'Content-Type': 'application/json'
