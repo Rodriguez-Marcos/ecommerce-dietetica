@@ -4,7 +4,7 @@ import NavBar from '../NavBar';
 import emptyCart from '../../Utils/emptycart';
 import { useSelector } from 'react-redux';
 import Cookies from 'universal-cookie'
-import { postAdress } from '../../Actions';
+// import { postAdress } from '../../Actions';
 
 export default function Success(){
 
@@ -34,7 +34,7 @@ export default function Success(){
         event.preventDefault()
         if (!input.direccion || !input.altura || !input.ciudad || !input.provincia || !input.numero) { alert('Debes llenar todos los campos') }
         else {
-             postAdress(input) 
+             //postAdress(input) 
              alert('Gracias por confiar en nosotros')}}
 
     return (

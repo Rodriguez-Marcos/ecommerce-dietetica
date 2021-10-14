@@ -4,6 +4,7 @@ import getTrolley from "../Utils/getTrolley";
 import Cookies from 'universal-cookie'
 import { ResponsiveEmbed } from 'react-bootstrap';
 export const GET_PRODUCTS = 'GET_PRODUCTS';
+export const GET_PRODUCTS_ADMIN = 'GET_PRODUCTS_ADMIN';
 export const GET_CATEGORIES = 'GET_CATEGORIES';
 export const GET_DIETS = 'GET_DIETS';
 export const GET_BY_ID_CATEGORY = 'GET_BY_ID_CATEGORY';
@@ -49,6 +50,18 @@ export function getProducts() {
                 dispatch({
                     payload: response.data,
                     type: GET_PRODUCTS
+                })
+            })
+    }
+}
+export function getProductsAdmin() {
+
+    return async function (dispatch) {
+        return axios.get(`http://localhost:3001/products/admin`)
+            .then((response) => {
+                dispatch({
+                    payload: response.data,
+                    type: GET_PRODUCTS_ADMIN
                 })
             })
     }
@@ -99,14 +112,9 @@ export function getById(id) {
     };
 };
 
-export function postProduct(payload,token) {
+export function postProduct(payload) {
     return async function (dispatch) {
-        console.log(token)
-        await axios.post("http://localhost:3001/products", payload, {
-            headers: {
-              'Authorization': `Bearer ${token}` 
-            }
-          });
+        await axios.post("http://localhost:3001/products", payload);
 
         return dispatch({
             type: "POST_PRODUCTS",
@@ -398,9 +406,7 @@ export function putOrders(payload, id ){
          };
        }
 
-export function postAdress(){
-    return 0
-}
+
 
 export default function getTrolleyAction() {
     return async function (dispatch) {
@@ -411,7 +417,6 @@ export default function getTrolleyAction() {
             })
             let res = await getTrolley(cookieTrolley.map(x=>x.id))
             let payload = [];
-            console.log(res.data)
             res.data.forEach(x=>{
                 cookieTrolley.forEach(({id})=>{
                     if(x.id===id.id)
