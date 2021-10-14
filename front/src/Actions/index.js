@@ -118,24 +118,25 @@ export function getById(id) {
 export function postProduct(payload, token) {
   return async function (dispatch) {
     let headersList = {
-      Accept: "*/*",
-      Authorization: "Bearer " + token,
-      "Content-Type": "application/json",
-    };
-
-    let reqOptions = {
-      url: "http://localhost:3001/products",
-      method: "POST",
-      headers: headersList,
-      data: JSON.stringify(payload),
-    };
-
-    axios.request(reqOptions).then(function (response) {
-      console.log(response.data);
-    });
+      "Accept": "*/*",
+   
+      "Authorization": "Bearer "+ token, 
+      "Content-Type": "application/json" 
+     }
+     
+     let reqOptions = {
+       url: "http://localhost:3001/products",
+       method: "POST",
+       headers: headersList,
+       data: JSON.stringify(payload), 
+     }
+     
+     axios.request(reqOptions).then(function (response) {
+       console.log(response.data);
+     })
     return dispatch({
       type: "POST_PRODUCTS",
-      payload,
+      payload  ,
     });
   };
 }
