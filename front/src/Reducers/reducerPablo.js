@@ -20,6 +20,7 @@ const InitialState = {
     orders: [], 
     address:[],
     paths: [null,null,null],
+
 }
 
 
@@ -182,6 +183,12 @@ export default function reducerPablo(state = InitialState, action) {
                 ...state,
                 paths: action.payload
             }
+            case 'FILTER_ORDERS':
+                return {
+                    ...state,
+                    orders: action.payload,
+                    
+                }
         default:
             return { ...state }
     }
