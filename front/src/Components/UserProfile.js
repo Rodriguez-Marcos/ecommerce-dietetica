@@ -21,7 +21,7 @@ const orders = useSelector((state) => state.reducerPablo.orders);
 const cookies = new Cookies();
 const dispatch = useDispatch();
 const myStorage = window.localStorage;
-const jwt = myStorage.jwt;
+const jwt = myStorage.getItem('jwt');
 var isadmin = decode(jwt)
 var id = isadmin.id
 

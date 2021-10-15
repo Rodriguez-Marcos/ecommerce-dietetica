@@ -5,6 +5,7 @@ import NavBar from '../NavBar';
 import emptycart from '../../Utils/emptycart';
 
 export default function Pending(){
+    const myStorage = window.localStorage;
 
 
     let [input, setInput]=useState({
@@ -23,7 +24,7 @@ export default function Pending(){
         })
     }
     useEffect(() => {
-        emptycart(window.localStorage.jwt)
+        emptycart(myStorage.getItem('jwt'))
     }, [])
 
     async function handleSubmit(event) {

@@ -12,8 +12,9 @@ import { getOrders, putOrders,getFilterStatus } from "../Actions";
 export default function TableOrders() {
   let dispatch = useDispatch();
   const orders = useSelector((state) => state.reducerPablo.orders);
-  const [order,setOrder] = useState('')
-  let token = window.localStorage.jwt
+  const [order,setOrder] = useState('');
+  const myStorage = window.localStorage
+  let token = myStorage.getItem('jwt')
 
   useEffect(() => {
     dispatch(getOrders(token,order));
@@ -37,13 +38,13 @@ export default function TableOrders() {
         putOrders({ status: event.target.value }, id, token)
       );
     }
-    dispatch(getOrders(window.localStorage.jwt,order));
+    dispatch(getOrders(myStorage.getItem('jwt'),order));
   }
   function handlerFilterStatus(e) {
     e.preventDefault();
     
       if (e.target.value === "todos") {
-        dispatch(getOrders(window.localStorage.jwt,order));
+        dispatch(getOrders(myStorage.getItem('jwt'),order));
       } else {
       
         dispatch(getFilterStatus(e.target.value, token));

@@ -7,6 +7,7 @@ import Cookies from 'universal-cookie'
 // import { postAdress } from '../../Actions';
 
 export default function Success(){
+    const myStorage = window.localStorage;
 
     let [input, setInput]=useState({
         direccion: ' ',
@@ -27,7 +28,7 @@ export default function Success(){
 
 
     useEffect(() => {
-        emptyCart(window.localStorage.jwt)
+        emptyCart(myStorage.getItem('jwt'))
     }, [])
 
     async function handleSubmit(event) {

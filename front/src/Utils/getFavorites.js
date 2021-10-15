@@ -8,5 +8,9 @@ export default async function getFavorites(token){
           'Authorization': 'Bearer '+ token,
           'Content-Type': 'application/json'
         }}
-      return axios(config);
+      return axios(config)
+      .then((res)=>{
+        console.log(res.data[0].products)
+        return res.data[0].products;
+      })
 }

@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export default async function postFavorites (id, token){
+export default async function deleteFavorites (id, token){
     var data = JSON.stringify({
         "id_products": id
       });
