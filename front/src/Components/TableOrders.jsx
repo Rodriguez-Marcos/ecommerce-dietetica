@@ -7,7 +7,7 @@ import AdminDetailsOrders from "./AdminDetailsOrders";
 import "./TableOrders.css";
 
 import { useDispatch, useSelector } from "react-redux";
-import { getOrders, putOrders, getFilterStatus } from "../Actions";
+import { getOrders, putOrders,getFilterStatus } from "../Actions";
 
 export default function TableOrders() {
   let dispatch = useDispatch();
@@ -43,7 +43,7 @@ export default function TableOrders() {
     e.preventDefault();
     
       if (e.target.value === "todos") {
-        dispatch(getOrders(window.localStorage.jwt));
+        dispatch(getOrders(window.localStorage.jwt,order));
       } else {
       
         dispatch(getFilterStatus(e.target.value, token));
