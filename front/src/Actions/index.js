@@ -34,8 +34,6 @@ let cookies = new Cookies();
 
 
 
-
-
 export const paginate = (recipes) => {
     return {
         type: PAGINATE,
