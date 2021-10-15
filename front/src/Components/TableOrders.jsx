@@ -7,7 +7,7 @@ import AdminDetailsOrders from "./AdminDetailsOrders";
 import "./TableOrders.css";
 
 import { useDispatch, useSelector } from "react-redux";
-import { getOrders, putOrders } from "../Actions";
+import { getOrders, putOrders, getFilterStatus } from "../Actions";
 
 export default function TableOrders() {
   let dispatch = useDispatch();
@@ -38,6 +38,17 @@ export default function TableOrders() {
       );
     }
     dispatch(getOrders(window.localStorage.jwt,order));
+  }
+  function handlerFilterStatus(e) {
+    e.preventDefault();
+    
+      if (e.target.value === "todos") {
+        dispatch(getOrders(window.localStorage.jwt));
+      } else {
+      
+        dispatch(getFilterStatus(e.target.value, token));
+      }
+    
   }
 
   const [state, setstate] = useState({
@@ -92,7 +103,19 @@ export default function TableOrders() {
               <th>Email</th>
               <th>Fecha de pedido:</th>
               <th>Total:</th>
-              <th>Estado:</th>
+              <th><select
+                  className="form-select"
+                  onChange={(e) => handlerFilterStatus(e)}
+                >
+                  <option disabled="disabled" selected="true">
+                    Estados:
+                  </option>
+                  <option value="todos"> todos</option>
+                  <option value="creada"> creada</option>
+                  <option value="procesando"> procesando</option>
+                  <option value="cancelada"> cancelada</option>
+                  <option value="completa"> completa</option>
+                </select></th>
 
               <th>Detalles:</th>
             </tr>
