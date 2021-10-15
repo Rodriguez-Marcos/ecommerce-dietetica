@@ -26,17 +26,16 @@ export default function Creator() {
   const c = useSelector((state) => state.reducerPablo.categories);
   const d = useSelector((state) => state.reducerPablo.diets);
   const isAdmin = useSelector((state) => state.reducerPablo.IsAdmin);
+  const myStorage = window.localStorage;
 
-  let token = window.localStorage.jwt
+  let token = myStorage.getItem('jwt')
   let dispatch = useDispatch();
 
-  const jwt = require('jsonwebtoken')
-  const myStorage = window.localStorage;
 
   // Renderizados
 
   useEffect(() => {
-    const jwt = myStorage.jwt;
+    const jwt = myStorage.getItem('jwt');
     var isadmin = decode(jwt)
     if (!!jwt) {
       dispatch({ type: 'LOGIN', payload: jwt })

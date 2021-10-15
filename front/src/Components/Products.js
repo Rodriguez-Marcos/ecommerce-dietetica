@@ -15,13 +15,14 @@ export default function ProductsCards() {
   let location = useLocation();
   const dispatch = useDispatch();
   let { isLogin, token, comodin, products } = useSelector(state => state.reducerPablo);
+  const myStorage = window.localStorage;
 
   
   useEffect(async ()=>{
     console.log(comodin)
     if(isLogin)
     {
-      let res = await getFavorites(token);
+      let res = await getFavorites(myStorage.getItem('jwt'));
       products.forEach(product=>{
         res.data[0].products.forEach(x=>{
           if(product.id=== x.id)

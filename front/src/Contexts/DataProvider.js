@@ -23,21 +23,6 @@ export const DataProvider = (props) => {
 		}
 	}, []);
 
-	/* const addCarrito = (id) =>{
-		const check = carrito.every(item =>{
-			return item.id !== id
-			
-		}) 
-		if(check){
-			const data = productos.filter(producto =>{
-				return producto.id === id
-			})
-			setCarrito([...carrito, ...data])
-		}else{
-			alert("El producto se ha añadido al carrito")
-		}
-	} */
-
 	useEffect(() =>{
 		 const getTotal = () =>{
 		 	const res = carrito?.reduce((prev, item) =>{
@@ -53,7 +38,6 @@ export const DataProvider = (props) => {
 		menu: [menu, setMenu],
 		favs: [favs, setFavs],
 		carrito: [carrito, setCarrito],
-		/* addCarrito: addCarrito, */
 		total: [total, setTotal],
 		favorites: [favorites, setFavorites]
 	}

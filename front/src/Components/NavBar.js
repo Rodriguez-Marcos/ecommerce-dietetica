@@ -43,7 +43,7 @@ function NavBar({ getProductbyName, setLoading, isLogin, token }) {
   const [favs, setFavs] = value.favs;
   const [favorites, setFavorites] = value.favorites;
   useEffect(async ()=>{
-    let res = await getFavorites(token)
+    let res = await getFavorites(myStorage.getItem('jwt'))
     setFavorites(res.data[0].products.length)
   },[comodin])
   
@@ -58,7 +58,7 @@ function NavBar({ getProductbyName, setLoading, isLogin, token }) {
   const { logout } = useUser();
   const myStorage = window.localStorage;
   useEffect(() => {
-    const jwt = myStorage.jwt;
+    const jwt = myStorage.getItem('jwt');
     var isadmin = decode(jwt)
 
     if (!!jwt) {

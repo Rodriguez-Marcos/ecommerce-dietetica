@@ -1,10 +1,13 @@
 import { useContext, useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useHistory } from "react-router"
+import { getProducts } from "../Actions"
 import { DataContext } from "../Contexts/DataProvider"
 import deleteFav from "../Utils/deleteFav"
 import getFavorites from "../Utils/getFavorites"
 import postCarrito from "../Utils/postCarrito"
+
+const myStorage = window.localStorage
 
 export default function Favorites() {
     const {token , comodin, isLogin} = useSelector(state=>state.reducerPablo)
@@ -19,10 +22,11 @@ export default function Favorites() {
         history.push('/login')
         setFavs(false)
     }
-        let res = await getFavorites(token)
+        console.log( myStorage.getItem('jwt'))
+        let res = await getFavorites( myStorage.getItem('jwt'))
         setProducts([...res.data[0].products])
         setFavorites(res.data[0].products.length)
-    },[comodin])
+    },[comodin,getProducts])
     async function handleClose(id){
         await deleteFav(id,token)
         dispatch({type:'COMODIN'})
