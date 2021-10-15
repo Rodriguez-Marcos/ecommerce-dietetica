@@ -30,7 +30,10 @@ export default function TableOrders() {
         id: id,
       });
 
+
       dispatch(putOrders({ status: event.target.value }, id, token));
+
+ 
     }
     dispatch(getOrders(window.localStorage.jwt));
   }
@@ -61,6 +64,7 @@ export default function TableOrders() {
   });
 
   function handlerDetails(e) {
+
     setstate({
       ...state,
       modal: true,
@@ -88,12 +92,13 @@ export default function TableOrders() {
       <Topbar />
       <div className="ordersTable-Sidebar">
         <Sidebar />
-        <table className={` ${"table"} `}>
+        <table className={` ${"table"} `} id="table1">
           <thead>
             <tr>
-              <th>Numero: </th>
-              <th>Datos del cliente:</th>
+              <th>N°</th>
+              <th>Datos del cliente</th>
               <th>Email</th>
+
               <th>Fecha de pedido:</th>
               <th>Total:</th>
               <th>
@@ -112,7 +117,9 @@ export default function TableOrders() {
                 </select>
               </th>
 
-              <th>Detalles:</th>
+
+
+              <th>Detalles</th>
             </tr>
           </thead>
 
@@ -149,7 +156,7 @@ export default function TableOrders() {
                 </td>
 
                 <td>
-                  <Button color="primary" onClick={() => handlerDetails(e)}>
+                  <Button className="resumenCompra" color="primary" onClick={() => handlerDetails(e)}>
                     {" "}
                     Ver Mas{" "}
                   </Button>
@@ -160,8 +167,8 @@ export default function TableOrders() {
             <div>Cargando </div>
           )}
         </table>
+        <AdminDetailsOrders input={state} closeModal={closeModal} />
       </div>
-      <AdminDetailsOrders input={state} closeModal={closeModal} />
     </div>
   );
 }
