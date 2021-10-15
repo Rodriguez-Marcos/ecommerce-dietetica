@@ -6,12 +6,12 @@ export const DataContext = createContext();
 
 export const DataProvider = (props) => {
 	const [productos, setProductos] = useState([]);
-	const [menu, setMenu] = useState(false)
-	const [favs, setFavs] = useState(false)
-	const [favorites, setFavorites] = useState(0)
-	const [carrito, setCarrito] =useState([])
-	const [total, setTotal] = useState(0)
-	const {productsCart} = useSelector(selector => selector.cart)
+	const [menu, setMenu] = useState(false);
+	const [favs, setFavs] = useState(false);
+	const [favorites, setFavorites] = useState([]);
+	const [carrito, setCarrito] =useState([]);
+	const [total, setTotal] = useState(0);
+	const {productsCart} = useSelector(selector => selector.cart);
 	
 
   useEffect(() => {

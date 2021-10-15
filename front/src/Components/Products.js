@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom'
 import ProductCard from './ProductCard';
@@ -8,30 +8,24 @@ import { Link } from 'react-router-dom';
 import Cookies from "universal-cookie";
 import axios from 'axios';
 import getFavorites from '../Utils/getFavorites';
+import { getProducts } from '../Actions';
+import { DataContext } from '../Contexts/DataProvider';
 
 const cookies = new Cookies();
 
 export default function ProductsCards() {
+  const value = useContext(DataContext);
+  let [favorites,setFavorites] = value.favorites;
   let location = useLocation();
   const dispatch = useDispatch();
   let { isLogin, token, comodin, products } = useSelector(state => state.reducerPablo);
   const myStorage = window.localStorage;
 
   
-  useEffect(async ()=>{
-    console.log(comodin)
-    if(isLogin)
-    {
-      let res = await getFavorites(myStorage.getItem('jwt'));
-      products.forEach(product=>{
-        res.data[0].products.forEach(x=>{
-          if(product.id=== x.id)
-            if(!product.isFavorite)
-              product.isFavorite = true
-        })
-      })
-    }
-    dispatch({type: 'GET_PRODUCTS', payload: products})
+  useEffect( async ()=>{
+    if(!!myStorage.getItem('jwt')){
+    let res = await getFavorites( myStorage.getItem('jwt'))
+        setFavorites(res)}
   },[comodin])
 
   return (

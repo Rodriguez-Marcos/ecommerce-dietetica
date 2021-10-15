@@ -16,22 +16,31 @@ import AddIcon from "@material-ui/icons/Add";
 import postFavorites from '../Utils/postFavorites';
 import axios from 'axios';
 import usePath from '../Hooks/UsePaths';
+import { DataContext } from '../Contexts/DataProvider';
+import deleteFavorites from '../Utils/deleteFav';
 const cookies = new Cookies();
 
 
 
 
 export function ProductCard({ product }) {
+  const myStoreage =window.localStorage;
   const [counter, setCounter] = useState(1);
   let location = useLocation();
   let history = useHistory();
   let dispatch = useDispatch();
   let { isLogin, token } = useSelector(state => state.reducerPablo);
   let { pushPath } = usePath();
-  
+  let value = useContext(DataContext);
+  let [favorites,setFavorites] = value.favorites;
+  const [fav,setFav] = useState(favorites.some(checkId));
+  let isFav = favorites.some(checkId)
+  function checkId({id}){
+    return id===product.id;
+  }
   useEffect(()=>{
-
-  },[addFavorite])
+    isFav = favorites.some(checkId)
+  },[])
   
 
   function handleClickTrolley(e) {
@@ -55,8 +64,14 @@ export function ProductCard({ product }) {
       pushPath();
       history.push('/login');
     };
-  await postFavorites(product.id,token);
-  product.isFavorite = true;
+    if(!fav){
+    setFav(true)
+    isFav = true;
+    await postFavorites(product.id,myStoreage.getItem('jwt'));}
+    else {
+      setFav(false)
+      isFav = false;
+      deleteFavorites(product.id,myStoreage.getItem('jwt'))}
   dispatch({
     type: 'COMODIN',
   })
@@ -74,7 +89,7 @@ export function ProductCard({ product }) {
           <div id="favorite-carrito">
             <div id="favorite">
               <input className="corazon" id={"heart"+product.id} onClick={()=>{addFavorite()}} type="checkbox" />
-              <label htmlFor={"heart"+product.id}><Favorite style={product.isFavorite?{color: 'rgb(28 104 28)'}:{color: 'rgb(187 255 187)'}}  /></label>
+              <label htmlFor={"heart"+product.id}><Favorite style={(fav)?{color: 'rgb(28 104 28)'}:{color: 'rgb(187 255 187)'}}  /></label>
             </div>
             <h5 id="precio">${product.price}</h5>
             <div id="carroCompras">

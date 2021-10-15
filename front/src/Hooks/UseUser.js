@@ -7,6 +7,7 @@ import Cookies from "universal-cookie";
 import createUserByGoogle from "../Utils/createUser/createUserByGoogle";
 import getCart from "../Utils/getCart";
 import usePath from "./UsePaths";
+import { DataContext } from "../Contexts/DataProvider";
 
 const cookies = new Cookies();
 
@@ -14,6 +15,8 @@ const cookies = new Cookies();
 export default function useUser() {
     const dispatch = useDispatch();
     const { goBack } = usePath();
+    const value = useContext(DataContext);
+    let [favorites,setFavorites] = value.favorites;
     let myStorage = window.localStorage;
     const login = useCallback((username, password) => {
         dispatch({type:'LOADING', payload: true})
@@ -64,6 +67,7 @@ export default function useUser() {
             console.log('deslogueado con exito')
             myStorage.setItem('jwt','');
             cookies.set('trolley',[])
+            setFavorites([])
         dispatch({type: 'LOGOUT'})
     }, []);
     return {

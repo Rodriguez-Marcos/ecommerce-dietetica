@@ -42,9 +42,8 @@ function NavBar({ getProductbyName, setLoading, isLogin, token }) {
   const [menu, setMenu] = value.menu;
   const [favs, setFavs] = value.favs;
   const [favorites, setFavorites] = value.favorites;
-  useEffect(async ()=>{
-    let res = await getFavorites(myStorage.getItem('jwt'))
-    setFavorites(res.data[0].products.length)
+  useEffect(()=>{
+    getFavorites(myStorage.getItem('jwt'))
   },[comodin])
   
   function onLogoutSuccess() {
@@ -127,7 +126,7 @@ function NavBar({ getProductbyName, setLoading, isLogin, token }) {
               <box-icon  name="Favs"></box-icon>
               <Favorite/>
                 {/* <ShoppingCart fontSize="large" id="iconoCarrito"/> */}
-                <span className="item__total">{favorites}</span>
+                <span className="item__total">{favorites?.length}</span>
               </NavLink>
                </div>
             </Nav.Link>

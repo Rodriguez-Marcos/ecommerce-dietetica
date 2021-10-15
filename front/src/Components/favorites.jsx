@@ -16,7 +16,6 @@ export default function Favorites() {
     const value = useContext(DataContext)
     const [favs, setFavs] = value.favs;
     const [favorites, setFavorites] = value.favorites;
-    const [products, setProducts] = useState([])
     useEffect(async ()=>{
         if(!isLogin){
         history.push('/login')
@@ -24,8 +23,8 @@ export default function Favorites() {
     }
         console.log( myStorage.getItem('jwt'))
         let res = await getFavorites( myStorage.getItem('jwt'))
-        setProducts([...res.data[0].products])
-        setFavorites(res.data[0].products.length)
+        console.log(res)
+        setFavorites(res)
     },[comodin,getProducts])
     async function handleClose(id){
         await deleteFav(id,token)
@@ -33,7 +32,7 @@ export default function Favorites() {
     }
 
     async function addFavsToCart(){
-        await postCarrito(token,products.map(x=>{return {id: x.id,quantity:1}}))
+        await postCarrito(token,favorites.map(x=>{return {id: x.id,quantity:1}}))
         dispatch({type:'COMODIN'})
         
     }
@@ -45,7 +44,7 @@ export default function Favorites() {
                     <box-icon onClick={() => { setFavs(false) }} name="x"></box-icon>
                 </div>
                 <h2>Sus favoritos:</h2>
-                {products?.map((producto) => (
+                {favorites?.map((producto) => (
 
                     // {console.log(e)}
 

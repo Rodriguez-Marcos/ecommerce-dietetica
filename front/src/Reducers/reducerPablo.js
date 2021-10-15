@@ -33,7 +33,6 @@ export default function reducerPablo(state = InitialState, action) {
                 ...state,
                 products: action.payload,
                 productsFiltered: action.payload,
-
             };
             case GET_PRODUCTS_ADMIN:
                 return {
