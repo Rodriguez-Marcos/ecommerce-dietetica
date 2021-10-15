@@ -5,40 +5,50 @@ import Topbar from "./AdminTopBar";
 import Sidebar from "./AdminSideBar";
 import AdminDetailsOrders from "./AdminDetailsOrders";
 import "./TableOrders.css";
-
 import { useDispatch, useSelector } from "react-redux";
-import { getOrders, putOrders } from "../Actions";
+import { getOrders, putOrders, getFilterStatus } from "../Actions";
 
 export default function TableOrders() {
   let dispatch = useDispatch();
   const orders = useSelector((state) => state.reducerPablo.orders);
-  let token = window.localStorage.jwt
+  let token = window.localStorage.jwt;
 
   useEffect(() => {
     dispatch(getOrders(token));
   }, [dispatch]);
-  console.log(token, 'Es el Token')
+
   const [estado, setStatus] = useState({
     status: orders.status,
     id: "",
   });
+
   function handlerStatus(event, id) {
     if (event.target.value != estado.actual) {
-      console.log('hola mama')
       setStatus({
         ...estado,
         status: event.target.value,
         id: id,
       });
 
-      console.log(estado)
-      dispatch(
-        putOrders({ status: event.target.value }, id, token)
-      );
+
+      dispatch(putOrders({ status: event.target.value }, id, token));
+
+ 
     }
     dispatch(getOrders(window.localStorage.jwt));
   }
 
+  function handlerFilterStatus(e) {
+    e.preventDefault();
+    
+      if (e.target.value === "todos") {
+        dispatch(getOrders(window.localStorage.jwt));
+      } else {
+      
+        dispatch(getFilterStatus(e.target.value, token));
+      }
+    
+  }
   const [state, setstate] = useState({
     clientName: "",
     clientLastname: "",
@@ -54,7 +64,6 @@ export default function TableOrders() {
   });
 
   function handlerDetails(e) {
-
 
     setstate({
       ...state,
@@ -89,9 +98,26 @@ export default function TableOrders() {
               <th>N°</th>
               <th>Datos del cliente</th>
               <th>Email</th>
-              <th>Fecha de pedido</th>
-              <th>Total</th>
-              <th>Estado</th>
+
+              <th>Fecha de pedido:</th>
+              <th>Total:</th>
+              <th>
+                <select
+                  className="form-select"
+                  onChange={(e) => handlerFilterStatus(e)}
+                >
+                  <option disabled="disabled" selected="true">
+                    Estados:
+                  </option>
+                  <option value="todos"> todos</option>
+                  <option value="creada"> creada</option>
+                  <option value="procesando"> procesando</option>
+                  <option value="cancelada"> cancelada</option>
+                  <option value="completa"> completa</option>
+                </select>
+              </th>
+
+
 
               <th>Detalles</th>
             </tr>
