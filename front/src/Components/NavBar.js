@@ -146,7 +146,7 @@ function NavBar({ getProductbyName, setLoading, isLogin, token }) {
               <button id="lupabtn" onSubmit={(e) => handleSubmit(e)} onClick={(e) => handleSubmit(e)}><img id="lupaimg" src={lupa} /></button>
             </Form>
             {isLogin ? <div id="sesion">
-               <p><AccountCircle/> Bienvendido {jwt?.decode(token)?.name} </p>
+               <p> <NavLink to='/userprofile'><AccountCircle/></NavLink>Bienvendido {jwt?.decode(token)?.name} </p>
                <GoogleLogout
               clientId="908895428836-kaesjl71puimi31fjbffca9t4nvl7v6r.apps.googleusercontent.com"
               buttonText="Cerrar Sesión"

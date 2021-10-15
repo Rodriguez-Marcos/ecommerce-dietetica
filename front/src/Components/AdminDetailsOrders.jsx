@@ -1,4 +1,5 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 import {
   Button,
   Modal,
@@ -50,7 +51,7 @@ export default function AdminDetailsOrders({ input , closeModal}) {
 
             {input.productName.map((e) => (
               <tbody>
-                <td> {e.name}</td>
+                <td><NavLink to={`Detail/${e.id}`}>{e.name}</NavLink> </td>
                 <td> {e.products_order.quantity}</td>
                 <td class="text-left"> $ {e.price}</td>
                 <td class="text-left"> $ {e.products_order.total}</td>
