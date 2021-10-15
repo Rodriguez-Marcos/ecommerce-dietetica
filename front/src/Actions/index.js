@@ -400,20 +400,45 @@ export function deleteDiets(id) {
     }
   };
 }
-export function getOrders(token) {
+export function getOrders(token,id_client) {
   return async function (dispatch) {
-    return axios
-      .get(`http://localhost:3001/orders`, {
-        headers: { Authorization: "Bearer " + token },
-      })
-      .then((response) => {
-        dispatch({
-          type: GET_ORDERS,
-          payload: response.data,
-        });
-      });
+
+    let headersList = {
+      Accept: "*/*",
+
+      Authorization: "Bearer " + token,
+      "Content-Type": "application/json",
+    };
+
+    
+    let reqOptions = {
+      url: `http://localhost:3001/orders?id_client=${id_client}`,
+      method: "GET",
+      headers: headersList,
+    };
+
+    axios.request(reqOptions).then( (response)=> {
+      dispatch({
+       type: GET_ORDERS,
+       payload: response.data,
+     });
+   });
+
+
+    // return axios
+    //   .get(`http://localhost:3001/orders`, {
+    //     headers: { Authorization: "Bearer " + token },
+    //   })
+    //   .then((response) => {
+    //     dispatch({
+    //       type: GET_ORDERS,
+    //       payload: response.data,
+    //     });
+    //   });
   };
 }
+
+
 export function putOrders(payload, id, token) {
   return async function (dispatch) {
     let headersList = {

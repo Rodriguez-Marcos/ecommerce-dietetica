@@ -5,50 +5,41 @@ import Topbar from "./AdminTopBar";
 import Sidebar from "./AdminSideBar";
 import AdminDetailsOrders from "./AdminDetailsOrders";
 import "./TableOrders.css";
+
 import { useDispatch, useSelector } from "react-redux";
-import { getOrders, putOrders, getFilterStatus } from "../Actions";
+import { getOrders, putOrders } from "../Actions";
 
 export default function TableOrders() {
   let dispatch = useDispatch();
   const orders = useSelector((state) => state.reducerPablo.orders);
-  let token = window.localStorage.jwt;
+  const [order,setOrder] = useState('')
+  let token = window.localStorage.jwt
 
   useEffect(() => {
-    dispatch(getOrders(token));
+    dispatch(getOrders(token,order));
   }, [dispatch]);
-
+  console.log(token, 'Es el Token')
   const [estado, setStatus] = useState({
     status: orders.status,
     id: "",
   });
-
   function handlerStatus(event, id) {
     if (event.target.value != estado.actual) {
+      console.log('hola mama')
       setStatus({
         ...estado,
         status: event.target.value,
         id: id,
       });
 
-
-      dispatch(putOrders({ status: event.target.value }, id, token));
-
- 
+      console.log(estado)
+      dispatch(
+        putOrders({ status: event.target.value }, id, token)
+      );
     }
-    dispatch(getOrders(window.localStorage.jwt));
+    dispatch(getOrders(window.localStorage.jwt,order));
   }
 
-  function handlerFilterStatus(e) {
-    e.preventDefault();
-    
-      if (e.target.value === "todos") {
-        dispatch(getOrders(window.localStorage.jwt));
-      } else {
-      
-        dispatch(getFilterStatus(e.target.value, token));
-      }
-    
-  }
   const [state, setstate] = useState({
     clientName: "",
     clientLastname: "",
@@ -64,6 +55,7 @@ export default function TableOrders() {
   });
 
   function handlerDetails(e) {
+
 
     setstate({
       ...state,
@@ -92,34 +84,17 @@ export default function TableOrders() {
       <Topbar />
       <div className="ordersTable-Sidebar">
         <Sidebar />
-        <table className={` ${"table"} `} id="table1">
+        <table className={` ${"table"} `}>
           <thead>
             <tr>
-              <th>N°</th>
-              <th>Datos del cliente</th>
+              <th>Numero: </th>
+              <th>Datos del cliente:</th>
               <th>Email</th>
-
               <th>Fecha de pedido:</th>
               <th>Total:</th>
-              <th>
-                <select
-                  className="form-select"
-                  onChange={(e) => handlerFilterStatus(e)}
-                >
-                  <option disabled="disabled" selected="true">
-                    Estados:
-                  </option>
-                  <option value="todos"> todos</option>
-                  <option value="creada"> creada</option>
-                  <option value="procesando"> procesando</option>
-                  <option value="cancelada"> cancelada</option>
-                  <option value="completa"> completa</option>
-                </select>
-              </th>
+              <th>Estado:</th>
 
-
-
-              <th>Detalles</th>
+              <th>Detalles:</th>
             </tr>
           </thead>
 
@@ -156,7 +131,7 @@ export default function TableOrders() {
                 </td>
 
                 <td>
-                  <Button className="resumenCompra" color="primary" onClick={() => handlerDetails(e)}>
+                  <Button color="primary" onClick={() => handlerDetails(e)}>
                     {" "}
                     Ver Mas{" "}
                   </Button>
@@ -167,8 +142,8 @@ export default function TableOrders() {
             <div>Cargando </div>
           )}
         </table>
-        <AdminDetailsOrders input={state} closeModal={closeModal} />
       </div>
+      <AdminDetailsOrders input={state} closeModal={closeModal} />
     </div>
   );
 }
