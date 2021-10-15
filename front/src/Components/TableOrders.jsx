@@ -43,7 +43,7 @@ export default function TableOrders() {
     e.preventDefault();
     
       if (e.target.value === "todos") {
-        dispatch(getOrders(window.localStorage.jwt));
+        dispatch(getOrders(window.localStorage.jwt,order));
       } else {
       
         dispatch(getFilterStatus(e.target.value, token));
