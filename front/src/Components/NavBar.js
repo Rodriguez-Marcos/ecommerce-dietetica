@@ -42,9 +42,6 @@ function NavBar({ getProductbyName, setLoading, isLogin, token }) {
   const [menu, setMenu] = value.menu;
   const [favs, setFavs] = value.favs;
   const [favorites, setFavorites] = value.favorites;
-  useEffect(()=>{
-    getFavorites(myStorage.getItem('jwt'))
-  },[comodin])
   
   function onLogoutSuccess() {
     console.log("logout success")
