@@ -30,9 +30,6 @@ export const FILTER_ORDERS = "FILTER_ORDERS";
 
 let cookies = new Cookies();
 
-
-
-
 export const paginate = (recipes) => {
   return {
     type: PAGINATE,
@@ -51,16 +48,16 @@ export function getProducts() {
   };
 }
 export function getProductsAdmin() {
-
-    return async function (dispatch) {
-        return axios.get(`http://localhost:3001/products/admin`)
-            .then((response) => {
-                dispatch({
-                    payload: response.data,
-                    type: 'GET_PRODUCTS_ADMIN'
-                })
-            })
-    }
+  return async function (dispatch) {
+    return axios
+      .get(`http://localhost:3001/products/admin`)
+      .then((response) => {
+        dispatch({
+          payload: response.data,
+          type: "GET_PRODUCTS_ADMIN",
+        });
+      });
+  };
 }
 
 export function getProductbyName(name) {
@@ -118,25 +115,25 @@ export function getById(id) {
 export function postProduct(payload, token) {
   return async function (dispatch) {
     let headersList = {
-      "Accept": "*/*",
-   
-      "Authorization": "Bearer "+ token, 
-      "Content-Type": "application/json" 
-     }
-     
-     let reqOptions = {
-       url: "http://localhost:3001/products",
-       method: "POST",
-       headers: headersList,
-       data: JSON.stringify(payload), 
-     }
-     
-     axios.request(reqOptions).then(function (response) {
-       console.log(response.data);
-     })
+      Accept: "*/*",
+
+      Authorization: "Bearer " + token,
+      "Content-Type": "application/json",
+    };
+
+    let reqOptions = {
+      url: "http://localhost:3001/products",
+      method: "POST",
+      headers: headersList,
+      data: JSON.stringify(payload),
+    };
+
+    axios.request(reqOptions).then(function (response) {
+      console.log(response.data);
+    });
     return dispatch({
       type: "POST_PRODUCTS",
-      payload  ,
+      payload,
     });
   };
 }
@@ -295,8 +292,8 @@ export function getByPrice(priceL, priceH) {
 }
 
 export function review(payload) {
-    return async function (dispatch) {
-        await axios.post("http://localhost:3001/reviews", payload);
+  return async function (dispatch) {
+    await axios.post("http://localhost:3001/reviews", payload);
 
     return dispatch({
       type: "REVIEW_URL",
@@ -304,19 +301,20 @@ export function review(payload) {
     });
   };
 }
-export function allowReview(id,token) {
-    return async function (dispatch) {
-        await axios.get("http://localhost:3001/reviews/allow/"+id,{
-            headers: { Authorization: "Bearer " + token },
-          })
-          .then((response) => {
-            dispatch({
-              type: "ALLOW_REVIEW",
-              payload: response.data,
-            });
-          });
-      };
-    }
+export function allowReview(id, token) {
+  return async function (dispatch) {
+    await axios
+      .get("http://localhost:3001/reviews/allow/" + id, {
+        headers: { Authorization: "Bearer " + token },
+      })
+      .then((response) => {
+        dispatch({
+          type: "ALLOW_REVIEW",
+          payload: response.data,
+        });
+      });
+  };
+}
 
 export function loginUser(payload) {
   return async function (dispatch) {
@@ -463,5 +461,30 @@ export default function getTrolleyAction() {
     } catch (err) {
       console.log(err);
     }
+  };
+}
+
+export function getFilterStatus(payload, token) {
+  return async function (dispatch) {
+    let headersList = {
+      Accept: "*/*",
+
+      Authorization: "Bearer " + token,
+      "Content-Type": "application/json",
+    };
+
+    let reqOptions = {
+      url: "http://localhost:3001/orders?status=" + payload,
+      method: "GET",
+      headers: headersList,
+    };
+
+    axios.request(reqOptions).then( (response)=> {
+       dispatch({
+        type: 'FILTER_ORDERS',
+        payload: response.data,
+      });
+    });
+  
   };
 }
