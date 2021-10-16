@@ -190,7 +190,10 @@ export async function emptyCart(req, res, next) {
                     from: "'Salvatore' <faridsesin@gmail.com>",
                     to: clientMail,
                     subject: 'Tu pedido ha sido creado con exito',
-                    html: 'GRACIAS POR TU COMPRA, Te damos la bienvenida a Salvatore. Tu pedido fue creado con exito. Enseguida tengamos tus productos listos te avisaremos',
+                    html: `
+                    <h1>GRACIAS POR TU COMPRA</h1>
+                    <h2>Te damos la bienvenida a Salvatore</h2>
+                    <p> Tu pedido fue creado con exito. Enseguida tengamos tus productos listos te avisaremos</p>`,
                 })
                 console.log('Message sent', info.messageId)
 
