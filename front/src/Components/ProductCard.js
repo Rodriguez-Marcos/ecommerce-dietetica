@@ -18,6 +18,7 @@ import axios from 'axios';
 import usePath from '../Hooks/UsePaths';
 import { DataContext } from '../Contexts/DataProvider';
 import deleteFavorites from '../Utils/deleteFav';
+import useUser from '../Hooks/UseUser';
 const cookies = new Cookies();
 
 
@@ -25,6 +26,7 @@ const cookies = new Cookies();
 
 export function ProductCard({ product }) {
   const myStoreage =window.localStorage;
+  const {logout} = useUser();
   const [counter, setCounter] = useState(1);
   let location = useLocation();
   let history = useHistory();
@@ -71,6 +73,7 @@ export function ProductCard({ product }) {
     else {
       setFav(false)
       isFav = false;
+      setFavorites([...favorites.filter(x=>x.id==!product.id)])
       deleteFavorites(product.id,myStoreage.getItem('jwt'))}
   dispatch({
     type: 'COMODIN',
