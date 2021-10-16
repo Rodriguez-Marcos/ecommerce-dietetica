@@ -38,10 +38,10 @@ function NavBar({ getProductbyName, setLoading, isLogin, token }) {
   let comodin = useSelector(state => state.reducerPablo.comodin);
   let isAdmin = useSelector(state => state.reducerPablo.IsAdmin);
   let { productsCart } = useSelector(state=>state.cart)// no sacar, sirve para contar la cantidad en el carrito
+  let { productsFavs } = useSelector(state=>state.favs)
   const value = useContext(DataContext)
   const [menu, setMenu] = value.menu;
   const [favs, setFavs] = value.favs;
-  const [favorites, setFavorites] = value.favorites;
   useEffect(()=>{
   },[comodin])
   
@@ -125,7 +125,7 @@ function NavBar({ getProductbyName, setLoading, isLogin, token }) {
               <box-icon  name="Favs"></box-icon>
               <Favorite/>
                 {/* <ShoppingCart fontSize="large" id="iconoCarrito"/> */}
-                <span className="item__total">{favorites?.length}</span>
+                <span className="item__total">{productsFavs?.length}</span>
               </NavLink>
                </div>
             </Nav.Link>

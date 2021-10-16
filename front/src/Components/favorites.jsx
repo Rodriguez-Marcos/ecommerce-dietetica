@@ -11,28 +11,26 @@ const myStorage = window.localStorage
 
 export default function Favorites() {
     const {token , comodin, isLogin} = useSelector(state=>state.reducerPablo)
+    const {productsFavs} = useSelector(state=>state.favs)
     const dispatch = useDispatch();
     const history = useHistory();
     const value = useContext(DataContext)
     const [favs, setFavs] = value.favs;
-    const [favorites, setFavorites] = value.favorites;
-    useEffect(async ()=>{
+    useEffect(()=>{
         if(!isLogin){
         history.push('/login')
         setFavs(false)
     }
-        console.log( myStorage.getItem('jwt'))
-        let res = await getFavorites( myStorage.getItem('jwt'))
-        console.log(res)
-        setFavorites(res)
-    },[comodin,getProducts])
-    async function handleClose(id){
-        await deleteFav(id,token)
+    },[])
+
+    function handleClose(id){
+        dispatch({type:'REMOVE_FAVS',payload: id})
+        deleteFav(id,token)
         dispatch({type:'COMODIN'})
     }
 
-    async function addFavsToCart(){
-        await postCarrito(token,favorites.map(x=>{return {id: x.id,quantity:1}}))
+    function addFavsToCart(){
+        postCarrito(token,productsFavs.map(x=>{return {id: x.id,quantity:1}}))
         dispatch({type:'COMODIN'})
         
     }
@@ -44,10 +42,7 @@ export default function Favorites() {
                     <box-icon onClick={() => { setFavs(false) }} name="x"></box-icon>
                 </div>
                 <h2>Sus favoritos:</h2>
-                {favorites?.map((producto) => (
-
-                    // {console.log(e)}
-
+                {productsFavs?.map((producto) => (
                     <div className="carrito__center">
                         <div className="carrito__item" key="">
                             <img className="img" src={producto.image} alt=""></img>
@@ -59,9 +54,9 @@ export default function Favorites() {
 
 
                             </div>
-                            <div className="remove__item">
+                            {/* <div className="remove__item">
                                 <box-icon id="trash" onClick={() => handleClose(producto.id)} name="trash"></box-icon>
-                            </div>
+                            </div> */}
                         </div>
 
 

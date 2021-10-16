@@ -32,16 +32,17 @@ export function ProductCard({ product }) {
   let history = useHistory();
   let dispatch = useDispatch();
   let { isLogin, token } = useSelector(state => state.reducerPablo);
+  let { productsFavs } = useSelector(state => state.favs);
   let { pushPath } = usePath();
   let value = useContext(DataContext);
   let [favorites,setFavorites] = value.favorites;
-  const [fav,setFav] = useState(favorites.some(checkId));
-  let isFav = favorites.some(checkId)
+  const [fav,setFav] = useState(productsFavs.some(checkId));
+  let isFav = productsFavs.some(checkId)
   function checkId({id}){
     return id===product.id;
   }
   useEffect(()=>{
-    isFav = favorites.some(checkId)
+    isFav = productsFavs.some(checkId)
   },[])
   
 
@@ -61,23 +62,21 @@ export function ProductCard({ product }) {
     })
   }
 
-  async function addFavorite(e){
-    if (!isLogin){
+  function addFavorite(e){
+    if(!isLogin){
       pushPath();
       history.push('/login');
-    };
-    if(!fav){
-    setFav(true)
-    isFav = true;
-    await postFavorites(product.id,myStoreage.getItem('jwt'));}
+    }
+    if(!isFav){
+      postFavorites(product.id,token)
+      setFav(true)
+      dispatch({type:'ADD_FAVS', payload: product})
+    }
     else {
+      deleteFavorites(product.id,token)
       setFav(false)
-      isFav = false;
-      setFavorites([...favorites.filter(x=>x.id==!product.id)])
-      deleteFavorites(product.id,myStoreage.getItem('jwt'))}
-  dispatch({
-    type: 'COMODIN',
-  })
+      dispatch({type:'REMOVE_FAVS', payload: product.id})
+    }
   }
   return (
     <div id="a" key={product.id}>
