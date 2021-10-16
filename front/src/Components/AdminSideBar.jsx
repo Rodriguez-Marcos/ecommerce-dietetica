@@ -26,23 +26,7 @@ export default function Sidebar({openProduct, openCategory, openDiet}) {
       <div className="sidebar">
       <div className="sidebarWrapper">
         <div className="sidebarMenu">
-          {/* <h3 className="sidebarTitle">Dashboard</h3>
-          <ul className="sidebarList"> */}
-            
-              {/* <li className="sidebarListItem active">
-                <LineStyle className="sidebarIcon" />
-              < Link to="/admin" className="link"> Panel Central</Link>
-              </li> */}
-            
-            {/* <li className="sidebarListItem">
-              <AttachMoney className="sidebarIcon" />
-              Economia
-            </li>
-            <li className="sidebarListItem">
-              <TrendingUp className="sidebarIcon" />
-              Ventas
-            </li>
-          </ul> */}
+       
         </div>
         <div className="sidebarMenu">
           <h3 className="sidebarTitle">Agregar Elementos</h3>
