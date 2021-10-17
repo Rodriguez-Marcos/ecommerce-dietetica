@@ -1,0 +1,47 @@
+/* .main {
+    background-color: white;
+    background-repeat: no-repeat;
+    background-size: cover;
+    min-height: 100vh;
+} */
+
+.form{
+    margin-top: 3em;
+    display: block;
+    margin-left: 13em;
+}
+
+.google{
+    display: block;
+    margin-left: 47em;
+    margin-top: -29em;
+}
+
+
+.ultimo{
+    /* margin-left: 15em; */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    justify-content: center;
+    /* border-radius: 40px; */
+    background-color: rgb(68, 56, 2);
+    color: rgb(255, 255, 255);
+    font-size: 35px;
+    padding: 5px;
+}
+
+.ultimo2{
+    display: flex;
+    justify-content: center;
+ 
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 20px;
+}
+
+.notificacion{
+    display: flex;
+    justify-content: center;
+    margin-left: 40em;
+
+}
+
