@@ -7,6 +7,7 @@ import emptyCart from '../../Utils/emptycart';
 import { useSelector } from 'react-redux';
 import Cookies from 'universal-cookie'
 import { Style } from '@material-ui/icons';
+import 'boxicons';
 // import { postAdress } from '../../Actions';
 
 export default function Success(){
@@ -46,19 +47,33 @@ export default function Success(){
             <NavBar />
             <div className={styles.main} >
             <div class="card" className={styles.card} >
-         <img src={success} class="card-img-top" alt="..." />
-        <div class="card-body">
+         <img src={success} class="card-img-top" className={styles.img} alt="..." />
+        <div class="card-body" className={styles.body}>
             <h5 class="card-title">Pago exitoso!</h5>
-            <p class="card-text">Muchas gracias por su compra</p>
-            <a href="#" class="btn btn-primary">Volver al inicio</a>
+            <p class="card-text">¡Muchas gracias por su compra!</p>
+            <a href="/home" class="btn btn-primary">Volver al inicio</a>
          </div>
         </div>
         
-
+        <br/> <br/> 
                
             </div>
+            <br/> <br/> 
+            
+                <p className={styles.dudas}>¿Dudas? <br/> </p>
+                <p className={styles.click}>Click en el logo para comunicarte con un asesor de Salvatore!</p>
+            <div class={styles.socialMedia}>
+                <a href="https://web.whatsapp.com/"
+                    rel='noreferrer' target="_BLANK" className={styles.socialMediaIcon}>
+              
+                    <box-icon type='logo' name='whatsapp'></box-icon>
+                </a>
+             
+                <a href="mailto:salvatoretiendasaludable@gmail.com" className={styles.socialMediaIcon}>
+                <box-icon name='mail-send' ></box-icon>
+                </a>
             </div>
-        
+            </div>
             
 
      
