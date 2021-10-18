@@ -96,6 +96,7 @@ export default function TableOrders() {
       <Topbar />
       <div className="ordersTable-Sidebar">
         <Sidebar />
+        </div>
         <div className=' table1 '>
         <table  className=' table '>
           <thead>
@@ -168,7 +169,7 @@ export default function TableOrders() {
           )}
         </table>
         </div>
-      </div>
+   
       <AdminDetailsOrders input={state} closeModal={closeModal} />
     </div>
   );
