@@ -3,18 +3,18 @@ import { connect, useDispatch, useSelector } from 'react-redux';
 import { useLocation, useHistory } from 'react-router-dom';
 import Cookies from 'universal-cookie';
 import { Link } from 'react-router-dom';
-import { Button, Card, ListGroup, ListGroupItem } from 'react-bootstrap'
+// import { Button, Card, ListGroup, ListGroupItem } from 'react-bootstrap'
 import './ProductCard.css'
 import defaultimg from '../image/salvatore-grande-color.png'
-import borrar from '../image/cancelar.png'
-import compras from '../image/carrito.png'
+// import borrar from '../image/cancelar.png'
+// import compras from '../image/carrito.png'
 import postCarrito from '../Utils/postCarrito';
-import removePC from '../Utils/removePC';
+// import removePC from '../Utils/removePC';
 import { Favorite, RemoveShoppingCart, ShoppingCartSharp } from '@material-ui/icons';
-import RemoveIcon from "@material-ui/icons/Remove";
-import AddIcon from "@material-ui/icons/Add";
+// import RemoveIcon from "@material-ui/icons/Remove";
+// import AddIcon from "@material-ui/icons/Add";
 import postFavorites from '../Utils/postFavorites';
-import axios from 'axios';
+// import axios from 'axios';
 import usePath from '../Hooks/UsePaths';
 import { DataContext } from '../Contexts/DataProvider';
 import deleteFavorites from '../Utils/deleteFav';

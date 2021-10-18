@@ -10,7 +10,7 @@ import getCart from "../Utils/getCart";
 import { useHistory } from "react-router";
 import axios from 'axios'
 import getTrolleyAction from "../Actions";
-import NavBar from "./NavBar";
+// import NavBar from "./NavBar";
 import removePC from '../Utils/removePC';
 import postCarrito from '../Utils/postCarrito';
 
