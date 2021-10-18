@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import styles from './pending.module.css'
 import NavBar from '../NavBar';
 import success from '../img/succes22.png'
+import emptyCart from '../../Utils/emptycart';
 // import { postAdress } from '../../Actions';
 import emptycart from '../../Utils/emptycart';
 import GoogleMaps from "simple-react-google-maps"
@@ -11,6 +12,10 @@ import swal from "sweetalert";
 
 export default function Pending(){
     const myStorage = window.localStorage;
+
+    useEffect(() => {
+        emptyCart(myStorage.getItem('jwt'))
+    }, [])
 
 
     return (
