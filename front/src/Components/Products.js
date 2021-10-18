@@ -13,9 +13,9 @@ import { DataContext } from '../Contexts/DataProvider';
 
 const cookies = new Cookies();
 
-export default function ProductsCards() {
+export default function ProductsCards({products}) {
   const dispatch = useDispatch();
-  let { isLogin, token, comodin, products } = useSelector(state => state.reducerPablo);
+  let { isLogin, token, comodin } = useSelector(state => state.reducerPablo);
   const myStorage = window.localStorage;
 
   
