@@ -43,7 +43,7 @@ function NavBar({ getProductbyName, setLoading, isLogin, token }) {
   const [menu, setMenu] = value.menu;
   const [favs, setFavs] = value.favs;
   useEffect(()=>{
-  },[comodin])
+  },[comodin,cookies])
   
   function onLogoutSuccess() {
     console.log("logout success")

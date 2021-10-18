@@ -4,11 +4,14 @@ import styles from './failure.module.css'
 import NavBar from '../NavBar';
 import fail from '../img/x.png'
 import emptyCart from '../../Utils/emptycart';
+import { useDispatch } from 'react-redux';
 
 export default function Failure(){
+    const dispatch = useDispatch();
     const myStorage = window.localStorage;
 
     useEffect(() => {
+        dispatch({type: 'REMOVE_ALL'})
         emptyCart(myStorage.getItem('jwt'))
     }, [])
 

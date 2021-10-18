@@ -4,13 +4,14 @@ import styles from './success.module.css'
 import NavBar from '../NavBar';
 import success from '../img/succes22.png'
 import emptyCart from '../../Utils/emptycart';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Cookies from 'universal-cookie'
 import { Style } from '@material-ui/icons';
 import 'boxicons';
 // import { postAdress } from '../../Actions';
 
 export default function Success(){
+    const dispatch =useDispatch();
     const myStorage = window.localStorage;
 
     // let [input, setInput]=useState({
@@ -32,6 +33,7 @@ export default function Success(){
 
 
     useEffect(() => {
+        dispatch({type: 'REMOVE_ALL'})
         emptyCart(myStorage.getItem('jwt'))
     }, [])
 
