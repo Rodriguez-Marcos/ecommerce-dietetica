@@ -7,10 +7,11 @@ import NavBar from './NavBar';
 
 function Search() {
     const productsFiltered = useSelector(state => state.reducerPablo.productsFiltered)
+    console.log(productsFiltered)
     const loading = useSelector(state => state.reducerPablo.loading)
     const error = useSelector(state => state.reducerPablo.error)
 
-    if (!error && !loading)
+    if (error===false && loading===false){
         return (
         <div id="contenedor">
             <NavBar/>
@@ -19,10 +20,11 @@ function Search() {
             </div>
             <div id="s1">
                 <ProductsCards
-                    products={productsFiltered} />
+                    products={productsFiltered}
+                     />
             </div>
         </div>
-        )
+        )}
     if (loading)
         return (
             <div id="contenedor">

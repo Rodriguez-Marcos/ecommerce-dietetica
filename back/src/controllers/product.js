@@ -161,6 +161,7 @@ export async function getProducts(req, res) {
                         stock:{[Op.gt]: 0}
                     }
                 })
+                
                 //res.status(200).json(products)
             } else {
                 if (id_category && id_diet) {
@@ -216,7 +217,7 @@ export async function getProducts(req, res) {
             } 
         }
 
-
+        console.log(productsFound)
         return res.status(200).send(productsFound)
 
 
