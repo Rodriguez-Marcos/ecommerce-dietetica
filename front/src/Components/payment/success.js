@@ -31,9 +31,9 @@ export default function Success(){
 
 
 
-    // useEffect(() => {
-    //     emptyCart(myStorage.getItem('jwt'))
-    // }, [])
+    useEffect(() => {
+        emptyCart(myStorage.getItem('jwt'))
+    }, [])
 
     // async function handleSubmit(event) {
     //     event.preventDefault()

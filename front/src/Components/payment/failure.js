@@ -1,9 +1,16 @@
-import React from 'react';
+
+import React, { useEffect, useState } from 'react';
 import styles from './failure.module.css'
 import NavBar from '../NavBar';
 import fail from '../img/x.png'
+import emptyCart from '../../Utils/emptycart';
 
 export default function Failure(){
+    const myStorage = window.localStorage;
+
+    useEffect(() => {
+        emptyCart(myStorage.getItem('jwt'))
+    }, [])
 
     return (
         <div>
