@@ -43,7 +43,7 @@ export default function TableUser({ clients, borrar, handlerUpdateUser, handleCh
                     Forzar Password Reset
                   </Button>{'   '}
                   <Button color="danger" onClick={() => { borrar(e.id) }}>
-                    🗑 Eliminar Usuario
+                    🗑 
                   </Button>
                 </td>
               </tbody>

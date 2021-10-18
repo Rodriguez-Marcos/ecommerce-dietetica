@@ -10,6 +10,9 @@
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
+    "@types/googlemaps": "^3.0.0",
+    "@types/markerclustererplus": "^2.1.29",
+    "@types/react": "^150.0 || ^16.0.0",
     "accounting": "^0.4.1",
     "axios": "^0.21.4",
     "bcrypt": "^5.0.1",
@@ -24,6 +27,7 @@
     "react-bootstrap": "^1.6.4",
     "react-dom": "^17.0.2",
     "react-google-login": "^5.2.2",
+    "react-google-maps": "^9.4.5",
     "react-icons": "^4.2.0",
     "react-material-ui-carousel": "^2.3.5",
     "react-redux": "^7.2.5",
@@ -36,15 +40,11 @@
     "redux-thunk": "^2.3.0",
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-react": "^2.0.4",
+    "simple-react-google-maps": "^1.1.2",
     "styled-components": "^5.3.1",
     "sweetalert": "^2.1.2",
     "universal-cookie": "^4.0.4",
-    "web-vitals": "^1.1.2",
-    "react-google-maps": "^9.4.5",
-    "@types/googlemaps": "^3.0.0",
-    "@types/markerclustererplus": "^2.1.29",
-    "@types/react": "^150.0 || ^16.0.0"
-
+    "web-vitals": "^1.1.2"
   },
   "scripts": {
     "start": "react-scripts start",

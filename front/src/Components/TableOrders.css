@@ -16,7 +16,7 @@
 #table1{
         overflow:scroll; 
         height:calc(95vh - 50px);
-        width:calc(80vw - 50px);
+        width:calc(100vw - 50px);
         margin: 5px;
 }
 
