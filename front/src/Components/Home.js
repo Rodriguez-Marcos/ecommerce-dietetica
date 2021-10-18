@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { connect, useSelector } from "react-redux"
+import React, { useEffect } from "react";
+import { connect } from "react-redux"
 import { getProducts } from "../Actions/index";
 import './Home.css'
 import ProductsCards from './Products'
-import { Image, Button, Overlay, Tooltip, OverlayTrigger } from 'react-bootstrap'
+import { Image} from 'react-bootstrap'
 import banner from '../image/BANNER-SALVATORE.jpg'
 import ProductsFilters from './Filters'
 import Example from './PromosHome'
