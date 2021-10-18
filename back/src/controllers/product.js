@@ -49,14 +49,28 @@ export async function getProductsAdmin(req, res) {
     let { id } = req.body;
 
     try {
-        if (id){
-            id = id.map(({id})=>id)
-            let products = await Product.findAll({where:{id}})
+        if (id) {
+            id = id.map(({ id }) => id)
+            let products = await Product.findAll({
+                where: { id }, include: [{
+                    model: Category,
+                },
+                {
+                    model: Diet,
+                }]
+            })
             return res.status(200).json(products)
         }
         if (!id_category && !name && !id_diet) {
 
-            var products = await Product.findAll()
+            var products = await Product.findAll({
+                include: [{
+                    model: Category,
+                },
+                {
+                    model: Diet,
+                }]
+            })
             //res.status(200).send(products)
         }
         else {
@@ -65,7 +79,13 @@ export async function getProductsAdmin(req, res) {
 
                 var products = await Product.findAll({
                     where: {
-                        name: { [Op.iLike]: `%${name}%` }
+                        name: { [Op.iLike]: `%${name}%` },
+                        include: [{
+                            model: Category,
+                        },
+                        {
+                            model: Diet,
+                        }]
                     }
                 })
                 //res.status(200).json(products)
@@ -73,7 +93,7 @@ export async function getProductsAdmin(req, res) {
                 if (id_category && id_diet) {
 
                     var products = await Product.findAll({
-                        
+
                         include: [{
                             model: Category,
                             where: { 'id': id_category }
@@ -86,7 +106,7 @@ export async function getProductsAdmin(req, res) {
                     //res.status(200).send(products)
                 } else if (id_diet) {
                     var products = await Product.findAll({
-                        
+
                         include: [{
                             model: Diet,
                             through: { attributes: [] },
@@ -96,7 +116,7 @@ export async function getProductsAdmin(req, res) {
                     //res.status(200).send(products)
                 } else if (id_category) {
                     var products = await Product.findAll({
-                        
+
                         include: [{
                             model: Category,
                             through: { attributes: [] },
@@ -110,17 +130,23 @@ export async function getProductsAdmin(req, res) {
         if (!priceL) priceL = 0;
         if (!priceH) priceH = await Product.max("price")
         let productsName = products.map(product => product.name)
-        var productsFound = await Product.findAll({ where: { name: productsName, price: { [Op.between]: [parseInt(priceL), parseInt(priceH)], } } })
+        var productsFound = await Product.findAll({ where: { name: productsName, price: { [Op.between]: [parseInt(priceL), parseInt(priceH)], } },
+        include: [{
+            model: Category,
+        },
+        {
+            model: Diet,
+        }] })
         if (sortby) {
             if (sortby === 'AscendentName') {
                 productsFound.sort((a, b) => a.name.localeCompare(b.name))
             } else if (sortby === 'DescendentName') {
                 productsFound.sort((a, b) => b.name.localeCompare(a.name))
             } else if (sortby === 'AscendentPrice') {
-            productsFound.sort((a, b) => a.price - b.price)
+                productsFound.sort((a, b) => a.price - b.price)
             } else if (sortby === 'DescendentPrice') {
                 productsFound.sort((a, b) => b.price - a.price)
-            } 
+            }
         }
 
 
@@ -141,14 +167,30 @@ export async function getProducts(req, res) {
     let { id } = req.body;
 
     try {
-        if (id){
-            id = id.map(({id})=>id)
-            let products = await Product.findAll({where:{id}})
+        if (id) {
+            id = id.map(({ id }) => id)
+            let products = await Product.findAll({
+                where: { id },
+                include: [{
+                    model: Category,
+                },
+                {
+                    model: Diet,
+                }]
+            })
             return res.status(200).json(products)
         }
         if (!id_category && !name && !id_diet) {
 
-            var products = await Product.findAll({where:{stock:{[Op.gt]: 0}}})
+            var products = await Product.findAll({
+                where: { stock: { [Op.gt]: 0 } },
+                include: [{
+                    model: Category,
+                },
+                {
+                    model: Diet,
+                }]
+            })
             //res.status(200).send(products)
         }
         else {
@@ -158,7 +200,13 @@ export async function getProducts(req, res) {
                 var products = await Product.findAll({
                     where: {
                         name: { [Op.iLike]: `%${name}%` },
-                        stock:{[Op.gt]: 0}
+                        stock: { [Op.gt]: 0 },
+                        include: [{
+                            model: Category,
+                        },
+                        {
+                            model: Diet,
+                        }]
                     }
                 })
                 //res.status(200).json(products)
@@ -166,7 +214,7 @@ export async function getProducts(req, res) {
                 if (id_category && id_diet) {
 
                     var products = await Product.findAll({
-                        where:{stock:{[Op.gt]: 0}},
+                        where: { stock: { [Op.gt]: 0 } },
                         include: [{
                             model: Category,
                             where: { 'id': id_category }
@@ -179,7 +227,7 @@ export async function getProducts(req, res) {
                     //res.status(200).send(products)
                 } else if (id_diet) {
                     var products = await Product.findAll({
-                        where:{stock:{[Op.gt]: 0}},
+                        where: { stock: { [Op.gt]: 0 } },
                         include: [{
                             model: Diet,
                             through: { attributes: [] },
@@ -189,7 +237,7 @@ export async function getProducts(req, res) {
                     //res.status(200).send(products)
                 } else if (id_category) {
                     var products = await Product.findAll({
-                        where:{stock:{[Op.gt]: 0}},
+                        where: { stock: { [Op.gt]: 0 } },
                         include: [{
                             model: Category,
                             through: { attributes: [] },
@@ -210,10 +258,10 @@ export async function getProducts(req, res) {
             } else if (sortby === 'DescendentName') {
                 productsFound.sort((a, b) => b.name.localeCompare(a.name))
             } else if (sortby === 'AscendentPrice') {
-            productsFound.sort((a, b) => a.price - b.price)
+                productsFound.sort((a, b) => a.price - b.price)
             } else if (sortby === 'DescendentPrice') {
                 productsFound.sort((a, b) => b.price - a.price)
-            } 
+            }
         }
 
 
@@ -232,7 +280,7 @@ export async function getProducts(req, res) {
 export async function getById(req, res) {
     const { id } = req.params
     try {
-        let products = await Product.findAll({ where: { id: id }, include: [{ model: Category }, { model: Diet },{model:Review}] })
+        let products = await Product.findAll({ where: { id: id }, include: [{ model: Category }, { model: Diet }, { model: Review }] })
         return res.json(products)
     }
     catch (err) {
@@ -264,7 +312,7 @@ export async function updateProduct(req, res) {
     const { id } = req.params
     const { name, price, description, image, stock, ids_categories, ids_diets } = req.body
     try {
-       
+
         await Product.update({
             name: name,
             price: price,

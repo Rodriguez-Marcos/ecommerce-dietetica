@@ -19,6 +19,10 @@ export default function cart(state = InitialState, action) {
                 ...state,
                 productsCart: state.productsCart.filter(x=>x.id!==action.payload)
             }
+        case 'REMOVE_ALL':
+            return{
+                ...InitialState,
+            }
         default:
             return {...state}
     }
