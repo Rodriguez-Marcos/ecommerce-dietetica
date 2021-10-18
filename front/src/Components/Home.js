@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { connect } from "react-redux"
+import { connect, useSelector } from "react-redux"
 import { getProducts } from "../Actions/index";
 import './Home.css'
 import ProductsCards from './Products'

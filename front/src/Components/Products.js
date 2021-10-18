@@ -14,9 +14,6 @@ import { DataContext } from '../Contexts/DataProvider';
 const cookies = new Cookies();
 
 export default function ProductsCards() {
-  const value = useContext(DataContext);
-  let [favorites,setFavorites] = value.favorites;
-  let location = useLocation();
   const dispatch = useDispatch();
   let { isLogin, token, comodin, products } = useSelector(state => state.reducerPablo);
   const myStorage = window.localStorage;
@@ -25,8 +22,8 @@ export default function ProductsCards() {
   useEffect( async ()=>{
     if(!!myStorage.getItem('jwt')){
     let res = await getFavorites( myStorage.getItem('jwt'))
-        setFavorites(res)}
-  },[comodin])
+    dispatch({type: 'GET_PRODUCTS_FAVS', payload: res})}
+  },[])
 
   return (
     <div className={styles.main}>
