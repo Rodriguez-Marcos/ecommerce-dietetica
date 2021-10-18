@@ -86,9 +86,9 @@ export default function FormEdit({
                       <input type='checkbox' value={e.id} name={e.name} class="form-check-input" />{e.name}
                     </label>
                   </div>                  ))}
-              {"    "}
+           
               <output>
-                {" "}
+                
                 seleccionaste: {input.ids_categories.length} categorias
               </output>
             </fieldset>

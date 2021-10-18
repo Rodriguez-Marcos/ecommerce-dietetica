@@ -31,7 +31,7 @@ export default function Creator() {
   let dispatch = useDispatch();
 
   // Renderizados
-
+console.log('user',p)
   useEffect(() => {
     const jwt = myStorage.getItem("jwt");
     var isadmin = decode(jwt);
@@ -194,6 +194,7 @@ export default function Creator() {
   });
 
   function editProductOpen(e) {
+  console.log( 'e', e)
     setEditModal({
       ...editModal,
       product: true,
@@ -207,6 +208,8 @@ export default function Creator() {
       price: e.price,
       description: e.description,
       stock: e.stock,
+  
+
     });
   }
   function editProductClose() {

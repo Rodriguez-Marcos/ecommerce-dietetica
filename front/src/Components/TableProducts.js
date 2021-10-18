@@ -8,7 +8,7 @@ import {
 
 export default function  TableProducts({p, editProductOpen, openDeleteProduct  }) {
  
-
+console.log(p)
   return (
     <div className='container'>
     <div className= {s.content}  >

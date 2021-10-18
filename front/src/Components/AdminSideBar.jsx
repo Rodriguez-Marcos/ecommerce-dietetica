@@ -11,26 +11,21 @@ import {
 } from "../Actions";
 
 import {
-  LineStyle,
-  Timeline,
-  TrendingUp,
-  AttachMoney,
+
   BarChart,
-  MailOutline,
+
   DynamicFeed,
-  ChatBubbleOutline,
-  WorkOutline,
+
   Report,
   
 } from "@material-ui/icons";
-import { Link } from "react-router-dom";
+
 import { NavLink } from "react-router-dom";
 import {Navbar, Container} from 'react-bootstrap'
 
 export default function Sidebar() {
   const c = useSelector((state) => state.reducerPablo.categories);
   const d = useSelector((state) => state.reducerPablo.diets);
-  const isAdmin = useSelector((state) => state.reducerPablo.IsAdmin);
   const myStorage = window.localStorage;
   let token = myStorage.getItem("jwt");
   const dispatch = useDispatch();
@@ -125,8 +120,8 @@ export default function Sidebar() {
       input.stock &&
       input.description &&
       input.image &&
-      input.ids_diets.length != 0 &&
-      input.ids_categories.length != 0
+      input.ids_diets.length !== 0 &&
+      input.ids_categories.length !== 0
     ) {
       dispatch(postProduct(input, token));
       alert(" Producto creado con exito");
