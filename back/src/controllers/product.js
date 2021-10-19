@@ -47,7 +47,6 @@ export async function createProduct(req, res) {
 export async function getProductsAdmin(req, res) {
     let { name, id_category, id_diet, priceL, priceH, sortby } = req.query;
     let { id } = req.body;
-
     try {
         if (id) {
             id = id.map(({ id }) => id)
@@ -75,7 +74,6 @@ export async function getProductsAdmin(req, res) {
         }
         else {
             if (name) {
-
 
                 var products = await Product.findAll({
                     where: {
@@ -196,18 +194,17 @@ export async function getProducts(req, res) {
         else {
             if (name) {
 
-
                 var products = await Product.findAll({
                     where: {
                         name: { [Op.iLike]: `%${name}%` },
-                        stock: { [Op.gt]: 0 },
+                        stock: { [Op.gt]: 0 }},
                         include: [{
                             model: Category,
                         },
                         {
                             model: Diet,
                         }]
-                    }
+                    
                 })
                 //res.status(200).json(products)
             } else {
