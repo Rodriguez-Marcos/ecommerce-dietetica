@@ -77,14 +77,15 @@ export async function getProductsAdmin(req, res) {
 
                 var products = await Product.findAll({
                     where: {
-                        name: { [Op.iLike]: `%${name}%` },
-                        include: [{
-                            model: Category,
-                        },
-                        {
-                            model: Diet,
-                        }]
-                    }
+                        name: { [Op.iLike]: `%${name}%` }
+                    },
+                    include: [{
+                        model: Category,
+                    },
+                    {
+                        model: Diet,
+                    }]
+
                 })
                 //res.status(200).json(products)
             } else {
@@ -128,13 +129,15 @@ export async function getProductsAdmin(req, res) {
         if (!priceL) priceL = 0;
         if (!priceH) priceH = await Product.max("price")
         let productsName = products.map(product => product.name)
-        var productsFound = await Product.findAll({ where: { name: productsName, price: { [Op.between]: [parseInt(priceL), parseInt(priceH)], } },
-        include: [{
-            model: Category,
-        },
-        {
-            model: Diet,
-        }] })
+        var productsFound = await Product.findAll({
+            where: { name: productsName, price: { [Op.between]: [parseInt(priceL), parseInt(priceH)], } },
+            include: [{
+                model: Category,
+            },
+            {
+                model: Diet,
+            }]
+        })
         if (sortby) {
             if (sortby === 'AscendentName') {
                 productsFound.sort((a, b) => a.name.localeCompare(b.name))
@@ -197,14 +200,15 @@ export async function getProducts(req, res) {
                 var products = await Product.findAll({
                     where: {
                         name: { [Op.iLike]: `%${name}%` },
-                        stock: { [Op.gt]: 0 }},
-                        include: [{
-                            model: Category,
-                        },
-                        {
-                            model: Diet,
-                        }]
-                    
+                        stock: { [Op.gt]: 0 }
+                    },
+                    include: [{
+                        model: Category,
+                    },
+                    {
+                        model: Diet,
+                    }]
+
                 })
                 //res.status(200).json(products)
             } else {
