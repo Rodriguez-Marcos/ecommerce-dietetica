@@ -13,10 +13,11 @@ import getCart from "../Utils/getCart";
 import axios from 'axios'
 import { useHistory } from "react-router";
 import swal from "sweetalert";
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import Calendar from './Calendar';
 import { decode } from "jsonwebtoken";
 import AddressCard from './AddressCard';
+import { Button } from 'react-bootstrap';
 
 export default function Pending(){
     const myStorage = window.localStorage;
@@ -224,6 +225,7 @@ if(addresses.length>0){
         <AddressCard address={address}/>
         </div>
       )})}
+      <div><NavLink to='/newaddress'><button>Añadir nueva dirección</button></NavLink></div>
     </div>
        
        
