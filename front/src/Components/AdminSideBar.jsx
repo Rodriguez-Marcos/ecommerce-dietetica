@@ -128,18 +128,7 @@ export default function Sidebar() {
       console.log(token, "este es el token del action");
       dispatch(getProductsAdmin());
       closeProduct();
-      setInput({
-        id: "",
-        name: "",
-        image: "",
-        price: "",
-        description: "",
-        stock: "",
-        ids_categories: [],
-        ids_diets: [],
-      
-        
-      })
+   
     } else {
       alert("falta informacion requerida en el formulario");
     }
@@ -228,7 +217,20 @@ export default function Sidebar() {
     setModal({
       ...modal,
       product: false,
-    });}
+    })
+    setInput({
+      id: "",
+      name: "",
+      image: "",
+      price: "",
+      description: "",
+      stock: "",
+      ids_categories: [],
+      ids_diets: [],
+    
+    })
+    
+    ;}
     function closeCategory() {
       setModal({
         ...modal,
