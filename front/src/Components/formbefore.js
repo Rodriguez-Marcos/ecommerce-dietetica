@@ -17,7 +17,6 @@ import { Link } from 'react-router-dom';
 import Calendar from './Calendar';
 import { decode } from "jsonwebtoken";
 import AddressCard from './AddressCard';
-
 export default function Pending(){
     const myStorage = window.localStorage;
     const value = useContext(DataContext)
@@ -207,7 +206,7 @@ if(addresses.length>0){
 
         <h1 className={styles.ultimo}>¡Último paso! </h1>
         <p className={styles.ultimo2}>Por favor seleccione: </p>
-        <div className={styles.form}>
+        <div >
         <div class="form-check form-check-inline">
         <div class="form-check">
   <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2"></input>
@@ -218,8 +217,12 @@ if(addresses.length>0){
     </div>
     <div className={styles.main}>
       {addresses && addresses?.map(address=>{
-        return <AddressCard address={address}/>
-      })}
+        return (
+          <div class="form-check">
+        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked></input>
+        <AddressCard address={address}/>
+        </div>
+      )})}
     </div>
        
        
