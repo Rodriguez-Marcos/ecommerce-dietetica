@@ -112,7 +112,7 @@ function handleInput(e) {
 
     async function handleSubmit(event) {
         event.preventDefault()
-        if (!input.calle || !input.altura || !input.barrio || !input.otros || !input.codigo || !input.numero) { swal("Error", "Debe llenar todos los campos", "error") }
+        if (input.calle || !input.altura || !input.barrio || !input.otros || !input.codigo || !input.numero) { swal("Error", "Debe llenar todos los campos", "error") }
         else {
              //postAdress(input) 
              swal("Creado", "Dirección cargada con éxito!", "success")}}
@@ -200,10 +200,15 @@ let { isLogin, token, comodin } = useSelector(state => state.reducerPablo)
             <p className={styles.ultimo2}>Por favor seleccione: </p>
             <div className={styles.form}>
             <div class="form-check form-check-inline">
+            <div class="form-check">
+      <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2"></input>
+      <label class="form-check-label" for="exampleRadios2">
+          Envío a domicilio:
+        </label>
+        </div>
+        </div>
               
-      <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1"></input>
-      <label class="form-check-label" for="inlineCheckbox1">Envío a domicilio:</label>
-      </div>
+    
             <form>
   <div class="form-row">
     <div class="form-group col-md-4">
@@ -321,12 +326,15 @@ let { isLogin, token, comodin } = useSelector(state => state.reducerPablo)
 
 
                 <div className={styles.google}>
-                    
-                <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1"></input>
-                <label class="form-check-label" for="inlineCheckbox1">Retiro en local:</label>
-                </div>
+                <div class="form-check">
+          <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked></input>
+        <label class="form-check-label" for="exampleRadios1">
+        Retiro en local:
+          </label>
+          </div>
+
                 <br />
+                
                 
                 <GoogleMaps
                 apiKey={"AIzaSyA5BBX89Qj05Gc9VuJD2hvQAIAOsL9ujXA"}
@@ -337,7 +345,24 @@ let { isLogin, token, comodin } = useSelector(state => state.reducerPablo)
                 markers={{lat: -31.417233, lng: -64.183923}} //optional
                 />
                 <br/>
-                <p>Dirección: Rivadavia 29. Plaza San Martin </p>
+                <h4>Seleccione una sucursal:</h4>
+                <div >
+                            <p className={styles.inputNames}></p>
+                            {/* a medida que selecciona el usuario ve lo que selecciona */}
+                            <select name="types"  className={styles.dropdown}>
+                                <option>
+                                    Seleccionar
+                                </option>
+                                <option>1.Centro</option>
+                             
+                            </select>
+                        </div>
+
+
+
+
+                {/* <p>Dirección: Rivadavia 29. Plaza San Martin </p> */}
+                <br/>
                 <h4>Por favor seleccione fecha y horario que va a retirar:</h4>
                 <Calendar></Calendar>
              
@@ -345,11 +370,17 @@ let { isLogin, token, comodin } = useSelector(state => state.reducerPablo)
                 <br />
                 
                 <div class="d-grid gap-2 col-3 mx-auto">
-                <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="gridCheck"></input>
-                <label class="form-check-label" for="gridCheck">
-                Quiero notificación vía mail de mi pedido
-                </label>
+                <div class="form-check form-check-inline">
+             <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1"></input>
+          <label class="form-check-label" for="inlineCheckbox1">Quiero notificación vía mail de mi pedido</label>
+
+
+
+
+
+
+
+              
                 </div>
                 <button type="button" class="btn btn-success" onClick={handleCompra}>Comprar</button>
                 {/* <button class="btn btn-primary" color="green" type="button">Comprar</button> */}
