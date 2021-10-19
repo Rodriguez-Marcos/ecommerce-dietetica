@@ -191,7 +191,7 @@ let { isLogin, token, comodin, addresses } = useSelector(state => state.reducerP
                }
              }, [isLogin])
 
-if(addresses){
+if(addresses.length>0){
   return (
 
     <div className={styles.main}>
