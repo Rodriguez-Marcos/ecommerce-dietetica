@@ -8,7 +8,7 @@ const styles = {
     background: "rgb(3, 3, 3) radial-gradient(circle, rgb(255, 255, 255) 0%, rgb(90, 54, 12) 61%)",
     minHeight: 150,
     textAlign: "center",
-    padding: 37,
+    padding: 30,
     justifyContent: "center",
   },
   btn: {
@@ -20,20 +20,20 @@ const styles = {
 export default function Example(props) {
   var items = [
     {
-      name: "10% de descuento en tu primera compra",
-      description: "Obtené un descuento especial del 10% en tu primera compra",
-      link: "",
+      name: "Lanzamiento: Aceite de coco EXTRA VIRGEN",
+      description: "¡Conoce nuestro producto!",
+      link: "/Detail/2",
     },
     {
-      name: "Envio gratis para CABA y GBA",
-      description: "Aprovechá el descuento y hace tu compra hoy",
+      name: "¡Envío gratis en tu primera compra!",
+      description: "Aprovechá y hace tu compra hoy",
       link: "",
     },
     {
       name: "Lanzamiento: Barrita de arroz CROWIE",
       description:
         "Conocé las nuevas barritas Crowie recién llegadas a nuestra web",
-      link: "/products/11",
+      link: "/Detail/11",
     },
   ];
 
@@ -52,9 +52,10 @@ function Item(props) {
       <h2>{props.item.name}</h2>
       <p>{props.item.description}</p>
       {(props.item.link!=="")? <Link to={props.item.link}>
-      <Button className="CheckButton" style={styles.btn}>
+      <button type="button" class="btn btn-dark">Click aquí</button>
+      {/* <Button className="CheckButton" style={styles.btn}>
         CLICK AQUÍ
-      </Button>
+      </Button> */}
       </Link>:<p></p>}
     </Paper>
   );

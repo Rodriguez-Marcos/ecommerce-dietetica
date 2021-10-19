@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom'
 import ProductCard from './ProductCard';
@@ -8,30 +8,22 @@ import { Link } from 'react-router-dom';
 import Cookies from "universal-cookie";
 import axios from 'axios';
 import getFavorites from '../Utils/getFavorites';
+import { getProducts } from '../Actions';
+import { DataContext } from '../Contexts/DataProvider';
 
 const cookies = new Cookies();
 
-export default function ProductsCards() {
-  let location = useLocation();
+export default function ProductsCards({products}) {
   const dispatch = useDispatch();
-  let { isLogin, token, comodin, products } = useSelector(state => state.reducerPablo);
+  let { isLogin, token, comodin } = useSelector(state => state.reducerPablo);
+  const myStorage = window.localStorage;
 
   
-  useEffect(async ()=>{
-    console.log(comodin)
-    if(isLogin)
-    {
-      let res = await getFavorites(token);
-      products.forEach(product=>{
-        res.data[0].products.forEach(x=>{
-          if(product.id=== x.id)
-            if(!product.isFavorite)
-              product.isFavorite = true
-        })
-      })
-    }
-    dispatch({type: 'GET_PRODUCTS', payload: products})
-  },[comodin])
+  useEffect( async ()=>{
+    if(!!myStorage.getItem('jwt')){
+    let res = await getFavorites( myStorage.getItem('jwt'))
+    dispatch({type: 'GET_PRODUCTS_FAVS', payload: res})}
+  },[])
 
   return (
     <div className={styles.main}>

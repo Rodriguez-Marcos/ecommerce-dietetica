@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export default async function postFavorites (id, token){
+export default async function deleteFavorites (id, token){
     var data = JSON.stringify({
         "id_products": id
       });
@@ -15,5 +15,5 @@ export default async function postFavorites (id, token){
         data : data
       };
       
-      return axios(config)
+      return setTimeout(()=>axios(config),50)
 }

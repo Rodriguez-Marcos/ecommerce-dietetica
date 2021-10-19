@@ -6,19 +6,27 @@
     width: 75%;
     margin: 0;
     padding: 0;
+  
 }
 .ordersTable-Sidebar{
     display: flex;
+    position: fixed;
     flex-direction: row;
     align-items: flex-start;
     flex-wrap: wrap;
+    overflow:scroll; 
 }
-#table1{
+.table1{
+    margin-left: 250px;
         overflow:scroll; 
+/* 
         height:calc(95vh - 50px);
-        width:calc(80vw - 50px);
-        margin: 5px;
+        width:calc(100vw - 50px); */
+        /* margin: 5px; */
 }
+
+
+
 
 @media only screen and (max-width: 770px) {
     

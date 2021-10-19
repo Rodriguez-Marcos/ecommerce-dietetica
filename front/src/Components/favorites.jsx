@@ -1,35 +1,36 @@
 import { useContext, useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useHistory } from "react-router"
+import { getProducts } from "../Actions"
 import { DataContext } from "../Contexts/DataProvider"
 import deleteFav from "../Utils/deleteFav"
 import getFavorites from "../Utils/getFavorites"
 import postCarrito from "../Utils/postCarrito"
 
+const myStorage = window.localStorage
+
 export default function Favorites() {
     const {token , comodin, isLogin} = useSelector(state=>state.reducerPablo)
+    const {productsFavs} = useSelector(state=>state.favs)
     const dispatch = useDispatch();
     const history = useHistory();
     const value = useContext(DataContext)
     const [favs, setFavs] = value.favs;
-    const [favorites, setFavorites] = value.favorites;
-    const [products, setProducts] = useState([])
-    useEffect(async ()=>{
+    useEffect(()=>{
         if(!isLogin){
         history.push('/login')
         setFavs(false)
     }
-        let res = await getFavorites(token)
-        setProducts([...res.data[0].products])
-        setFavorites(res.data[0].products.length)
-    },[comodin])
-    async function handleClose(id){
-        await deleteFav(id,token)
+    },[])
+
+    function handleClose(id){
+        dispatch({type:'REMOVE_FAVS',payload: id})
+        deleteFav(id,token)
         dispatch({type:'COMODIN'})
     }
 
-    async function addFavsToCart(){
-        await postCarrito(token,products.map(x=>{return {id: x.id,quantity:1}}))
+    function addFavsToCart(){
+        postCarrito(token,productsFavs.map(x=>{return {id: x.id,quantity:1}}))
         dispatch({type:'COMODIN'})
         
     }
@@ -41,10 +42,7 @@ export default function Favorites() {
                     <box-icon onClick={() => { setFavs(false) }} name="x"></box-icon>
                 </div>
                 <h2>Sus favoritos:</h2>
-                {products?.map((producto) => (
-
-                    // {console.log(e)}
-
+                {productsFavs?.map((producto) => (
                     <div className="carrito__center">
                         <div className="carrito__item" key="">
                             <img className="img" src={producto.image} alt=""></img>
@@ -56,9 +54,9 @@ export default function Favorites() {
 
 
                             </div>
-                            <div className="remove__item">
+                            {/* <div className="remove__item">
                                 <box-icon id="trash" onClick={() => handleClose(producto.id)} name="trash"></box-icon>
-                            </div>
+                            </div> */}
                         </div>
 
 

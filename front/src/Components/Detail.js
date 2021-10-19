@@ -30,11 +30,12 @@ function Detail({ match }) {
   const dispatch = useDispatch();
   const history = useHistory();
   const  { pushPath } = usePath();
+  const myStorage = window.localStorage;
 
 
   useEffect(() => {
     dispatch(getById(id))
-    dispatch(allowReview(id,window.localStorage.jwt))
+    dispatch(allowReview(id,myStorage.getItem('jwt')))
   }, [dispatch])
 
   const producto = useSelector(state => state.reducerRocio.detail)

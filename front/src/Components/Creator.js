@@ -1,11 +1,11 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { postProduct, postCategory, postDiet, putProduct } from "../Actions";
+import {  putProduct } from "../Actions";
 import "bootstrap/dist/css/bootstrap.min.css";
-import './Creator.css'
+import "./Creator.css";
 import FormEdit from "./FormEdit";
-import FormCreator from "./FormCreator";
+
 import TableProducts from "./TableProducts";
 import Topbar from "./AdminTopBar";
 import Sidebar from "./AdminSideBar";
@@ -17,7 +17,6 @@ import {
 } from "../Actions";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import { decode } from "jsonwebtoken";
-import { Redirect } from "react-router";
 
 
 export default function Creator() {
@@ -26,24 +25,21 @@ export default function Creator() {
   const c = useSelector((state) => state.reducerPablo.categories);
   const d = useSelector((state) => state.reducerPablo.diets);
   const isAdmin = useSelector((state) => state.reducerPablo.IsAdmin);
-
-  let token = window.localStorage.jwt
-  let dispatch = useDispatch();
-
-  const jwt = require('jsonwebtoken')
   const myStorage = window.localStorage;
+
+  let token = myStorage.getItem("jwt");
+  let dispatch = useDispatch();
 
   // Renderizados
 
   useEffect(() => {
-    const jwt = myStorage.jwt;
-    var isadmin = decode(jwt)
+    const jwt = myStorage.getItem("jwt");
+    var isadmin = decode(jwt);
     if (!!jwt) {
-      dispatch({ type: 'LOGIN', payload: jwt })
-      dispatch({ type: 'SET_LOGIN_USER', payload: isadmin.isAdmin })
+      dispatch({ type: "LOGIN", payload: jwt });
+      dispatch({ type: "SET_LOGIN_USER", payload: isadmin.isAdmin });
     }
-  }, [myStorage])
-
+  }, [myStorage]);
 
   useEffect(() => {
     dispatch(getProductsAdmin());
@@ -112,7 +108,9 @@ export default function Creator() {
     } else {
       setInput({
         ...input,
-        ids_categories: [...input.ids_categories.filter(a => a !== e.target.value)],  
+        ids_categories: [
+          ...input.ids_categories.filter((a) => a !== e.target.value),
+        ],
       });
     }
   }
@@ -121,12 +119,12 @@ export default function Creator() {
     if (e.target.checked) {
       setInput({
         ...input,
-        ids_diets: [...input.ids_diets,e.target.value],
+        ids_diets: [...input.ids_diets, e.target.value],
       });
     } else {
       setInput({
         ...input,
-        ids_diets: [...input.ids_diets.filter(a => a !== e.target.value)],  
+        ids_diets: [...input.ids_diets.filter((a) => a !== e.target.value)],
       });
     }
   }
@@ -182,63 +180,8 @@ export default function Creator() {
     dispatch(getProductsAdmin());
   }
 
-  // handlers de submit
 
-  function handlerSubmitProduct(e) {
 
-    e.preventDefault();
-    if (
-      input.name &&
-      input.price &&
-      input.stock &&
-      input.description &&
-      input.image &&
-      input.ids_diets.length != 0 &&
-      input.ids_categories.length != 0
-    ) {
-      dispatch(postProduct(input, token));
-      alert(" Producto creado con exito");
-      console.log(token ,"este es el token del action")
-      dispatch(getProductsAdmin());
-      closeProduct();
-    } else {
-      alert("falta informacion requerida en el formulario");
-    }
-  }
-
-  function handlerSubmitCategory(e) {
-    e.preventDefault();
-    if (category.name && category.description) {
-      dispatch(postCategory(category));
-
-      alert(" Categoria creada con exito");
-      closeCategory();
-    } else {
-      alert("falta informacion requerida en el formulario");
-    }
-  }
-
-  function handlerSubmitDiet(e) {
-    e.preventDefault();
-    if (diet.name && diet.description) {
-      dispatch(postDiet(diet));
-
-      alert(" Dieta creada con exito");
-      closeDiet();
-    } else {
-      alert("falta informacion requerida en el formulario");
-    }
-  }
-
-  // Modales
-
-  // Modales de Producto
-
-  const [modal, setModal] = useState({
-    product: false,
-    category: false,
-    diet: false,
-  });
   const [editModal, setEditModal] = useState({
     product: false,
     category: false,
@@ -249,28 +192,6 @@ export default function Creator() {
     category: false,
     diet: false,
   });
-
-  function openProduct() {
-    setModal({
-      ...modal,
-      product: true,
-    });
-  }
-  function closeProduct() {
-    setModal({
-      ...modal,
-      product: false,
-    });
-    setInput({
-      name: "",
-      image: "",
-      price: "",
-      description: "",
-      stock: "",
-      ids_categories: [],
-      ids_diets: [],
-    });
-  }
 
   function editProductOpen(e) {
     setEditModal({
@@ -327,129 +248,62 @@ export default function Creator() {
     });
   }
 
-  // Modales de Categoria
-
-  function openCategory() {
-    setModal({
-      ...modal,
-      category: true,
-    });
-  }
-
-  function closeCategory() {
-    setModal({
-      ...modal,
-      category: false,
-    });
-    setCategory({
-      name: "",
-      description: "",
-    });
-  }
-
-  // Modales de Dieta
-
-  function openDiet() {
-    setModal({
-      ...modal,
-      diet: true,
-    });
-  }
-
-  function closeDiet() {
-    setModal({
-      ...modal,
-      diet: false,
-    });
-    setDiet({
-      name: "",
-      description: "",
-    });
-  }
-  // INICIO DEL COMPONENTE
+ 
   return (
-
-    <div className='creator' >
-      
+    <div className="creator">
       <Topbar />
       <div className="others">
         <div className="screem">
-          <Sidebar
-            openProduct={openProduct}
-            openCategory={openCategory}
-            openDiet={openDiet} />
-
+          <Sidebar />
         </div>
         <div>
-        <FormCreator
-          modal={modal}
-          input={input}
-          handlerProduct={handlerProduct}
-          c={c}
-          d={d}
-          handlerCategories={handlerCategories}
-          handlerDiets={handlerDiets}
-          handlerSubmitProduct={handlerSubmitProduct}
-          closeProduct={closeProduct}
-          handlerSubmitCategory={handlerSubmitCategory}
-          category={category}
-          diet={diet}
-          handlerCategory={handlerCategory}
-          closeCategory={closeCategory}
-          handlerSubmitDiet={handlerSubmitDiet}
-          handlerDiet={handlerDiet}
-          closeDiet={closeDiet}
-        />
-        {/* 
+          {/* 
       Modales de Edicion 
       
       */}
-        <FormEdit
-          d={d}
-          c={c}
-          editModal={editModal}
-          input={input}
-          handlerProduct={handlerProduct}
-          handlerCategories={handlerCategories}
-          handlerDiets={handlerDiets}
-          handlerSubmitProduct={handlerSubmitProductEdit}
-          editProductClose={editProductClose}
-        />
-        <div>
-          <TableProducts
-            p={p}
-            editProductOpen={editProductOpen}
-            openDeleteProduct={openDeleteProduct}
+          <FormEdit
+            d={d}
+            c={c}
+            editModal={editModal}
+            input={input}
+            handlerProduct={handlerProduct}
+            handlerCategories={handlerCategories}
+            handlerDiets={handlerDiets}
+            handlerSubmitProduct={handlerSubmitProductEdit}
+            editProductClose={editProductClose}
           />
+          <div>
+            <TableProducts
+              p={p}
+              editProductOpen={editProductOpen}
+              openDeleteProduct={openDeleteProduct}
+            />
+          </div>
+          <div>
+            <Modal isOpen={deleteModal.product}>
+              <ModalHeader>Eliminar Producto</ModalHeader>
+              <ModalBody>
+                Desea eliminar :{" "}
+                <strong class="badge bg-primary text-wrap  w: 10rem">
+                  {" "}
+                  {input.name}
+                </strong>{" "}
+                de la Lista ?
+              </ModalBody>
+              <ModalFooter>
+                <Button color="primary" onClick={() => deleteProduct()}>
+                  {" "}
+                  Aceptar
+                </Button>
+                <Button color="danger" onClick={(e) => closeDeleteProduct(e)}>
+                  {" "}
+                  Cancelar
+                </Button>
+              </ModalFooter>
+            </Modal>
+          </div>
         </div>
-        <div>
-          <Modal isOpen={deleteModal.product}>
-            <ModalHeader>Eliminar Producto</ModalHeader>
-            <ModalBody>
-              Desea eliminar :{" "}
-              <strong class="badge bg-primary text-wrap  w: 10rem">
-                {" "}
-                {input.name}
-              </strong>{" "}
-              de la Lista ?
-            </ModalBody>
-            <ModalFooter>
-              <Button color="primary" onClick={() => deleteProduct()}>
-                {" "}
-                Aceptar
-              </Button>
-              <Button color="danger" onClick={(e) => closeDeleteProduct(e)}>
-                {" "}
-                Cancelar
-              </Button>
-            </ModalFooter>
-          </Modal>
-        </div> 
-      
       </div>
     </div>
-    </div>
-    
-
   );
 }

@@ -7,6 +7,7 @@ import Cookies from "universal-cookie";
 import createUserByGoogle from "../Utils/createUser/createUserByGoogle";
 import getCart from "../Utils/getCart";
 import usePath from "./UsePaths";
+import { DataContext } from "../Contexts/DataProvider";
 
 const cookies = new Cookies();
 
@@ -14,6 +15,8 @@ const cookies = new Cookies();
 export default function useUser() {
     const dispatch = useDispatch();
     const { goBack } = usePath();
+    const value = useContext(DataContext);
+    let [favorites,setFavorites] = value.favorites;
     let myStorage = window.localStorage;
     const login = useCallback((username, password) => {
         dispatch({type:'LOADING', payload: true})
@@ -22,15 +25,14 @@ export default function useUser() {
             .then(async jwt => {
                 let id_products = [];
                 cookies.get('trolley')?.map(x=>id_products.push({id:x.id,quantity: x.quantity}));
-                console.log(jwt)
-                myStorage.jwt = jwt;
+                myStorage.setItem('jwt',jwt);
                 goBack();
                 await postCarrito(jwt, id_products)
                 .then(async (res)=>{
                     await getCart(jwt)
                 }).catch((err)=>{console.error(err)})
                 dispatch({type: 'LOGIN', payload: jwt})
-                var isadmin = await decode(jwt)
+                var isadmin = decode(jwt)
                 dispatch({type:'LOADING', payload: false})
                 dispatch({type: 'SET_LOGIN_USER', payload: isadmin.isAdmin})
             })
@@ -40,15 +42,15 @@ export default function useUser() {
         const loginGoogle = useCallback(async (res)=>{
             let id_products = [];
                 cookies.get('trolley')?.map(x=>id_products.push({id:x.id,quantity: x.quantity}));
-            myStorage.jwt = res.$b.id_token;
+                myStorage.setItem('jwt',res.$b.id_token);
             const { googleId } = res.profileObj;
             await createUserByGoogle(googleId,res.$b.id_token)
-            postCarrito(myStorage.jwt, id_products)
+            postCarrito(myStorage.getItem('jwt'), id_products)
             .then(async (res) => {
-                    await getCart(myStorage.jwt);
+                    await getCart(myStorage.getItem('jwt'));
                 }).catch((err)=>{console.error(err)})
                 .then((response)=>{
-                    dispatch({type: 'LOGIN', payload: myStorage.jwt});
+                    dispatch({type: 'LOGIN', payload: myStorage.getItem('jwt')});
                     dispatch({type:'LOADING', payload: false})
                     goBack();
 
@@ -56,15 +58,16 @@ export default function useUser() {
             .catch ((err) => {
                 alert('Algo salio mal'+'\nEse usuario ya fue registrado en nuestra plataforma, prueba iniciar sesion con contraseña');
                 console.error(err);
-                myStorage.jwt = '';
+                myStorage.setItem('jwt','');
                 dispatch({type:'LOADING', payload: false});
             })
         })
         
         const logout = useCallback(() => {
             console.log('deslogueado con exito')
-            myStorage.jwt = '';
+            myStorage.setItem('jwt','');
             cookies.set('trolley',[])
+            setFavorites([])
         dispatch({type: 'LOGOUT'})
     }, []);
     return {

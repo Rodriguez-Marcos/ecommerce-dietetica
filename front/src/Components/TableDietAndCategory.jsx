@@ -95,7 +95,7 @@ export default function AdminDietAndCategory() {
 
               <td>
                 <Button color="danger" onClick={() => openDeleteDiet(e)}>
-                  Borrar
+                  🗑
                 </Button>
               </td>
             </tbody>
@@ -134,7 +134,7 @@ export default function AdminDietAndCategory() {
 
               <td>
                 <Button color="danger" onClick ={()=>openDeleteCategory(e)} >
-                  Borrar
+                 🗑
                 </Button>
               </td>
             </tbody>

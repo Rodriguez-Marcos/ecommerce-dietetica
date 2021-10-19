@@ -1,18 +1,57 @@
-import React from 'react';
-import Styles from './payment.module.css'
+
+import React, { useEffect, useState } from 'react';
+import styles from './failure.module.css'
 import NavBar from '../NavBar';
+import fail from '../img/x.png'
+import emptyCart from '../../Utils/emptycart';
+import { useDispatch } from 'react-redux';
 
 export default function Failure(){
+    const dispatch = useDispatch();
+    const myStorage = window.localStorage;
+
+    useEffect(() => {
+        dispatch({type: 'REMOVE_ALL'})
+        emptyCart(myStorage.getItem('jwt'))
+    }, [])
 
     return (
         <div>
-        <NavBar/>
-        <div className={Styles.div}>
-            <div>
-            <h1>Algo Salio mal en la Compra</h1>
+            <NavBar />
+            <div className={styles.main} >
+            <div class="card" className={styles.card} >
+         <img src={fail} class="card-img-top" className={styles.img} alt="..." />
+        
+        <div class="card-body" className={styles.body}>
+        <br/>
+            <h5 class="card-title">¡Ups! Algo salió mal...</h5>
+            <p class="card-text">Revise su pago</p>
+            <a href="/home" class="btn btn-primary">Volver al inicio</a>
+         </div>
+        </div>
+        
+        <br/> <br/> 
+               
             </div>
-        </div>
-        </div>
+            <br/> <br/> 
+            
+                <p className={styles.dudas}>¿Dudas? <br/> </p>
+                <p className={styles.click}>Click en el logo para comunicarte con un asesor de Salvatore!</p>
+            <div class={styles.socialMedia}>
+                <a href="https://web.whatsapp.com/"
+                    rel='noreferrer' target="_BLANK" className={styles.socialMediaIcon}>
+              
+                    <box-icon type='logo' name='whatsapp'></box-icon>
+                </a>
+             
+                <a href="mailto:salvatoretiendasaludable@gmail.com" className={styles.socialMediaIcon}>
+                <box-icon name='mail-send' ></box-icon>
+                </a>
+            </div>
+            </div>
+            
+
+     
     )
 
 

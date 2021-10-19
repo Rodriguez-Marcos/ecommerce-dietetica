@@ -16,6 +16,7 @@ import Pendings from './Components/payment/pending';
 import Failure from './Components/payment/failure';
 import CreateAdress from './Components/CreateAdress';
 import UserProfile from './Components/UserProfile'
+import Form from './Components/formbefore';
 
 
 function App() {
@@ -39,6 +40,7 @@ function App() {
     <Route exact path='/Admin/orders'  render={() => isAdmin ? <TableOrders/>: <Redirect to='/home'/>}/>
     <Route exact path='/Admin/filters' render={() => isAdmin ? <AdminDietAndCategory/>: <Redirect to='/home'/>}/>
     <Route exact path='/userprofile'component={UserProfile}/>
+    <Route exact path='/envio' component={Form}/>
     <Route exact path='/payment/success' component={Success}/>
     <Route exact path='/payment/pending' component={Pendings}/>
     <Route exact path='/payment/failure' component={Failure}/>

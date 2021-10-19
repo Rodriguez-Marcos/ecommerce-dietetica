@@ -10,7 +10,7 @@ import getCart from "../Utils/getCart";
 import { useHistory } from "react-router";
 import axios from 'axios'
 import getTrolleyAction from "../Actions";
-import NavBar from "./NavBar";
+// import NavBar from "./NavBar";
 import removePC from '../Utils/removePC';
 import postCarrito from '../Utils/postCarrito';
 
@@ -195,8 +195,10 @@ export default function Trolley() {
             <h3>Total: ${total}</h3>
             {!isLogin ? <button className="btn"><Link to='/Login' onClick={()=>{setMenu(false)}} className="btn btn-success">Inicia sesión para iniciar su compra </Link></button> : false}
             <br /> <br />
-            {isLogin ? <button className="btn" onClick={handleSubmit}>Comprar</button>:false}
+
+            {isLogin ? <button className="btn"><Link to='/envio' onClick={()=>{setMenu(false)}} className="btn btn-success">Iniciar Compra</Link></button>:false}
           </div>
+          {/* onClick={handleSubmit} */}
 
 
 
