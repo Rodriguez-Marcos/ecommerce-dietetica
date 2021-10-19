@@ -101,50 +101,58 @@ export default function Creator() {
 
   function handlerCategories(e) {
     if (e.target.checked) {
-      setInput({
+      if(!input.ids_categories.includes( parseInt(e.target.value) )){
+        setInput({
         ...input,
-        ids_categories: [...input.ids_categories, e.target.value],
+        ids_categories: [...input.ids_categories, parseInt(e.target.value) ],
       });
+      }
     } else {
       setInput({
         ...input,
         ids_categories: [
-          ...input.ids_categories.filter((a) => a !== e.target.value),
+          ...input.ids_categories.filter((a) => a !==  parseInt(e.target.value) )
         ],
       });
     }
   }
+    console.log(input)
 
   function handlerDiets(e) {
+ 
     if (e.target.checked) {
-      setInput({
+      if(!input.ids_diets.includes(  parseInt(e.target.value) )){
+        setInput({
         ...input,
-        ids_diets: [...input.ids_diets, e.target.value],
+        ids_diets: [...input.ids_diets, parseInt(e.target.value) ],
       });
+      }
+      
     } else {
       setInput({
         ...input,
-        ids_diets: [...input.ids_diets.filter((a) => a !== e.target.value)],
+        ids_diets: [...input.ids_diets.filter((a) => a !== parseInt(e.target.value) )],
       });
     }
   }
 
-  function handlerCategory(e) {
-    setCategory({
-      ...category,
-      [e.target.name]: e.target.value,
-    });
-  }
+  // function handlerCategory(e) {
+  //   setCategory({
+  //     ...category,
+  //     [e.target.name]: e.target.value,
+  //   });
+  // }
 
-  function handlerDiet(e) {
-    setDiet({
-      ...diet,
-      [e.target.name]: e.target.value,
-    });
-  }
+  // function handlerDiet(e) {
+  //   setDiet({
+  //     ...diet,
+  //     [e.target.name]: e.target.value,
+  //   });
+  // }
 
   // handles edit
   function handlerSubmitProductEdit(e) {
+
     e.preventDefault();
     if (
       input.name &&
@@ -194,6 +202,7 @@ export default function Creator() {
   });
 
   function editProductOpen(e) {
+
     setEditModal({
       ...editModal,
       product: true,
@@ -207,6 +216,9 @@ export default function Creator() {
       price: e.price,
       description: e.description,
       stock: e.stock,
+      ids_categories : e.categories.map(e=>e.id),
+      ids_diets: e.diets.map(e=>e.id)
+
     });
   }
   function editProductClose() {
