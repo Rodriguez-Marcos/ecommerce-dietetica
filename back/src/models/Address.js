@@ -2,6 +2,7 @@ import Sequelize from 'sequelize';
 import { sequelize } from '../database/db.js'
 import Client from './Client.js'
 import Order from './Order.js'
+import Cart from './Cart.js'
 
 
 const Address = sequelize.define('address', {
@@ -10,26 +11,30 @@ const Address = sequelize.define('address', {
         primaryKey: true,
         autoIncrement: true,
     },
-    address: {
+    calle: {
         type: Sequelize.TEXT,
         allowNull: false,
     },
-    number: {
+    altura: {
         type: Sequelize.INTEGER,
         allowNull: false,
     },
-    others: {
+    barrio: {
         type: Sequelize.TEXT,
         allowNull: false,
     },
-    province: {
+    otros: {
         type: Sequelize.TEXT,
         allowNull: false,
     },
-    phone: {
+    codigo: {
         type: Sequelize.TEXT,
         allowNull: true,
         defaultValue: null,
+    },
+    numero: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
     },
     
 }, {
@@ -39,6 +44,8 @@ const Address = sequelize.define('address', {
 
 Client.hasMany(Address,{foreignKey:'id_client',sourceKey:'id'})
 Address.belongsTo(Client,{foreignKey:'id_client',sourceKey:'id'})
-Address.hasMany(Order,{foreignKey:'id_address',sourceKey:'id'})
-Order.belongsTo(Address,{foreignKey:'id_address',sourceKey:'id'})
+Address.hasMany(Cart,{foreignKey:'id_address',sourceKey:'id'})
+Cart.belongsTo(Address,{foreignKey:'id_address',sourceKey:'id'})
+Address.hasMany(Order,{foreignKey:'shippingAddress',sourceKey:'id'})
+Order.belongsTo(Address,{foreignKey:'shippingAddress',sourceKey:'id'})
 export default Address

@@ -16,7 +16,6 @@ export async function createOrder(req, res) {
 
         await Order.create({
 
-            shippingAddress: shippingAddress,
             id_client: id_client
         }
         )
@@ -37,7 +36,7 @@ export async function createOrder(req, res) {
             let updatedOrder = await Order.findOne(
                 {
                     where: { id_client: id_client },
-                    attributes: ["id", "ammount", "shippingAddress", "createDate", "status"],
+                    attributes: ["id", "ammount", "createDate", "status"],
                     include: [
                         { model: Client, attributes: ["id", "name", "lastname", "email", "phone"] },
                         {
