@@ -6,7 +6,7 @@ import {
   ModalHeader,
   ModalBody,
   ModalFooter,
-  ModalGrup,
+
 } from "reactstrap";
 
 export default function AdminDetailsOrders({ input , closeModal}) {

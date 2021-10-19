@@ -24,6 +24,10 @@ export default function favs(state = InitialState, action) {
                 ...state,
                 productsFavs: state.productsFavs.filter(x=>x.id!==action.payload)
             }
+        case 'REMOVE_ALL_FAVS':
+            return{
+                ...InitialState
+            }
         default:
             return {...state}
     }

@@ -9,6 +9,7 @@ import {
   ModalBody,
   FormGroup,
   ModalFooter,
+  Input,
 } from "reactstrap";
 
 export default function FormEdit({
@@ -23,7 +24,7 @@ export default function FormEdit({
   editProductClose,
 }) {
 
-
+  console.log('esto es input',input)
   return (
     <Modal isOpen={editModal.product}>
       <ModalHeader>
@@ -80,15 +81,28 @@ export default function FormEdit({
           <div>
             <fieldset>
               <h6>Seleccionar Categorias: </h6>
-                {c.map((e,i) => (
-                  <div class="form-check" key={i}>
-                    <label onChange={(e) => handlerCategories(e)} key={e.id} class="form-check-label">
-                      <input type='checkbox' value={e.id} name={e.name} class="form-check-input" />{e.name}
-                    </label>
-                  </div>                  ))}
-              {"    "}
+              {c.map((e, i) => (
+
+                <div class="form-check" key={i}>                
+                  <label
+                    onChange={(e) => handlerCategories(e)}
+                    key={e.id}
+                    class="form-check-label"
+                  >
+                    <input
+                      type="checkbox"
+                      value={e.id}
+                      name={e.name}
+                      class="form-check-input"
+                      checked= {input.ids_categories.includes(e.id)? true: false}
+
+                    />
+                    {e.name}
+                  </label>
+                </div>
+              ))}
+
               <output>
-                {" "}
                 seleccionaste: {input.ids_categories.length} categorias
               </output>
             </fieldset>
@@ -97,15 +111,26 @@ export default function FormEdit({
           <div>
             <fieldset>
               <h6> Seleccionar Dietas: </h6>
-              {d.map((e,i) => (
-                  <div class="form-check" key={i}>
-                    <label onChange={(e) => handlerDiets(e)} key={e.id} class="form-check-label" >
-                      <input type='checkbox' value={e.id} name={e.name} class="form-check-input" />{e.name}
-                    </label>
-                  </div>
-
-
-                ))}
+              {d.map((e, i) => (
+                <div class="form-check" key={i}>
+                  <label
+                    onChange={(e) => handlerDiets(e)}
+                    key={e.id}
+                    class="form-check-label"
+                  >
+                    <input
+                      type="checkbox"
+                      value={e.id}
+                      name={e.name}
+                      class="form-check-input"
+                      checked= {input.ids_diets.includes(e.id)? true: false}
+                 
+                   
+                    />
+                    {e.name}
+                  </label>
+                </div>
+              ))}
               {"    "}
               <output> seleccionaste: {input.ids_diets.length} dietas</output>
             </fieldset>
