@@ -1,21 +1,20 @@
 import Address from "../models/Address"
 
 export async function addAddress(req, res) {
-    let { calle, altura, barrio, otros, codigo, numero } = req.body
+    const { calle, altura, barrio, otros, codigo, numero } = req.body
     const id_client = req.id
+ 
     try {
         let newAddress = await Address.create({
-            calle,
-            altura,
-            barrio,
-            otros,
-            codigo,
-            numero,
-            id_client
-        }, {
-            fields: ['calle', 'altura', 'barrio', 'otros', 'codigo', 'numero', 'id_client']
+            calle:calle,
+            altura:parseInt(altura),
+            barrio:barrio,
+            otros:otros,
+            codigo:codigo,
+            numero:parseInt(numero),
+            id_client:id_client
         })
-        console.log(newAddress)
+        
         if (newAddress) {
             return res.status(200).json({
                 message: 'Address added successfully',
