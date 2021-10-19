@@ -138,6 +138,57 @@ export function postProduct(payload, token) {
     });
   };
 }
+export function postAddress(payload, token) {
+  return async function (dispatch) {
+    let headersList = {
+      Accept: "*/*",
+
+      Authorization: "Bearer " + token,
+      "Content-Type": "application/json",
+    };
+
+    let reqOptions = {
+      url: "http://localhost:3001/address",
+      method: "POST",
+      headers: headersList,
+      data: JSON.stringify(payload),
+    };
+
+    axios.request(reqOptions).then(function (response) {
+      console.log(response.data);
+    });
+    return dispatch({
+      type: "POST_ADDRESS",
+      payload,
+    });
+  };
+}
+export function getAddress(token,id_client) {
+  return async function (dispatch) {
+
+    let headersList = {
+      Accept: "*/*",
+
+      Authorization: "Bearer " + token,
+      "Content-Type": "application/json",
+    };
+
+    
+    let reqOptions = {
+      url: `http://localhost:3001/address?id_client=${id_client}`,
+      method: "GET",
+      headers: headersList,
+    };
+
+    axios.request(reqOptions).then( (response)=> {
+      dispatch({
+       type: "GET_ADDRESS",
+       payload: response.data.data,
+     });
+   })
+  }
+}
+
 export function putProduct(payload, id) {
   return async function (dispatch) {
     await axios.put("http://localhost:3001/products/" + id, payload);

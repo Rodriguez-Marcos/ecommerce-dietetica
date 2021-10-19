@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from 'react';
 // import Styles from './payment.module.css'
 import styles from './formbefore.module.css'
 import NavBar from './NavBar';
-// import { postAdress } from '../../Actions';
+import { getAddress, postAddress } from '../Actions';
 // import emptycart from '../../Utils/emptycart';
 import GoogleMaps from "simple-react-google-maps"
 import { StyleSharp } from '@material-ui/icons';
@@ -15,6 +15,8 @@ import { useHistory } from "react-router";
 import swal from "sweetalert";
 import { Link } from 'react-router-dom';
 import Calendar from './Calendar';
+import { decode } from "jsonwebtoken";
+import AddressCard from './AddressCard';
 
 export default function Pending(){
     const myStorage = window.localStorage;
@@ -106,23 +108,29 @@ function handleInput(e) {
     //         [event.target.name]: event.target.value
     //     })
     // }
-    // useEffect(() => {
-    //     emptycart(myStorage.getItem('jwt'))
-    // }, [])
-
+    const jwt = window.localStorage.jwt
+    var client = decode(jwt)
+    console.log(client)
+    var id = client.id
+    const dispatch = useDispatch();
+    useEffect(() => {
+      const jwt = myStorage.getItem("jwt")
+        dispatch(getAddress(jwt,id))
+    }, [])
     async function handleSubmit(event) {
         event.preventDefault()
-        if (input.calle || !input.altura || !input.barrio || !input.otros || !input.codigo || !input.numero) { swal("Error", "Debe llenar todos los campos", "error") }
+        if (!input.calle || !input.altura || !input.barrio || !input.otros || !input.codigo || !input.numero) { swal("Error", "Debe llenar todos los campos", "error") }
         else {
-             //postAdress(input) 
+             const jwt = myStorage.getItem("jwt");
+             dispatch(postAddress(input,jwt))
              swal("Creado", "Dirección cargada con éxito!", "success")}}
 
 
-let { isLogin, token, comodin } = useSelector(state => state.reducerPablo)
+let { isLogin, token, comodin, addresses } = useSelector(state => state.reducerPablo)
              const cookies = new Cookies();
              
 
-             const dispatch = useDispatch();
+            
              useEffect(() => { }, [payment]);
              useEffect(()=>{
                getCart(token)
@@ -184,6 +192,116 @@ let { isLogin, token, comodin } = useSelector(state => state.reducerPablo)
                }
              }, [isLogin])
 
+if(addresses.length>0){
+  return (
+
+    <div className={styles.main}>
+    <NavBar/>
+    {/* <div className={Styles.div}> */}
+        {/* <div>
+        <h1>Gracias Por tu compra Aguardamos tu pago nomas </h1>
+        </div> */}
+
+{/* 
+    </div> */}
+
+        <h1 className={styles.ultimo}>¡Último paso! </h1>
+        <p className={styles.ultimo2}>Por favor seleccione: </p>
+        <div className={styles.form}>
+        <div class="form-check form-check-inline">
+        <div class="form-check">
+  <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2"></input>
+  <label class="form-check-label" for="exampleRadios2">
+      Envío a domicilio:
+    </label>
+    </div>
+    </div>
+    <div>
+      {addresses && addresses?.map(address=>{
+        return (
+          <div class="form-check">
+        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked></input>
+        <AddressCard address={address}/>
+        </div>
+      )})}
+    </div>
+       
+       
+       
+          
+
+        
+</div>
+
+
+            <div className={styles.google}>
+            <div class="form-check">
+      <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked></input>
+    <label class="form-check-label" for="exampleRadios1">
+    Retiro en local:
+      </label>
+      </div>
+
+            <br />
+            
+            
+            <GoogleMaps
+            apiKey={"AIzaSyA5BBX89Qj05Gc9VuJD2hvQAIAOsL9ujXA"}
+            style={{height: "360px", width: "90%"}}
+            zoom={15}
+            center={{lat: -31.417233, lng: -64.183923}}
+            // -31.417233, -64.183923
+            markers={{lat: -31.417233, lng: -64.183923}} //optional
+            />
+            <br/>
+            <h4>Seleccione una sucursal:</h4>
+            <div >
+                        <p className={styles.inputNames}></p>
+                        {/* a medida que selecciona el usuario ve lo que selecciona */}
+                        <select name="types"  className={styles.dropdown}>
+                            <option>
+                                Seleccionar
+                            </option>
+                            <option>1.Centro</option>
+                         
+                        </select>
+                    </div>
+
+
+
+
+            {/* <p>Dirección: Rivadavia 29. Plaza San Martin </p> */}
+            <br/>
+            <h4>Por favor seleccione fecha y horario que va a retirar:</h4>
+            <Calendar></Calendar>
+         
+            </div>
+            <br />
+            
+            <div class="d-grid gap-2 col-3 mx-auto">
+            <div class="form-check form-check-inline">
+         <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1"></input>
+      <label class="form-check-label" for="inlineCheckbox1">Quiero notificación vía mail de mi pedido</label>
+
+
+
+
+
+
+
+          
+            </div>
+            <button type="button" class="btn btn-success" onClick={handleCompra}>Comprar</button>
+            {/* <button class="btn btn-primary" color="green" type="button">Comprar</button> */}
+      
+            <button type="button" class="btn btn-dark" onClick={()=>{setMenu(true)}} >Volver al carrito</button>
+           
+            </div>
+
+
+    </div>
+)
+}else{
     return (
 
         <div className={styles.main}>
@@ -394,5 +512,5 @@ let { isLogin, token, comodin } = useSelector(state => state.reducerPablo)
     )
 
 
-
+                    }
 }

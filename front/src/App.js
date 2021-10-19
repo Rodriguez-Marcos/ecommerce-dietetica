@@ -14,7 +14,7 @@ import { useSelector } from 'react-redux';
 import Success from './Components/payment/success';
 import Pendings from './Components/payment/pending';
 import Failure from './Components/payment/failure';
-import CreateAdress from './Components/CreateAdress';
+import CreateAddress from './Components/CreateAddress';
 import UserProfile from './Components/UserProfile'
 import Form from './Components/formbefore';
 
@@ -34,7 +34,7 @@ function App() {
     {/* <Route exact path='/trolley' component={Trolley}/> */}
     {/* <Route exact path='/CreateUser' component={CreateUser}/> */}
     <Route exact path='/Login' component={Login}/>
-    <Route exact path='/newadress' component={CreateAdress}/>
+    <Route exact path='/newaddress' component={CreateAddress}/>
     <Route exact path='/Admin' render={() => isAdmin ? <Creator></Creator>: <Redirect to='/home'/>}/>
     <Route exact path='/Admin/user'  render={() => isAdmin ? <UsersAdminDetail/>: <Redirect to='/home'/>}/>
     <Route exact path='/Admin/orders'  render={() => isAdmin ? <TableOrders/>: <Redirect to='/home'/>}/>
