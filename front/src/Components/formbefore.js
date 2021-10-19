@@ -16,6 +16,7 @@ import swal from "sweetalert";
 import { Link } from 'react-router-dom';
 import Calendar from './Calendar';
 import { decode } from "jsonwebtoken";
+import AddressCard from './AddressCard';
 
 export default function Pending(){
     const myStorage = window.localStorage;
@@ -215,20 +216,12 @@ if(addresses.length>0){
     </label>
     </div>
     </div>
-     
-       {addresses?.map(address => {
-         return(
-         <div>
-           <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2"></input>
-          <div> Calle: {address.calle}</div>
-          <div> Altura: {address.altura}</div>
-          <div> Barrio: {address.barrio}</div>
-          <div> Otros: {address.otros}</div>
-          <div> Codigo: {address.codigo}</div>
-          <div> Numero: {address.numero}</div>
-           </div>
-         )}
-       )}
+    <div className={styles.main}>
+      {addresses && addresses?.map(address=>{
+        return <AddressCard address={address}/>
+      })}
+    </div>
+       
        
        
           
