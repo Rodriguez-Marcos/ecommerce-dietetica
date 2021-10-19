@@ -21,7 +21,6 @@ import Trolley from './Trolley'
 import { decode } from "jsonwebtoken";
 import 'boxicons';
 import Favorites from './favorites';
-import getFavorites from '../Utils/getFavorites';
 
 
 

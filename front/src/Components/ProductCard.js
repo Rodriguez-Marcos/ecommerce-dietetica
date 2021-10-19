@@ -31,17 +31,20 @@ export function ProductCard({ product }) {
   let location = useLocation();
   let history = useHistory();
   let dispatch = useDispatch();
-  let { isLogin, token } = useSelector(state => state.reducerPablo);
+  let { isLogin, token, comodin } = useSelector(state => state.reducerPablo);
   let { productsFavs } = useSelector(state => state.favs);
   let { pushPath } = usePath();
-  let value = useContext(DataContext);
-  let [favorites,setFavorites] = value.favorites;
   const [fav,setFav] = useState(productsFavs.some(checkId));
   let isFav = productsFavs.some(checkId)
   function checkId({id}){
     return id===product.id;
   }
+ /*  useEffect(()=>{
+    setFav(productsFavs.some(checkId))
+    console.log('primer use effect')
+  },[isLogin]) */
   useEffect(()=>{
+    console.log('segundo use effect')
     isFav = productsFavs.some(checkId)
   },[])
   
