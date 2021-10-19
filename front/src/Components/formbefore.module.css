@@ -4,11 +4,7 @@
     background-size: cover;
     min-height: 100vh;
 } */
-.main {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-}
+
 
 .form{
     margin-top: 3em;
