@@ -12,10 +12,6 @@ const Order = sequelize.define('order', {
         allowNull: true,
         defaultValue: null
     },
-    shippingAddress: {
-        type: Sequelize.TEXT,
-        allowNull: false,
-    },
     createDate: {
         type: Sequelize.DATE,
         defaultValue: Sequelize.fn('NOW')
