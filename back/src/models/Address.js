@@ -33,7 +33,7 @@ const Address = sequelize.define('address', {
         defaultValue: null,
     },
     numero: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.BIGINT,
         allowNull: false,
     },
     
