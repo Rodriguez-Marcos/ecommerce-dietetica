@@ -14,6 +14,7 @@ import axios from 'axios'
 import { useHistory } from "react-router";
 import swal from "sweetalert";
 import { Link } from 'react-router-dom';
+import Calendar from './Calendar';
 
 export default function Pending(){
     const myStorage = window.localStorage;
@@ -337,6 +338,8 @@ let { isLogin, token, comodin } = useSelector(state => state.reducerPablo)
                 />
                 <br/>
                 <p>Dirección: Rivadavia 29. Plaza San Martin </p>
+                <h4>Por favor seleccione fecha y horario que va a retirar:</h4>
+                <Calendar></Calendar>
              
                 </div>
                 <br />
