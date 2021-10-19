@@ -7,16 +7,19 @@ import AdminDetailsOrders from "./AdminDetailsOrders";
 import "./TableOrders.css";
 
 import { useDispatch, useSelector } from "react-redux";
-import { getOrders, putOrders } from "../Actions";
+import { getOrders, putOrders,getFilterStatus } from "../Actions";
 
 export default function TableOrders() {
   let dispatch = useDispatch();
   const orders = useSelector((state) => state.reducerPablo.orders);
+  const [order,setOrder] = useState('');
+  const myStorage = window.localStorage
+  let token = myStorage.getItem('jwt')
 
   useEffect(() => {
-    dispatch(getOrders(window.localStorage.jwt));
+    dispatch(getOrders(token,order));
   }, [dispatch]);
-
+  console.log(token, 'Es el Token')
   const [estado, setStatus] = useState({
     status: orders.status,
     id: "",
@@ -30,11 +33,23 @@ export default function TableOrders() {
         id: id,
       });
 
+      console.log(estado)
       dispatch(
-        putOrders({ status: event.target.value }, id, window.localStorage.jwt)
+        putOrders({ status: event.target.value }, id, token)
       );
     }
-    dispatch(getOrders(window.localStorage.jwt));
+    dispatch(getOrders(myStorage.getItem('jwt'),order));
+  }
+  function handlerFilterStatus(e) {
+    e.preventDefault();
+    
+      if (e.target.value === "todos") {
+        dispatch(getOrders(myStorage.getItem('jwt'),order));
+      } else {
+      
+        dispatch(getFilterStatus(e.target.value, token));
+      }
+    
   }
 
   const [state, setstate] = useState({
@@ -52,7 +67,7 @@ export default function TableOrders() {
   });
 
   function handlerDetails(e) {
-    console.log("esto es e", e);
+
 
     setstate({
       ...state,
@@ -81,7 +96,9 @@ export default function TableOrders() {
       <Topbar />
       <div className="ordersTable-Sidebar">
         <Sidebar />
-        <table className={` ${"table"} `}>
+        </div>
+        <div className=' table1 '>
+        <table  className=' table '>
           <thead>
             <tr>
               <th>Numero: </th>
@@ -89,7 +106,19 @@ export default function TableOrders() {
               <th>Email</th>
               <th>Fecha de pedido:</th>
               <th>Total:</th>
-              <th>Estado:</th>
+              <th><select
+                  className="form-select"
+                  onChange={(e) => handlerFilterStatus(e)}
+                >
+                  <option disabled="disabled" selected="true">
+                    Estados:
+                  </option>
+                  <option value="todos"> todos</option>
+                  <option value="creada"> creada</option>
+                  <option value="procesando"> procesando</option>
+                  <option value="cancelada"> cancelada</option>
+                  <option value="completa"> completa</option>
+                </select></th>
 
               <th>Detalles:</th>
             </tr>
@@ -139,7 +168,8 @@ export default function TableOrders() {
             <div>Cargando </div>
           )}
         </table>
-      </div>
+        </div>
+   
       <AdminDetailsOrders input={state} closeModal={closeModal} />
     </div>
   );

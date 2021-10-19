@@ -6,10 +6,12 @@ export const DataContext = createContext();
 
 export const DataProvider = (props) => {
 	const [productos, setProductos] = useState([]);
-	const [menu, setMenu] = useState(false)
-	const [carrito, setCarrito] =useState([])
-	const [total, setTotal] = useState(0)
-	const {productsCart} = useSelector(selector => selector.cart)
+	const [menu, setMenu] = useState(false);
+	const [favs, setFavs] = useState(false);
+	const [favorites, setFavorites] = useState([]);
+	const [carrito, setCarrito] =useState([]);
+	const [total, setTotal] = useState(0);
+	const {productsCart} = useSelector(selector => selector.cart);
 	
 
   useEffect(() => {
@@ -21,24 +23,9 @@ export const DataProvider = (props) => {
 		}
 	}, []);
 
-	/* const addCarrito = (id) =>{
-		const check = carrito.every(item =>{
-			return item.id !== id
-			
-		}) 
-		if(check){
-			const data = productos.filter(producto =>{
-				return producto.id === id
-			})
-			setCarrito([...carrito, ...data])
-		}else{
-			alert("El producto se ha añadido al carrito")
-		}
-	} */
-
 	useEffect(() =>{
 		 const getTotal = () =>{
-		 	const res = carrito.reduce((prev, item) =>{
+		 	const res = carrito?.reduce((prev, item) =>{
 		 		return prev + (item.price * item.cantidad)
 		 	},0)
 		 	setTotal(res)
@@ -49,9 +36,10 @@ export const DataProvider = (props) => {
 	const value = {
 		productos : [productos],
 		menu: [menu, setMenu],
+		favs: [favs, setFavs],
 		carrito: [carrito, setCarrito],
-		/* addCarrito: addCarrito, */
-		total: [total, setTotal]
+		total: [total, setTotal],
+		favorites: [favorites, setFavorites]
 	}
 	return (
 		<DataContext.Provider value={value}>

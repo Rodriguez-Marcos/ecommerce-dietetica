@@ -11,7 +11,7 @@ import { Navbar, Nav, NavDropdown, Form, FormControl, Button, Image } from 'reac
 import useUser from '../Hooks/UseUser'; //hook para loguearse y ver si esta logueado el usuario
 import Logo from '../image/SALVATORE-grande.png'
 import lupa from '../image/buscar.png'
-import { ShoppingCart} from '@material-ui/icons';
+import { Favorite, ShoppingCart} from '@material-ui/icons';
 import { AccountCircle } from '@material-ui/icons';
 import { ExitToApp } from '@material-ui/icons';
 import Cookies from "universal-cookie";
@@ -20,6 +20,7 @@ import { DataContext } from "../Contexts/DataProvider"
 import Trolley from './Trolley'
 import { decode } from "jsonwebtoken";
 import 'boxicons';
+import Favorites from './favorites';
 
 
 
@@ -35,9 +36,13 @@ const cookies = new Cookies();
 function NavBar({ getProductbyName, setLoading, isLogin, token }) {
   let comodin = useSelector(state => state.reducerPablo.comodin);
   let isAdmin = useSelector(state => state.reducerPablo.IsAdmin);
-  let { productCart} = useSelector(state=>state.cart)// no sacar, sirve para contar la cantidad en el carrito
+  let { productsCart } = useSelector(state=>state.cart)// no sacar, sirve para contar la cantidad en el carrito
+  let { productsFavs } = useSelector(state=>state.favs)
   const value = useContext(DataContext)
   const [menu, setMenu] = value.menu;
+  const [favs, setFavs] = value.favs;
+  useEffect(()=>{
+  },[comodin,cookies])
   
   function onLogoutSuccess() {
     console.log("logout success")
@@ -50,7 +55,7 @@ function NavBar({ getProductbyName, setLoading, isLogin, token }) {
   const { logout } = useUser();
   const myStorage = window.localStorage;
   useEffect(() => {
-    const jwt = myStorage.jwt;
+    const jwt = myStorage.getItem('jwt');
     var isadmin = decode(jwt)
 
     if (!!jwt) {
@@ -60,8 +65,11 @@ function NavBar({ getProductbyName, setLoading, isLogin, token }) {
   }, [myStorage])
   let history = useHistory();
   useEffect(() => {
-
-  }, [comodin,])
+    let isArray = Array.isArray(cookies.get('trolley'))
+    if(!isArray){
+      cookies.set('trolley',[])
+    }
+  }, [])
 
 
 
@@ -110,6 +118,15 @@ function NavBar({ getProductbyName, setLoading, isLogin, token }) {
                 <span className="item__total">{cookie?.length}</span>
               </NavLink>
                </div>
+            <div className="favs">
+            
+              <NavLink to='' onClick={e=>{e.preventDefault() ;setFavs(true) }} className='navlink1'>
+              <box-icon  name="Favs"></box-icon>
+              <Favorite/>
+                {/* <ShoppingCart fontSize="large" id="iconoCarrito"/> */}
+                <span className="item__total">{productsFavs?.length}</span>
+              </NavLink>
+               </div>
             </Nav.Link>
             {isAdmin ?
             <NavLink to='/Admin'>Admin</NavLink> : null}
@@ -126,7 +143,7 @@ function NavBar({ getProductbyName, setLoading, isLogin, token }) {
               <button id="lupabtn" onSubmit={(e) => handleSubmit(e)} onClick={(e) => handleSubmit(e)}><img id="lupaimg" src={lupa} /></button>
             </Form>
             {isLogin ? <div id="sesion">
-               <p><AccountCircle/> Bienvendido {jwt?.decode(token)?.name} </p>
+               <p> <NavLink to='/userprofile'><AccountCircle/></NavLink>Bienvendido {jwt?.decode(token)?.name} </p>
                <GoogleLogout
               clientId="908895428836-kaesjl71puimi31fjbffca9t4nvl7v6r.apps.googleusercontent.com"
               buttonText="Cerrar Sesión"
@@ -144,6 +161,7 @@ function NavBar({ getProductbyName, setLoading, isLogin, token }) {
         </Navbar.Collapse>
       </Navbar>
       {menu?<Trolley/>:false}
+      {favs?<Favorites/>:false}
 
     </div>
   )

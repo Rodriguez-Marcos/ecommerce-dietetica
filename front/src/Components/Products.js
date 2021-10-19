@@ -1,31 +1,30 @@
-import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
+import React, { useState, useEffect, useContext } from 'react';
+import { connect, useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom'
 import ProductCard from './ProductCard';
 import styles from './product.module.css';
 import { Link } from 'react-router-dom';
 
 import Cookies from "universal-cookie";
+import axios from 'axios';
+import getFavorites from '../Utils/getFavorites';
+import { getProducts } from '../Actions';
+import { DataContext } from '../Contexts/DataProvider';
 
 const cookies = new Cookies();
 
-export default function ProductsCards(params, {productsCart}) {
-  let location = useLocation();
+export default function ProductsCards({products}) {
+  const dispatch = useDispatch();
+  let { isLogin, token, comodin } = useSelector(state => state.reducerPablo);
+  const myStorage = window.localStorage;
 
-  let products = params.products
+  
+  useEffect( async ()=>{
+    if(!!myStorage.getItem('jwt')){
+    let res = await getFavorites( myStorage.getItem('jwt'))
+    dispatch({type: 'GET_PRODUCTS_FAVS', payload: res})}
+  },[])
 
-  useEffect(() => {
-
-  }, [])
-  if(productsCart){
-    return(
-      <div className={styles.main}>
-      {productsCart && productsCart.map(product=>{
-        return <ProductCard product={product}/>
-      })}
-    </div>
-    )
-  }
   return (
     <div className={styles.main}>
       {products && products?.map(product=>{

@@ -5,6 +5,7 @@ import Cookies from "universal-cookie";
 let cookies = new Cookies(); 
 
 export default function emptycart (token){
+  cookies.set('trolley',[])
 
     var config = {
         method: 'get',
@@ -16,7 +17,6 @@ export default function emptycart (token){
       
       axios(config)
       .then(function (response) {
-        cookies.set('trolley',[])
       })
       .catch(function (error) {
         console.log(error);

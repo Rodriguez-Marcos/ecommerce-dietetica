@@ -9,6 +9,7 @@ import {
   ModalBody,
   FormGroup,
   ModalFooter,
+  Input,
 } from "reactstrap";
 
 export default function FormEdit({
@@ -23,7 +24,7 @@ export default function FormEdit({
   editProductClose,
 }) {
 
-
+  console.log('esto es input',input)
   return (
     <Modal isOpen={editModal.product}>
       <ModalHeader>
@@ -80,20 +81,28 @@ export default function FormEdit({
           <div>
             <fieldset>
               <h6>Seleccionar Categorias: </h6>
-              <select
-                onChange={(e) => handlerCategories(e)}
-                class="form-select"
-                multiple
-                aria-label="multiple select example"
-                >
-                {c.map((e) => (
-                  <option value={e.id}  name={e.name}> {e.name}</option>
-                  ))}
-              </select>
-              {"    "}
-                  <div>{input.ids_categories?.map((a)=> a)}</div>
+              {c.map((e, i) => (
+
+                <div class="form-check" key={i}>                
+                  <label
+                    onChange={(e) => handlerCategories(e)}
+                    key={e.id}
+                    class="form-check-label"
+                  >
+                    <input
+                      type="checkbox"
+                      value={e.id}
+                      name={e.name}
+                      class="form-check-input"
+                      checked= {input.ids_categories.includes(e.id)? true: false}
+
+                    />
+                    {e.name}
+                  </label>
+                </div>
+              ))}
+
               <output>
-                {" "}
                 seleccionaste: {input.ids_categories.length} categorias
               </output>
             </fieldset>
@@ -102,19 +111,27 @@ export default function FormEdit({
           <div>
             <fieldset>
               <h6> Seleccionar Dietas: </h6>
-              <select
-                onChange={(e) => handlerDiets(e)}
-                class="form-select"
-                multiple
-                aria-label="multiple select example"
-              >
-                {d.map((e) => (
-                  <option value={e.id} name={e.name}> {e.name}</option>
-                ))}
-              </select>
+              {d.map((e, i) => (
+                <div class="form-check" key={i}>
+                  <label
+                    onChange={(e) => handlerDiets(e)}
+                    key={e.id}
+                    class="form-check-label"
+                  >
+                    <input
+                      type="checkbox"
+                      value={e.id}
+                      name={e.name}
+                      class="form-check-input"
+                      checked= {input.ids_diets.includes(e.id)? true: false}
+                 
+                   
+                    />
+                    {e.name}
+                  </label>
+                </div>
+              ))}
               {"    "}
-              <div>{input.ids_diets}</div>
-              {console.log(input.ids_diets)}
               <output> seleccionaste: {input.ids_diets.length} dietas</output>
             </fieldset>
           </div>

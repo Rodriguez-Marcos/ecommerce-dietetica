@@ -10,7 +10,7 @@ import getCart from "../Utils/getCart";
 import { useHistory } from "react-router";
 import axios from 'axios'
 import getTrolleyAction from "../Actions";
-import NavBar from "./NavBar";
+// import NavBar from "./NavBar";
 import removePC from '../Utils/removePC';
 import postCarrito from '../Utils/postCarrito';
 
@@ -44,7 +44,16 @@ export default function Trolley() {
     })
 
   }
-  const increase = id => {
+  const increase = producto => {
+    let {id, stock} = producto
+    let handle = cookies.get('trolley').find(x => {
+      if (x.id === id) {
+        if(x.quantity >= stock){
+          return true;
+        }}})
+        if(handle){
+          return 0;
+        }
     carrito.forEach(item => {
       if (item.id === id) {
         item.cantidad += 1;
@@ -85,7 +94,10 @@ export default function Trolley() {
   const cookies = new Cookies();
 
   const dispatch = useDispatch();
-  useEffect(() => { }, [payment])
+  useEffect(() => { }, [payment]);
+  useEffect(()=>{
+    getCart(token)
+  },[comodin])
   const history = useHistory();
   async function handleSubmit(event) {
     event.preventDefault();
@@ -141,9 +153,10 @@ export default function Trolley() {
     if (isLogin) {
       getCart(token);
     }
-    dispatch(getTrolleyAction())
   }, [isLogin])
-
+  
+  useEffect(() => {
+  dispatch(getTrolleyAction())},[])
     return (
       <div className="carritos show">
         <div className="carrito show">
@@ -164,10 +177,11 @@ export default function Trolley() {
                 </div>
                 <div>
                 
-                  <box-icon onClick={() => increase(producto.id)}  name="up-arrow" type="solid"></box-icon>
+                  <box-icon onClick={() => increase(producto)}  name="up-arrow" type="solid"></box-icon>
                   <h3 className="cantidad">{producto.cantidad}</h3>
                   
                   <box-icon onClick={() => reduce(producto.id)} name="down-arrow" type="solid"></box-icon>
+                  <h6>Stock: {producto.stock}</h6>
                 </div>
                 <div className="remove__item">
                   <box-icon id="trash" onClick={()=>handleClose(producto.id)} name="trash"></box-icon>
@@ -181,8 +195,10 @@ export default function Trolley() {
             <h3>Total: ${total}</h3>
             {!isLogin ? <button className="btn"><Link to='/Login' onClick={()=>{setMenu(false)}} className="btn btn-success">Inicia sesión para iniciar su compra </Link></button> : false}
             <br /> <br />
-            {isLogin ? <button className="btn" onClick={handleSubmit}>Comprar</button>:false}
+
+            {isLogin ? <button className="btn"><Link to='/envio' onClick={()=>{setMenu(false)}} className="btn btn-success">Iniciar Compra</Link></button>:false}
           </div>
+          {/* onClick={handleSubmit} */}
 
 
 

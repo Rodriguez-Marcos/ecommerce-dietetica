@@ -4,15 +4,9 @@ import Home from './Components/Home';
 import Detail from './Components/Detail.js';
 import Creator from './Components/Creator';
 import Search from './Components/Search';
-import Footer from './Components/Footer';
-import CreateUser from './Components/CreateUser';
 import { Redirect, Switch } from 'react-router';
-import Trolley from './Components/Trolley';
-import {Image} from 'react-bootstrap'
-import fondo from '../src/image/fondo1.jpg'
 import { DataProvider } from './Contexts/DataProvider'
 import Login from './Components/Login';
-import Sidebar from './Components/AdminSideBar';
 import UsersAdminDetail from './Components/UsersAdminDetail'
 import TableOrders from './Components/TableOrders';
 import AdminDietAndCategory from './Components/TableDietAndCategory';
@@ -20,8 +14,9 @@ import { useSelector } from 'react-redux';
 import Success from './Components/payment/success';
 import Pendings from './Components/payment/pending';
 import Failure from './Components/payment/failure';
-import CreateAdress from './Components/CreateAdress'
-import AdminDetailsOrders from './Components/AdminDetailsOrders';
+import CreateAdress from './Components/CreateAdress';
+import UserProfile from './Components/UserProfile'
+import Form from './Components/formbefore';
 
 
 function App() {
@@ -39,18 +34,13 @@ function App() {
     {/* <Route exact path='/trolley' component={Trolley}/> */}
     {/* <Route exact path='/CreateUser' component={CreateUser}/> */}
     <Route exact path='/Login' component={Login}/>
-    <Route exact path='/Admin' component={Creator}/>
-
-    <Route exact path='/Admin/user' component={UsersAdminDetail}/>
-    <Route exact path='/Admin/orders' component={OrderAdminDetail}/>
-    <Route exact path='/Admin/orders' component={TableOrders}/>
-    <Route exact path='/Admin/filters' component={AdminDietAndCategory}/>
-
     <Route exact path='/newadress' component={CreateAdress}/>
     <Route exact path='/Admin' render={() => isAdmin ? <Creator></Creator>: <Redirect to='/home'/>}/>
     <Route exact path='/Admin/user'  render={() => isAdmin ? <UsersAdminDetail/>: <Redirect to='/home'/>}/>
     <Route exact path='/Admin/orders'  render={() => isAdmin ? <TableOrders/>: <Redirect to='/home'/>}/>
     <Route exact path='/Admin/filters' render={() => isAdmin ? <AdminDietAndCategory/>: <Redirect to='/home'/>}/>
+    <Route exact path='/userprofile'component={UserProfile}/>
+    <Route exact path='/envio' component={Form}/>
     <Route exact path='/payment/success' component={Success}/>
     <Route exact path='/payment/pending' component={Pendings}/>
     <Route exact path='/payment/failure' component={Failure}/>

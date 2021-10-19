@@ -1,8 +1,10 @@
+import { CompareArrowsOutlined } from '@material-ui/icons';
 import axios from 'axios'
 function postCarrito(token, products){
   var data = JSON.stringify({
     "products": products,
   });
+  console.log(products)
   var config = {
     method: 'post',
     url: 'http://localhost:3001/cart',
@@ -13,14 +15,7 @@ function postCarrito(token, products){
     data
   };
   
-  console.log('fui yo')
-      axios(config)
-      .then(function (response) {
-        console.log('actualizado con exito');
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+      return axios(config)
 }
 
 export default postCarrito;

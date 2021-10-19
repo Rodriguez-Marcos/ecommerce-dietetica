@@ -1,0 +1,74 @@
+.card{
+    width: 18rem;
+}
+
+.main{
+    display: flex;
+    margin-left:39em ;
+}
+
+.body{
+    margin-left: 60px;
+    
+}
+
+.img{
+    margin-left: 30px;
+    margin-top: 50px;
+    width: 200px;
+    height: 200px;
+}
+
+/* * {
+    margin: 0%;
+    padding: 0%;
+    /* box-sizing: content-box; */
+
+    .dudas{
+        margin-top: 10px;
+        display: flex;
+        margin-left:48em ;
+        font-size: 15px;
+        font-family: sans-serif;
+        font-weight: 600;
+    
+    }
+
+    .click{
+         margin-top: 10px;
+        display: flex;
+        margin-left:38em ;
+        font-size: 15px;
+        font-family: sans-serif;
+        font-weight: 500;
+
+    }
+    
+    
+     .socialMedia{
+         width: 98%; 
+         display: flex;
+         margin-top: 5px;
+        justify-content: center; 
+        margin-right: 1em;
+        
+    
+     }
+    .socialMediaIcon box-icon{
+        display: inline-block;
+        margin-left: 15px;
+        width: 60px;
+        height: 60px;
+        border: 1px solid #fff;
+        border-radius: 50%;
+        text-align: center;
+        color: #fff;
+        margin-right: 10px;
+        font-size: 40px;
+        line-height: 45px;
+    }
+    .socialMediaIcon box-icon:hover{
+        fill: #1a8616;
+    }
+   
+
