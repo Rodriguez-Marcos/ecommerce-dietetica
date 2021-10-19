@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from 'react';
 // import Styles from './payment.module.css'
 import styles from './formbefore.module.css'
 import NavBar from './NavBar';
-// import { postAdress } from '../../Actions';
+import { postAddress } from '../Actions';
 // import emptycart from '../../Utils/emptycart';
 import GoogleMaps from "simple-react-google-maps"
 import { StyleSharp } from '@material-ui/icons';
@@ -15,6 +15,7 @@ import { useHistory } from "react-router";
 import swal from "sweetalert";
 import { Link } from 'react-router-dom';
 import Calendar from './Calendar';
+import { decode } from "jsonwebtoken";
 
 export default function Pending(){
     const myStorage = window.localStorage;
@@ -109,12 +110,13 @@ function handleInput(e) {
     // useEffect(() => {
     //     emptycart(myStorage.getItem('jwt'))
     // }, [])
-
+    const dispatch = useDispatch();
     async function handleSubmit(event) {
         event.preventDefault()
-        if (input.calle || !input.altura || !input.barrio || !input.otros || !input.codigo || !input.numero) { swal("Error", "Debe llenar todos los campos", "error") }
+        if (!input.calle || !input.altura || !input.barrio || !input.otros || !input.codigo || !input.numero) { swal("Error", "Debe llenar todos los campos", "error") }
         else {
-             //postAdress(input) 
+             const jwt = myStorage.getItem("jwt");
+             dispatch(postAddress(input,jwt))
              swal("Creado", "Dirección cargada con éxito!", "success")}}
 
 
@@ -122,7 +124,7 @@ let { isLogin, token, comodin } = useSelector(state => state.reducerPablo)
              const cookies = new Cookies();
              
 
-             const dispatch = useDispatch();
+            
              useEffect(() => { }, [payment]);
              useEffect(()=>{
                getCart(token)
