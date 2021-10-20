@@ -31,7 +31,6 @@ export default function Success(){
     // }
 
 
-
     useEffect(() => {
         dispatch({type: 'REMOVE_ALL'})
         emptyCart(myStorage.getItem('jwt'))

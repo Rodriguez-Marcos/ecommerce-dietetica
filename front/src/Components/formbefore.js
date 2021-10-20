@@ -13,9 +13,11 @@ import getCart from "../Utils/getCart";
 import axios from 'axios'
 import { useHistory } from "react-router";
 import swal from "sweetalert";
-import { Link } from 'react-router-dom';
-//import Calendar from './Calendar';
+import { Link, NavLink } from 'react-router-dom';
+import Calendar from './Calendar';
 import { decode } from "jsonwebtoken";
+import AddressCard from './AddressCard';
+import { Button } from 'react-bootstrap';
 
 export default function Pending(){
     const myStorage = window.localStorage;
@@ -215,20 +217,17 @@ if(addresses.length>0){
     </label>
     </div>
     </div>
-     
-       {addresses?.map(address => {
-         return(
-         <div>
-           <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2"></input>
-          <div> Calle: {address.calle}</div>
-          <div> Altura: {address.altura}</div>
-          <div> Barrio: {address.barrio}</div>
-          <div> Otros: {address.otros}</div>
-          <div> Codigo: {address.codigo}</div>
-          <div> Numero: {address.numero}</div>
-           </div>
-         )}
-       )}
+    <div>
+      {addresses && addresses?.map(address=>{
+        return (
+          <div class="form-check">
+        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked></input>
+        <AddressCard address={address}/>
+        </div>
+      )})}
+      <div><NavLink to='/newaddress'><button>Añadir nueva dirección</button></NavLink></div>
+    </div>
+       
        
        
           
