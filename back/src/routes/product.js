@@ -14,4 +14,5 @@ router.get('/:id',getById);
 router.delete('/:id',useExtractor ,deleteProduct);
 router.put('/:id' ,updateProduct);
 
+
 export default router;
