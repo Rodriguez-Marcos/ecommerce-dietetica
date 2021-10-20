@@ -14,10 +14,16 @@ import gif from './img/loading-25.gif'
 
 
 function Login({ respuesta, isLogin }) {
+    // VER RUTA
+    useEffect(() => {
+        if (isLogin) history.push('/home');
+    
+    }, [isLogin])
     const dispatch = useDispatch();
     const [click, setClick] = useState(0)
     let { loading, error } = useSelector(state=>state.loading)
 
+    
     const [input, setInput] = useState({
         name: '',
         lastname: '',
@@ -27,27 +33,12 @@ function Login({ respuesta, isLogin }) {
         phone: '213124124',
     }
     )
+    const [control,setControl] = useState(input)
+    const [account, setAccount] = useState(false)
 
-    const [errors, setErrors] = useState({
-        name: '',
-        lastname: '',
-        password: '',
-        email: ''
-    }
-    )
-
-
-    function handlerUser(event) {
-        setErrors(validate({
-            ...input,
-            [event.target.name]: event.target.value
-        }))
-        setInput({
-            ...input,
-            [event.target.name]: event.target.value
-        })
-    }
-
+    const { login, loginGoogle } = useUser();
+    const history = useHistory();
+    
     async function handelSubmit(event) {
         event.preventDefault()
         if (!input.name || !input.lastname || !input.password || !input.email) {
@@ -67,27 +58,13 @@ function Login({ respuesta, isLogin }) {
         }
     }
 
-    const [account, setAccount] = useState(false)
-
-    const { login, loginGoogle } = useUser();
-    const history = useHistory();
-
-    const [state, setState] = useState({
-        username: '',
-        password: ''
-    })
- 
-    // VER RUTA
-    useEffect(() => {
-        if (isLogin) history.push('/home');
-
-    }, [isLogin])
-
-    function handleEmail(event) {
+    function handleChange(event) {
+        setControl(validate(input))
         setInput({
             ...input,
             [event.target.name]: event.target.value
         })
+        console.log('control: ',control)
     }
 
     function handleSubmit(event) {
@@ -102,9 +79,6 @@ function Login({ respuesta, isLogin }) {
         }
     }
 
-
-
-
     const responseGoogle = (response) => {}
     
 
@@ -115,14 +89,14 @@ function Login({ respuesta, isLogin }) {
                 <Form className="divuser">
                     <Form.Group className="mb-3" controlId="formBasicEmail" >
                         <Form.Label>Email</Form.Label>
-                        <Form.Control placeholder="ejemplo@email.com" type="text" name="email" value={input.email} onChange={handleEmail} />
+                        <Form.Control placeholder="ejemplo@email.com" type="text" name="email" value={input.email} onChange={handleChange} />
                         <Form.Text className="text-muted">
                             Nunca compartiremos su correo electrónico con nadie más.
                         </Form.Text>
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="formBasicEmail" >
                         <Form.Label>Contraseña</Form.Label>
-                        <Form.Control placeholder="Contraseña" type="password" name='password' value={input.password} onChange={handleEmail} />
+                        <Form.Control placeholder="Contraseña" type="password" name='password' value={input.password} onChange={handleChange} />
                         <Form.Text className="text-muted">
                             Escriba su contraseña registrada
                         </Form.Text>
@@ -152,7 +126,7 @@ function Login({ respuesta, isLogin }) {
                         <Form.Control type="text" placeholder="Nombre" type="text"
                             value={input.name}
                             name="name"
-                            onChange={handlerUser} />
+                            onChange={handleChange} />
                         <Form.Text className="text-muted">
                             Nunca compartiremos su correo electrónico con nadie más.
                         </Form.Text>
@@ -160,15 +134,15 @@ function Login({ respuesta, isLogin }) {
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                         <Form.Label>Apellidos</Form.Label>
                         <Form.Control type="text" placeholder="Apellidos" value={input.lastname}
-                            name="lastname" onChange={handlerUser} />
+                            name="lastname" onChange={handleChange} />
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="formBasicPassword">
                         <Form.Label>Contraseña</Form.Label>
                         <Form.Control type="password" placeholder="Password" value={input.password}
-                            name="password" onChange={handlerUser} />
+                            name="password" onChange={handleChange} />
                         <Form.Label>Email</Form.Label>
                         <Form.Control type="text" placeholder="Email" value={input.email}
-                            name="email" onChange={handlerUser} />
+                            name="email" onChange={handleChange} />
                     </Form.Group>
                     <Button variant="primary" type="submit" onClick={handelSubmit}>
                         Crear Cuenta

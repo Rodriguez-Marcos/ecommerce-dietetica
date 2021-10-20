@@ -10,12 +10,6 @@ import Cookies from 'universal-cookie';
 import NavBar from './NavBar'
 
 
-
-
-
-// import { DiscussionEmbed } from 'disqus-react';
-
-
 import { Rating } from "@material-ui/lab";
 import swal from "sweetalert";
 import postCarrito from '../Utils/postCarrito';

@@ -4,7 +4,13 @@
     background-size: cover;
     min-height: 100vh;
 } */
-
+.map {
+    width: 600;
+    height: 450;
+    border: 10px;
+    border-color: blue;
+    border-radius: 10px;
+}
 
 .form{
     margin-top: 3em;
