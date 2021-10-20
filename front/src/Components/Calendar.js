@@ -10,7 +10,16 @@ import './Calendar.css'
 
 export default function Calendar () {
   return (
-    <input type="today" min="2017-08-15" max="2018-08-26" step="7"></input>
+    <div>
+    <input id="today2" type="date"></input>
+      <label for="appt">Por favor elija horario de retiro:</label>
+
+  <input type="time" id="appt" name="appt"
+       min="09:00" max="18:00" required></input>
+
+  <small>Horarios: de 9am a 18hs</small>
+    </div>
+
 
   )
 }

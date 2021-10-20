@@ -13,7 +13,7 @@ import axios from 'axios'
 import { useHistory } from "react-router";
 import swal from "sweetalert";
 import { Link, NavLink } from 'react-router-dom';
-//import Calendar from './Calendar';
+import Calendar from './Calendar';
 import { decode } from "jsonwebtoken";
 import AddressCard from './AddressCard';
 import { Button } from 'react-bootstrap';
@@ -482,8 +482,8 @@ export default function Pending() {
 
           {/* <p>Dirección: Rivadavia 29. Plaza San Martin </p> */}
           <br />
-          <h4>Por favor seleccione fecha y horario que va a retirar:</h4>
-          {/* <Calendar></Calendar> */}
+          <h4>Por favor seleccione fecha de retiro:</h4>
+          <Calendar></Calendar>
 
         </div>
         <br />
