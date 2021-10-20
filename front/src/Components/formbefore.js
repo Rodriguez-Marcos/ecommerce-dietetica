@@ -3,7 +3,6 @@ import './formbefore.css'
 import NavBar from './NavBar';
 import { getAddress, postAddress } from '../Actions';
 // import emptycart from '../../Utils/emptycart';
-import GoogleMaps from "simple-react-google-maps"
 import { StyleSharp } from '@material-ui/icons';
 import Cookies from "universal-cookie";
 import { useDispatch, useSelector } from "react-redux";
@@ -17,8 +16,11 @@ import Calendar from './Calendar';
 import { decode } from "jsonwebtoken";
 import AddressCard from './AddressCard';
 import { Button, Container, Row, Col, Card } from 'react-bootstrap';
+import { Select } from '@material-ui/core';
+
 
 export default function Pending() {
+  const [sucuSelected, setSucuSelected] = useState('Centro Córdoba')
   const myStorage = window.localStorage;
   const value = useContext(DataContext)
   const [carrito, setCarrito] = value.carrito;

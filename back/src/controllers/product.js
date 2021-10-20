@@ -357,3 +357,4 @@ export async function postOrder(req, res) {
     var resultado = await product.addOrder(order)
     res.send(resultado)
 }
+

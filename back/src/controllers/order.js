@@ -4,6 +4,7 @@ import Product from '../models/Product.js';
 import Client from '../models/Client.js';
 import Product_Cart from '../models/Product_Cart.js'
 import Cart from '../models/Cart.js';
+import { sequelize } from '../database/db.js'
 const nodemailer = require('nodemailer');
 
 export async function createOrder(req, res) {
@@ -46,8 +47,8 @@ export async function createOrder(req, res) {
                     order: [["createDate", "DESC"]],
                     limit: 1
                 })
-                let client = await Client.findOne({where:{id:id_client}})
-                let clientMail = client.dataValues.email
+            let client = await Client.findOne({ where: { id: id_client } })
+            let clientMail = client.dataValues.email
             const transporter = nodemailer.createTransport({
                 host: 'smtp-relay.sendinblue.com',
                 port: 587,
@@ -71,10 +72,10 @@ export async function createOrder(req, res) {
                     <p> Tu pedido fue creado con exito. Enseguida tengamos tus productos listos te avisaremos</p>`,
             })
             console.log('Message sent', info.messageId)
-            
-            return res.redirect ('http://localhost:3001/cart/emptycart')
-            }
-        
+
+            return res.redirect('http://localhost:3001/cart/emptycart')
+        }
+
     } catch (err) {
         console.log(err)
         res.status(500).json({
@@ -181,4 +182,62 @@ export async function changeOrderStatus(req, res) {
         })
 
     }
+}
+
+export async function bestSellers(req, res) {
+    try {
+
+        let productsQuantity = await Product_Order.findAll({
+            group: ['id_product'],
+            attributes: ['id_product', 
+                        [sequelize.fn('SUM', sequelize.col('quantity')), 
+                        'productQuantity'],
+                        [sequelize.literal(`(
+                              SELECT name
+                              FROM products
+                              WHERE products.id = products_order.id_product
+                              
+                            )`),
+                            'name',
+                          ]],
+            order: [[sequelize.fn('SUM', sequelize.col('quantity')), 'DESC']],
+            limit:7 
+            
+        })
+        res.status(200).json({
+            message: 'Products counted',
+            data: productsQuantity
+        })
+    } catch (err) {
+        console.log(err)
+        res.status(500).json({
+            message: 'Something goes Wrong',
+            data: {}
+        })
+    }
+}
+
+export async function totalOrderByDay(req, res){
+    try {
+
+        let totalByDay = await Order.findAll({
+            group: [sequelize.fn('date_trunc', 'day', sequelize.col('createDate')), 'createdDay'],
+            attributes: [[sequelize.fn('date_trunc', 'day', sequelize.col('createDate')), 'createdDay'], 
+                        [sequelize.fn('SUM', sequelize.col('ammount')), 'total'
+                        ]],
+            //limit:7 
+            
+        })
+        res.status(200).json({
+            message: 'Ammounts counted',
+            data: totalByDay
+        })
+    } catch (err) {
+        console.log(err)
+        res.status(500).json({
+            message: 'Something goes Wrong',
+            data: {}
+        })
+    }
+  
 }
