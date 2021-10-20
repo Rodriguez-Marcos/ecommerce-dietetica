@@ -14,7 +14,7 @@ import axios from 'axios'
 import { useHistory } from "react-router";
 import swal from "sweetalert";
 import { Link } from 'react-router-dom';
-import Calendar from './Calendar';
+//import Calendar from './Calendar';
 import { decode } from "jsonwebtoken";
 
 export default function Pending(){
@@ -276,7 +276,7 @@ if(addresses.length>0){
             {/* <p>Dirección: Rivadavia 29. Plaza San Martin </p> */}
             <br/>
             <h4>Por favor seleccione fecha y horario que va a retirar:</h4>
-            <Calendar></Calendar>
+            {/* <Calendar></Calendar> */}
          
             </div>
             <br />
@@ -485,7 +485,7 @@ if(addresses.length>0){
                 {/* <p>Dirección: Rivadavia 29. Plaza San Martin </p> */}
                 <br/>
                 <h4>Por favor seleccione fecha y horario que va a retirar:</h4>
-                <Calendar></Calendar>
+                {/* <Calendar></Calendar> */}
              
                 </div>
                 <br />
