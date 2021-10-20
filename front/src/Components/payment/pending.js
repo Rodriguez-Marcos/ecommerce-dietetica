@@ -6,7 +6,6 @@ import success from '../img/succes22.png'
 import emptyCart from '../../Utils/emptycart';
 // import { postAdress } from '../../Actions';
 import emptycart from '../../Utils/emptycart';
-import GoogleMaps from "simple-react-google-maps"
 import { StyleSharp } from '@material-ui/icons';
 import swal from "sweetalert";
 import { useDispatch } from 'react-redux';
