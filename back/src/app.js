@@ -43,7 +43,7 @@ app.use('/reviews',useExtractor, Reviewroutes)
 app.use('/favorite',useExtractor, Favoriteroutes)
 app.use('/cart',useExtractor,Cartroutes)
 app.use('/payment', useExtractor, Payment)
-app.use('/address', Address)
+app.use('/address',useExtractor, Address)
 app.get("/feedback",(req, res) => {
   console.log(req.query.payment_id)
   console.log(req.query.collection_status)

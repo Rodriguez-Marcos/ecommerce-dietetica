@@ -3,11 +3,12 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { REVIEW_URL } from "../Actions/index";
 import { useSelector, useDispatch } from 'react-redux'
-import { getById, allowReview } from '../Actions/index'
+import { getById, allowReview,postReview } from '../Actions/index'
 import styles from './Detail.css'
 import { Container, Row, Col, Image, Form, Button, ListGroup, ListGroupItem, Card, Accordion } from 'react-bootstrap'
 import Cookies from 'universal-cookie';
 import NavBar from './NavBar'
+
 
 
 
@@ -83,18 +84,8 @@ function Detail({ match }) {
 
   function handleSubmit(e) {
     e.preventDefault()
-    return axios.post(REVIEW_URL + id, input)
-      .then((r) => {
-        e.target.reset()
-        setInput({
-          title: "",
-          description: "",
-          calification: "",
-        });
-        swal("Creado", "Comentario enviado con éxito!", "success")
-          .then(() => window.location.reload());
-      })
-      .catch((error) => swal("Error", error, "error"));
+   dispatch(postReview(input,id,token))
+   window.location.reload()
   }
 
   {/*             

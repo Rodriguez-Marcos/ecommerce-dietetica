@@ -27,6 +27,7 @@ export const REVIEW_URL = "http://localhost:3001/reviews/";
 export const GET_ORDERS = "GET_ORDERS";
 export const PUT_ORDERS = "PUT_ORDERS";
 export const FILTER_ORDERS = "FILTER_ORDERS";
+export const POST_REVIEW ='POST_REVIEW'
 
 let cookies = new Cookies();
 
@@ -137,6 +138,57 @@ export function postProduct(payload, token) {
     });
   };
 }
+export function postAddress(payload, token) {
+  return async function (dispatch) {
+    let headersList = {
+      Accept: "*/*",
+
+      Authorization: "Bearer " + token,
+      "Content-Type": "application/json",
+    };
+
+    let reqOptions = {
+      url: "http://localhost:3001/address",
+      method: "POST",
+      headers: headersList,
+      data: JSON.stringify(payload),
+    };
+
+    axios.request(reqOptions).then(function (response) {
+      console.log(response.data);
+    });
+    return dispatch({
+      type: "POST_ADDRESS",
+      payload,
+    });
+  };
+}
+export function getAddress(token,id_client) {
+  return async function (dispatch) {
+
+    let headersList = {
+      Accept: "*/*",
+
+      Authorization: "Bearer " + token,
+      "Content-Type": "application/json",
+    };
+
+    
+    let reqOptions = {
+      url: `http://localhost:3001/address?id_client=${id_client}`,
+      method: "GET",
+      headers: headersList,
+    };
+
+    axios.request(reqOptions).then( (response)=> {
+      dispatch({
+       type: "GET_ADDRESS",
+       payload: response.data.data,
+     });
+   })
+  }
+}
+
 export function putProduct(payload, id) {
   return async function (dispatch) {
     await axios.put("http://localhost:3001/products/" + id, payload);
@@ -314,6 +366,7 @@ export function allowReview(id, token) {
         });
       });
   };
+
 }
 
 export function loginUser(payload) {
@@ -511,5 +564,30 @@ export function getFilterStatus(payload, token) {
       });
     });
   
+  };
+}
+
+
+export function postReview(payload,id, token) {
+  return async function (dispatch) {
+    let headersList = {
+      "Accept": "*/*",
+      "Authorization": "Bearer "+token,
+      "Content-Type": "application/json" 
+     }
+     
+     let reqOptions = {
+       url: "http://localhost:3001/reviews/"+id,
+       method: "POST",
+       headers: headersList,
+       data: JSON.stringify(payload),
+     }
+     
+     axios.request(reqOptions).then(function (response) {
+      dispatch({
+        type: 'POST_REVIEW',
+        payload: response.data,
+      })});
+      
   };
 }

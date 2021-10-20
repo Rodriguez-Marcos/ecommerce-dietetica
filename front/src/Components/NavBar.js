@@ -21,7 +21,6 @@ import Trolley from './Trolley'
 import { decode } from "jsonwebtoken";
 import 'boxicons';
 import Favorites from './favorites';
-import getFavorites from '../Utils/getFavorites';
 
 
 
@@ -108,8 +107,9 @@ function NavBar({ getProductbyName, setLoading, isLogin, token }) {
             <Nav.Link >
               <NavLink to="/home" className='navlink1' >Inicio</NavLink>
             </Nav.Link>
+            
 
-            <Nav.Link >
+          
               
             <div className="cart">
             
@@ -119,16 +119,23 @@ function NavBar({ getProductbyName, setLoading, isLogin, token }) {
                 <span className="item__total">{cookie?.length}</span>
               </NavLink>
                </div>
+
+               <div>
+                 
+
             <div className="favs">
             
               <NavLink to='' onClick={e=>{e.preventDefault() ;setFavs(true) }} className='navlink1'>
-              <box-icon  name="Favs"></box-icon>
+              <box-icon  name="favs"></box-icon>
               <Favorite/>
                 {/* <ShoppingCart fontSize="large" id="iconoCarrito"/> */}
                 <span className="item__total">{productsFavs?.length}</span>
               </NavLink>
-               </div>
-            </Nav.Link>
+              </div>
+              </div>
+              
+           
+
             {isAdmin ?
             <NavLink to='/Admin'>Admin</NavLink> : null}
           </Nav>

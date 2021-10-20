@@ -5,6 +5,7 @@
     min-height: 100vh;
 } */
 
+
 .form{
     margin-top: 3em;
     display: block;
@@ -25,7 +26,7 @@
     display: flex;
     justify-content: center;
     /* border-radius: 40px; */
-    background-color: rgb(68, 56, 2);
+    background-color: rgba(68, 56, 2, 0.226);
     color: rgb(255, 255, 255);
     font-size: 35px;
     padding: 5px;
@@ -55,5 +56,43 @@
     /* font-weight: bold; */
     /* text-shadow: 1px 1px #000000; */
     letter-spacing: 1px;
+}
+
+.dropdown {
+    /* display: flex; */
+    /* width: 40%; */
+    /* margin: auto; */
+    /* justify-content: start; */
+    background-color: #79500a;
+    color: rgb(255, 255, 255);
+    font-weight: 500;
+    font-size: 18px;
+    border: none;
+    /* border: 2px solid #000000; */
+    border-radius: 3px;
+    /* text-shadow: -1px 2px #000000; */
+}
+
+.dropdown:hover{
+    border: 0.5px solid #473703;
+
+}
+
+.dropdown option {
+    background-color: #ffffff;
+    color: rgb(0, 0, 0);
+}
+
+.dropdown:focus {
+    outline: none;
+}
+
+.inputNames {
+    font-family: "Segoe UI";
+    text-align: center;
+    font-size: 22px;
+    font-weight: bold;
+    color: #ffffff;
+    text-shadow: -1px 2px #000000;
 }
 

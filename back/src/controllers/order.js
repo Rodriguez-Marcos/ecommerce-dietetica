@@ -16,7 +16,6 @@ export async function createOrder(req, res) {
 
         await Order.create({
 
-            shippingAddress: shippingAddress,
             id_client: id_client
         }
         )
@@ -34,10 +33,10 @@ export async function createOrder(req, res) {
         if (promisesResolved) {
             let totalValue = await Product_Order.sum('total', { where: { id_order: newOrderId.dataValues.id } })
             await Order.update({ ammount: totalValue }, { where: { id: newOrderId.dataValues.id } })
-            let updatedOrder = await Order.findOne(
+            await Order.findOne(
                 {
                     where: { id_client: id_client },
-                    attributes: ["id", "ammount", "shippingAddress", "createDate", "status"],
+                    attributes: ["id", "ammount", "createDate", "status"],
                     include: [
                         { model: Client, attributes: ["id", "name", "lastname", "email", "phone"] },
                         {
