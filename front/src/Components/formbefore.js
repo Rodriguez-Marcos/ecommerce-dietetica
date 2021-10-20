@@ -126,6 +126,7 @@ export default function Pending() {
       const jwt = myStorage.getItem("jwt");
       dispatch(postAddress(input, jwt))
       swal("Creado", "Dirección cargada con éxito!", "success")
+      window.location.reload()
     }
   }
 
