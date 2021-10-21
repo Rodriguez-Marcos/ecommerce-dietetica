@@ -14,7 +14,8 @@ const Cart = sequelize.define('cart', {
         type: Sequelize.INTEGER,
         allowNull: true,
         defaultValue: null}
-}, {
+}, 
+{
     timestamps: false
 })
 
