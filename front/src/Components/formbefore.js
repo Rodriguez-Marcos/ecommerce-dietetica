@@ -146,7 +146,7 @@ export default function Pending() {
     const jwt = myStorage.getItem("jwt");
     const { value } = e.target
     setAddressId(value)
-    dispatch(sendIdAddress(value,jwt))
+    dispatch(sendIdAddress(value, jwt))
   }
 
 
@@ -226,74 +226,67 @@ export default function Pending() {
 
   if (addresses.length > 0) {
     return (
-
-      <Container>
-
-        <div >
-          <NavBar />
-          <div class="form-check form-check-inline">
-
-            <div class="form-check">
-              <label class="form-check-label" for="exampleRadios2">
-                Envío a domicilio:
-              </label>
-            </div>
-          </div>
-          <div>
-            {addresses && addresses?.map(address => {
-              return (
-                <div class="form-check">
-                  <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value={address.id} onClick={handleSetAddress} ></input>
-                  <AddressCard address={address} />
+      <div>
+        <NavBar />
+        <Container className="Container-Envio" >
+          <Col xs="12" md="6" className="retiro-domicilio">
+            <Card className="card-domicilio">
+              <Card.Body className="retiro-Body">
+                <div>
+                  {addresses && addresses?.map(address => {
+                    return (
+                      <div class="form-check">
+                        <label class="form-check-label" for="exampleRadios2">
+                          Envío a domicilio:
+                        </label>
+                        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value={address.id} onClick={handleSetAddress} ></input>
+                        <AddressCard address={address} />
+                      </div>
+                    )
+                  })}
+                  <div>
+                    <NavLink to='/newaddress'><button>Añadir nueva dirección</button></NavLink>
+                  </div>
                 </div>
-              )
-            })}
-            <div><NavLink to='/newaddress'><button>Añadir nueva dirección</button></NavLink></div>
-          </div>
-        </div>
-        <div>
-          <div class="form-check">
-            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value={0} onClick={handleSetAddress}></input>
-            <label class="form-check-label" for="exampleRadios1">
-              Retiro en local:
-            </label>
-          </div>
-          <br />
-          <iframe id="map" src={(sucursal?.find(x => x.name === sucuSelected))?.src} width="480" height="250" loading="lazy"></iframe>
-          <br />
-          <h4>Seleccione una sucursal:</h4>
-          <div >
-            <p></p>
-            {/* a medida que selecciona el usuario ve lo que selecciona */}
-            <select name="types" onChange={handleInputSucu}>
-              <option value='Centro Córdoba'>Seleccionar sucursal</option>
-              {sucursal?.map(sucu => {
-                return <option value={sucu.name}>{sucu.name}</option>
-              })}
-            </select>
-          </div>
+              </Card.Body>
+            </Card>
+          </Col>
+
+          <Col xs="12" md="6" className="retiro-domicilio">
+            <Card className="card-domicilio">
+              <Card.Body className="retiro-Body">
+
+                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value={0} onClick={handleSetAddress}></input>
+                <label class="form-check-label" for="exampleRadios1">
+                  Retiro en local:
+                </label>
+                <iframe id="map" src={(sucursal?.find(x => x.name === sucuSelected))?.src} width="480" height="250" loading="lazy"></iframe>
+                <h4>Seleccione una sucursal:</h4>
+                {/* a medida que selecciona el usuario ve lo que selecciona */}
+                <select name="types" onChange={handleInputSucu}>
+                  <option value='Centro Córdoba'>Seleccionar sucursal</option>
+                  {sucursal?.map(sucu => {
+                    return <option value={sucu.name}>{sucu.name}</option>
+                  })}
+                </select>
+                <h4>Por favor seleccione fecha y horario que va a retirar:</h4>
+                <h4>Por favor seleccione fecha y horario que va a retirar:</h4>
+          <Calendar></Calendar>
+              </Card.Body>
+            </Card>
+          </Col>
           {/* <p>Dirección: Rivadavia 29. Plaza San Martin </p> */}
-          <br />
-          <h4>Por favor seleccione fecha y horario que va a retirar:</h4>
-          {/* <Calendar></Calendar> */}
 
-        </div>
-        <br />
-
-        <div class="d-grid gap-2 col-3 mx-auto">
           <div class="form-check form-check-inline">
             <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1"></input>
             <label class="form-check-label" for="inlineCheckbox1">Quiero notificación vía mail de mi pedido</label>
-          <button type="button" class="btn btn-success" onClick={handleCompra}>Comprar</button>
-          {/* <button class="btn btn-primary" color="green" type="button">Comprar</button> */}
+            <button type="button" class="btn btn-success" onClick={handleCompra}>Comprar</button>
+            {/* <button class="btn btn-primary" color="green" type="button">Comprar</button> */}
 
-          <button type="button" class="btn btn-dark" onClick={() => { setMenu(true) }} >Volver al carrito</button>
+            <button type="button" class="btn btn-dark" onClick={() => { setMenu(true) }} >Volver al carrito</button>
           </div>
-
-        </div>
-
-
-      </Container>
+        </Container>
+      </div>
     )
   } else {
     return (
@@ -481,9 +474,9 @@ export default function Pending() {
               <label class="form-check-label" for="inlineCheckbox1">Quiero notificación vía mail de mi pedido</label>
             </div>
             <div className="btnComprar">
-            <button type="button" class="btn btn-success" onClick={handleCompra}>Comprar</button>
-            {/* <button class="btn btn-primary" color="green" type="button">Comprar</button> */}
-            <button type="button" class="btn btn-dark" onClick={() => { setMenu(true) }} >Volver al carrito</button>
+              <button type="button" class="btn btn-success" onClick={handleCompra}>Comprar</button>
+              {/* <button class="btn btn-primary" color="green" type="button">Comprar</button> */}
+              <button type="button" class="btn btn-dark" onClick={() => { setMenu(true) }} >Volver al carrito</button>
             </div>
 
           </div>
