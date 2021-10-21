@@ -22,14 +22,12 @@ export const sequelize = process.env.NODE_ENV === "production"
             idle: 10000,
         },
         dialectOptions: {
-            useUTC: false,
             ssl: {
                 require: true,
                 rejectUnauthorized: false,
             },
             keepAlive: true,
         },
-        timezone: '-03:00',
         ssl: true,
     })
     : new Sequelize(

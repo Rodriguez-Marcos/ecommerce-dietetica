@@ -122,6 +122,23 @@ export async function getCart(req, res) {
 
     }
 }
+export async function addAddressCart(req, res) {
+    const id_client = req.id;
+    let {id_address} = req.query
+    try {
+        let cart = await Cart.update({id_address:id_address, where: { id_client: id_client }, include: [{ model: Product }] })
+        return res.status(200).send(cart)
+
+    } catch (err) {
+        console.log(err)
+        res.status(500).json({
+            message: 'Something goes Wrong',
+            data: {}
+
+        })
+
+    }
+}
 export async function emptyCart(req, res, next) {
     const id_client = req.id
 
