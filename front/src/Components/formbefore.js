@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import './formbefore.css'
 import NavBar from './NavBar';
-import { getAddress, postAddress } from '../Actions';
+import { getAddress, postAddress, sendIdAddress } from '../Actions';
 // import emptycart from '../../Utils/emptycart';
 import { StyleSharp } from '@material-ui/icons';
 import Cookies from "universal-cookie";
@@ -27,6 +27,7 @@ export default function Pending() {
   const [menu, setMenu] = value.menu;
   const [errors, setErrors] = useState({});
   const [touched, setTouched] = useState({});
+  const [addressid, setAddressId] = useState(null)
 
   function validateForm(input) {
     let errors = {};
@@ -112,13 +113,14 @@ export default function Pending() {
   // }
   const jwt = window.localStorage.jwt
   var client = decode(jwt)
-  console.log(client)
+  console.log(jwt)
   var id = client.id
   const dispatch = useDispatch();
   useEffect(() => {
     const jwt = myStorage.getItem("jwt")
     dispatch(getAddress(jwt, id))
   }, [])
+
   async function handleSubmit(event) {
     event.preventDefault()
     if (!input.calle || !input.altura || !input.barrio || !input.otros || !input.codigo || !input.numero) { swal("Error", "Debe llenar todos los campos", "error") }
@@ -128,6 +130,13 @@ export default function Pending() {
       swal("Creado", "Dirección cargada con éxito!", "success")
       window.location.reload()
     }
+  }
+
+
+  function handleSetAddress(e,jwt){
+    const {value} = e.target
+    setAddressId(value)
+    dispatch(sendIdAddress(addressid,jwt))
   }
 
 
@@ -218,9 +227,10 @@ export default function Pending() {
       <Container>
 
         <div >
+          <NavBar/>
           <div class="form-check form-check-inline">
+           
             <div class="form-check">
-              <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2"></input>
               <label class="form-check-label" for="exampleRadios2">
                 Envío a domicilio:
               </label>
@@ -230,11 +240,12 @@ export default function Pending() {
             {addresses && addresses?.map(address => {
               return (
                 <div class="form-check">
-                  <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked></input>
+                  <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value={address.id} onClick={handleSetAddress} checked></input>
                   <AddressCard address={address} />
                 </div>
               )
             })}
+            {console.log(addressid)}
             <div><NavLink to='/newaddress'><button>Añadir nueva dirección</button></NavLink></div>
           </div>
         </div>
@@ -303,7 +314,6 @@ export default function Pending() {
                 <Card.Body className="retiro-Body">
                   <div class="form-check form-check-inline">
                     <div class="form-check">
-                      <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2"></input>
                       <label class="form-check-label" for="exampleRadios2">
                         Envío a domicilio:
                       </label>
