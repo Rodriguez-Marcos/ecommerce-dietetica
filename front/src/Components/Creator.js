@@ -164,6 +164,7 @@ export default function Creator() {
     ) {
       dispatch(putProduct(input, input.id));
       alert("Modificacion exitosa");
+      dispatch(getProductsAdmin());
       editProductClose();
     } else {
       alert("falta informacion requerida en el formulario");
