@@ -18,18 +18,18 @@ export default function Example(props) {
   );
 }
 var items = [
-  // {
-  //   // name: "Lanzamiento: Aceite de coco EXTRA VIRGEN",
-  //   // description: "¡Conoce nuestro producto!",
-  //   link: "/Detail/2",
-  //   img: banner2
-  // },
-  // {
-  //   // name: "¡Envío gratis en tu primera compra!",
-  //   // description: "Aprovechá y hace tu compra hoy",
-  //   link: "/home",
-  //   img: banner3
-  // },
+  {
+    // name: "Lanzamiento: Aceite de coco EXTRA VIRGEN",
+    // description: "¡Conoce nuestro producto!",
+    link: "/Detail/2",
+    img: banner2
+  },
+  {
+    // name: "¡Envío gratis en tu primera compra!",
+    // description: "Aprovechá y hace tu compra hoy",
+    link: "/home",
+    img: banner3
+  },
   {
     // name: "Lanzamiento: Barrita de arroz CROWIE",
     // description:
