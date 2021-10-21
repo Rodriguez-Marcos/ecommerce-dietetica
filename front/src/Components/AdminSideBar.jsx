@@ -318,28 +318,28 @@ export default function Sidebar() {
                 <h3 className="sidebarTitle">Tablas</h3>
                 <ul className="sidebarList">
                   <li className="sidebarListItem">
-                    <DynamicFeed className="sidebarIcon" />
-                    <NavLink to="/Admin/grafics">Graficas</NavLink>
+                    <DynamicFeed className="sidebarIcon " />
+                    <NavLink to="/Admin/grafics"  class="text-decoration-none text-dark" >Graficas</NavLink>
                   </li>
                   <li className="sidebarListItem">
                     <DynamicFeed className="sidebarIcon" />
-                    <NavLink to="/Admin/user">Usuarios</NavLink>
+                    <NavLink to="/Admin/user" class="text-decoration-none text-dark">Usuarios</NavLink>
                   </li>
                   <li className="sidebarListItem">
                     <DynamicFeed className="sidebarIcon" />
-                    <NavLink to="/Admin"> Productos</NavLink>
+                    <NavLink to="/Admin" class="text-decoration-none text-dark"> Productos</NavLink>
                   </li>
                   <li className="sidebarListItem">
                     <DynamicFeed className="sidebarIcon" />
-                    <NavLink to="/Admin/orders">Ordenes</NavLink>
+                    <NavLink to="/Admin/orders" class="text-decoration-none text-dark">Ordenes</NavLink>
                   </li>
                   <li className="sidebarListItem">
                     <DynamicFeed className="sidebarIcon" />
-                    <NavLink to="/Admin/filters">Categorias y Dietas</NavLink>
+                    <NavLink to="/Admin/filters" class="text-decoration-none text-dark">Categorias y Dietas</NavLink>
                   </li>
                   <li className="sidebarListItem">
                     <DynamicFeed className="sidebarIcon" />
-                    <NavLink to="/Admin/sucursal">Sucursales</NavLink>
+                    <NavLink to="/Admin/sucursal" class="text-decoration-none text-dark" >Sucursales</NavLink>
                   </li>
                 </ul>
               </div>
@@ -356,7 +356,7 @@ export default function Sidebar() {
             </li> */}
                   <li className="sidebarListItem">
                     <Report className="sidebarIcon" />
-                    <NavLink to="/home">Salir</NavLink>
+                    <NavLink to="/home" class="text-decoration-none text-danger">Salir</NavLink>
                   </li>
                 </ul>
               </div>
