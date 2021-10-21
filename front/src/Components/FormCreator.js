@@ -27,6 +27,10 @@ export default function FormCreator({
   diet,
   handlerDiet,  
   closeDiet,
+  handlerSucursal, 
+  sucu, 
+  handlerSubmitSucursal, 
+  closeSucursal, 
 }) {
 
 
@@ -234,6 +238,46 @@ export default function FormCreator({
             Insertar
           </Button>
           <Button className="btn btn-danger" onClick={() => closeDiet()}>
+            Cancelar
+          </Button>
+        </ModalFooter>
+      </Modal>
+      {/* Crear Sucursal */}
+      <Modal isOpen={modal.sucursal}>
+        <ModalHeader>
+          <div>
+            <h3>Insertar Nueva Sucursal</h3>
+          </div>
+        </ModalHeader>
+        <ModalBody onSubmit={(e) => handlerSubmitSucursal(e)}>
+          <div>
+            <label>Nombre de Sucursal</label>
+            <input
+              className="form-control"
+              name="name"
+              type="text"
+              value={sucu.name}
+              onChange={(e) => handlerSucursal(e)}
+            />
+            {!sucu.name ? <output> ✏</output> : <output> ✔</output>}
+          </div>
+          <div>
+            <label>Insertar Enlace GoogleMaps</label>
+            <input
+              className="form-control"
+              name="src"
+              type="textarea"
+              value={sucu.src}
+              onChange={(e) => handlerSucursal(e)}
+            />
+            {!sucu.src ? <output> ✏</output> : <output> ✔</output>}
+          </div>
+        </ModalBody>
+        <ModalFooter>
+          <Button color="primary" onClick={(e) => handlerSubmitSucursal(e)}>
+            Insertar
+          </Button>
+          <Button className="btn btn-danger" onClick={() => closeSucursal()}>
             Cancelar
           </Button>
         </ModalFooter>
