@@ -1,0 +1,60 @@
+:root{
+    --colorCafe: #99642C;
+    --hoverColorText:rgb(175, 172, 172);
+    --colorverde:#849836
+}
+.Container-Envio{
+    width: 90vw;
+    margin: auto;
+}
+
+#map{
+    width: 100%;
+    border-radius: 15px;
+}
+
+.retiro-local{
+    border-radius: 5px;
+    padding: 10px;
+}
+.retiro-domicilio{
+    border-radius: 5px;
+    padding: 10px;
+}
+.card-domicilio{
+    border: 5px solid var(--colorCafe) ;
+    border-radius: 5px;
+    padding: 5px;
+    height: 100%;
+}
+
+.card-domicilio:hover{
+    border: 5px solid var(--colorverde);  
+}
+.retiro-Body{
+    width: 100%;
+    height: 100%;
+    margin: 10px;
+    justify-content: space-between;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.card-retiro{
+    height: 100%;
+    border: 5px solid var(--colorCafe) ;
+}
+.card-retiro:hover{
+    border: 5px solid var(--colorverde);  
+}
+.btn-Cargar{
+    width: 100%;
+    height: 3rem;
+    margin: 10px;
+    justify-content: center;
+    display: flex;
+}
+.btns-envio{
+    width: fit-content;
+}

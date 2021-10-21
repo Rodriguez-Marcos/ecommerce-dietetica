@@ -216,3 +216,28 @@ export async function bestSellers(req, res) {
         })
     }
 }
+
+export async function totalOrderByDay(req, res){
+    try {
+
+        let totalByDay = await Order.findAll({
+            group: [sequelize.fn('date_trunc', 'day', sequelize.col('createDate')), 'createdDay'],
+            attributes: [[sequelize.fn('date_trunc', 'day', sequelize.col('createDate')), 'createdDay'], 
+                        [sequelize.fn('SUM', sequelize.col('ammount')), 'total'
+                        ]],
+            //limit:7 
+            
+        })
+        res.status(200).json({
+            message: 'Ammounts counted',
+            data: totalByDay
+        })
+    } catch (err) {
+        console.log(err)
+        res.status(500).json({
+            message: 'Something goes Wrong',
+            data: {}
+        })
+    }
+  
+}
