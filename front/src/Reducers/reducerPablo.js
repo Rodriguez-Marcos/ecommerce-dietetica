@@ -224,6 +224,10 @@ export default function reducerPablo(state = InitialState, action) {
         return {
           ...state,
         }
+        case 'POST_SUCURSAL':
+        return{
+          ...state, 
+        }
 
     default:
       return { ...state };
