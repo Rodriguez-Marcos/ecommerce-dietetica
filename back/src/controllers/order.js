@@ -9,7 +9,6 @@ const nodemailer = require('nodemailer');
 
 export async function createOrder(req, res) {
     const id_client = req.id
-    var shippingAddress = "Direccion de prueba"
     try {
         let cart = await Cart.findOne({ where: { id_client: id_client } })
         let products = await Product_Cart.findAll({ where: { id_cart: cart.dataValues.id }, attributes: ["id_product", "quantity"] })
