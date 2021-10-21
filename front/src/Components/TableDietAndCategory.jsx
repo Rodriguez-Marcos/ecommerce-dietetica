@@ -64,7 +64,6 @@ export default function AdminDietAndCategory() {
     dispatch(getCategories());
 
   }
-
   function closeModal() {
     setEsther({
       ...esther,
@@ -96,7 +95,7 @@ export default function AdminDietAndCategory() {
               <td>{e.description}</td>
 
               <td>
-                <Button color="danger" onClick={() => openDeleteDiet(e)}>
+                <Button color="danger  bg-danger" onClick={() => openDeleteDiet(e)}>
                   🗑
                 </Button>
               </td>
@@ -135,7 +134,7 @@ export default function AdminDietAndCategory() {
               <td>{e.description}</td>
 
               <td>
-                <Button color="danger" onClick ={()=>openDeleteCategory(e)} >
+                <Button color="danger  bg-danger" onClick ={()=>openDeleteCategory(e)} >
                  🗑
                 </Button>
               </td>

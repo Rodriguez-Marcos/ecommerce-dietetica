@@ -13,7 +13,7 @@ export default function TableUser({ clients, borrar, handlerUpdateUser, handleCh
       <div className="tab-sidebar">
         <Sidebar />
         <div className='contenedor'  >
-          <table className={`tablaproductos`}>
+          <table className={`tablaproductos` } class= 'table'>
             <thead>
               <tr>
                 <th>ID</th>
@@ -33,16 +33,16 @@ export default function TableUser({ clients, borrar, handlerUpdateUser, handleCh
                 <td>{e.isAdmin ? 'Si' : 'No'}</td>
                 <td>
                   {e.isAdmin ?
-                    <Button color="primary" onClick={() => handlerUpdateUser(e.id)}>
+                    <Button color="primary text-dark bg-warning" onClick={() => handlerUpdateUser(e.id)}>
                       Quitar de admin
                     </Button> :
-                    <Button color="primary" onClick={() => handlerUpdateUser(e.id)}>
+                    <Button color="primary text-dark bg-success" onClick={() => handlerUpdateUser(e.id)}>
                       Transformar en admin
                     </Button>}{'   '}
-                  <Button color="danger" onClick={() => { handleChangePassword(e.id) }}>
+                  <Button color="danger text-dark bg-info " onClick={() => { handleChangePassword(e.id) }}>
                     Forzar Password Reset
                   </Button>{'   '}
-                  <Button color="danger" onClick={() => { borrar(e.id) }}>
+                  <Button color="danger text-dark bg-danger " onClick={() => { borrar(e.id) }}>
                     🗑 
                   </Button>
                 </td>

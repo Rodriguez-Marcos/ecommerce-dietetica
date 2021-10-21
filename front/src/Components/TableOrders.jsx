@@ -106,11 +106,11 @@ export default function TableOrders() {
               <th>Email</th>
               <th>Fecha de pedido:</th>
               <th>Total:</th>
-              <th><select
+              <th><select  color="bg-danger"
                   className="form-select"
                   onChange={(e) => handlerFilterStatus(e)}
                 >
-                  <option disabled="disabled" selected="true">
+                  <option disabled="disabled" selected="true"  color="bg-danger">
                     Estados:
                   </option>
                   <option value="todos"> todos</option>
@@ -138,11 +138,12 @@ export default function TableOrders() {
                 </td>
                 <td> $ {e.ammount}</td>
 
-                <td>
+                <td >
                   <select
                     className="form-select"
                     onChange={(value) => handlerStatus(value, e.id)}
                     name="seleccionar"
+                    color="bg-danger"
                   >
                     <option disabled="disabled" selected="true">
                       {" "}
@@ -157,7 +158,7 @@ export default function TableOrders() {
                 </td>
 
                 <td>
-                  <Button color="primary" onClick={() => handlerDetails(e)}>
+                  <Button color="primary" onClick={() => handlerDetails(e)} color="info bg-info" >
                     {" "}
                     Ver Mas{" "}
                   </Button>
