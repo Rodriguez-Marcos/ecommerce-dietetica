@@ -5,7 +5,7 @@ import { getTotalByDay } from "../Actions";
 import { Bar } from "react-chartjs-2";
 import Topbar from "./AdminTopBar";
 import Sidebar from "./AdminSideBar";
-import Bestsellers from './Grafics.best'
+import Bestsellers from "./Grafics.best";
 export default function Grafics() {
   // Importaciones y creacion de entorno
   const dispatch = useDispatch();
@@ -21,12 +21,9 @@ export default function Grafics() {
     dispatch(getTotalByDay(token));
   }, []);
 
-
-
   const [state, setState] = useState({
     totalByDay_Total: [],
     totalByDay_Day: [],
-    colors: [],
   });
   function Dates() {
     setState({
@@ -35,7 +32,6 @@ export default function Grafics() {
       totalByDay_Day: totalByDay.map((e) => e.createdDay.slice(0, 10)),
     });
   }
-
 
   function generateCharacter() {
     let characters = [
@@ -68,7 +64,6 @@ export default function Grafics() {
     return "#" + color;
   }
 
-
   function generateColors() {
     let colors = [];
     for (let i = 0; i < state.totalByDay_Day.length; i++) {
@@ -77,7 +72,7 @@ export default function Grafics() {
     return colors;
   }
 
-  console.log(generateColors())
+  console.log(generateColors());
   const data = {
     labels: state.totalByDay_Day,
     datasets: [
@@ -98,18 +93,22 @@ export default function Grafics() {
     responsive: true,
   };
   return (
-    <div >
-       <div>
+    <div>
+      <div>
         <Topbar />
         <Sidebar />
       </div>
       <div style={{ width: "100%", height: "500px" }}>
-      <h2>Compras Diarias. </h2>
-      <Bar data={data} options={opciones} />
-      <button onClick={() => Dates()}> Ver</button>
-      <Bestsellers/>
+        <button onClick={() => Dates()}>
+          {" "}
+          <h2>Compras Diarias. </h2>
+        </button>
+        <Bar data={data} options={opciones} />
       </div>
-    
+      <br />
+      <br />
+      <br />
+      <Bestsellers />
     </div>
   );
 }

@@ -100,16 +100,13 @@ export default function Bestsellers() {
     },
   };
 
-
-  
   return (
     <div style={{ width: "100%", height: "500px" }}>
-     
-
-      <h2>Productos más Vendidos </h2>
-
+      <button onClick={() => Dates()}>
+        {" "}
+        <h2>Productos más Vendidos </h2>
+      </button>
       <Pie data={data} options={opciones} />
-      <button onClick={() => Dates()}> Ver</button>
     </div>
   );
 }
