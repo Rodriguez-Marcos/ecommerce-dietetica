@@ -691,3 +691,50 @@ export function deleteAddress(id, token) {
   };
 }
 
+export function putSucursal(payload, id, token) {
+  return async function (dispatch) {
+    let headersList = {
+      Accept: "*/*",
+
+      Authorization: "Bearer " + token,
+      "Content-Type": "application/json",
+    };
+
+    let reqOptions = {
+      url: "http://localhost:3001/sucursal/" + id,
+      method: "PUT",
+      headers: headersList,
+      data: JSON.stringify(payload),
+    };
+
+    axios.request(reqOptions).then(function (response) {
+      console.log(response.data);
+    });
+    return dispatch({
+      type: 'PUT_SUCURSAL',
+      payload,
+      id,
+    });
+  };
+}
+
+export function deleteSucursal(id, token) {
+  return async function (dispatch) {
+    let headersList = {
+      Accept: "*/*",
+
+      Authorization: "Bearer " + token,
+      "Content-Type": "application/json",
+    };
+
+    let reqOptions = {
+      url: "http://localhost:3001/sucursal/" + id,
+      method: "DELETE",
+      headers: headersList,
+    };
+
+    axios.request(reqOptions).then(function (response) {
+      console.log(response.data);
+    });
+  };
+}

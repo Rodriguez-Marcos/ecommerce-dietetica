@@ -28,6 +28,7 @@ export default function Pending() {
   const [errors, setErrors] = useState({});
   const [touched, setTouched] = useState({});
   const [addressid, setAddressId] = useState(null)
+  const [sucursal, setSucursal] = useState([]);
 
   function validateForm(input) {
     let errors = {};
@@ -132,7 +133,11 @@ export default function Pending() {
     }
   }
 
-
+  useEffect(() => {
+     axios.get('http://localhost:3001/sucursal').then(function (response) {
+       setSucursal(response.data.data);
+     })
+  },[])
   
   let { isLogin, token, comodin, addresses } = useSelector(state => state.reducerPablo)
   const cookies = new Cookies();
@@ -207,15 +212,7 @@ export default function Pending() {
       getCart(token);
     }
   }, [isLogin])
-  let sucursales = [{
-    name: 'Centro Túcuman',
-    src: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5989.084087354766!2d-65.23970981598292!3d-26.803966545215907!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94225d009b6cbcb9%3A0x5f70eb933f102370!2sWimac%20Servicio%20tecnico!5e0!3m2!1sen!2sar!4v1634738352935!5m2!1sen!2sar'
-  },
-  {
-    name: 'Centro Córdoba',
-    src: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4048.528218709014!2d-64.21707256668158!3d-31.430849654591235!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9432a246ddaef005%3A0xeb247e51452379bf!2sSKN%20IT!5e0!3m2!1sen!2sar!4v1634738510417!5m2!1sen!2sar'
-  }
-  ]
+ 
   function handleInputSucu(e) {
     e.preventDefault();
     const { value } = e.target;
@@ -261,7 +258,7 @@ export default function Pending() {
             </label>
           </div>
           <br />
-          <iframe id="map" src={(sucursales.find(x => x.name === sucuSelected)).src} width="480" height="250" loading="lazy"></iframe>
+          <iframe id="map" src={(sucursal?.find(x => x.name === sucuSelected))?.src} width="480" height="250" loading="lazy"></iframe>
           <br />
           <h4>Seleccione una sucursal:</h4>
           <div >
@@ -269,7 +266,7 @@ export default function Pending() {
             {/* a medida que selecciona el usuario ve lo que selecciona */}
             <select name="types" onChange={handleInputSucu}>
               <option value='Centro Córdoba'>Seleccionar sucursal</option>
-              {sucursales?.map(sucu => {
+              {sucursal?.map(sucu => {
                 return <option value={sucu.name}>{sucu.name}</option>
               })}
             </select>
@@ -452,14 +449,14 @@ export default function Pending() {
                       </label>
                     </div>
 
-          <iframe id="map" src={(sucursales.find(x => x.name === sucuSelected)).src} width="480" height="250" loading="lazy"></iframe>
+          <iframe id="map" src={(sucursal?.find(x => x.name === sucuSelected))?.src} width="480" height="250" loading="lazy"></iframe>
                     <h4>Seleccione una sucursal:</h4>
                     <div >
                       <p></p>
                       {/* a medida que selecciona el usuario ve lo que selecciona */}
                       <select name="types" onChange={handleInputSucu} >
               <option value='Centro Córdoba'>Seleccionar sucursal</option>
-              {sucursales?.map(sucu => {
+              {sucursal?.map(sucu => {
                 return <option value={sucu.name}>{sucu.name}</option>
               })}
             </select>

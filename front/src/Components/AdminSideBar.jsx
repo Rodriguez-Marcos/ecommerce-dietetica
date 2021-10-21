@@ -310,6 +310,10 @@ export default function Sidebar() {
               <DynamicFeed className="sidebarIcon" />
               <NavLink to='/Admin/filters'>Categorias y Dietas</NavLink>
             </li>
+            <li className="sidebarListItem">
+              <DynamicFeed className="sidebarIcon" />
+              <NavLink to='/Admin/sucursal'>Sucursales</NavLink>
+            </li>
 
           </ul>
         </div>

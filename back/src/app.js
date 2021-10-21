@@ -17,6 +17,7 @@ import useExtractor from './controllers/loginUser.js';
 import Payment from './routes/payment'
 import Address from './routes/address.js'
 import Storeroutes from './routes/store.js'
+import Sucursal from './routes/sucursal.js'
 const app = express()
 
 
@@ -58,7 +59,8 @@ app.get("/feedback",(req, res) => {
     )
   }
    return res.redirect("http://localhost:3000/payment/failure") 
-}) 
+})
+app.use('/sucursal', Sucursal)
 
 
 

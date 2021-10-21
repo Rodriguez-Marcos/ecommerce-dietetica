@@ -9,14 +9,16 @@ import AdminTopBar from './AdminTopBar'
 import './TableUser.css'
 
 
+
 export default function AdminDietAndCategory() {
   const c = useSelector((state) => state.reducerPablo.categories);
   const d = useSelector((state) => state.reducerPablo.diets);
+  const [sucursal, setSucursal] = useState([])
   let dispatch = useDispatch();
   useEffect(() => {
     dispatch(getCategories());
     dispatch(getDiets());
-  }, []);
+    }, []);
 
   const [esther, setEsther] = useState({
     id: "",
@@ -24,7 +26,7 @@ export default function AdminDietAndCategory() {
     modalCategory: false,
     modalDiet: false,
   });
-
+  
   function openDeleteDiet(e) {
     setEsther({
       ...esther,
@@ -158,6 +160,7 @@ export default function AdminDietAndCategory() {
       </div>
     </div>
    </div>
+  
    </div>
   );
 }
