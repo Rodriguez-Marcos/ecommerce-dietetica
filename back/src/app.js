@@ -45,8 +45,6 @@ app.use('/cart',useExtractor,Cartroutes)
 app.use('/payment', useExtractor, Payment)
 app.use('/address',useExtractor, Address)
 app.get("/feedback",(req, res) => {
-  console.log(req.query.payment_id)
-  console.log(req.query.collection_status)
   if(req.query.collection_status === 'approved'){
    return res.redirect(
     "http://localhost:3000/payment/success"

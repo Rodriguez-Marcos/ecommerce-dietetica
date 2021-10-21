@@ -20,6 +20,7 @@ import { Button } from 'react-bootstrap';
 import { Select } from '@material-ui/core';
 
 export default function Pending() {
+  const {isLogin}= useSelector(state=>state.cart)
   const [sucuSelected, setSucuSelected] = useState('Centro Córdoba')
   const myStorage = window.localStorage;
   const value = useContext(DataContext)
@@ -28,7 +29,15 @@ export default function Pending() {
   const [menu, setMenu] = value.menu;
   const [errors, setErrors] = useState({});
   const [touched, setTouched] = useState({});
-
+  useEffect(() => {
+    if (!!myStorage.getItem('jwt')) {
+      getCart(myStorage.getItem('jwt'));
+    }
+    else{
+      history.push('/home')
+    }
+  }, [isLogin])
+  
   function validateForm(input) {
     let errors = {};
     if (!input.calle) {
@@ -112,8 +121,7 @@ export default function Pending() {
   // }
   const jwt = window.localStorage.jwt
   var client = decode(jwt)
-  console.log(client)
-  var id = client.id
+  var id = client?.id
   const dispatch = useDispatch();
   useEffect(() => {
     const jwt = myStorage.getItem("jwt")
@@ -130,7 +138,7 @@ export default function Pending() {
   }
 
 
-  let { isLogin, token, comodin, addresses } = useSelector(state => state.reducerPablo)
+  let { token, comodin, addresses } = useSelector(state => state.reducerPablo)
   const cookies = new Cookies();
 
 
@@ -190,11 +198,6 @@ export default function Pending() {
   }
 
 
-  useEffect(() => {
-    if (isLogin) {
-      getCart(token);
-    }
-  }, [isLogin])
   let sucursales = [{
     name: 'Centro Túcuman',
     src: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5989.084087354766!2d-65.23970981598292!3d-26.803966545215907!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94225d009b6cbcb9%3A0x5f70eb933f102370!2sWimac%20Servicio%20tecnico!5e0!3m2!1sen!2sar!4v1634738352935!5m2!1sen!2sar'

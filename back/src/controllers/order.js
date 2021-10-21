@@ -7,11 +7,12 @@ import Cart from '../models/Cart.js';
 import { sequelize } from '../database/db.js'
 const nodemailer = require('nodemailer');
 
-export async function createOrder(req, res) {
+export async function createOrder(req, res, next) {
     const id_client = req.id
     var shippingAddress = "Direccion de prueba"
     try {
         let cart = await Cart.findOne({ where: { id_client: id_client } })
+        res.redirect('http://localhost:3001/cart/emptycart')
         let products = await Product_Cart.findAll({ where: { id_cart: cart.dataValues.id }, attributes: ["id_product", "quantity"] })
         console.log(products)
 
@@ -71,9 +72,7 @@ export async function createOrder(req, res) {
                     <h2>Te damos la bienvenida a Salvatore</h2>
                     <p> Tu pedido fue creado con exito. Enseguida tengamos tus productos listos te avisaremos</p>`,
             })
-            console.log('Message sent', info.messageId)
 
-            return res.redirect('http://localhost:3001/cart/emptycart')
         }
 
     } catch (err) {
@@ -86,6 +85,7 @@ export async function createOrder(req, res) {
 }
 export async function getOrders(req, res) {
     let { id_client, id_order, status } = req.query
+    id_client = req.id;
     try {
         if (!id_client && !id_order) {
             var orders = await Order.findAll(
