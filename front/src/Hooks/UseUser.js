@@ -43,9 +43,9 @@ export default function useUser() {
         dispatch({ type: 'ERROR', payload: false })
         let id_products = [];
         cookies.get('trolley')?.map(x => id_products.push({ id: x.id, quantity: x.quantity }));
-        myStorage.setItem('jwt', res.$b.id_token);
+        myStorage.setItem('jwt', res.tokenId);
         const { googleId } = res.profileObj;
-        await createUserByGoogle(googleId, res.$b.id_token)
+        await createUserByGoogle(googleId, res.tokenId)
         postCarrito(myStorage.getItem('jwt'), id_products)
         .then(async (res) => {
             await getCart(myStorage.getItem('jwt'));

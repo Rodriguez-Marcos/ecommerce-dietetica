@@ -10,3 +10,15 @@
     top:20% ;
     left: 35%;
 }
+
+Form {
+    text-decoration: none;
+}
+
+.registrarse:hover{
+    cursor: pointer;
+}
+
+.btn {
+    margin-right: 10px;
+}

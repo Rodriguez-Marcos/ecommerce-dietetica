@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import './formbefore.css'
 import NavBar from './NavBar';
-import { getAddress, postAddress, sendIdAddress,deleteAddress } from '../Actions';
+import { getAddress, postAddress, sendIdAddress, deleteAddress } from '../Actions';
 // import emptycart from '../../Utils/emptycart';
 import { StyleSharp } from '@material-ui/icons';
 import Cookies from "universal-cookie";
@@ -19,6 +19,7 @@ import { Button, Container, Row, Col, Card } from 'react-bootstrap';
 import { Select } from '@material-ui/core';
 
 export default function Pending() {
+  const {isLogin}= useSelector(state=>state.cart)
   const [sucuSelected, setSucuSelected] = useState('Centro Córdoba')
   const myStorage = window.localStorage;
   const value = useContext(DataContext)
@@ -27,6 +28,15 @@ export default function Pending() {
   const [menu, setMenu] = value.menu;
   const [errors, setErrors] = useState({});
   const [touched, setTouched] = useState({});
+  useEffect(() => {
+    if (!!myStorage.getItem('jwt')) {
+      getCart(myStorage.getItem('jwt'));
+    }
+    else{
+      history.push('/home')
+    }
+  }, [isLogin])
+  
   const [addressid, setAddressId] = useState(null)
   const [sucursal, setSucursal] = useState([]);
 
@@ -114,7 +124,7 @@ export default function Pending() {
   // }
   const jwt = window.localStorage.jwt
   var client = decode(jwt)
-  var id = client.id
+  var id = client?.id
   const dispatch = useDispatch();
   useEffect(() => {
     const jwt = myStorage.getItem("jwt")
@@ -129,25 +139,26 @@ export default function Pending() {
       console.log(jwt)
       dispatch(postAddress(input, jwt))
       swal("Creado", "Dirección cargada con éxito!", "success")
-       window.location.reload()
+      window.location.reload()
     }
   }
 
   useEffect(() => {
-     axios.get('http://localhost:3001/sucursal').then(function (response) {
-       setSucursal(response.data.data);
-     })
-  },[])
-  
-  let { isLogin, token, comodin, addresses } = useSelector(state => state.reducerPablo)
+    axios.get('http://localhost:3001/sucursal').then(function (response) {
+      setSucursal(response.data.data);
+    })
+  }, [])
+
+  let { token, comodin, addresses } = useSelector(state => state.reducerPablo)
   const cookies = new Cookies();
-  
-  function handleSetAddress(e){
+
+  function handleSetAddress(e) {
     const jwt = myStorage.getItem("jwt");
-    const {value} = e.target
+    const { value } = e.target
     setAddressId(value)
-    dispatch(sendIdAddress(addressid,jwt))
+    dispatch(sendIdAddress(value,jwt))
   }
+
 
 
 
@@ -212,7 +223,7 @@ export default function Pending() {
       getCart(token);
     }
   }, [isLogin])
- 
+
   function handleInputSucu(e) {
     e.preventDefault();
     const { value } = e.target;
@@ -220,7 +231,7 @@ export default function Pending() {
     console.log(sucuSelected)
   }
 
-  
+
 
 
   if (addresses.length > 0) {
@@ -229,9 +240,9 @@ export default function Pending() {
       <Container>
 
         <div >
-          <NavBar/>
+          <NavBar />
           <div class="form-check form-check-inline">
-           
+
             <div class="form-check">
               <label class="form-check-label" for="exampleRadios2">
                 Envío a domicilio:
@@ -252,7 +263,7 @@ export default function Pending() {
         </div>
         <div>
           <div class="form-check">
-            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value={'Retiro en local'} onClick={handleSetAddress}></input>
+            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value={0} onClick={handleSetAddress}></input>
             <label class="form-check-label" for="exampleRadios1">
               Retiro en local:
             </label>
@@ -283,11 +294,11 @@ export default function Pending() {
           <div class="form-check form-check-inline">
             <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1"></input>
             <label class="form-check-label" for="inlineCheckbox1">Quiero notificación vía mail de mi pedido</label>
-          </div>
           <button type="button" class="btn btn-success" onClick={handleCompra}>Comprar</button>
           {/* <button class="btn btn-primary" color="green" type="button">Comprar</button> */}
 
           <button type="button" class="btn btn-dark" onClick={() => { setMenu(true) }} >Volver al carrito</button>
+          </div>
 
         </div>
 
@@ -305,9 +316,10 @@ export default function Pending() {
 
         {/* 
         </div> */}
-
-        <h1 >¡Último paso! </h1>
-        <h5>Por favor seleccione: </h5>
+        <div className="ultimo-paso">
+          <h1 >¡Último paso! </h1>
+          <h5>Por favor seleccione: </h5>
+        </div>
         <Container className="Container-Envio" >
           <Row >
             <Col xs="12" md="6" className="retiro-domicilio">
@@ -449,17 +461,17 @@ export default function Pending() {
                       </label>
                     </div>
 
-          <iframe id="map" src={(sucursal?.find(x => x.name === sucuSelected))?.src} width="480" height="250" loading="lazy"></iframe>
+                    <iframe id="map" src={(sucursal?.find(x => x.name === sucuSelected))?.src} width="480" height="250" loading="lazy"></iframe>
                     <h4>Seleccione una sucursal:</h4>
                     <div >
                       <p></p>
                       {/* a medida que selecciona el usuario ve lo que selecciona */}
                       <select name="types" onChange={handleInputSucu} >
-              <option value='Centro Córdoba'>Seleccionar sucursal</option>
-              {sucursal?.map(sucu => {
-                return <option value={sucu.name}>{sucu.name}</option>
-              })}
-            </select>
+                        <option value='Centro Córdoba'>Seleccionar sucursal</option>
+                        {sucursal?.map(sucu => {
+                          return <option value={sucu.name}>{sucu.name}</option>
+                        })}
+                      </select>
                     </div>
 
                     {/* <p>Dirección: Rivadavia 29. Plaza San Martin </p> */}
@@ -474,17 +486,15 @@ export default function Pending() {
           </Row>
 
           <div class="d-grid gap-2 col-3 mx-auto" className="btns-envio">
-            <div class="form-check form-check-inline">
+            <div class="form-check form-check-inline" className="btnEmail">
               <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1"></input>
               <label class="form-check-label" for="inlineCheckbox1">Quiero notificación vía mail de mi pedido</label>
-
-
-
             </div>
+            <div className="btnComprar">
             <button type="button" class="btn btn-success" onClick={handleCompra}>Comprar</button>
             {/* <button class="btn btn-primary" color="green" type="button">Comprar</button> */}
-
-            <button type="button" class="btn btn-dark" onClick={() => { setMenu(true) }} >Volver al carrito</button>          
+            <button type="button" class="btn btn-dark" onClick={() => { setMenu(true) }} >Volver al carrito</button>
+            </div>
 
           </div>
         </Container>
