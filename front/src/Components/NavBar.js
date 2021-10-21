@@ -158,6 +158,7 @@ function NavBar({ getProductbyName, setLoading, isLogin, token }) {
             </Form>
             {isLogin ? <div id="sesion">
                <p> <NavLink to='/userprofile'><AccountCircle/></NavLink>Bienvendido {jwt?.decode(token)?.name} </p>
+               <NavLink to='/home'>
                <GoogleLogout
               clientId="908895428836-kaesjl71puimi31fjbffca9t4nvl7v6r.apps.googleusercontent.com"
               buttonText="Cerrar Sesión"
@@ -165,7 +166,7 @@ function NavBar({ getProductbyName, setLoading, isLogin, token }) {
               onFailure={() => { console.log('fallo') }}
             >
               <span id='cerrarSesion'><ExitToApp/> Cerrar Sesión</span>
-            </GoogleLogout> {/* <button onClick={()=>{logout(),signOut()}}> Salir </button> */} 
+            </GoogleLogout></NavLink> {/* <button onClick={()=>{logout(),signOut()}}> Salir </button> */} 
             </div>
               : <div id="btnsSesionRegistro">
                 <NavLink id="btnSesion" to='/Login'><Image id="imgSesion" src={Sesion} /><span>Inicia Sesion</span> </NavLink>

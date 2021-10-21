@@ -5,11 +5,11 @@ import Client from '../models/Client.js';
 import Product_Cart from '../models/Product_Cart.js'
 import Cart from '../models/Cart.js';
 import { sequelize } from '../database/db.js'
+import Address from '../models/Address.js';
 const nodemailer = require('nodemailer');
 
 export async function createOrder(req, res, next) {
     const id_client = req.id
-    var shippingAddress = "Direccion de prueba"
     try {
         let cart = await Cart.findOne({ where: { id_client: id_client } })
         res.redirect('http://localhost:3001/cart/emptycart')
@@ -18,7 +18,9 @@ export async function createOrder(req, res, next) {
 
         await Order.create({
 
-            id_client: id_client
+            id_client: id_client,
+            shippingAddress: cart.dataValues.id_address,
+            id_store: cart.dataValues.id_store
         }
         )
         let newOrderId = await Order.findOne({ where: { id_client: id_client }, attributes: ["id"], order: [["createDate", "DESC"]], limit: 1 })
@@ -35,12 +37,13 @@ export async function createOrder(req, res, next) {
         if (promisesResolved) {
             let totalValue = await Product_Order.sum('total', { where: { id_order: newOrderId.dataValues.id } })
             await Order.update({ ammount: totalValue }, { where: { id: newOrderId.dataValues.id } })
-            await Order.findOne(
+            var order = await Order.findOne(
                 {
                     where: { id_client: id_client },
-                    attributes: ["id", "ammount", "createDate", "status"],
+                    attributes: ["id", "ammount", "createDate", "status","shippingAddress","id_store"],
                     include: [
                         { model: Client, attributes: ["id", "name", "lastname", "email", "phone"] },
+                        { model: Address, attributes: ["id"] },
                         {
                             model: Product, attributes: ["id", "name", "price", "description"],
                             through: { attributes: ["quantity", "total"] }
@@ -62,16 +65,46 @@ export async function createOrder(req, res, next) {
                     rejectUnauthorized: false
                 }
             })
-
-            const info = await transporter.sendMail({
-                from: "'Salvatore' <faridsesin@gmail.com>",
-                to: clientMail,
-                subject: 'Tu pedido ha sido creado con exito',
-                html: `
+            if (order.dataValues.shippingAddress !== null) {
+                let address = await Address.findOne({ where: { id: order.dataValues.shippingAddress } })
+                const info = await transporter.sendMail({
+                    from: "'Salvatore' <faridsesin@gmail.com>",
+                    to: clientMail,
+                    subject: 'Tu pedido ha sido creado con exito',
+                    html: `
                     <h1>GRACIAS POR TU COMPRA</h1>
-                    <h2>Te damos la bienvenida a Salvatore</h2>
-                    <p> Tu pedido fue creado con exito. Enseguida tengamos tus productos listos te avisaremos</p>`,
-            })
+                    <h2>Hola ${client.dataValues.name} ${client.dataValues.lastname} </h2>
+                    <p> Estamos procesando tu pedido y te enviaremos un correo enseguida tu pedido sea despachado</p>
+                    
+                    <p>La direccion de envio es:</p>
+                    <ul>
+                    <li>Calle:${address.dataValues.calle}</li>
+                    <li>Altura:${address.dataValues.altura}</li>
+                    <li>Barrio:${address.dataValues.barrio}</li>
+                    <li>Otros:${address.dataValues.otros}</li>
+                    <li>Codigo:${address.dataValues.codigo}</li>
+                    
+                    </ul>
+                    
+                    
+                    
+                    
+                    `,
+                })
+                console.log('Message sent', info.messageId)
+            }
+            if (order.dataValues.id_store !== null) {
+                const info = await transporter.sendMail({
+                    from: "'Salvatore' <faridsesin@gmail.com>",
+                    to: clientMail,
+                    subject: 'Tu pedido ha sido creado con exito',
+                    html: `
+                        <h1>GRACIAS POR TU COMPRA</h1>
+                        <h2>Hola ${client.dataValues.name} ${client.dataValues.lastname} </h2>
+                        <p> Estamos procesando tu pedido y te esperamos para que recojas tus productos</p>`,
+                })
+                console.log('Message sent', info.messageId)
+            }
 
         }
 
@@ -189,20 +222,20 @@ export async function bestSellers(req, res) {
 
         let productsQuantity = await Product_Order.findAll({
             group: ['id_product'],
-            attributes: ['id_product', 
-                        [sequelize.fn('SUM', sequelize.col('quantity')), 
-                        'productQuantity'],
-                        [sequelize.literal(`(
+            attributes: ['id_product',
+                [sequelize.fn('SUM', sequelize.col('quantity')),
+                    'productQuantity'],
+                [sequelize.literal(`(
                               SELECT name
                               FROM products
                               WHERE products.id = products_order.id_product
                               
                             )`),
-                            'name',
-                          ]],
+                    'name',
+                ]],
             order: [[sequelize.fn('SUM', sequelize.col('quantity')), 'DESC']],
-            limit:7 
-            
+            limit: 7
+
         })
         res.status(200).json({
             message: 'Products counted',
@@ -215,4 +248,29 @@ export async function bestSellers(req, res) {
             data: {}
         })
     }
+}
+
+export async function totalOrderByDay(req, res) {
+    try {
+
+        let totalByDay = await Order.findAll({
+            group: [sequelize.fn('date_trunc', 'day', sequelize.col('createDate')), 'createdDay'],
+            attributes: [[sequelize.fn('date_trunc', 'day', sequelize.col('createDate')), 'createdDay'],
+            [sequelize.fn('SUM', sequelize.col('ammount')), 'total'
+            ]],
+            //limit:7 
+
+        })
+        res.status(200).json({
+            message: 'Ammounts counted',
+            data: totalByDay
+        })
+    } catch (err) {
+        console.log(err)
+        res.status(500).json({
+            message: 'Something goes Wrong',
+            data: {}
+        })
+    }
+
 }

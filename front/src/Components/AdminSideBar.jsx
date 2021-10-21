@@ -8,20 +8,13 @@ import {
   getProductsAdmin,
   postCategory,
   postDiet,
+  postSucursal,
 } from "../Actions";
 
-import {
-
-  BarChart,
-
-  DynamicFeed,
-
-  Report,
-  
-} from "@material-ui/icons";
+import { BarChart, DynamicFeed, Report } from "@material-ui/icons";
 
 import { NavLink } from "react-router-dom";
-import {Navbar, Container} from 'react-bootstrap'
+import { Navbar, Container } from "react-bootstrap";
 
 export default function Sidebar() {
   const c = useSelector((state) => state.reducerPablo.categories);
@@ -48,11 +41,10 @@ export default function Sidebar() {
     name: "",
     description: "",
   });
-
-
-
- 
-
+  const [sucu, setSucu] = useState({
+    name: "",
+    src: "",
+  });
 
   async function handlerProduct(e) {
     if (e.target.name === "image") {
@@ -128,18 +120,6 @@ export default function Sidebar() {
       console.log(token, "este es el token del action");
       dispatch(getProductsAdmin());
       closeProduct();
-      setInput({
-        id: "",
-        name: "",
-        image: "",
-        price: "",
-        description: "",
-        stock: "",
-        ids_categories: [],
-        ids_diets: [],
-      
-        
-      })
     } else {
       alert("falta informacion requerida en el formulario");
     }
@@ -168,6 +148,17 @@ export default function Sidebar() {
       alert("falta informacion requerida en el formulario");
     }
   }
+  function handlerSubmitSucursal(e) {
+    e.preventDefault();
+    if (sucu.name && sucu.src) {
+      dispatch(postSucursal(sucu, token));
+
+      alert(" Sucursal creada con exito");
+      closeSucursal();
+    } else {
+      alert("falta informacion requerida en el formulario");
+    }
+  }
   function handlerCategory(e) {
     setCategory({
       ...category,
@@ -178,6 +169,12 @@ export default function Sidebar() {
   function handlerDiet(e) {
     setDiet({
       ...diet,
+      [e.target.name]: e.target.value,
+    });
+  }
+  function handlerSucursal(e) {
+    setSucu({
+      ...sucu,
       [e.target.name]: e.target.value,
     });
   }
@@ -196,14 +193,12 @@ export default function Sidebar() {
     }
   }
 
-
-
   const [modal, setModal] = useState({
     product: false,
     category: false,
     diet: false,
+    sucursal: false,
   });
-
 
   function openProduct() {
     setModal({
@@ -223,93 +218,135 @@ export default function Sidebar() {
       diet: true,
     });
   }
+  function openSucursal() {
+    setModal({
+      ...modal,
+      sucursal: true,
+    });
+  }
 
   function closeProduct() {
     setModal({
       ...modal,
       product: false,
-    });}
-    function closeCategory() {
-      setModal({
-        ...modal,
-        category: false,
-      });
-      setCategory({
-        name: "",
-        description: "",
-      });
-    }
-    function closeDiet() {
-      setModal({
-        ...modal,
-        diet: false,
-      });
-      setDiet({
-        name: "",
-        description: "",
-      });
-    }
-
+    });
+    setInput({
+      id: "",
+      name: "",
+      image: "",
+      price: "",
+      description: "",
+      stock: "",
+      ids_categories: [],
+      ids_diets: [],
+    });
+  }
+  function closeCategory() {
+    setModal({
+      ...modal,
+      category: false,
+    });
+    setCategory({
+      name: "",
+      description: "",
+    });
+  }
+  function closeDiet() {
+    setModal({
+      ...modal,
+      diet: false,
+    });
+    setDiet({
+      name: "",
+      description: "",
+    });
+  }
+  function closeSucursal() {
+    setModal({
+      ...modal,
+      sucursal: false,
+    });
+    setSucu({
+      name: "",
+      src: "",
+    });
+  }
 
   return (
     <Navbar bg="light" expand="lg" id="ContenedorNav">
-    <Container id="navResponsive">
-      <Navbar.Brand href="#home">Menu</Navbar.Brand>
-      <Navbar.Toggle aria-controls="basic-navbar-nav" />
-      <Navbar.Collapse id="basic-navbar-nav">
-      <div className="sidebar">
-      <div className="sidebarWrapper">
-        <div className="sidebarMenu">
-       
-        </div>
-        <div className="sidebarMenu">
-          <h3 className="sidebarTitle">Agregar Elementos</h3>
-          <ul className="sidebarList">
-            {/* <li className="sidebarListItem">
+      <Container id="navResponsive">
+        <Navbar.Brand href="#home">Menu</Navbar.Brand>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
+          <div className="sidebar">
+            <div className="sidebarWrapper">
+              <div className="sidebarMenu"></div>
+              <div className="sidebarMenu">
+                <h3 className="sidebarTitle">Agregar Elementos</h3>
+                <ul className="sidebarList">
+                  {/* <li className="sidebarListItem">
               <PermIdentity className="sidebarIcon" />
               Usuarios
             </li> */}
-            
-            <li className="sidebarListItem" onClick={() => openProduct()}>
-              <button className="sidebarIcon"  />
-              Productos
-            </li>
 
-            <li className="sidebarListItem" onClick={() => openCategory()}>
-              <BarChart className="sidebarIcon" />
-              Categorias
-            </li>
-            <li className="sidebarListItem"  onClick={() => openDiet()}>
-              <BarChart className="sidebarIcon" />
-              Dietas
-            </li>
-          </ul>
-        </div>
-        <div className="sidebarMenu">
-          <h3 className="sidebarTitle">Navegacion</h3>
-          <ul className="sidebarList">
-            <li className="sidebarListItem">
-              <DynamicFeed className="sidebarIcon" />
-              <NavLink to='/Admin/user'>Lista de Usuarios</NavLink>
-            </li>
-            <li className="sidebarListItem">
-              <DynamicFeed className="sidebarIcon" />
-              <NavLink to='/Admin'>Lista de Productos</NavLink>
-            </li>
-            <li className="sidebarListItem">
-              <DynamicFeed className="sidebarIcon" />
-              <NavLink to='/Admin/orders'>Ordenes</NavLink>
-            </li>
-            <li className="sidebarListItem">
-              <DynamicFeed className="sidebarIcon" />
-              <NavLink to='/Admin/filters'>Categorias y Dietas</NavLink>
-            </li>
-          </ul>
-        </div>
-        <div className="sidebarMenu">
-          <h3 className="sidebarTitle">Staff</h3>
-          <ul className="sidebarList">
-            {/* <li className="sidebarListItem">
+                  <li className="sidebarListItem" onClick={() => openProduct()}>
+                    <button className="sidebarIcon" />
+                    Productos
+                  </li>
+
+                  <li
+                    className="sidebarListItem"
+                    onClick={() => openCategory()}
+                  >
+                    <BarChart className="sidebarIcon" />
+                    Categorias
+                  </li>
+                  <li className="sidebarListItem" onClick={() => openDiet()}>
+                    <BarChart className="sidebarIcon" />
+                    Dietas
+                  </li>
+                  <li
+                    className="sidebarListItem"
+                    onClick={() => openSucursal()}
+                  >
+                    <button className="sidebarIcon" />
+                    Sucursales
+                  </li>
+                </ul>
+              </div>
+              <div className="sidebarMenu">
+                <h3 className="sidebarTitle">Tablas</h3>
+                <ul className="sidebarList">
+                  <li className="sidebarListItem">
+                    <DynamicFeed className="sidebarIcon " />
+                    <NavLink to="/Admin/grafics"  class="text-decoration-none text-dark" >Graficas</NavLink>
+                  </li>
+                  <li className="sidebarListItem">
+                    <DynamicFeed className="sidebarIcon" />
+                    <NavLink to="/Admin/user" class="text-decoration-none text-dark">Usuarios</NavLink>
+                  </li>
+                  <li className="sidebarListItem">
+                    <DynamicFeed className="sidebarIcon" />
+                    <NavLink to="/Admin" class="text-decoration-none text-dark"> Productos</NavLink>
+                  </li>
+                  <li className="sidebarListItem">
+                    <DynamicFeed className="sidebarIcon" />
+                    <NavLink to="/Admin/orders" class="text-decoration-none text-dark">Ordenes</NavLink>
+                  </li>
+                  <li className="sidebarListItem">
+                    <DynamicFeed className="sidebarIcon" />
+                    <NavLink to="/Admin/filters" class="text-decoration-none text-dark">Categorias y Dietas</NavLink>
+                  </li>
+                  <li className="sidebarListItem">
+                    <DynamicFeed className="sidebarIcon" />
+                    <NavLink to="/Admin/sucursal" class="text-decoration-none text-dark" >Sucursales</NavLink>
+                  </li>
+                </ul>
+              </div>
+              <div className="sidebarMenu">
+                <h3 className="sidebarTitle">Finalizar</h3>
+                <ul className="sidebarList">
+                  {/* <li className="sidebarListItem">
               <WorkOutline className="sidebarIcon" />
               Manage
             </li>
@@ -317,55 +354,39 @@ export default function Sidebar() {
               <Timeline className="sidebarIcon" />
               Analytics
             </li> */}
-            <li className="sidebarListItem">
-              <Report className="sidebarIcon" />
-              <NavLink to='/home'>Salir</NavLink>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-      </Navbar.Collapse>
-    </Container>
-    <FormCreator
-    modal ={modal}
-    input={input}
-    handlerProduct={handlerProduct}
-    c={c}
-    d={d}
-    handlerCategories={handlerCategories}
-  handlerDiets={handlerDiets}
-  handlerSubmitProduct={handlerSubmitProduct}
-  closeProduct={closeProduct}
-  handlerSubmitCategory={handlerSubmitCategory}
-  category={category}
-  handlerCategory={handlerCategory}
-  closeCategory={closeCategory}
-  handlerSubmitDiet={handlerSubmitDiet}
-  diet={diet}
-  handlerDiet={handlerDiet}
-  closeDiet={closeDiet}
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
-    />
-  </Navbar>
-
+                  <li className="sidebarListItem">
+                    <Report className="sidebarIcon" />
+                    <NavLink to="/home" class="text-decoration-none text-danger">Salir</NavLink>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </Navbar.Collapse>
+      </Container>
+      <FormCreator
+        modal={modal}
+        input={input}
+        handlerProduct={handlerProduct}
+        c={c}
+        d={d}
+        handlerCategories={handlerCategories}
+        handlerDiets={handlerDiets}
+        handlerSubmitProduct={handlerSubmitProduct}
+        closeProduct={closeProduct}
+        handlerSubmitCategory={handlerSubmitCategory}
+        category={category}
+        handlerCategory={handlerCategory}
+        closeCategory={closeCategory}
+        handlerSubmitDiet={handlerSubmitDiet}
+        diet={diet}
+        handlerDiet={handlerDiet}
+        closeDiet={closeDiet}
+        handlerSucursal={handlerSucursal}
+        sucu={sucu}
+        handlerSubmitSucursal={handlerSubmitSucursal}
+        closeSucursal={closeSucursal}
+      />
+    </Navbar>
   );
 }

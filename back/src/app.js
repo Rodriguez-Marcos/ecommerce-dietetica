@@ -16,7 +16,8 @@ import Cartroutes from './routes/cart.js'
 import useExtractor from './controllers/loginUser.js';
 import Payment from './routes/payment'
 import Address from './routes/address.js'
-
+import Storeroutes from './routes/store.js'
+import Sucursal from './routes/sucursal.js'
 const app = express()
 
 
@@ -44,6 +45,7 @@ app.use('/favorite',useExtractor, Favoriteroutes)
 app.use('/cart',useExtractor,Cartroutes)
 app.use('/payment', useExtractor, Payment)
 app.use('/address',useExtractor, Address)
+app.use('/stores', Storeroutes)
 app.get("/feedback",(req, res) => {
   if(req.query.collection_status === 'approved'){
    return res.redirect(
@@ -55,7 +57,8 @@ app.get("/feedback",(req, res) => {
     )
   }
    return res.redirect("http://localhost:3000/payment/failure") 
-}) 
+})
+app.use('/sucursal', Sucursal)
 
 
 

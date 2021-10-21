@@ -28,6 +28,8 @@ export const GET_ORDERS = "GET_ORDERS";
 export const PUT_ORDERS = "PUT_ORDERS";
 export const FILTER_ORDERS = "FILTER_ORDERS";
 export const POST_REVIEW ='POST_REVIEW'
+export const SEND_ADDRESS ='SEND_ADDRESS'
+export const DELETE_ADDRESS ='DELETE_ADDRESS'
 
 let cookies = new Cookies();
 
@@ -586,6 +588,175 @@ export function postReview(payload,id, token) {
      axios.request(reqOptions).then(function (response) {
       dispatch({
         type: 'POST_REVIEW',
+        payload: response.data,
+      })});
+      
+  };
+}
+
+
+
+
+
+export function getTotalByDay( token) {
+  return async function (dispatch) {
+
+    
+let headersList = {
+  "Accept": "*/*",
+
+  "Authorization": "Bearer "+ token,  
+ }
+ 
+ let reqOptions = {
+   url: "http://localhost:3001/orders/totalbyday",
+   method: "GET",
+   headers: headersList,
+ }
+ 
+ axios.request(reqOptions).then(function (response) {
+  dispatch({
+    type: 'GET_TOTAL_BY_DAY',
+    payload: response.data,
+  })
+ })      
+  };
+}
+export function getBestSellers( token) {
+  return async function (dispatch) {
+
+    
+let headersList = {
+  "Accept": "*/*",
+
+  "Authorization": "Bearer "+ token,  
+ }
+ 
+ let reqOptions = {
+   url: "http://localhost:3001/orders/bestsellers",
+   method: "GET",
+   headers: headersList,
+ }
+ 
+ axios.request(reqOptions).then(function (response) {
+  dispatch({
+    type: 'GET_BEST_SELLERS',
+    payload: response.data,
+  })
+ })      
+  };
+}
+
+export function sendIdAddress( payload,token) {
+  return async function (dispatch) {
+    let headersList = {
+      "Accept": "*/*",
+      "Authorization": "Bearer "+token,
+      "Content-Type": "application/json" 
+     }
+     
+     let reqOptions = {
+       url: "http://localhost:3001/cart?id_address="+payload,
+       method: "PUT",
+       headers: headersList,
+     }
+     
+     axios.request(reqOptions).then(function (response) {
+      dispatch({
+        type: 'SEND_ADDRESS',
+        payload: response.data,
+      })});
+      
+  };
+}
+
+export function deleteAddress(id, token) {
+  return async function (dispatch) {
+    let headersList = {
+      Accept: "*/*",
+
+      Authorization: "Bearer " + token,
+      "Content-Type": "application/json",
+    };
+
+    let reqOptions = {
+      url: "http://localhost:3001/address/" + id,
+      method: "DELETE",
+      headers: headersList,
+    };
+
+    axios.request(reqOptions).then(function (response) {
+      console.log(response.data);
+    });
+  };
+}
+
+export function putSucursal(payload, id, token) {
+  return async function (dispatch) {
+    let headersList = {
+      Accept: "*/*",
+
+      Authorization: "Bearer " + token,
+      "Content-Type": "application/json",
+    };
+
+    let reqOptions = {
+      url: "http://localhost:3001/sucursal/" + id,
+      method: "PUT",
+      headers: headersList,
+      data: JSON.stringify(payload),
+    };
+
+    axios.request(reqOptions).then(function (response) {
+      console.log(response.data);
+    });
+    return dispatch({
+      type: 'PUT_SUCURSAL',
+      payload,
+      id,
+    });
+  };
+}
+
+export function deleteSucursal(id, token) {
+  return async function (dispatch) {
+    let headersList = {
+      Accept: "*/*",
+
+      Authorization: "Bearer " + token,
+      "Content-Type": "application/json",
+    };
+
+    let reqOptions = {
+      url: "http://localhost:3001/sucursal/" + id,
+      method: "DELETE",
+      headers: headersList,
+    };
+
+    axios.request(reqOptions).then(function (response) {
+      console.log(response.data);
+    });
+  };
+}
+
+export function postSucursal(payload, token) {
+  return async function (dispatch) {
+    let headersList = {
+      "Accept": "*/*",
+      "Authorization": "Bearer "+token,
+      "Content-Type": "application/json" 
+     }
+     
+     let reqOptions = {
+       url: "http://localhost:3001/sucursal",
+       method: "POST",
+       headers: headersList,
+       data: JSON.stringify(payload),
+     }
+     
+     axios.request(reqOptions).then(function (response) {
+      dispatch({
+        type: 'POST_SUCURSAL',
         payload: response.data,
       })});
       
