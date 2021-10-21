@@ -9,6 +9,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: rgb(241, 232, 229) !important;
+  padding: 0 !important;
 }
 
 code {

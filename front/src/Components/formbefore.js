@@ -18,7 +18,6 @@ import AddressCard from './AddressCard';
 import { Button, Container, Row, Col, Card } from 'react-bootstrap';
 import { Select } from '@material-ui/core';
 
-
 export default function Pending() {
   const [sucuSelected, setSucuSelected] = useState('Centro Córdoba')
   const myStorage = window.localStorage;
@@ -86,6 +85,7 @@ export default function Pending() {
       })
     );
   }
+  // ----------------------------------------------------------------------
 
   function onFocus(ev) {
     setTouched({
@@ -126,6 +126,7 @@ export default function Pending() {
       const jwt = myStorage.getItem("jwt");
       dispatch(postAddress(input, jwt))
       swal("Creado", "Dirección cargada con éxito!", "success")
+      window.location.reload()
     }
   }
 
@@ -195,7 +196,21 @@ export default function Pending() {
       getCart(token);
     }
   }, [isLogin])
-
+  let sucursales = [{
+    name: 'Centro Túcuman',
+    src: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5989.084087354766!2d-65.23970981598292!3d-26.803966545215907!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94225d009b6cbcb9%3A0x5f70eb933f102370!2sWimac%20Servicio%20tecnico!5e0!3m2!1sen!2sar!4v1634738352935!5m2!1sen!2sar'
+  },
+  {
+    name: 'Centro Córdoba',
+    src: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4048.528218709014!2d-64.21707256668158!3d-31.430849654591235!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9432a246ddaef005%3A0xeb247e51452379bf!2sSKN%20IT!5e0!3m2!1sen!2sar!4v1634738510417!5m2!1sen!2sar'
+  }
+  ]
+  function handleInputSucu(e) {
+    e.preventDefault();
+    const { value } = e.target;
+    setSucuSelected(value)
+    console.log(sucuSelected)
+  }
 
   if (addresses.length > 0) {
     return (
@@ -230,35 +245,24 @@ export default function Pending() {
               Retiro en local:
             </label>
           </div>
-
           <br />
-
-
-          <GoogleMaps
-            apiKey={"AIzaSyA5BBX89Qj05Gc9VuJD2hvQAIAOsL9ujXA"}
-            style={{ height: "360px", width: "90%" }}
-            zoom={15}
-            center={{ lat: -31.417233, lng: -64.183923 }}
-            // -31.417233, -64.183923
-            markers={{ lat: -31.417233, lng: -64.183923 }} //optional
-          />
+          <iframe id="map" src={(sucursales.find(x => x.name === sucuSelected)).src} width="480" height="250" loading="lazy"></iframe>
           <br />
           <h4>Seleccione una sucursal:</h4>
           <div >
             <p></p>
             {/* a medida que selecciona el usuario ve lo que selecciona */}
-            <select name="types" >
-              <option>
-                Seleccionar
-              </option>
-              <option>1.Centro</option>
-
+            <select name="types" onChange={handleInputSucu}>
+              <option value='Centro Córdoba'>Seleccionar sucursal</option>
+              {sucursales?.map(sucu => {
+                return <option value={sucu.name}>{sucu.name}</option>
+              })}
             </select>
           </div>
           {/* <p>Dirección: Rivadavia 29. Plaza San Martin </p> */}
           <br />
           <h4>Por favor seleccione fecha y horario que va a retirar:</h4>
-          <Calendar></Calendar>
+          {/* <Calendar></Calendar> */}
 
         </div>
         <br />
@@ -309,7 +313,7 @@ export default function Pending() {
 
                   <form>
                     <div class="form-row">
-                      <div class="form-group col-xs-5">
+                      <div>
                         <label for="inputCity">Calle:</label>
                         <input
                           type="text"
@@ -327,7 +331,7 @@ export default function Pending() {
 
                         {/* <input type="text" class="form-control" name='calle' value={input.calle} onChange={handleAdress} ></input> */}
                       </div>
-                      <div class="form-group col-xs-6">
+                      <div >
                         <label for="inputCity">Altura:</label>
                         <input
                           type="text"
@@ -434,25 +438,17 @@ export default function Pending() {
                       </label>
                     </div>
 
-                    <GoogleMaps
-                      apiKey={"AIzaSyA5BBX89Qj05Gc9VuJD2hvQAIAOsL9ujXA"}
-                      zoom={15}
-                      center={{ lat: -31.417233, lng: -64.183923 }}
-                      // -31.417233, -64.183923
-                      markers={{ lat: -31.417233, lng: -64.183923 }} //optional
-                    />
-
+          <iframe id="map" src={(sucursales.find(x => x.name === sucuSelected)).src} width="480" height="250" loading="lazy"></iframe>
                     <h4>Seleccione una sucursal:</h4>
                     <div >
                       <p></p>
                       {/* a medida que selecciona el usuario ve lo que selecciona */}
-                      <select name="types">
-                        <option>
-                          Seleccionar
-                        </option>
-                        <option>1.Centro</option>
-
-                      </select>
+                      <select name="types" onChange={handleInputSucu} >
+              <option value='Centro Córdoba'>Seleccionar sucursal</option>
+              {sucursales?.map(sucu => {
+                return <option value={sucu.name}>{sucu.name}</option>
+              })}
+            </select>
                     </div>
 
                     {/* <p>Dirección: Rivadavia 29. Plaza San Martin </p> */}
@@ -466,7 +462,7 @@ export default function Pending() {
             </Col>
           </Row>
 
-          <div class="d-grid gap-2 col-3 mx-auto">
+          <div class="d-grid gap-2 col-3 mx-auto" className="btns-envio">
             <div class="form-check form-check-inline">
               <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1"></input>
               <label class="form-check-label" for="inlineCheckbox1">Quiero notificación vía mail de mi pedido</label>
@@ -477,7 +473,7 @@ export default function Pending() {
             <button type="button" class="btn btn-success" onClick={handleCompra}>Comprar</button>
             {/* <button class="btn btn-primary" color="green" type="button">Comprar</button> */}
 
-            <button type="button" class="btn btn-dark" onClick={() => { setMenu(true) }} >Volver al carrito</button>
+            <button type="button" class="btn btn-dark" onClick={() => { setMenu(true) }} >Volver al carrito</button>          
 
           </div>
         </Container>
