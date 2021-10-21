@@ -197,7 +197,7 @@ export async function changeOrderStatus(req, res) {
         await Order.update({ status: status }, { where: { id: id } })
         let order = await Order.findOne({
             where: { id: id },
-            attributes: ["id", "ammount", "shippingAddress", "createDate", "status"],
+            attributes: ["id", "ammount", "shippingAddress", "createDate", "status","shippingAddress"],
             include: [
                 { model: Client, attributes: ["id", "name", "lastname", "email", "phone"] },
                 {
@@ -205,6 +205,37 @@ export async function changeOrderStatus(req, res) {
                     through: { attributes: ["quantity", "total"] }
                 }],
         })
+        console.log(order)
+        if(status==="procesando"){
+            let client = await Client.findOne({ where: { id: order.dataValues.client.dataValues.id } })
+            let clientMail = client.dataValues.email
+            const transporter = nodemailer.createTransport({
+                host: 'smtp-relay.sendinblue.com',
+                port: 587,
+                secure: false,
+                auth: {
+                    user: 'faridsesin@gmail.com',
+                    pass: 'G76d8KXDCzjT4Ew0'
+                },
+                tls: {
+                    rejectUnauthorized: false
+                }
+            })
+           
+                //let address = await Address.findOne({ where: { id: order.dataValues.shippingAddress } })
+                const info = await transporter.sendMail({
+                    from: "'Salvatore' <faridsesin@gmail.com>",
+                    to: clientMail,
+                    subject: 'Tu pedido ha sido despachado',
+                    html: `
+                    <h1>TU PEDIDO HA SIDO DESPACHADO</h1>
+                    <h2>Hola ${client.dataValues.name} ${client.dataValues.lastname} </h2>
+                    <p>Pronto recibiras tus productos para que los disfrutes</p>
+                    `,
+                })
+                console.log('Message sent', info.messageId)
+            
+        }
         return res.status(200).send(order)
     } catch (err) {
         console.log(err)
