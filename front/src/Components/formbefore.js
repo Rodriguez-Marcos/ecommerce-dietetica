@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import './formbefore.css'
 import NavBar from './NavBar';
-import { getAddress, postAddress, sendIdAddress } from '../Actions';
+import { getAddress, postAddress, sendIdAddress,deleteAddress } from '../Actions';
 // import emptycart from '../../Utils/emptycart';
 import { StyleSharp } from '@material-ui/icons';
 import Cookies from "universal-cookie";
@@ -113,7 +113,6 @@ export default function Pending() {
   // }
   const jwt = window.localStorage.jwt
   var client = decode(jwt)
-  console.log(jwt)
   var id = client.id
   const dispatch = useDispatch();
   useEffect(() => {
@@ -126,22 +125,25 @@ export default function Pending() {
     if (!input.calle || !input.altura || !input.barrio || !input.otros || !input.codigo || !input.numero) { swal("Error", "Debe llenar todos los campos", "error") }
     else {
       const jwt = myStorage.getItem("jwt");
+      console.log(jwt)
       dispatch(postAddress(input, jwt))
       swal("Creado", "Dirección cargada con éxito!", "success")
-      window.location.reload()
+       window.location.reload()
     }
   }
 
 
-  function handleSetAddress(e,jwt){
+  
+  let { isLogin, token, comodin, addresses } = useSelector(state => state.reducerPablo)
+  const cookies = new Cookies();
+  
+  function handleSetAddress(e){
+    const jwt = myStorage.getItem("jwt");
     const {value} = e.target
     setAddressId(value)
     dispatch(sendIdAddress(addressid,jwt))
   }
 
-
-  let { isLogin, token, comodin, addresses } = useSelector(state => state.reducerPablo)
-  const cookies = new Cookies();
 
 
 
@@ -221,6 +223,9 @@ export default function Pending() {
     console.log(sucuSelected)
   }
 
+  
+
+
   if (addresses.length > 0) {
     return (
 
@@ -240,18 +245,17 @@ export default function Pending() {
             {addresses && addresses?.map(address => {
               return (
                 <div class="form-check">
-                  <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value={address.id} onClick={handleSetAddress} checked></input>
+                  <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value={address.id} onClick={handleSetAddress} ></input>
                   <AddressCard address={address} />
                 </div>
               )
             })}
-            {console.log(addressid)}
             <div><NavLink to='/newaddress'><button>Añadir nueva dirección</button></NavLink></div>
           </div>
         </div>
         <div>
           <div class="form-check">
-            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked></input>
+            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value={'Retiro en local'} onClick={handleSetAddress}></input>
             <label class="form-check-label" for="exampleRadios1">
               Retiro en local:
             </label>

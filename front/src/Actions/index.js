@@ -29,6 +29,7 @@ export const PUT_ORDERS = "PUT_ORDERS";
 export const FILTER_ORDERS = "FILTER_ORDERS";
 export const POST_REVIEW ='POST_REVIEW'
 export const SEND_ADDRESS ='SEND_ADDRESS'
+export const DELETE_ADDRESS ='DELETE_ADDRESS'
 
 let cookies = new Cookies();
 
@@ -594,6 +595,58 @@ export function postReview(payload,id, token) {
 }
 
 
+
+
+
+export function getTotalByDay( token) {
+  return async function (dispatch) {
+
+    
+let headersList = {
+  "Accept": "*/*",
+
+  "Authorization": "Bearer "+ token,  
+ }
+ 
+ let reqOptions = {
+   url: "http://localhost:3001/orders/totalbyday",
+   method: "GET",
+   headers: headersList,
+ }
+ 
+ axios.request(reqOptions).then(function (response) {
+  dispatch({
+    type: 'GET_TOTAL_BY_DAY',
+    payload: response.data,
+  })
+ })      
+  };
+}
+export function getBestSellers( token) {
+  return async function (dispatch) {
+
+    
+let headersList = {
+  "Accept": "*/*",
+
+  "Authorization": "Bearer "+ token,  
+ }
+ 
+ let reqOptions = {
+   url: "http://localhost:3001/orders/bestsellers",
+   method: "GET",
+   headers: headersList,
+ }
+ 
+ axios.request(reqOptions).then(function (response) {
+  dispatch({
+    type: 'GET_BEST_SELLERS',
+    payload: response.data,
+  })
+ })      
+  };
+}
+
 export function sendIdAddress( payload,token) {
   return async function (dispatch) {
     let headersList = {
@@ -614,6 +667,27 @@ export function sendIdAddress( payload,token) {
         payload: response.data,
       })});
       
+  };
+}
+
+export function deleteAddress(id, token) {
+  return async function (dispatch) {
+    let headersList = {
+      Accept: "*/*",
+
+      Authorization: "Bearer " + token,
+      "Content-Type": "application/json",
+    };
+
+    let reqOptions = {
+      url: "http://localhost:3001/address/" + id,
+      method: "DELETE",
+      headers: headersList,
+    };
+
+    axios.request(reqOptions).then(function (response) {
+      console.log(response.data);
+    });
   };
 }
 
