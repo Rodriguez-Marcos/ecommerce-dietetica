@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
-// import Styles from './payment.module.css'
-import styles from './formbefore.module.css'
+import './formbefore.css'
 import NavBar from './NavBar';
 import { getAddress, postAddress } from '../Actions';
 // import emptycart from '../../Utils/emptycart';
@@ -16,7 +15,7 @@ import { Link, NavLink } from 'react-router-dom';
 import Calendar from './Calendar';
 import { decode } from "jsonwebtoken";
 import AddressCard from './AddressCard';
-import { Button } from 'react-bootstrap';
+import { Button, Container, Row, Col, Card } from 'react-bootstrap';
 import { Select } from '@material-ui/core';
 
 export default function Pending() {
@@ -86,6 +85,7 @@ export default function Pending() {
       })
     );
   }
+  // ----------------------------------------------------------------------
 
   function onFocus(ev) {
     setTouched({
@@ -215,19 +215,9 @@ export default function Pending() {
   if (addresses.length > 0) {
     return (
 
-      <div className={styles.main}>
-        <NavBar />
-        {/* <div className={Styles.div}> */}
-        {/* <div>
-        <h1>Gracias Por tu compra Aguardamos tu pago nomas </h1>
-        </div> */}
+      <Container>
 
-        {/* 
-    </div> */}
-
-        <h1 className={styles.ultimo}>¡Último paso! </h1>
-        <p className={styles.ultimo2}>Por favor seleccione: </p>
-        <div className={styles.form}>
+        <div >
           <div class="form-check form-check-inline">
             <div class="form-check">
               <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2"></input>
@@ -247,41 +237,28 @@ export default function Pending() {
             })}
             <div><NavLink to='/newaddress'><button>Añadir nueva dirección</button></NavLink></div>
           </div>
-
-
-
-
-
-
         </div>
-
-
-        <div className={styles.google}>
+        <div>
           <div class="form-check">
             <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked></input>
             <label class="form-check-label" for="exampleRadios1">
               Retiro en local:
             </label>
           </div>
-
           <br />
-          <iframe className={styles.map} src={(sucursales.find(x => x.name === sucuSelected)).src} width="480" height="250" loading="lazy"></iframe>
+          <iframe id="map" src={(sucursales.find(x => x.name === sucuSelected)).src} width="480" height="250" loading="lazy"></iframe>
           <br />
           <h4>Seleccione una sucursal:</h4>
           <div >
-            <p className={styles.inputNames}></p>
+            <p></p>
             {/* a medida que selecciona el usuario ve lo que selecciona */}
-            <select name="types" onChange={handleInputSucu} className={styles.dropdown}>
+            <select name="types" onChange={handleInputSucu}>
               <option value='Centro Córdoba'>Seleccionar sucursal</option>
               {sucursales?.map(sucu => {
                 return <option value={sucu.name}>{sucu.name}</option>
               })}
             </select>
           </div>
-
-
-
-
           {/* <p>Dirección: Rivadavia 29. Plaza San Martin </p> */}
           <br />
           <h4>Por favor seleccione fecha y horario que va a retirar:</h4>
@@ -294,14 +271,6 @@ export default function Pending() {
           <div class="form-check form-check-inline">
             <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1"></input>
             <label class="form-check-label" for="inlineCheckbox1">Quiero notificación vía mail de mi pedido</label>
-
-
-
-
-
-
-
-
           </div>
           <button type="button" class="btn btn-success" onClick={handleCompra}>Comprar</button>
           {/* <button class="btn btn-primary" color="green" type="button">Comprar</button> */}
@@ -311,12 +280,11 @@ export default function Pending() {
         </div>
 
 
-      </div>
+      </Container>
     )
   } else {
     return (
-
-      <div className={styles.main}>
+      <div>
         <NavBar />
         {/* <div className={Styles.div}> */}
         {/* <div>
@@ -326,190 +294,189 @@ export default function Pending() {
         {/* 
         </div> */}
 
-        <h1 className={styles.ultimo}>¡Último paso! </h1>
-        <p className={styles.ultimo2}>Por favor seleccione: </p>
-        <div className={styles.form}>
-          <div class="form-check form-check-inline">
-            <div class="form-check">
-              <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2"></input>
-              <label class="form-check-label" for="exampleRadios2">
-                Envío a domicilio:
-              </label>
-            </div>
-          </div>
+        <h1 >¡Último paso! </h1>
+        <h5>Por favor seleccione: </h5>
+        <Container className="Container-Envio" >
+          <Row >
+            <Col xs="12" md="6" className="retiro-domicilio">
+              <Card className="card-domicilio">
+                <Card.Body className="retiro-Body">
+                  <div class="form-check form-check-inline">
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2"></input>
+                      <label class="form-check-label" for="exampleRadios2">
+                        Envío a domicilio:
+                      </label>
+                    </div>
+                  </div>
 
 
-          <form>
-            <div class="form-row">
-              <div class="form-group col-md-4">
-                <label for="inputCity">Calle:</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  name="calle"
-                  // a todos los input le pongo handleInput para que vaya al estado
-                  onChange={handleInput}
-                  required='required'
-                  onFocus={onFocus}
-                  value={input.calle}
-                ></input>
-                {errors.calle && touched.calle && (
-                  <p className={styles.errorMsg}>{errors.calle}</p>
-                )}
+                  <form>
+                    <div class="form-row">
+                      <div>
+                        <label for="inputCity">Calle:</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          name="calle"
+                          // a todos los input le pongo handleInput para que vaya al estado
+                          onChange={handleInput}
+                          required='required'
+                          onFocus={onFocus}
+                          value={input.calle}
+                        ></input>
+                        {errors.calle && touched.calle && (
+                          <p>{errors.calle}</p>
+                        )}
 
-                {/* <input type="text" class="form-control" name='calle' value={input.calle} onChange={handleAdress} ></input> */}
-              </div>
-            </div>
-            <div class="form-group col-md-4">
-              <label for="inputCity">Altura:</label>
-              <input
-                type="text"
-                class="form-control"
-                name="altura"
-                // a todos los input le pongo handleInput para que vaya al estado
-                onChange={handleInput}
-                required='required'
-                onFocus={onFocus}
-                value={input.altura}
-              ></input>
-              {errors.altura && touched.altura && (
-                <p className={styles.errorMsg}>{errors.altura}</p>
-              )}
+                        {/* <input type="text" class="form-control" name='calle' value={input.calle} onChange={handleAdress} ></input> */}
+                      </div>
+                      <div >
+                        <label for="inputCity">Altura:</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          name="altura"
+                          // a todos los input le pongo handleInput para que vaya al estado
+                          onChange={handleInput}
+                          required='required'
+                          onFocus={onFocus}
+                          value={input.altura}
+                        ></input>
+                        {errors.altura && touched.altura && (
+                          <p>{errors.altura}</p>
+                        )}
 
-              {/* 
+                        {/* 
       <input type="text" class="form-control" name='altura' value={input.altura} onChange={handleAdress} ></input> */}
-            </div>
-            <div class="form-group col-md-4">
-              <label for="inputCity">Barrio:</label>
-              <input
-                type="text"
-                class="form-control"
-                name="barrio"
-                // a todos los input le pongo handleInput para que vaya al estado
-                onChange={handleInput}
-                required='required'
-                onFocus={onFocus}
-                value={input.barrio}
-              ></input>
-              {errors.barrio && touched.barrio && (
-                <p className={styles.errorMsg}>{errors.barrio}</p>
-              )}
-              {/* <input type="text" class="form-control" name='barrio' value={input.barrio} onChange={handleAdress}  ></input> */}
-            </div>
-            <div class="form-group col-md-4">
-              <label for="inputZip">Otros:</label>
-              <input
-                type="text"
-                class="form-control"
-                name="otros"
-                // a todos los input le pongo handleInput para que vaya al estado
-                onChange={handleInput}
-                required='required'
-                onFocus={onFocus}
-                value={input.otros}
-              ></input>
-              {errors.otros && touched.otros && (
-                <p className={styles.errorMsg}>{errors.otros}</p>
-              )}
-              {/* <input type="text" class="form-control" name='otros' value={input.otros} onChange={handleAdress} ></input> */}
-            </div>
-            <div class="form-group col-md-4">
-              <label for="inputZip">Código postal:</label>
-              <input
-                type="text"
-                class="form-control"
-                name="codigo"
-                // a todos los input le pongo handleInput para que vaya al estado
-                onChange={handleInput}
-                required='required'
-                onFocus={onFocus}
-                value={input.codigo}
-              ></input>
-              {errors.codigo && touched.codigo && (
-                <p className={styles.errorMsg}>{errors.codigo}</p>
-              )}
-              {/* <input type="text" class="form-control" name='codigo' value={input.codigo} onChange={handleAdress}  ></input> */}
-            </div>
-            <div class="form-row">
-              <div class="form-group col-md-4">
-                <label for="inputCity">Número de contacto:</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  name="numero"
-                  // a todos los input le pongo handleInput para que vaya al estado
-                  onChange={handleInput}
-                  required='required'
-                  onFocus={onFocus}
-                  value={input.numero}
-                ></input>
-                {errors.numero && touched.numero && (
-                  <p className={styles.errorMsg}>{errors.numero}</p>
-                )}
-                {/* <input type="text" class="form-control" name='numero' value={input.numero} onChange={handleAdress} ></input> */}
-              </div>
-            </div>
-            <br />
-            <button type="submit" class="btn btn-primary" onClick={handleSubmit}>Cargar</button>
-          </form>
-        </div>
+                      </div>
+                      <div class="form-group col-xs-12">
+                        <label for="inputCity">Barrio:</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          name="barrio"
+                          // a todos los input le pongo handleInput para que vaya al estado
+                          onChange={handleInput}
+                          required='required'
+                          onFocus={onFocus}
+                          value={input.barrio}
+                        ></input>
+                        {errors.barrio && touched.barrio && (
+                          <p >{errors.barrio}</p>
+                        )}
+                        {/* <input type="text" class="form-control" name='barrio' value={input.barrio} onChange={handleAdress}  ></input> */}
+                      </div>
+                      <div class="form-group col-xs-12">
+                        <label for="inputZip">Otros:</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          name="otros"
+                          // a todos los input le pongo handleInput para que vaya al estado
+                          onChange={handleInput}
+                          required='required'
+                          onFocus={onFocus}
+                          value={input.otros}
+                        ></input>
+                        {errors.otros && touched.otros && (
+                          <p >{errors.otros}</p>
+                        )}
+                        {/* <input type="text" class="form-control" name='otros' value={input.otros} onChange={handleAdress} ></input> */}
+                      </div>
+                      <div class="form-group col-xs-12">
+                        <label for="inputZip">Código postal:</label>
+                        <input
+                          type="number"
+                          class="form-control"
+                          name="codigo"
+                          // a todos los input le pongo handleInput para que vaya al estado
+                          onChange={handleInput}
+                          required='required'
+                          onFocus={onFocus}
+                          value={input.codigo}
+                        ></input>
+                        {errors.codigo && touched.codigo && (
+                          <p >{errors.codigo}</p>
+                        )}
+                        {/* <input type="text" class="form-control" name='codigo' value={input.codigo} onChange={handleAdress}  ></input> */}
+                      </div>
+                      <div class="form-group col-xs-12">
+                        <label for="inputCity">Número de contacto:</label>
+                        <input
+                          type="number"
+                          class="form-control"
+                          name="numero"
+                          // a todos los input le pongo handleInput para que vaya al estado
+                          onChange={handleInput}
+                          required='required'
+                          onFocus={onFocus}
+                          value={input.numero}
+                        ></input>
+                        {errors.numero && touched.numero && (
+                          <p >{errors.numero}</p>
+                        )}
+                        {/* <input type="text" class="form-control" name='numero' value={input.numero} onChange={handleAdress} ></input> */}
+                      </div>
+                    </div>
+                  </form>
+                  <div className="btn-Cargar">
+                    <button type="submit" class="btn btn-primary" onClick={handleSubmit}>Cargar</button>
+                  </div>
+                </Card.Body>
+              </Card>
+            </Col>
 
+            <Col xs="12" md="6" className="retiro-local">
+              <Card className="card-retiro">
+                <Card.Body>
+                  <div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked></input>
+                      <label class="form-check-label" for="exampleRadios1">
+                        Retiro en local:
+                      </label>
+                    </div>
 
-        <div className={styles.google}>
-          <div class="form-check">
-            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked></input>
-            <label class="form-check-label" for="exampleRadios1">
-              Retiro en local:
-            </label>
-          </div>
-
-          <br />
-          <iframe className={styles.map} src={(sucursales.find(x => x.name === sucuSelected)).src} width="480" height="250" loading="lazy"></iframe>
-          <br />
-          <h4>Seleccione una sucursal:</h4>
-          <div >
-            <p className={styles.inputNames}></p>
-            {/* a medida que selecciona el usuario ve lo que selecciona */}
-            <select name="types" onChange={handleInputSucu} className={styles.dropdown}>
+          <iframe id="map" src={(sucursales.find(x => x.name === sucuSelected)).src} width="480" height="250" loading="lazy"></iframe>
+                    <h4>Seleccione una sucursal:</h4>
+                    <div >
+                      <p></p>
+                      {/* a medida que selecciona el usuario ve lo que selecciona */}
+                      <select name="types" onChange={handleInputSucu} >
               <option value='Centro Córdoba'>Seleccionar sucursal</option>
               {sucursales?.map(sucu => {
                 return <option value={sucu.name}>{sucu.name}</option>
               })}
             </select>
+                    </div>
+
+                    {/* <p>Dirección: Rivadavia 29. Plaza San Martin </p> */}
+
+                    <h4>Por favor seleccione fecha y horario que va a retirar:</h4>
+                    <Calendar></Calendar>
+
+                  </div>
+                </Card.Body>
+              </Card>
+            </Col>
+          </Row>
+
+          <div class="d-grid gap-2 col-3 mx-auto" className="btns-envio">
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1"></input>
+              <label class="form-check-label" for="inlineCheckbox1">Quiero notificación vía mail de mi pedido</label>
+
+
+
+            </div>
+            <button type="button" class="btn btn-success" onClick={handleCompra}>Comprar</button>
+            {/* <button class="btn btn-primary" color="green" type="button">Comprar</button> */}
+
+            <button type="button" class="btn btn-dark" onClick={() => { setMenu(true) }} >Volver al carrito</button>          
+
           </div>
-
-
-
-
-          {/* <p>Dirección: Rivadavia 29. Plaza San Martin </p> */}
-          <br />
-          <h4>Por favor seleccione fecha de retiro:</h4>
-          <Calendar></Calendar>
-
-        </div>
-        <br />
-
-        <div class="d-grid gap-2 col-3 mx-auto">
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1"></input>
-            <label class="form-check-label" for="inlineCheckbox1">Quiero notificación vía mail de mi pedido</label>
-
-
-
-
-
-
-
-
-          </div>
-          <button type="button" class="btn btn-success" onClick={handleCompra}>Comprar</button>
-          {/* <button class="btn btn-primary" color="green" type="button">Comprar</button> */}
-
-          <button type="button" class="btn btn-dark" onClick={() => { setMenu(true) }} >Volver al carrito</button>
-
-        </div>
-
-
+        </Container>
       </div>
     )
 
