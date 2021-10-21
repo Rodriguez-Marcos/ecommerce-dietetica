@@ -738,3 +738,27 @@ export function deleteSucursal(id, token) {
     });
   };
 }
+
+export function postSucursal(payload, token) {
+  return async function (dispatch) {
+    let headersList = {
+      "Accept": "*/*",
+      "Authorization": "Bearer "+token,
+      "Content-Type": "application/json" 
+     }
+     
+     let reqOptions = {
+       url: "http://localhost:3001/sucursal",
+       method: "POST",
+       headers: headersList,
+       data: JSON.stringify(payload),
+     }
+     
+     axios.request(reqOptions).then(function (response) {
+      dispatch({
+        type: 'POST_SUCURSAL',
+        payload: response.data,
+      })});
+      
+  };
+}

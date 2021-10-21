@@ -146,8 +146,9 @@ export default function Pending() {
     const jwt = myStorage.getItem("jwt");
     const { value } = e.target
     setAddressId(value)
-    dispatch(sendIdAddress(addressid, jwt))
+    dispatch(sendIdAddress(value,jwt))
   }
+
 
 
 

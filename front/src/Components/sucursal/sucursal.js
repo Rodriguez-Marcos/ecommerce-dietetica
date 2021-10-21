@@ -26,7 +26,7 @@ export default function Sucursal() {
         axios.get('http://localhost:3001/sucursal').then(function (response) {
             setSucursal(response.data.data);
         })
-    }, [])
+    }, [dispatch])
 
 
     const copyToClipboard = (text) => {
@@ -71,6 +71,9 @@ export default function Sucursal() {
             edit: false,
             delet: false,
         })
+        axios.get('http://localhost:3001/sucursal').then(function (response) {
+            setSucursal(response.data.data);
+        })
     }
 
     function deleteSucu(){
@@ -83,6 +86,7 @@ export default function Sucursal() {
             edit: false,
             delet: false,
         })
+
     }
 
     console.log(modal)
