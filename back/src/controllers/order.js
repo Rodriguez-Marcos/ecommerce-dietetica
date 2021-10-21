@@ -17,7 +17,8 @@ export async function createOrder(req, res) {
 
         await Order.create({
 
-            id_client: id_client
+            id_client: id_client,
+            shippingAddress: cart.dataValues.id_address
         }
         )
         let newOrderId = await Order.findOne({ where: { id_client: id_client }, attributes: ["id"], order: [["createDate", "DESC"]], limit: 1 })
