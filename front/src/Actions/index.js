@@ -595,6 +595,58 @@ export function postReview(payload,id, token) {
 }
 
 
+
+
+
+export function getTotalByDay( token) {
+  return async function (dispatch) {
+
+    
+let headersList = {
+  "Accept": "*/*",
+
+  "Authorization": "Bearer "+ token,  
+ }
+ 
+ let reqOptions = {
+   url: "http://localhost:3001/orders/totalbyday",
+   method: "GET",
+   headers: headersList,
+ }
+ 
+ axios.request(reqOptions).then(function (response) {
+  dispatch({
+    type: 'GET_TOTAL_BY_DAY',
+    payload: response.data,
+  })
+ })      
+  };
+}
+export function getBestSellers( token) {
+  return async function (dispatch) {
+
+    
+let headersList = {
+  "Accept": "*/*",
+
+  "Authorization": "Bearer "+ token,  
+ }
+ 
+ let reqOptions = {
+   url: "http://localhost:3001/orders/bestsellers",
+   method: "GET",
+   headers: headersList,
+ }
+ 
+ axios.request(reqOptions).then(function (response) {
+  dispatch({
+    type: 'GET_BEST_SELLERS',
+    payload: response.data,
+  })
+ })      
+  };
+}
+
 export function sendIdAddress( payload,token) {
   return async function (dispatch) {
     let headersList = {

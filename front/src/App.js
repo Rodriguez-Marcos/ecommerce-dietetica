@@ -20,6 +20,7 @@ import Form from './Components/formbefore';
 import Grafics from './Components/Grafics';
 
 
+
 function App() {
 
   const isAdmin = useSelector((state)=> state.reducerPablo.IsAdmin)
@@ -42,12 +43,14 @@ function App() {
     <Route exact path='/Admin/user'  render={() => isAdmin ? <UsersAdminDetail/>: <Redirect to='/home'/>}/>
     <Route exact path='/Admin/orders'  render={() => isAdmin ? <TableOrders/>: <Redirect to='/home'/>}/>
     <Route exact path='/Admin/filters' render={() => isAdmin ? <AdminDietAndCategory/>: <Redirect to='/home'/>}/>
+      <Route exact path='/Admin/grafics' render={()=> isAdmin? <Grafics/> :<Redirect to='/home'/> }/>
     <Route exact path='/userprofile'component={UserProfile}/>
     <Route exact path='/envio' component={Form}/>
     <Route exact path='/payment/success' component={Success}/>
     <Route exact path='/payment/pending' component={Pendings}/>
     <Route exact path='/payment/failure' component={Failure}/>
-    <Route exact path='/g' component={Grafics}/>
+ 
+   
 
     </Switch>
     {/* <Footer/> */}

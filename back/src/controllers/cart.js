@@ -149,7 +149,7 @@ export async function emptyCart(req, res, next) {
         console.log(cart)
         let products = await Product.findAll()
         await cart.removeProduct(products)
-        await Cart.update({ totalAmount: 0 }, { where: { id_client: id_client } })
+        await Cart.update({ totalAmount: 0,id_address:"" }, { where: { id_client: id_client } })
 
         return res.json({
             message: 'Cart empty',
