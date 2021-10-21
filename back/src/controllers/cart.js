@@ -126,7 +126,7 @@ export async function addAddressCart(req, res) {
     const id_client = req.id;
     let {id_address} = req.query
     try {
-        let cart = await Cart.update({id_address:id_address, where: { id_client: id_client }, include: [{ model: Product }] })
+        let cart = await Cart.update({id_address:id_address}, {where: { id_client: id_client }, include: [{ model: Product }] })
         return res.status(200).send(cart)
 
     } catch (err) {
