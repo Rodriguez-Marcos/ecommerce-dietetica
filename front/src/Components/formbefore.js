@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import './formbefore.css'
 import NavBar from './NavBar';
-import { getAddress, postAddress, sendIdAddress,deleteAddress } from '../Actions';
+import { getAddress, postAddress, sendIdAddress,deleteAddress,sendIdStore } from '../Actions';
 // import emptycart from '../../Utils/emptycart';
 import { StyleSharp } from '@material-ui/icons';
 import Cookies from "universal-cookie";
@@ -20,6 +20,7 @@ import { Select } from '@material-ui/core';
 
 export default function Pending() {
   const [sucuSelected, setSucuSelected] = useState('Centro Córdoba')
+  const [idSucu, setIdsucu] = useState(0)
   const myStorage = window.localStorage;
   const value = useContext(DataContext)
   const [carrito, setCarrito] = value.carrito;
@@ -119,6 +120,7 @@ export default function Pending() {
   useEffect(() => {
     const jwt = myStorage.getItem("jwt")
     dispatch(getAddress(jwt, id))
+
   }, [])
 
   async function handleSubmit(event) {
@@ -151,8 +153,6 @@ export default function Pending() {
 
 
 
-
-
   useEffect(() => { }, [payment]);
   useEffect(() => {
     getCart(token)
@@ -160,6 +160,10 @@ export default function Pending() {
   const history = useHistory();
   async function handleCompra(event) {
     event.preventDefault();
+    const jwt = myStorage.getItem("jwt")
+    let idSucu = (sucursal?.find(x => x.name === sucuSelected))?.id
+    dispatch(sendIdStore(idSucu,jwt))
+    dispatch()
     var data = JSON.stringify({
       "payment": "mercadopago"
     });
@@ -253,7 +257,7 @@ export default function Pending() {
         </div>
         <div>
           <div class="form-check">
-            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value={'Retiro en local'} onClick={handleSetAddress}></input>
+            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" ></input>
             <label class="form-check-label" for="exampleRadios1">
               Retiro en local:
             </label>
@@ -444,7 +448,7 @@ export default function Pending() {
                 <Card.Body>
                   <div>
                     <div class="form-check">
-                      <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked></input>
+                      <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" checked></input>
                       <label class="form-check-label" for="exampleRadios1">
                         Retiro en local:
                       </label>
