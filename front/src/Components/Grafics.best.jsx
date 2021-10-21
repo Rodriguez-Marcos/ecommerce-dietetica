@@ -101,7 +101,7 @@ export default function Bestsellers() {
   };
 
   return (
-    <div style={{ width: "100%", height: "500px" }}>
+    <div style={{ width: "65%", height: "500px" }}>
       <button onClick={() => Dates()}>
         {" "}
         <h2>Productos más Vendidos </h2>

@@ -98,7 +98,7 @@ export default function Grafics() {
         <Topbar />
         <Sidebar />
       </div>
-      <div style={{ width: "100%", height: "500px" }}>
+      <div style={{ width: "65%", height: "500px" }}>
         <button onClick={() => Dates()}>
           {" "}
           <h2>Compras Diarias. </h2>
