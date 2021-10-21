@@ -275,8 +275,6 @@ export default function Sidebar() {
   return (
     <Navbar bg="light" expand="lg" id="ContenedorNav">
       <Container id="navResponsive">
-        <Navbar.Brand href="#home">Menu</Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <div className="sidebar">
             <div className="sidebarWrapper">
@@ -284,11 +282,7 @@ export default function Sidebar() {
               <div className="sidebarMenu">
                 <h3 className="sidebarTitle">Agregar Elementos</h3>
                 <ul className="sidebarList">
-                  {/* <li className="sidebarListItem">
-              <PermIdentity className="sidebarIcon" />
-              Usuarios
-            </li> */}
-
+                 
                   <li className="sidebarListItem" onClick={() => openProduct()}>
                     <button className="sidebarIcon" />
                     Productos
@@ -341,25 +335,14 @@ export default function Sidebar() {
                     <DynamicFeed className="sidebarIcon" />
                     <NavLink to="/Admin/sucursal" class="text-decoration-none text-dark" >Sucursales</NavLink>
                   </li>
-                </ul>
-              </div>
-              <div className="sidebarMenu">
-                <h3 className="sidebarTitle">Finalizar</h3>
-                <ul className="sidebarList">
-                  {/* <li className="sidebarListItem">
-              <WorkOutline className="sidebarIcon" />
-              Manage
-            </li>
-            <li className="sidebarListItem">
-              <Timeline className="sidebarIcon" />
-              Analytics
-            </li> */}
                   <li className="sidebarListItem">
                     <Report className="sidebarIcon" />
                     <NavLink to="/home" class="text-decoration-none text-danger">Salir</NavLink>
                   </li>
+
                 </ul>
               </div>
+              
             </div>
           </div>
         </Navbar.Collapse>
