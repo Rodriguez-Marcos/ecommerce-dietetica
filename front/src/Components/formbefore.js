@@ -253,7 +253,7 @@ export default function Pending() {
         </div>
         <div>
           <div class="form-check">
-            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value={'Retiro en local'} onClick={handleSetAddress}></input>
+            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value={0} onClick={handleSetAddress}></input>
             <label class="form-check-label" for="exampleRadios1">
               Retiro en local:
             </label>
