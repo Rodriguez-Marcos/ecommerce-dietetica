@@ -1,35 +1,35 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getTotalByDay } from "../Actions";
-import { Bar } from "react-chartjs-2";
-import Topbar from "./AdminTopBar";
-import Sidebar from "./AdminSideBar";
-import Bestsellers from "./Grafics.best";
-export default function Grafics() {
+import { getBestSellers } from "../Actions";
+import { Pie } from "react-chartjs-2";
+import "chart.piecelabel.js";
+
+export default function Bestsellers() {
   // Importaciones y creacion de entorno
   const dispatch = useDispatch();
-  let totalByDay = useSelector((state) => state.reducerPablo.totalByDay);
+  let bestsellers = useSelector((state) => state.reducerPablo.bestseller);
   const myStorage = window.localStorage;
   let token = myStorage.getItem("jwt");
-  totalByDay = totalByDay.data;
+  bestsellers = bestsellers.data;
 
   // estados
-  const [order, setOrder] = useState("");
 
   useEffect(() => {
-    dispatch(getTotalByDay(token));
-  }, []);
+    dispatch(getBestSellers(token));
+  }, [dispatch]);
 
   const [state, setState] = useState({
-    totalByDay_Total: [],
-    totalByDay_Day: [],
+    id_product: [],
+    productQuantity: [],
+    name: [],
   });
   function Dates() {
     setState({
       ...state,
-      totalByDay_Total: totalByDay.map((e) => e.total),
-      totalByDay_Day: totalByDay.map((e) => e.createdDay.slice(0, 10)),
+      productQuantity: bestsellers.map((e) => e.productQuantity),
+      id_product: bestsellers.map((e) => e.id_product),
+      name: bestsellers.map((e) => e.name),
     });
   }
 
@@ -66,7 +66,7 @@ export default function Grafics() {
 
   function generateColors() {
     let colors = [];
-    for (let i = 0; i < state.totalByDay_Day.length; i++) {
+    for (let i = 0; i < state.id_product.length; i++) {
       colors.push(GenerateHexa());
     }
     return colors;
@@ -74,16 +74,15 @@ export default function Grafics() {
 
   console.log(generateColors());
   const data = {
-    labels: state.totalByDay_Day,
+    labels: state.name,
     datasets: [
       {
-        label: "Dinero $",
+        data: state.productQuantity,
         backgroundColor: generateColors(),
-        borderColor: "black",
-        borderWidth: 2,
-        hoverBackgroundColor: generateColors(),
-        hoverBorderColor: "black",
-        data: state.totalByDay_Total,
+        // borderColor: "black",
+        // borderWidth: 2,
+        // hoverBackgroundColor: generateColors(),
+        // hoverBorderColor: "black",
       },
     ],
   };
@@ -91,24 +90,23 @@ export default function Grafics() {
   const opciones = {
     maintainAspectRatio: false,
     responsive: true,
+    pieceLabel: {
+      render: function (arg) {
+        return arg.label + ":" + arg.value;
+      },
+      fontSize: "15",
+      fontColor: "#fff",
+      fontFamily: "Arial",
+    },
   };
+
   return (
-    <div>
-      <div>
-        <Topbar />
-        <Sidebar />
-      </div>
-      <div style={{ width: "100%", height: "500px" }}>
-        <button onClick={() => Dates()}>
-          {" "}
-          <h2>Compras Diarias. </h2>
-        </button>
-        <Bar data={data} options={opciones} />
-      </div>
-      <br />
-      <br />
-      <br />
-      <Bestsellers />
+    <div style={{ width: "100%", height: "500px" }}>
+      <button onClick={() => Dates()}>
+        {" "}
+        <h2>Productos más Vendidos </h2>
+      </button>
+      <Pie data={data} options={opciones} />
     </div>
   );
 }
