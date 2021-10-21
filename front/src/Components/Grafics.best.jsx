@@ -3,7 +3,8 @@ import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getBestSellers } from "../Actions";
 import { Pie } from "react-chartjs-2";
-import 'chart.piecelabel.js'
+import "chart.piecelabel.js";
+
 export default function Bestsellers() {
   // Importaciones y creacion de entorno
   const dispatch = useDispatch();
@@ -16,7 +17,7 @@ export default function Bestsellers() {
 
   useEffect(() => {
     dispatch(getBestSellers(token));
-  }, []);
+  }, [dispatch]);
 
   const [state, setState] = useState({
     id_product: [],
@@ -89,17 +90,22 @@ export default function Bestsellers() {
   const opciones = {
     maintainAspectRatio: false,
     responsive: true,
-    pieceLabel:{
-        render: function(arg){
-            return arg.label + ":" + arg.value
-        }, 
-        fontSize: 13,
-        fontColor: '#fff',
-        fontFamily: 'Arial'
-    }
+    pieceLabel: {
+      render: function (arg) {
+        return arg.label + ":" + arg.value;
+      },
+      fontSize: "15",
+      fontColor: "#fff",
+      fontFamily: "Arial",
+    },
   };
+
+
+  
   return (
     <div style={{ width: "100%", height: "500px" }}>
+     
+
       <h2>Productos más Vendidos </h2>
 
       <Pie data={data} options={opciones} />

@@ -288,15 +288,19 @@ export default function Sidebar() {
           </ul>
         </div>
         <div className="sidebarMenu">
-          <h3 className="sidebarTitle">Navegacion</h3>
+          <h3 className="sidebarTitle">Tablas</h3>
           <ul className="sidebarList">
-            <li className="sidebarListItem">
+          <li className="sidebarListItem">
               <DynamicFeed className="sidebarIcon" />
-              <NavLink to='/Admin/user'>Lista de Usuarios</NavLink>
+              <NavLink to='/Admin/grafics'>Graficas</NavLink>
             </li>
             <li className="sidebarListItem">
               <DynamicFeed className="sidebarIcon" />
-              <NavLink to='/Admin'>Lista de Productos</NavLink>
+              <NavLink to='/Admin/user'>Usuarios</NavLink>
+            </li>
+            <li className="sidebarListItem">
+              <DynamicFeed className="sidebarIcon" />
+              <NavLink to='/Admin'> Productos</NavLink>
             </li>
             <li className="sidebarListItem">
               <DynamicFeed className="sidebarIcon" />
@@ -306,10 +310,11 @@ export default function Sidebar() {
               <DynamicFeed className="sidebarIcon" />
               <NavLink to='/Admin/filters'>Categorias y Dietas</NavLink>
             </li>
+
           </ul>
         </div>
         <div className="sidebarMenu">
-          <h3 className="sidebarTitle">Staff</h3>
+          <h3 className="sidebarTitle">Finalizar</h3>
           <ul className="sidebarList">
             {/* <li className="sidebarListItem">
               <WorkOutline className="sidebarIcon" />

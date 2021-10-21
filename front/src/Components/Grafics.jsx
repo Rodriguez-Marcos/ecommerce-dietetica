@@ -3,6 +3,9 @@ import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getTotalByDay } from "../Actions";
 import { Bar } from "react-chartjs-2";
+import Topbar from "./AdminTopBar";
+import Sidebar from "./AdminSideBar";
+import Bestsellers from './Grafics.best'
 export default function Grafics() {
   // Importaciones y creacion de entorno
   const dispatch = useDispatch();
@@ -95,11 +98,18 @@ export default function Grafics() {
     responsive: true,
   };
   return (
-    <div style={{ width: "100%", height: "500px" }}>
+    <div >
+       <div>
+        <Topbar />
+        <Sidebar />
+      </div>
+      <div style={{ width: "100%", height: "500px" }}>
       <h2>Compras Diarias. </h2>
-
       <Bar data={data} options={opciones} />
       <button onClick={() => Dates()}> Ver</button>
+      <Bestsellers/>
+      </div>
+    
     </div>
   );
 }
