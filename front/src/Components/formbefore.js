@@ -371,7 +371,9 @@ export default function Pending() {
                 required='required'
                 onFocus={onFocus}
                 value={input.altura}
-              ></input>
+              >
+                
+              </input>
               {errors.altura && touched.altura && (
                 <p className={styles.errorMsg}>{errors.altura}</p>
               )}
