@@ -87,7 +87,7 @@ function NavBar({ getProductbyName, setLoading, isLogin, token }) {
       setLoading();
       history.push("/search");
     } else {
-      history.push("/home");
+      history.push("/");
     }
   }
 
@@ -101,7 +101,7 @@ function NavBar({ getProductbyName, setLoading, isLogin, token }) {
   return (
     <div className="content">
       <Navbar classname="navbar" expand="lg">
-        <Navbar.Brand href="#"><NavLink to="/home" ><img className="Logo" src={Logo} /></NavLink></Navbar.Brand>
+        <Navbar.Brand href="#"><NavLink to="/" ><img className="Logo" src={Logo} /></NavLink></Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll">
           <Nav id="navScroll"
@@ -111,7 +111,10 @@ function NavBar({ getProductbyName, setLoading, isLogin, token }) {
             id="Links"
           >
             <Nav.Link >
-              <NavLink to="/home" className='navlink1' >Inicio</NavLink>
+              <NavLink to="/" className='navlink1' >Inicio</NavLink>
+            </Nav.Link>
+            <Nav.Link >
+              <NavLink to="/products" className='navlink1' >Productos</NavLink>
             </Nav.Link>
             
 

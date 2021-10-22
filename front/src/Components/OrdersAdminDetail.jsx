@@ -66,7 +66,7 @@ export default function OrderAdminDetail() {
           <h6>Orden Numero </h6>
         </ModalHeader>
 
-      </Modal> </div> : <Redirect to='/home'/>};
+      </Modal> </div> : <Redirect to='/'/>};
 
 
 

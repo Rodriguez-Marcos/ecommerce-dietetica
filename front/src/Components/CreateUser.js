@@ -17,7 +17,7 @@ function CreateUser() {
 
     const history = useHistory();
     useEffect(() => {
-        if (isLogin) history.push('http://localhost:3001/home');
+        if (isLogin) history.push('http://localhost:3001/');
     }, [isLogin, history])
 
 
@@ -70,7 +70,7 @@ function CreateUser() {
     const responseGoogle = (response) => {
         createUserByGoogle(response.profileObj)
         if (response.profileObj !== undefined) {
-            history.push('/home')
+            history.push('/')
         }
     }
 
