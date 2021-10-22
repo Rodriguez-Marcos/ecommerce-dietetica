@@ -669,6 +669,28 @@ export function sendIdAddress( payload,token) {
       
   };
 }
+export function sendIdStore( payload,token) {
+  return async function (dispatch) {
+    let headersList = {
+      "Accept": "*/*",
+      "Authorization": "Bearer "+token,
+      "Content-Type": "application/json" 
+     }
+     
+     let reqOptions = {
+       url: "http://localhost:3001/cart?id_store="+payload,
+       method: "PUT",
+       headers: headersList,
+     }
+     
+     axios.request(reqOptions).then(function (response) {
+      dispatch({
+        type: 'SEND_STORE',
+        payload: response.data,
+      })});
+      
+  };
+}
 
 export function deleteAddress(id, token) {
   return async function (dispatch) {

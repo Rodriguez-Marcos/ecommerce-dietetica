@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import './formbefore.css'
 import NavBar from './NavBar';
-import { getAddress, postAddress, sendIdAddress, deleteAddress } from '../Actions';
+import { getAddress, postAddress, sendIdAddress, deleteAddress, sendIdStore } from '../Actions';
 // import emptycart from '../../Utils/emptycart';
 import { StyleSharp } from '@material-ui/icons';
 import Cookies from "universal-cookie";
@@ -19,8 +19,9 @@ import { Button, Container, Row, Col, Card } from 'react-bootstrap';
 import { Select } from '@material-ui/core';
 
 export default function Pending() {
-  const {isLogin}= useSelector(state=>state.cart)
+  const { isLogin } = useSelector(state => state.cart)
   const [sucuSelected, setSucuSelected] = useState('Centro Córdoba')
+  const [idSelected, setIdSelected] = useState(2)
   const myStorage = window.localStorage;
   const value = useContext(DataContext)
   const [carrito, setCarrito] = value.carrito;
@@ -32,11 +33,11 @@ export default function Pending() {
     if (!!myStorage.getItem('jwt')) {
       getCart(myStorage.getItem('jwt'));
     }
-    else{
+    else {
       history.push('/home')
     }
   }, [isLogin])
-  
+
   const [addressid, setAddressId] = useState(null)
   const [sucursal, setSucursal] = useState([]);
 
@@ -156,7 +157,7 @@ export default function Pending() {
     const jwt = myStorage.getItem("jwt");
     const { value } = e.target
     setAddressId(value)
-    dispatch(sendIdAddress(value,jwt))
+    dispatch(sendIdAddress(value, jwt))
   }
 
 
@@ -170,6 +171,9 @@ export default function Pending() {
   const history = useHistory();
   async function handleCompra(event) {
     event.preventDefault();
+    let el = document.getElementById('exampleRadios')
+    if(el?.checked)
+    dispatch(sendIdStore(idSelected,myStorage.getItem('jwt')))
     var data = JSON.stringify({
       "payment": "mercadopago"
     });
@@ -228,7 +232,16 @@ export default function Pending() {
     e.preventDefault();
     const { value } = e.target;
     setSucuSelected(value)
-    console.log(sucuSelected)
+    setIdSelected((sucursal?.find(x => x.name === value))?.id)
+    console.log('id: ',(sucursal?.find(x => x.name === value))?.id)
+    console.log('sucursales: ',sucursal)
+  }
+
+  function handleSelect(e){
+    console.log(e.target.checked)
+    if(e.target.value === 'retiro en sucursal'){
+
+    }
   }
 
 
@@ -253,7 +266,7 @@ export default function Pending() {
             {addresses && addresses?.map(address => {
               return (
                 <div class="form-check">
-                  <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value={address.id} onClick={handleSetAddress} ></input>
+                  <input class="form-check-input" type="radio" name="exampleRadios" id={"exampleRadios1_"+address.id } value={address.id} onClick={handleSetAddress} ></input>
                   <AddressCard address={address} />
                 </div>
               )
@@ -263,7 +276,7 @@ export default function Pending() {
         </div>
         <div>
           <div class="form-check">
-            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value={0} onClick={handleSetAddress}></input>
+            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value={'retiro en sucursal'} defaultChecked onClick={handleSelect} ></input>
             <label class="form-check-label" for="exampleRadios1">
               Retiro en local:
             </label>
@@ -294,10 +307,10 @@ export default function Pending() {
           <div class="form-check form-check-inline">
             <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1"></input>
             <label class="form-check-label" for="inlineCheckbox1">Quiero notificación vía mail de mi pedido</label>
-          <button type="button" class="btn btn-success" onClick={handleCompra}>Comprar</button>
-          {/* <button class="btn btn-primary" color="green" type="button">Comprar</button> */}
+            <button type="button" class="btn btn-success" onClick={handleCompra}>Comprar</button>
+            {/* <button class="btn btn-primary" color="green" type="button">Comprar</button> */}
 
-          <button type="button" class="btn btn-dark" onClick={() => { setMenu(true) }} >Volver al carrito</button>
+            <button type="button" class="btn btn-dark" onClick={() => { setMenu(true) }} >Volver al carrito</button>
           </div>
 
         </div>
@@ -455,7 +468,7 @@ export default function Pending() {
                 <Card.Body>
                   <div>
                     <div class="form-check">
-                      <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked></input>
+                      <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="retiro en sucursal" onClick={handleSelect} defaultChecked></input>
                       <label class="form-check-label" for="exampleRadios1">
                         Retiro en local:
                       </label>
@@ -491,9 +504,9 @@ export default function Pending() {
               <label class="form-check-label" for="inlineCheckbox1">Quiero notificación vía mail de mi pedido</label>
             </div>
             <div className="btnComprar">
-            <button type="button" class="btn btn-success" onClick={handleCompra}>Comprar</button>
-            {/* <button class="btn btn-primary" color="green" type="button">Comprar</button> */}
-            <button type="button" class="btn btn-dark" onClick={() => { setMenu(true) }} >Volver al carrito</button>
+              <button type="button" class="btn btn-success" onClick={handleCompra}>Comprar</button>
+              {/* <button class="btn btn-primary" color="green" type="button">Comprar</button> */}
+              <button type="button" class="btn btn-dark" onClick={() => { setMenu(true) }} >Volver al carrito</button>
             </div>
 
           </div>
