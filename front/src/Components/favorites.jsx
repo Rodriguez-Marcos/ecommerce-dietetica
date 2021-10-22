@@ -39,6 +39,10 @@ export default function Favorites() {
         })
     }
 
+    function handleClose(){
+        console.log('123')
+    }
+
     return (
         <div className="carritos show">
             <div className="carrito show">
@@ -58,9 +62,9 @@ export default function Favorites() {
 
 
                             </div>
-                            {/* <div className="remove__item">
+                            <div className="remove__item">
                                 <box-icon id="trash" onClick={() => handleClose(producto.id)} name="trash"></box-icon>
-                            </div> */}
+                            </div>
                         </div>
 
 
