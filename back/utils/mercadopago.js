@@ -10,9 +10,9 @@ export default function Mercadopago (cartItems) {
         try {
           let preference = {
             back_urls: {
-              success: "http://localhost:3000/payment/success",
-              failure: "http://localhost:3000/payment/failure",
-              pending: "http://localhost:3000/payment/pending",
+              success: "https://salvatore-dietetica.herokuapp.com/payment/success",
+              failure: "https://salvatore-dietetica.herokuapp.com/payment/failure",
+              pending: "https://salvatore-dietetica.herokuapp.com/payment/pending",
             },
             auto_return: "approved",
             items: []   

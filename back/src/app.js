@@ -49,14 +49,14 @@ app.use('/stores', Storeroutes)
 app.get("/feedback",(req, res) => {
   if(req.query.collection_status === 'approved'){
    return res.redirect(
-    "http://localhost:3000/payment/success"
+    "https://ecommerce-dietetica.vercel.app/payment/success"
   )}
   if(req.query.collection_status === 'pending'){
     return res.redirect(
-      "http://localhost:3000/payment/pending"
+      "https://ecommerce-dietetica.vercel.app/payment/pending"
     )
   }
-   return res.redirect("http://localhost:3000/payment/failure") 
+   return res.redirect("https://ecommerce-dietetica.vercel.app/payment/failure") 
 })
 app.use('/sucursal', Sucursal)
 
