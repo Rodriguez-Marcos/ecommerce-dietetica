@@ -149,7 +149,9 @@ export default function Pending() {
 
   function calenSubmit(event){
     event.preventDefault()
-    swal("Creado", "Turno asignado con éxito!", "success")
+    if(!errorsForm)
+    return swal("Creado", "Turno asignado con éxito!", "success")
+    return swal("Creado", "No pudimos agendar tu turno, por favor slecciona una fecha valida", "error")
   }
 
   useEffect(() => {
@@ -164,6 +166,9 @@ export default function Pending() {
   function handleSetAddress(e) {
     const jwt = myStorage.getItem("jwt");
     const { value } = e.target
+    if(value){
+      dispatch({type: 'SET_EERORS_FORM', payload: ''})
+    }
     setAddressId(value)
     dispatch(sendIdAddress(value, jwt))
   }
@@ -248,7 +253,7 @@ export default function Pending() {
   }
 
   function handleSelect(e) {
-    console.log(e.target.checked)
+    dispatch({type: 'SET_EERORS_FORM', payload: 'Deves volver a ingresar un horario si todavia no lo has hecho'})
     if (e.target.value !== 'retiro en sucursal') {
 
     }
@@ -305,7 +310,10 @@ export default function Pending() {
                   </select>
                   <h4>Por favor seleccione fecha y horario que va a retirar:</h4>
                   <h4>Por favor seleccione fecha y horario que va a retirar:</h4>
-                  <Calendar></Calendar>
+                  <span class="calendar">
+                    <Calendar></Calendar>
+                    </span>
+                    {errorsForm?<p style={{color: 'red'}}>{errorsForm}</p>:<br/>}
                 </Card.Body>
               </Card>
             </Col>
@@ -318,7 +326,7 @@ export default function Pending() {
               <label class="form-check-label" for="inlineCheckbox1">Quiero notificación vía mail de mi pedido</label>
             </div>
             <div className="btnComprar">
-              <button type="button" class="btn btn-success" onClick={handleCompra}>Comprar</button>
+            <button type="button" style={errorsForm?{backgroundColor: 'red'}:{}} class="btn btn-success" onClick={handleCompra}>Comprar</button>
               {/* <button class="btn btn-primary" color="green" type="button">Comprar</button> */}
               <button type="button" class="btn btn-dark" onClick={() => { setMenu(true) }} >Volver al carrito</button>
             </div>
