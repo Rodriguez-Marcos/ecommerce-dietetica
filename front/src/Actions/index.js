@@ -626,10 +626,16 @@ export function getBestSellers( token) {
   return async function (dispatch) {
 
     
+let headersList = {
+  "Accept": "*/*",
+
+  "Authorization": "Bearer "+ token,  
+ }
  
  let reqOptions = {
    url: "http://localhost:3001/orders/bestsellers",
    method: "GET",
+   headers: headersList,
  }
  
  axios.request(reqOptions).then(function (response) {
@@ -640,7 +646,6 @@ export function getBestSellers( token) {
  })      
   };
 }
-
 export function getQualified() {
   return async function (dispatch) {
 
@@ -658,7 +663,6 @@ export function getQualified() {
  })      
   };
 }
-
 export function sendIdAddress( payload,token) {
   return async function (dispatch) {
     let headersList = {
@@ -720,8 +724,11 @@ export function deleteAddress(id, token) {
     };
 
     axios.request(reqOptions).then(function (response) {
-      console.log(response.data);
-    });
+       dispatch({
+        type: 'DELETE_ADDRESS',
+        payload: response.data,
+      })});
+    
   };
 }
 

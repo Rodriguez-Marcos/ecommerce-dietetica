@@ -17,18 +17,14 @@ export default function AddressCard({ address }) {
   let history = useHistory();
   let dispatch = useDispatch();
   let { isLogin, token, comodin } = useSelector(state => state.reducerPablo);
-  let { productsFavs } = useSelector(state => state.favs);
-  let { pushPath } = usePath();
-  const [fav, setFav] = useState(productsFavs.some(checkId));
-  let isFav = productsFavs.some(checkId)
   function checkId({ id }) {
     return id === address.id;
   }
   function borrar(e) {
     const jwt = myStorage.getItem("jwt");
     const { value } = e.target;
-   dispatch(deleteAddress(value,jwt))
-   window.location.reload()
+ dispatch(deleteAddress(value,jwt))
+ window.location.reload()
   }
  
 
