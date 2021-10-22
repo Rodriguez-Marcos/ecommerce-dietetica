@@ -165,7 +165,7 @@ function NavBar({ getProductbyName, setLoading, isLogin, token }) {
               <p> <NavLink className="perfil" to='/userprofile'><AccountCircle />Bienvendido {jwt?.decode(token)?.name} </NavLink></p>
               <NavLink className='Link_cerrarSesion'to='/'>
                 <GoogleLogout
-                  clientId="908895428836-kaesjl71puimi31fjbffca9t4nvl7v6r.apps.googleusercontent.com"
+                  clientId="908895428836-4a919vmuc5gl4ao04i8cjpgmnjt58ks0.apps.googleusercontent.com"
                   buttonText="Cerrar Sesión"
                   onLogoutSuccess={logout}
                   onFailure={(e) => { console.error('fallo',e);myStorage.setItem('jwt','') }}
