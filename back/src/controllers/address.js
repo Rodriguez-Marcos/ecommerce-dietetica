@@ -57,7 +57,7 @@ export async function getAddress(req, res) {
     }
 }
 export async function deleteAddress(req, res) {
-    const { id } = req
+    const { id } = req.params
     try {
         let address = await Address.destroy({ where: { id: id } })
         return res.json({
