@@ -193,13 +193,13 @@ export default function Pending() {
       data: data
     };
 
-    /* axios(config)
+     axios(config)
       .then(function (response) {
         window.location.replace(response.data);
       })
       .catch(function (error) {
         console.log(error);
-      }); */
+      });
 
   }
   async function payment(token) {
