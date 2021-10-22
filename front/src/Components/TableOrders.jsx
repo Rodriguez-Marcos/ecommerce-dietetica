@@ -8,6 +8,7 @@ import "./TableOrders.css";
 
 import { useDispatch, useSelector } from "react-redux";
 import { getOrders, putOrders,getFilterStatus } from "../Actions";
+import { AccessAlarm } from "@material-ui/icons";
 
 export default function TableOrders() {
   let dispatch = useDispatch();
@@ -16,10 +17,11 @@ export default function TableOrders() {
   const myStorage = window.localStorage
   let token = myStorage.getItem('jwt')
 
+
+  console.log(orders,'estoy aca')
   useEffect(() => {
     dispatch(getOrders(token,order));
   }, [dispatch]);
-  console.log(token, 'Es el Token')
   const [estado, setStatus] = useState({
     status: orders.status,
     id: "",
@@ -65,7 +67,7 @@ export default function TableOrders() {
     status: "",
     modal: false,
   });
-
+console.log(state)
   function handlerDetails(e) {
 
 
@@ -129,7 +131,7 @@ export default function TableOrders() {
               <tbody>
                 <td>{e.id}</td>
                 <td>
-                  {e.client ? e.client.name : "User"} {"  "}
+                  {e.client ? e.client.name : "User"} {" "}
                   {e.client ? e.client.lastname : "No Found "}{" "}
                 </td>
                 <td>{e.client ? e.client.email : "No Found"}</td>

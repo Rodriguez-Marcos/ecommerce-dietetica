@@ -23,6 +23,9 @@
     position: absolute;
     left: 0;
   }
+.link_banner{
+  cursor: pointer;
+}
 /* .bannerTexto{
     width: 100%;
     height: 100%;

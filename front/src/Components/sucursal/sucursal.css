@@ -1,0 +1,19 @@
+.sidebar-sucursal {
+  width: auto;
+}
+.container {
+  width: auto;
+}
+.table-sucursales {
+  height: calc(95vh - 50px);
+  width: calc(71vw - 50px);
+}
+
+.sidebar-sucursales {
+  display: flex;
+  flex-wrap: wrap;
+}
+.list-sucursales {
+  padding: 10px;
+  overflow: scroll;
+}

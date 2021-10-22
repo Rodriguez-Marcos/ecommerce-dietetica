@@ -161,6 +161,13 @@
 #sesion button div{
     display: none;
 }
+.perfil{
+    text-decoration: none;
+    color: white;
+}
+.perfil:hover{
+    color: var(--colorverde);
+}
 
 
 .favs{
@@ -219,6 +226,9 @@
     font-weight: 600;
     background-color: crimson;
 
+}
+.Link_cerrarSesion{
+    text-decoration: none;
 }
 @media only screen and (max-width: 1080px) {
     #Links{

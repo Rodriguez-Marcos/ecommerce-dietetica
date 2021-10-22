@@ -39,6 +39,8 @@ export default function Favorites() {
         })
     }
 
+ 
+
     return (
         <div className="carritos show">
             <div className="carrito show">

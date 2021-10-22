@@ -8,6 +8,11 @@ import {
   Button,
 
 } from "reactstrap";
+import { Accordion } from "@material-ui/core";
+import { AccordionDetails } from "@material-ui/core";
+import { AccordionSummary } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
+import { ExpandMore } from "@material-ui/icons";
 
 export default function Bestsellers() {
   // Importaciones y creacion de entorno
@@ -104,13 +109,34 @@ export default function Bestsellers() {
     },
   };
 
+    //acordeon
+    const [expanded, setExpanded] = React.useState(false);
+
+    const handleChange = (panel) => (event, isExpanded) => {
+      setExpanded(isExpanded ? panel : false);
+    };
+  
+
   return (
+    <Accordion expanded={expanded === 'panel2'} onChange={handleChange('panel2')}>
+    <AccordionSummary
+      // expandIcon={<ExpandMoreIcon />}
+      aria-controls="panel2bh-content"
+      id="panel2bh-header"
+      onClick={() => Dates() }
+    >
+      <Typography sx={{ width: '33%', flexShrink: 0 }}>Users</Typography>
+    </AccordionSummary>
+    <AccordionDetails>
     <div style={{ width: "65%", height: "500px" }}>
-      <Button onClick={() => Dates() } color="primary bg-primary">
+      {/* <Button onClick={() => Dates() } color="primary bg-primary">
         {" "}
         <h2>Productos más Vendidos </h2>
-      </Button>
+      </Button> */}
       <Pie data={data} options={opciones} />
     </div>
+    </AccordionDetails>
+  </Accordion>
+   
   );
 }

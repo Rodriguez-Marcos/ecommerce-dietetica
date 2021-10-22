@@ -92,8 +92,7 @@ export async function createOrder(req, res, next) {
                     `,
                 })
                 console.log('Message sent', info.messageId)
-            }
-            if (order.dataValues.id_store !== null) {
+            } else {
                 const info = await transporter.sendMail({
                     from: "'Salvatore' <faridsesin@gmail.com>",
                     to: clientMail,
@@ -101,7 +100,7 @@ export async function createOrder(req, res, next) {
                     html: `
                         <h1>GRACIAS POR TU COMPRA</h1>
                         <h2>Hola ${client.dataValues.name} ${client.dataValues.lastname} </h2>
-                        <p> Estamos procesando tu pedido y te esperamos para que recojas tus productos</p>`,
+                        <p> Estamos procesando tu pedido y te esperamos para que recojas tus productos en la sucursal que escogiste</p>`,
                 })
                 console.log('Message sent', info.messageId)
             }
@@ -118,7 +117,8 @@ export async function createOrder(req, res, next) {
 }
 export async function getOrders(req, res) {
     let { id_client, id_order, status } = req.query
-    id_client = req.id;
+    
+    console.log("hola")
     try {
         if (!id_client && !id_order) {
             var orders = await Order.findAll(
@@ -247,13 +247,12 @@ export async function changeOrderStatus(req, res) {
 
     }
 }
-
 export async function bestSellers(req, res) {
     try {
 
         let productsQuantity = await Product_Order.findAll({
             group: ['id_product'],
-            attributes: ['id_product',
+            attributes: [['id_product','id'],
                 [sequelize.fn('SUM', sequelize.col('quantity')),
                     'productQuantity'],
                 [sequelize.literal(`(
@@ -296,7 +295,6 @@ export async function bestSellers(req, res) {
         })
     }
 }
-
 export async function totalOrderByDay(req, res) {
     try {
 
