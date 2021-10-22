@@ -354,8 +354,8 @@ export async function updateProduct(req, res) {
 export async function bestQualifiedProducts(req, res) {
     try {
         let qualified = await Review.findAll({
-            order: ['calification'],
             group:['id_product'],
+            order: [[sequelize.fn('SUM', sequelize.col('calification')), 'DESC']],
             attributes: [['id_product', 'id'],
             [sequelize.literal(`(
                 SELECT name
