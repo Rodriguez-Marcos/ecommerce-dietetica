@@ -3,10 +3,12 @@ import DatePicker, { registerLocale } from "react-datepicker";
 import { addDays, isWeekend } from 'date-fns';
 import "react-datepicker/dist/react-datepicker.css";
 import es from 'date-fns/locale/es';
+import { useDispatch } from "react-redux";
 registerLocale("es", es);
 
 
 export default function Calendar() {
+  const dispatch = useDispatch();
   const [hoursSelected, setHoursSelected] = useState();
   const [startDate, setStartDate] = useState(new Date());
   const [err, setErr] = useState('No se ha seleccionado un horario valido');
@@ -25,17 +27,17 @@ export default function Calendar() {
 
 let weekends = calcWeekends(new Date(),addDays(new Date(),14))
 function handleChange(e){
- // console.log(weekends)
   let hour = e.slice(11,13);
   let minut = e.slice(14,16);
   let validHours = [9,10,11,12,13,14,15,16,17,18]
   let isValid = validHours.find(x=>x===Number(hour))
   if(isValid){
     if(minut === '30' || minut === '00'){
-     setErr(' ')}
-     else{setErr('No se ha seleccionado un horario valido')}
+      dispatch({type: 'SET_EERORS_FORM',payload: ''})
+    }
+     else{dispatch({type: 'SET_EERORS_FORM',payload: 'No se ha seleccionado un horario valido'})}
   }
-  else{setErr('No se ha seleccionado un horario valido')}
+  else{dispatch({type: 'SET_EERORS_FORM',payload: 'No se ha seleccionado un horario valido'})}
   setHoursSelected(e)
 }
 
@@ -59,7 +61,7 @@ function handleChange(e){
       maxDate={addDays(new Date(), 14)}
       selected={startDate} onChange={(date) => setStartDate(date)}
     />
-    <h6 style={{color: 'red'}}>{err}</h6>
+    
     </>
   );
 }

@@ -158,7 +158,7 @@ export default function Pending() {
     })
   }, [])
 
-  let { token, comodin, addresses } = useSelector(state => state.reducerPablo)
+  let { token, comodin, addresses, errorsForm } = useSelector(state => state.reducerPablo)
   const cookies = new Cookies();
 
   function handleSetAddress(e) {
@@ -179,6 +179,7 @@ export default function Pending() {
   const history = useHistory();
   async function handleCompra(event) {
     event.preventDefault();
+    if(errorsForm){
     let el = document.getElementById('exampleRadios1')
     if (el?.checked)
       dispatch(sendIdStore(idSelected, myStorage.getItem('jwt')))
@@ -204,7 +205,7 @@ export default function Pending() {
       .catch(function (error) {
         console.log(error);
       });
-
+}
   }
   async function payment(token) {
     var data = JSON.stringify({
@@ -504,10 +505,10 @@ export default function Pending() {
                     <span class="calendar">
                     <Calendar></Calendar>
                     </span>
+                    {errorsForm?<p style={{color: 'red'}}>{errorsForm}</p>:<br/>}
                     <div className="btn-Cargar">
                     <button type="submit" class="btn btn-primary" onClick={calenSubmit}>Cargar</button>
                   </div>
-
                   </div>
                 </Card.Body>
               </Card>
@@ -520,7 +521,7 @@ export default function Pending() {
               <label class="form-check-label" for="inlineCheckbox1">Quiero notificación vía mail de mi pedido</label>
             </div>
             <div className="btnComprar">
-              <button type="button" class="btn btn-success" onClick={handleCompra}>Comprar</button>
+              <button type="button" style={errorsForm?{backgroundColor: 'red'}:{}} class="btn btn-success" onClick={handleCompra}>Comprar</button>
               {/* <button class="btn btn-primary" color="green" type="button">Comprar</button> */}
               <button type="button" class="btn btn-dark" onClick={() => { setMenu(true) }} >Volver al carrito</button>
             </div>

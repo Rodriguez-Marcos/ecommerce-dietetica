@@ -44,12 +44,18 @@ const InitialState = {
   paths: [null, null, null],
   totalByDay: [],
   bestseller:[],
-  qualified:[]
+  qualified:[],
+  errorsForm: 'No se ha seleccionado un horario valido'
 
 };
 
 export default function reducerPablo(state = InitialState, action) {
   switch (action.type) {
+    case 'SET_EERORS_FORM':
+      return{
+        ...state,
+        errorsForm: action.payload
+      }
     case GET_PRODUCTS:
       return {
         ...state,
