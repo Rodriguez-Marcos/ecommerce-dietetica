@@ -60,7 +60,8 @@ app.get("/feedback",(req, res) => {
 })
 app.use('/sucursal', Sucursal)
 app.use('/',(req, res)=>{
-  return res.send('<meta name="google-site-verification" content="fNJ2-N4Gb7MmRZ3QyA7ZyZBTwEN2ZGdPnfIWqVlZgys" />')
+  return res.send('<!doctype html><html lang="en"><head><meta name="google-site-verification" content="fNJ2-N4Gb7MmRZ3QyA7ZyZBTwEN2ZGdPnfIWqVlZgys"/><meta charset="utf-8"/><link rel="icon" href="/nuez.png"/><meta name="viewport" content="width=device-width,initial-scale=1"/><meta name="theme-color" content="#000000"/><meta name="description" content="Web site created using create-react-app"/><link rel="manifest" href="/manifest.json"/><title>Salvatore - Dietética</title><link href="/static/css/2.6c7e8b04.chunk.css" rel="stylesheet"><link href="/static/css/main.133493c5.chunk.css" rel="stylesheet"></head>')
+  return res.send('<meta name="google-site-verification" content="fNJ2-N4Gb7MmRZ3QyA7ZyZBTwEN2ZGdPnfIWqVlZgys"/>')
 })
 
 
