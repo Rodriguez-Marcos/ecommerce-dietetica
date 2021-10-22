@@ -33,7 +33,7 @@ export default function Pending() {
       getCart(myStorage.getItem('jwt'));
     }
     else{
-      history.push('/home')
+      history.push('/')
     }
   }, [isLogin])
   
