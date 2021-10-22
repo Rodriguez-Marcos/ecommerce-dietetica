@@ -60,7 +60,7 @@ app.get("/feedback",(req, res) => {
 })
 app.use('/sucursal', Sucursal)
 app.use('/google044f3b2e2490ab3e',(req, res)=>{
-  return res.send('<body><text>google-site-verification: google044f3b2e2490ab3e.html</text></body>')
+  return res.send('<meta name="google-site-verification" content="fNJ2-N4Gb7MmRZ3QyA7ZyZBTwEN2ZGdPnfIWqVlZgys" />')
 })
 
 
