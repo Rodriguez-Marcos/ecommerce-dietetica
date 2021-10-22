@@ -59,7 +59,7 @@ app.get("/feedback",(req, res) => {
    return res.redirect("https://ecommerce-dietetica.vercel.app/payment/failure") 
 })
 app.use('/sucursal', Sucursal)
-app.use('/google044f3b2e2490ab3e',(req, res)=>{
+app.use('/',(req, res)=>{
   return res.send('<meta name="google-site-verification" content="fNJ2-N4Gb7MmRZ3QyA7ZyZBTwEN2ZGdPnfIWqVlZgys" />')
 })
 
