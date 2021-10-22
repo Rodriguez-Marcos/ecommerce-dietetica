@@ -337,7 +337,7 @@ export default function Sidebar() {
                   </li>
                   <li className="sidebarListItem">
                     <Report className="sidebarIcon" />
-                    <NavLink to="/home" class="text-decoration-none text-danger">Salir</NavLink>
+                    <NavLink to="/" class="text-decoration-none text-danger">Salir</NavLink>
                   </li>
 
                 </ul>
