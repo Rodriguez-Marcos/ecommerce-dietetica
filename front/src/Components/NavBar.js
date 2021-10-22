@@ -146,7 +146,9 @@ function NavBar({ getProductbyName, setLoading, isLogin, token }) {
 
 
             {isAdmin ?
-              <NavLink to='/Admin'>Admin</NavLink> : null}
+            <Nav.Link>
+              <NavLink to='/Admin'>Admin</NavLink>
+              </Nav.Link> : null}
           </Nav>
           <Nav id="busqueda">
             <Form className="d-flex" id="d-flex" onSubmit={(e) => handleSubmit(e)}>
