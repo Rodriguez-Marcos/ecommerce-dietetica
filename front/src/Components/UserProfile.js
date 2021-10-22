@@ -12,6 +12,7 @@ import AdminDetailsOrders from "./AdminDetailsOrders";
 
 
 
+
 export default function UserProfile(){
     
 const orders = useSelector((state) => state.reducerPablo.orders);
@@ -75,7 +76,7 @@ var id = isadmin.id
     return(
         <div>
             <Navbar/>
-            <div>
+            <div >
            <UserOrders orders= {orders} handlerDetails = {handlerDetails}/>
             </div>
             <AdminDetailsOrders input={state} closeModal={closeModal} />

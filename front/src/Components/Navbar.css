@@ -261,6 +261,9 @@
         justify-content: center;
         align-items: center;
     }
+    #navlink-inicio{
+        display:none
+    }
   }
 /* Movil */
 .navbar-nav{
