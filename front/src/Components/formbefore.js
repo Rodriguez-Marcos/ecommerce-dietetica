@@ -132,6 +132,7 @@ export default function Pending() {
   useEffect(() => {
     const jwt = myStorage.getItem("jwt")
     dispatch(getAddress(jwt, id))
+
   }, [])
 
   async function handleSubmit(event) {
@@ -161,8 +162,6 @@ export default function Pending() {
     setAddressId(value)
     dispatch(sendIdAddress(value, jwt))
   }
-
-
 
 
 
