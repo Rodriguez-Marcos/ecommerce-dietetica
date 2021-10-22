@@ -179,7 +179,7 @@ export default function Pending() {
   const history = useHistory();
   async function handleCompra(event) {
     event.preventDefault();
-    if(errorsForm){
+    if(!errorsForm){
     let el = document.getElementById('exampleRadios1')
     if (el?.checked)
       dispatch(sendIdStore(idSelected, myStorage.getItem('jwt')))
