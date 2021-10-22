@@ -7,6 +7,10 @@ import { useSelector, useDispatch } from "react-redux";
 import ProductsCards from './Products';
 import './Home.css'
 import { getBestSellers } from "../Actions";
+import Footer from './Footer'
+
+
+
 export default function LandingPage() {
     const dispatch = useDispatch();
     let bestsellers = useSelector((state) => state.reducerPablo.bestseller)
@@ -14,6 +18,7 @@ export default function LandingPage() {
     let token = myStorage.getItem("jwt");
     bestsellers = bestsellers.data;
     
+    console.log(bestsellers)
     // estados
   
     useEffect(() => {
@@ -33,6 +38,7 @@ export default function LandingPage() {
                 <ProductsCards
                     products={bestsellers} />
             </div>
+           
         </div>
     )
 }

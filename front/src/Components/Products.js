@@ -10,6 +10,7 @@ import axios from 'axios';
 import getFavorites from '../Utils/getFavorites';
 import { getProducts } from '../Actions';
 import { DataContext } from '../Contexts/DataProvider';
+import Footer from './Footer';
 
 const cookies = new Cookies();
 
@@ -26,10 +27,15 @@ export default function ProductsCards({products}) {
   },[])
 
   return (
+    <div>
     <div className={styles.main}>
       {products && products?.map(product=>{
         return <ProductCard product={product}/>
       })}
+    </div>
+    <footer>
+      <Footer/>
+    </footer>
     </div>
 
 

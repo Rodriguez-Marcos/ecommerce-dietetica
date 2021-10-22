@@ -146,7 +146,9 @@ function NavBar({ getProductbyName, setLoading, isLogin, token }) {
            
 
             {isAdmin ?
-            <NavLink to='/Admin'>Admin</NavLink> : null}
+            <Nav.Link >
+            <NavLink to='/Admin' className='navlink1'>Admin</NavLink> 
+            </Nav.Link>:null}
           </Nav>
           <Nav id="busqueda">
             <Form className="d-flex" id="d-flex" onSubmit={(e) => handleSubmit(e)}>
@@ -161,7 +163,7 @@ function NavBar({ getProductbyName, setLoading, isLogin, token }) {
             </Form>
             {isLogin ? <div id="sesion">
                <p> <NavLink to='/userprofile'><AccountCircle/></NavLink>Bienvendido {jwt?.decode(token)?.name} </p>
-               <NavLink to='/home'>
+               
                <GoogleLogout
               clientId="908895428836-kaesjl71puimi31fjbffca9t4nvl7v6r.apps.googleusercontent.com"
               buttonText="Cerrar Sesión"
@@ -170,7 +172,7 @@ function NavBar({ getProductbyName, setLoading, isLogin, token }) {
             >
               <span id='cerrarSesion'><ExitToApp/> Cerrar Sesión</span>
             </GoogleLogout>
-            </NavLink>
+            
             </div>
               : <div id="btnsSesionRegistro">
                 <NavLink id="btnSesion" to='/Login'><Image id="imgSesion" src={Sesion} /><span>Inicia Sesion</span> </NavLink>
@@ -181,7 +183,7 @@ function NavBar({ getProductbyName, setLoading, isLogin, token }) {
       </Navbar>
       {menu?<Trolley/>:false}
       {favs?<Favorites/>:false}
-
+            
     </div>
   )
 

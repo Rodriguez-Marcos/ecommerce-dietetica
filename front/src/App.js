@@ -19,7 +19,7 @@ import UserProfile from './Components/UserProfile'
 import Form from './Components/formbefore';
 import Grafics from './Components/Grafics';
 import Sucursal from './Components/sucursal/sucursal';
-import LandingPage from './Components/LandingPage.js';
+import LandingPage from './Components/landingPage.js';
 
 
 
