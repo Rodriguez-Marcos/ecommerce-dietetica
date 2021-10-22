@@ -41,7 +41,7 @@ var items = [
 function Item(props) {
   return (
     <Paper className="paperContainer">
-      <Link to={props.item.link}>
+      <Link to={props.item.link} className="link_banner">
         <img src={props.item.img} className="img_banner" />
       </Link>
       {/* <div className="bannerTexto"> 
