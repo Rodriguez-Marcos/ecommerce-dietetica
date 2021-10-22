@@ -41,7 +41,7 @@ export default function AddressCard({ address }) {
         <h5 id="otros">Otros: {address.otros}</h5>
         <h5 id="codigo">Codigo: {address.codigo}</h5>
         <h5 id="numero">Numero: {address.numero}</h5>
-      <button type='submit' value={address.id} onClick={borrar}>Eliminar</button>
+      <button className="btn-eliminar" class="btn btn-success" type='submit' value={address.id} onClick={borrar}>Eliminar</button>
       </div>
 
     </div>
