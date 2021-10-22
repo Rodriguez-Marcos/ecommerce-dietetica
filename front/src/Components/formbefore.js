@@ -149,7 +149,7 @@ export default function Pending() {
 
   function calenSubmit(event){
     event.preventDefault()
-    swal("Creado", "Turno asignado correctamente!", "success")
+    swal("Creado", "Turno asignado con éxito!", "success")
   }
 
   useEffect(() => {
