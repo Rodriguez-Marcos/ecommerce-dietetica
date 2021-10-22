@@ -646,7 +646,23 @@ let headersList = {
  })      
   };
 }
+export function getQualified() {
+  return async function (dispatch) {
 
+ 
+ let reqOptions = {
+   url: "http://localhost:3001/products/reviews",
+   method: "GET"
+ }
+ 
+ axios.request(reqOptions).then(function (response) {
+  dispatch({
+    type: 'GET_QUALIFIED',
+    payload: response.data,
+  })
+ })      
+  };
+}
 export function sendIdAddress( payload,token) {
   return async function (dispatch) {
     let headersList = {
@@ -708,8 +724,11 @@ export function deleteAddress(id, token) {
     };
 
     axios.request(reqOptions).then(function (response) {
-      console.log(response.data);
-    });
+       dispatch({
+        type: 'DELETE_ADDRESS',
+        payload: response.data,
+      })});
+    
   };
 }
 
@@ -784,4 +803,3 @@ export function postSucursal(payload, token) {
       
   };
 }
-

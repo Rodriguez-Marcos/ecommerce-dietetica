@@ -6,10 +6,14 @@ import { Bar } from "react-chartjs-2";
 import Topbar from "./AdminTopBar";
 import Sidebar from "./AdminSideBar";
 import Bestsellers from "./Grafics.best";
-import {
-  Button,
+import { Button } from "reactstrap";
+import './Grafics.css'
+import { Accordion } from "@material-ui/core";
+import { AccordionDetails } from "@material-ui/core";
+import { AccordionSummary } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
+import { ExpandMore } from "@material-ui/icons";
 
-} from "reactstrap";
 export default function Grafics() {
   // Importaciones y creacion de entorno
   const dispatch = useDispatch();
@@ -96,23 +100,48 @@ export default function Grafics() {
     maintainAspectRatio: false,
     responsive: true,
   };
+
+
+  //acordeon
+  const [expanded, setExpanded] = React.useState(false);
+
+  const handleChange = (panel) => (event, isExpanded) => {
+    setExpanded(isExpanded ? panel : false);
+  };
+
+
   return (
+
     <div>
       <div>
         <Topbar />
+      </div>
+      <div className="sidebar-graficas">
         <Sidebar />
+        <div className="graficas">
+          <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
+            <AccordionSummary
+              // expandIcon={<ExpandMoreIcon />}
+              aria-controls="panel1bh-content"
+              id="panel1bh-header"
+              onClick={() => Dates()}
+            >
+              <Typography sx={{ width: '33%', flexShrink: 0 }} />
+              <Typography sx={{ color: 'text.secondary' }}>Estadistica compras diarias</Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <div style={{ width: "65%", height: "500px" }}>
+                {/* <Button color="primary bg-primary" onClick={() => Dates()}>
+              {" "}
+              <h2>Compras Diarias. </h2>
+            </Button> */}
+                <Bar data={data} options={opciones} />
+              </div>
+            </AccordionDetails>
+          </Accordion>
+          <Bestsellers />
+        </div>
       </div>
-      <div style={{ width: "65%", height: "500px" }}>
-        <Button  color="primary bg-primary" onClick={() => Dates()}>
-          {" "}
-          <h2>Compras Diarias. </h2>
-        </Button>
-        <Bar data={data} options={opciones} />
-      </div>
-      <br />
-      <br />
-      <br />
-      <Bestsellers />
     </div>
   );
 }

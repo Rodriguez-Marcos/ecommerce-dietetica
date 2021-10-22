@@ -39,7 +39,7 @@ app.use('/categories', Categoryroutes);
 app.use('/diets', Dietroutes);
 app.use('/login', Login);
 app.use('/addCart',Cart)
-app.use('/orders',useExtractor, Orderroutes);
+app.use('/orders', Orderroutes);
 app.use('/reviews',useExtractor, Reviewroutes)
 app.use('/favorite',useExtractor, Favoriteroutes)
 app.use('/cart',useExtractor,Cartroutes)

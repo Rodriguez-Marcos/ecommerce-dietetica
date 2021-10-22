@@ -4,6 +4,7 @@ import Diet from '../models/Diet.js';
 import Category from '../models/Category.js';
 import Review from '../models/Review.js';
 import { Sequelize, Op } from 'sequelize';
+import { sequelize } from '../database/db.js'
 
 export async function createProduct(req, res) {
     const { name, price, description, image, stock, ids_categories, ids_diets } = req.body;
@@ -345,6 +346,51 @@ export async function updateProduct(req, res) {
             message: 'Something goes Wrong',
             data: {}
 
+        })
+
+    }
+}
+
+export async function bestQualifiedProducts(req, res) {
+    try {
+        let qualified = await Review.findAll({
+            order: ['calification'],
+            attributes: [['id_product', 'id'],
+            [sequelize.literal(`(
+                SELECT name
+                FROM products
+                WHERE products.id = review.id_product
+                
+              )`),
+                'name',
+            ],
+            [sequelize.literal(`(
+                SELECT price
+                FROM products
+                WHERE products.id = review.id_product
+                
+              )`),
+                'price',
+            ],
+            [sequelize.literal(`(
+                SELECT image
+                FROM products
+                WHERE products.id = review.id_product
+                
+              )`),
+                'image',
+            ]],
+            limit: 10
+        })
+        res.status(200).json({
+            message: 'Products counted',
+            data: qualified
+        })
+    } catch (err) {
+        console.log(err)
+        res.status(500).json({
+            message: 'Something goes Wrong',
+            data: {}
         })
 
     }

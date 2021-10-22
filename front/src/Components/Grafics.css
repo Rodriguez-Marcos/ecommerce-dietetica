@@ -1,0 +1,13 @@
+.sidebar-graficas{
+    display: flex;
+    flex-direction: row;
+}
+.graficas{
+    width: 100%;
+}
+
+@media only screen and (min-width:100px) and (max-width: 700px) {
+    .sidebar-graficas{
+        flex-direction: column;
+    }
+}
