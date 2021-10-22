@@ -21,8 +21,6 @@ import Grafics from './Components/Grafics';
 import Sucursal from './Components/sucursal/sucursal';
 import LandingPage from './Components/landingPage.js';
 
-
-
 function App() {
 
   const isAdmin = useSelector((state)=> state.reducerPablo.IsAdmin)

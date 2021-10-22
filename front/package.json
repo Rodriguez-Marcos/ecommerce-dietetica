@@ -22,6 +22,7 @@
     "chart.js-plugin-labels-dv": "^3.0.5",
     "chart.piecelabel.js": "^0.15.0",
     "cors": "^2.8.5",
+    "date-fns": "^2.25.0",
     "dotenv": "^10.0.0",
     "jsonwebtoken": "^8.5.1",
     "react": "^17.0.2",
