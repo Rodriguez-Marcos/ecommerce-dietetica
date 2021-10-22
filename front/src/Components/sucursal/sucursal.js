@@ -24,7 +24,7 @@ export default function Sucursal() {
   });
 
   useEffect(() => {
-    axios.get("http://localhost:3001/sucursal").then(function (response) {
+    axios.get("/sucursal").then(function (response) {
       setSucursal(response.data.data);
     });
   }, [dispatch]);
@@ -69,7 +69,7 @@ export default function Sucursal() {
       edit: false,
       delet: false,
     });
-    axios.get("http://localhost:3001/sucursal").then(function (response) {
+    axios.get("/sucursal").then(function (response) {
       setSucursal(response.data.data);
     });
   }
@@ -84,7 +84,7 @@ export default function Sucursal() {
       edit: false,
       delet: false,
     });
-    axios.get("http://localhost:3001/sucursal").then(function (response) {
+    axios.get("/sucursal").then(function (response) {
       setSucursal(response.data.data);
     });
   }
@@ -122,7 +122,7 @@ export default function Sucursal() {
             edit: false,
             delet: false,
         })
-        axios.get('http://localhost:3001/sucursal').then(function (response) {
+        axios.get('/sucursal').then(function (response) {
             setSucursal(response.data.data);
         })
     }

@@ -7,9 +7,9 @@ let items = [] ;
  console.log('items',items)
  data = JSON.stringify({items,
   back_urls: {
-    "success": "http://localhost:3001/feedback",
-    "failure": "http://localhost:3001/feedback",
-    "pending": "http://localhost:3001/feedback"
+    "success": "/feedback",
+    "failure": "/feedback",
+    "pending": "/feedback"
   },
   auto_return: "approved",})
 var config = {
