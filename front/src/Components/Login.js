@@ -89,7 +89,9 @@ function Login({ respuesta, isLogin }) {
     }
 
 
-    const responseGoogle = (response) => { }
+    const responseGoogle = (response) => {
+        console.error(response)
+     }
 
 
     if (!account) {
