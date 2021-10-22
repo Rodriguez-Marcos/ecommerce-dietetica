@@ -9,6 +9,26 @@ export default function emptycart (token){
 
     var config = {
         method: 'get',
+        url: '/payment/pending',
+        headers: { 
+          'Authorization': 'Bearer '+ token
+        }
+      };
+      
+      axios(config)
+      .then(function (response) {
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+      
+
+}
+export default function createOrder (token){
+  cookies.set('trolley',[])
+
+    var config = {
+        method: 'get',
         url: '/payment/success',
         headers: { 
           'Authorization': 'Bearer '+ token
