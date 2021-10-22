@@ -24,8 +24,6 @@ import 'boxicons';
 import Favorites from './favorites';
 import getCart from '../Utils/getCart';
 
-
-
 const jwt = require('jsonwebtoken')
 const cookies = new Cookies();
 
@@ -38,15 +36,17 @@ const cookies = new Cookies();
 function NavBar({ getProductbyName, setLoading, isLogin, token }) {
   let comodin = useSelector(state => state.reducerPablo.comodin);
   let isAdmin = useSelector(state => state.reducerPablo.IsAdmin);
-  let { productsCart } = useSelector(state=>state.cart)// no sacar, sirve para contar la cantidad en el carrito
-  let { productsFavs } = useSelector(state=>state.favs)
+  let { productsCart } = useSelector(state => state.cart)// no sacar, sirve para contar la cantidad en el carrito
+  let { productsFavs } = useSelector(state => state.favs)
   const value = useContext(DataContext)
   const [menu, setMenu] = value.menu;
   const [favs, setFavs] = value.favs;
+
   const location = useLocation();
   useEffect(()=>{
   },[comodin,cookies])
   
+
   function onLogoutSuccess() {
     console.log("logout success")
   }
@@ -72,8 +72,8 @@ function NavBar({ getProductbyName, setLoading, isLogin, token }) {
   let history = useHistory();
   useEffect(() => {
     let isArray = Array.isArray(cookies.get('trolley'))
-    if(!isArray){
-      cookies.set('trolley',[])
+    if (!isArray) {
+      cookies.set('trolley', [])
     }
   }, [])
 
@@ -94,7 +94,7 @@ function NavBar({ getProductbyName, setLoading, isLogin, token }) {
   function handleChange(event) {
     setActualState(event.target.value)
   }
-  if(cookies.get('trolley')){
+  if (cookies.get('trolley')) {
     var cookie = cookies.get('trolley')
   }
 
@@ -116,37 +116,37 @@ function NavBar({ getProductbyName, setLoading, isLogin, token }) {
             <Nav.Link >
               <NavLink to="/products" className='navlink1' >Productos</NavLink>
             </Nav.Link>
-            
 
-          
-              
+
+
+
             <div className="cart">
-            
-              <NavLink to='' onClick={e=>{e.preventDefault() ;setMenu(true) }} className='navlink1'>
-              <box-icon name="cart"></box-icon>
+
+              <NavLink to='' onClick={e => { e.preventDefault(); setMenu(true) }} className='navlink1'>
+                <box-icon name="cart"></box-icon>
                 {/* <ShoppingCart fontSize="large" id="iconoCarrito"/> */}
                 <span className="item__total">{cookie?.length}</span>
               </NavLink>
-               </div>
+            </div>
 
-               <div>
-                 
+            <div>
 
-            <div className="favs">
-            
-              <NavLink to='' onClick={e=>{e.preventDefault() ;setFavs(true) }} className='navlink1'>
-              <box-icon  name="favs"></box-icon>
-              <Favorite/>
-                {/* <ShoppingCart fontSize="large" id="iconoCarrito"/> */}
-                <span className="item__total">{productsFavs?.length}</span>
-              </NavLink>
+
+              <div className="favs">
+
+                <NavLink to='' onClick={e => { e.preventDefault(); setFavs(true) }} className='navlink1'>
+                  <box-icon name="favs"></box-icon>
+                  <Favorite />
+                  {/* <ShoppingCart fontSize="large" id="iconoCarrito"/> */}
+                  <span className="item__total">{productsFavs?.length}</span>
+                </NavLink>
               </div>
-              </div>
-              
-           
+            </div>
+
+
 
             {isAdmin ?
-            <NavLink to='/Admin'>Admin</NavLink> : null}
+              <NavLink to='/Admin'>Admin</NavLink> : null}
           </Nav>
           <Nav id="busqueda">
             <Form className="d-flex" id="d-flex" onSubmit={(e) => handleSubmit(e)}>
@@ -160,15 +160,18 @@ function NavBar({ getProductbyName, setLoading, isLogin, token }) {
               <button id="lupabtn" onSubmit={(e) => handleSubmit(e)} onClick={(e) => handleSubmit(e)}><img id="lupaimg" src={lupa} /></button>
             </Form>
             {isLogin ? <div id="sesion">
-               <p> <NavLink to='/userprofile'><AccountCircle/></NavLink>Bienvendido {jwt?.decode(token)?.name} </p>
-               <GoogleLogout
-              clientId="908895428836-kaesjl71puimi31fjbffca9t4nvl7v6r.apps.googleusercontent.com"
-              buttonText="Cerrar Sesión"
-              onLogoutSuccess={logout}
-              onFailure={() => { console.log('fallo') }}
-            >
-              <span id='cerrarSesion'><ExitToApp/> Cerrar Sesión</span>
-            </GoogleLogout>
+              <p> <NavLink className="perfil" to='/userprofile'><AccountCircle />Bienvendido {jwt?.decode(token)?.name} </NavLink></p>
+              <NavLink className='Link_cerrarSesion'to='/home'>
+                <GoogleLogout
+                  clientId="908895428836-kaesjl71puimi31fjbffca9t4nvl7v6r.apps.googleusercontent.com"
+                  buttonText="Cerrar Sesión"
+                  onLogoutSuccess={logout}
+                  onFailure={() => { console.log('fallo') }}
+                >
+                  <span id='cerrarSesion'><ExitToApp /> Cerrar Sesión</span>
+                </GoogleLogout>
+              </NavLink> {/* <button onClick={()=>{logout(),signOut()}}> Salir </button> */}
+
             </div>
               : <div id="btnsSesionRegistro">
                 <NavLink id="btnSesion" to='/Login'><Image id="imgSesion" src={Sesion} /><span>Inicia Sesion</span> </NavLink>
@@ -177,8 +180,8 @@ function NavBar({ getProductbyName, setLoading, isLogin, token }) {
           </Nav>
         </Navbar.Collapse>
       </Navbar>
-      {menu?<Trolley/>:false}
-      {favs?<Favorites/>:false}
+      {menu ? <Trolley /> : false}
+      {favs ? <Favorites /> : false}
 
     </div>
   )
