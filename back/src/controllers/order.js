@@ -12,7 +12,7 @@ export async function createOrder(req, res, next) {
     const id_client = req.id
     try {
         let cart = await Cart.findOne({ where: { id_client: id_client } })
-        res.redirect('http://localhost:3001/cart/emptycart')
+        res.redirect('https://salvatore-dietetica.herokuapp.com/cart/emptycart')
         let products = await Product_Cart.findAll({ where: { id_cart: cart.dataValues.id }, attributes: ["id_product", "quantity"] })
         console.log(products)
 

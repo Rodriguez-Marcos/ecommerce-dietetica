@@ -166,7 +166,7 @@ function Login({ respuesta, isLogin }) {
                     </Button>
 
                     <GoogleLogin
-                        clientId="908895428836-kaesjl71puimi31fjbffca9t4nvl7v6r.apps.googleusercontent.com"
+                        clientId="908895428836-4a919vmuc5gl4ao04i8cjpgmnjt58ks0.apps.googleusercontent.com"
                         buttonText="Login"
                         onSuccess={loginGoogle}
                         onFailure={responseGoogle}
