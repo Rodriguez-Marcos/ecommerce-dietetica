@@ -7,7 +7,7 @@ let cookies = new Cookies();
 export default async function getCart( token, location ){
     var config = {
         method: 'get',
-        url: 'http://localhost:3001/cart',
+        url: '/cart',
         headers: { 
           'Authorization': 'Bearer '+ token
         }

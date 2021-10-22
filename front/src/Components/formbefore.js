@@ -147,13 +147,18 @@ export default function Pending() {
     }
   }
 
+  function calenSubmit(event){
+    event.preventDefault()
+    swal("Creado", "Turno asignado con éxito!", "success")
+  }
+
   useEffect(() => {
-    axios.get('http://localhost:3001/sucursal').then(function (response) {
+    axios.get('/sucursal').then(function (response) {
       setSucursal(response.data.data);
     })
   }, [])
 
-  let { token, comodin, addresses } = useSelector(state => state.reducerPablo)
+  let { token, comodin, addresses, errorsForm } = useSelector(state => state.reducerPablo)
   const cookies = new Cookies();
 
   function handleSetAddress(e) {
@@ -174,6 +179,7 @@ export default function Pending() {
   const history = useHistory();
   async function handleCompra(event) {
     event.preventDefault();
+    if(!errorsForm){
     let el = document.getElementById('exampleRadios1')
     if (el?.checked)
       dispatch(sendIdStore(idSelected, myStorage.getItem('jwt')))
@@ -184,7 +190,7 @@ export default function Pending() {
 
     var config = {
       method: 'post',
-      url: 'http://localhost:3001/payment',
+      url: '/payment',
       headers: {
         'Authorization': 'Bearer ' + token,
         'Content-Type': 'application/json'
@@ -199,7 +205,7 @@ export default function Pending() {
       .catch(function (error) {
         console.log(error);
       });
-
+}
   }
   async function payment(token) {
     var data = JSON.stringify({
@@ -477,11 +483,12 @@ export default function Pending() {
                       </label>
                     </div>
 
-                    <iframe id="map" src={(sucursal?.find(x => x.name === sucuSelected))?.src} width="480" height="250" loading="lazy"></iframe>
-                    <h4>Seleccione una sucursal:</h4>
+                     <iframe id="map" src={(sucursal?.find(x => x.name === sucuSelected))?.src} width="480" height="250" loading="lazy"></iframe>
+                    <h4 class="sucu2">Seleccione una sucursal:</h4>
                     <div >
                       <p></p>
                       {/* a medida que selecciona el usuario ve lo que selecciona */}
+                      <div class="sucuu">
                       <select name="types" onChange={handleInputSucu} >
                         <option value='Centro Córdoba'>Seleccionar sucursal</option>
                         {sucursal?.map(sucu => {
@@ -489,12 +496,19 @@ export default function Pending() {
                         })}
                       </select>
                     </div>
+                    </div>
+                    <br/>
 
                     {/* <p>Dirección: Rivadavia 29. Plaza San Martin </p> */}
 
-                    <h4>Por favor seleccione fecha y horario que va a retirar:</h4>
+                    <h4>Seleccione fecha y horario que va a retirar:</h4>
+                    <span class="calendar">
                     <Calendar></Calendar>
-
+                    </span>
+                    {errorsForm?<p style={{color: 'red'}}>{errorsForm}</p>:<br/>}
+                    <div className="btn-Cargar">
+                    <button type="submit" class="btn btn-primary" onClick={calenSubmit}>Cargar</button>
+                  </div>
                   </div>
                 </Card.Body>
               </Card>
@@ -507,7 +521,7 @@ export default function Pending() {
               <label class="form-check-label" for="inlineCheckbox1">Quiero notificación vía mail de mi pedido</label>
             </div>
             <div className="btnComprar">
-              <button type="button" class="btn btn-success" onClick={handleCompra}>Comprar</button>
+              <button type="button" style={errorsForm?{backgroundColor: 'red'}:{}} class="btn btn-success" onClick={handleCompra}>Comprar</button>
               {/* <button class="btn btn-primary" color="green" type="button">Comprar</button> */}
               <button type="button" class="btn btn-dark" onClick={() => { setMenu(true) }} >Volver al carrito</button>
             </div>

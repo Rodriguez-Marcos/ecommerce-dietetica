@@ -17,7 +17,7 @@ function CreateUser() {
 
     const history = useHistory();
     useEffect(() => {
-        if (isLogin) history.push('http://localhost:3001/');
+        if (isLogin) history.push('/');
     }, [isLogin, history])
 
 

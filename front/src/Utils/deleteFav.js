@@ -7,7 +7,7 @@ export default async function deleteFavorites (id, token){
       
       var config = {
         method: 'delete',
-        url: 'http://localhost:3001/favorite',
+        url: '/favorite',
         headers: { 
           'Authorization': 'Bearer '+ token,
           'Content-Type': 'application/json'

@@ -83,6 +83,26 @@
     justify-content: space-around;
 }
 
+.calendar{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.sucuu{
+    
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+}
+.sucu2{
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
 
 @media only screen and (max-width: 770px) {
     .btnEmail{

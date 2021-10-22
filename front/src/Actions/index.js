@@ -23,7 +23,7 @@ export const GET_CLIENTS = "GET_CLIENTS";
 export const UPDATE_CLIENTS = "UPDATE_CLIENTS";
 export const DELETE_CLIENTS = "DELETE_CLIENTS";
 export const RESET_PASSWORD = "RESET_PASSWORD";
-export const REVIEW_URL = "http://localhost:3001/reviews/";
+export const REVIEW_URL = "/reviews/";
 export const GET_ORDERS = "GET_ORDERS";
 export const PUT_ORDERS = "PUT_ORDERS";
 export const FILTER_ORDERS = "FILTER_ORDERS";
@@ -42,7 +42,7 @@ export const paginate = (recipes) => {
 
 export function getProducts() {
   return async function (dispatch) {
-    return axios.get(`http://localhost:3001/products/`).then((response) => {
+    return axios.get(`/products/`).then((response) => {
       dispatch({
         payload: response.data,
         type: GET_PRODUCTS,
@@ -53,7 +53,7 @@ export function getProducts() {
 export function getProductsAdmin() {
   return async function (dispatch) {
     return axios
-      .get(`http://localhost:3001/products/admin`)
+      .get(`/products/admin`)
       .then((response) => {
         dispatch({
           payload: response.data,
@@ -66,7 +66,7 @@ export function getProductsAdmin() {
 export function getProductbyName(name) {
   return async function (dispatch) {
     return axios
-      .get(`http://localhost:3001/products?name=${name}`)
+      .get(`/products?name=${name}`)
       .then((response) => {
         dispatch({
           type: GET_PRODUCTS_FILTERED,
@@ -90,7 +90,7 @@ export function deleteProductByID(id, token) {
     };
 
     let reqOptions = {
-      url: "http://localhost:3001/products/" + id,
+      url: "/products/" + id,
       method: "DELETE",
       headers: headersList,
     };
@@ -104,7 +104,7 @@ export function deleteProductByID(id, token) {
 export function getById(id) {
   return async function (dispatch) {
     try {
-      const res = await axios.get("http://localhost:3001/products/" + id);
+      const res = await axios.get("/products/" + id);
       return dispatch({
         type: "GET_ID",
         payload: res.data,
@@ -125,7 +125,7 @@ export function postProduct(payload, token) {
     };
 
     let reqOptions = {
-      url: "http://localhost:3001/products",
+      url: "/products",
       method: "POST",
       headers: headersList,
       data: JSON.stringify(payload),
@@ -150,7 +150,7 @@ export function postAddress(payload, token) {
     };
 
     let reqOptions = {
-      url: "http://localhost:3001/address",
+      url: "/address",
       method: "POST",
       headers: headersList,
       data: JSON.stringify(payload),
@@ -177,7 +177,7 @@ export function getAddress(token,id_client) {
 
     
     let reqOptions = {
-      url: `http://localhost:3001/address?id_client=${id_client}`,
+      url: `/address?id_client=${id_client}`,
       method: "GET",
       headers: headersList,
     };
@@ -193,7 +193,7 @@ export function getAddress(token,id_client) {
 
 export function putProduct(payload, id) {
   return async function (dispatch) {
-    await axios.put("http://localhost:3001/products/" + id, payload);
+    await axios.put("/products/" + id, payload);
 
     return dispatch({
       type: "PUT_PRODUCTS",
@@ -205,7 +205,7 @@ export function putProduct(payload, id) {
 
 export function postCategory(payload) {
   return async function (dispatch) {
-    await axios.post("http://localhost:3001/categories", payload);
+    await axios.post("/categories", payload);
     return dispatch({
       type: "POST_CATEGORY",
       payload,
@@ -214,7 +214,7 @@ export function postCategory(payload) {
 }
 export function postDiet(payload) {
   return async function (dispatch) {
-    await axios.post("http://localhost:3001/diets", payload);
+    await axios.post("/diets", payload);
 
     return dispatch({
       type: "POST_DIET",
@@ -227,7 +227,7 @@ export function getByIdCategory(id) {
   return async function (dispatch) {
     try {
       const res = await axios.get(
-        `http://localhost:3001/products?id_category=${id}`
+        `/products?id_category=${id}`
       );
       return dispatch({
         type: GET_BY_ID_CATEGORY,
@@ -243,7 +243,7 @@ export function getByIdDiet(id) {
   return async function (dispatch) {
     try {
       const res = await axios.get(
-        `http://localhost:3001/products?id_diet=${id}`
+        `/products?id_diet=${id}`
       );
       return dispatch({
         type: GET_BY_ID_DIET,
@@ -265,7 +265,7 @@ export function getProductsFiltered(
   return async function (dispatch) {
     try {
       const res = await axios.get(
-        `http://localhost:3001/products?id_category=${CategoryId}&id_diet=${DietId}&priceL=${priceL}&priceH=${priceH}&sortby=${sortby}`
+        `/products?id_category=${CategoryId}&id_diet=${DietId}&priceL=${priceL}&priceH=${priceH}&sortby=${sortby}`
       );
       return dispatch({
         type: GET_BY_DIET_AND_CATEGORY,
@@ -279,7 +279,7 @@ export function getProductsFiltered(
 
 export function getCategories() {
   return async function (dispatch) {
-    return axios.get(`http://localhost:3001/categories`).then((response) => {
+    return axios.get(`/categories`).then((response) => {
       dispatch({
         type: GET_CATEGORIES,
         payload: response.data,
@@ -290,7 +290,7 @@ export function getCategories() {
 
 export function getDiets() {
   return async function (dispatch) {
-    return axios.get(`http://localhost:3001/diets`).then((response) => {
+    return axios.get(`/diets`).then((response) => {
       dispatch({
         type: GET_DIETS,
         payload: response.data,
@@ -333,7 +333,7 @@ export function getByPrice(priceL, priceH) {
   return async function (dispatch) {
     try {
       const res = await axios.get(
-        `http://localhost:3001/products?priceL=${priceL}&priceH=${priceH}`
+        `/products?priceL=${priceL}&priceH=${priceH}`
       );
       return dispatch({
         type: GET_BY_PRICE,
@@ -347,7 +347,7 @@ export function getByPrice(priceL, priceH) {
 
 export function review(payload) {
   return async function (dispatch) {
-    await axios.post("http://localhost:3001/reviews", payload);
+    await axios.post("/reviews", payload);
 
     return dispatch({
       type: "REVIEW_URL",
@@ -358,7 +358,7 @@ export function review(payload) {
 export function allowReview(id, token) {
   return async function (dispatch) {
     await axios
-      .get("http://localhost:3001/reviews/allow/" + id, {
+      .get("/reviews/allow/" + id, {
         headers: { Authorization: "Bearer " + token },
       })
       .then((response) => {
@@ -373,7 +373,7 @@ export function allowReview(id, token) {
 
 export function loginUser(payload) {
   return async function (dispatch) {
-    await axios.post(`http://localhost:3001/login/`, payload);
+    await axios.post(`/login/`, payload);
     return dispatch({
       type: "SET_LOGIN_USER",
       payload,
@@ -383,7 +383,7 @@ export function loginUser(payload) {
 
 export function getClients() {
   return async function (dispatch) {
-    return axios.get(`http://localhost:3001/clients`).then((response) => {
+    return axios.get(`/clients`).then((response) => {
       dispatch({
         payload: response.data,
         type: GET_CLIENTS,
@@ -394,7 +394,7 @@ export function getClients() {
 
 export function updateClients(id) {
   return async function (dispatch) {
-    return axios.put(`http://localhost:3001/clients/` + id).then((response) => {
+    return axios.put(`/clients/` + id).then((response) => {
       dispatch({
         payload: response.data,
         type: UPDATE_CLIENTS,
@@ -406,7 +406,7 @@ export function updateClients(id) {
 export function resetPassword(id) {
   return async function (dispatch) {
     return axios
-      .put(`http://localhost:3001/clients/resetpassword/${id}`)
+      .put(`/clients/resetpassword/${id}`)
       .then((response) => {
         dispatch({
           payload: response.data,
@@ -419,7 +419,7 @@ export function resetPassword(id) {
 export function deleteClients(id) {
   return async function (dispatch) {
     try {
-      const res = await axios.delete("http://localhost:3001/clients/" + id);
+      const res = await axios.delete("/clients/" + id);
       return dispatch({
         type: "DELETE_CLIENTS",
         payload: res.data,
@@ -432,7 +432,7 @@ export function deleteClients(id) {
 export function deleteCategory(id) {
   return async function (dispatch) {
     try {
-      const res = await axios.delete("http://localhost:3001/categories/" + id);
+      const res = await axios.delete("/categories/" + id);
       return dispatch({
         type: "DELETE_CATEGORIES",
         payload: res.data,
@@ -445,7 +445,7 @@ export function deleteCategory(id) {
 export function deleteDiets(id) {
   return async function (dispatch) {
     try {
-      const res = await axios.delete("http://localhost:3001/diets/" + id);
+      const res = await axios.delete("/diets/" + id);
       return dispatch({
         type: "DELETE_DIETS",
         payload: res.data,
@@ -467,7 +467,7 @@ export function getOrders(token,id_client) {
 
     
     let reqOptions = {
-      url: `http://localhost:3001/orders?id_client=${id_client}`,
+      url: `/orders?id_client=${id_client}`,
       method: "GET",
       headers: headersList,
     };
@@ -481,7 +481,7 @@ export function getOrders(token,id_client) {
 
 
     // return axios
-    //   .get(`http://localhost:3001/orders`, {
+    //   .get(`/orders`, {
     //     headers: { Authorization: "Bearer " + token },
     //   })
     //   .then((response) => {
@@ -494,6 +494,7 @@ export function getOrders(token,id_client) {
 }
 
 
+
 export function putOrders(payload, id, token) {
   return async function (dispatch) {
     let headersList = {
@@ -504,7 +505,7 @@ export function putOrders(payload, id, token) {
     };
 
     let reqOptions = {
-      url: "http://localhost:3001/orders/" + id,
+      url: "/orders/" + id,
       method: "PUT",
       headers: headersList,
       data: JSON.stringify(payload),
@@ -554,7 +555,7 @@ export function getFilterStatus(payload, token) {
     };
 
     let reqOptions = {
-      url: "http://localhost:3001/orders?status=" + payload,
+      url: "/orders?status=" + payload,
       method: "GET",
       headers: headersList,
     };
@@ -579,7 +580,7 @@ export function postReview(payload,id, token) {
      }
      
      let reqOptions = {
-       url: "http://localhost:3001/reviews/"+id,
+       url: "/reviews/"+id,
        method: "POST",
        headers: headersList,
        data: JSON.stringify(payload),
@@ -609,7 +610,7 @@ let headersList = {
  }
  
  let reqOptions = {
-   url: "http://localhost:3001/orders/totalbyday",
+   url: "/orders/totalbyday",
    method: "GET",
    headers: headersList,
  }
@@ -633,7 +634,7 @@ let headersList = {
  }
  
  let reqOptions = {
-   url: "http://localhost:3001/orders/bestsellers",
+   url: "/orders/bestsellers",
    method: "GET",
    headers: headersList,
  }
@@ -651,7 +652,7 @@ export function getQualified() {
 
  
  let reqOptions = {
-   url: "http://localhost:3001/products/reviews",
+   url: "/products/reviews",
    method: "GET"
  }
  
@@ -672,7 +673,7 @@ export function sendIdAddress( payload,token) {
      }
      
      let reqOptions = {
-       url: "http://localhost:3001/cart?id_address="+payload,
+       url: "/cart?id_address="+payload,
        method: "PUT",
        headers: headersList,
      }
@@ -694,7 +695,7 @@ export function sendIdStore( payload,token) {
      }
      
      let reqOptions = {
-       url: "http://localhost:3001/cart?id_store="+payload,
+       url: "/cart?id_store="+payload,
        method: "PUT",
        headers: headersList,
      }
@@ -718,7 +719,7 @@ export function deleteAddress(id, token) {
     };
 
     let reqOptions = {
-      url: "http://localhost:3001/address/" + id,
+      url: "/address/" + id,
       method: "DELETE",
       headers: headersList,
     };
@@ -742,7 +743,7 @@ export function putSucursal(payload, id, token) {
     };
 
     let reqOptions = {
-      url: "http://localhost:3001/sucursal/" + id,
+      url: "/sucursal/" + id,
       method: "PUT",
       headers: headersList,
       data: JSON.stringify(payload),
@@ -769,7 +770,7 @@ export function deleteSucursal(id, token) {
     };
 
     let reqOptions = {
-      url: "http://localhost:3001/sucursal/" + id,
+      url: "/sucursal/" + id,
       method: "DELETE",
       headers: headersList,
     };
@@ -789,7 +790,7 @@ export function postSucursal(payload, token) {
      }
      
      let reqOptions = {
-       url: "http://localhost:3001/sucursal",
+       url: "/sucursal",
        method: "POST",
        headers: headersList,
        data: JSON.stringify(payload),
