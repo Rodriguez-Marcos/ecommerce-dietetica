@@ -626,21 +626,33 @@ export function getBestSellers( token) {
   return async function (dispatch) {
 
     
-let headersList = {
-  "Accept": "*/*",
-
-  "Authorization": "Bearer "+ token,  
- }
  
  let reqOptions = {
    url: "http://localhost:3001/orders/bestsellers",
    method: "GET",
-   headers: headersList,
  }
  
  axios.request(reqOptions).then(function (response) {
   dispatch({
     type: 'GET_BEST_SELLERS',
+    payload: response.data,
+  })
+ })      
+  };
+}
+
+export function getQualified() {
+  return async function (dispatch) {
+
+ 
+ let reqOptions = {
+   url: "http://localhost:3001/products/reviews",
+   method: "GET"
+ }
+ 
+ axios.request(reqOptions).then(function (response) {
+  dispatch({
+    type: 'GET_QUALIFIED',
     payload: response.data,
   })
  })      
