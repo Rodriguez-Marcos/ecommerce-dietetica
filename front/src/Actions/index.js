@@ -494,6 +494,7 @@ export function getOrders(token,id_client) {
 }
 
 
+
 export function putOrders(payload, id, token) {
   return async function (dispatch) {
     let headersList = {
