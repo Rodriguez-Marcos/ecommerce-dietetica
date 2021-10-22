@@ -10,9 +10,9 @@ export default function Mercadopago (cartItems) {
         try {
           let preference = {
             back_urls: {
-              success: "https://salvatore-dietetica.herokuapp.com/payment/success",
-              failure: "https://salvatore-dietetica.herokuapp.com/payment/failure",
-              pending: "https://salvatore-dietetica.herokuapp.com/payment/pending",
+              success: "https://salvatore-dietetica.herokuapp.com/feedback?collection_status=success",
+              failure: "https://salvatore-dietetica.herokuapp.com/feedback?collection_status=failure",
+              pending: "https://salvatore-dietetica.herokuapp.com/feedback?collection_status=pending",
             },
             auto_return: "approved",
             items: []   

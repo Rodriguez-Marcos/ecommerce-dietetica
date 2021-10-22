@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import styles from './success.module.css'
 import NavBar from '../NavBar';
 import success from '../img/succes22.png'
-import emptyCart from '../../Utils/emptycart';
+import createOrder from '../../Utils/emptyCart';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router'
 import Cookies from 'universal-cookie'
@@ -36,7 +36,7 @@ export default function Success(){
 
     useEffect(() => {
         dispatch({type: 'REMOVE_ALL'});
-        emptyCart(myStorage.getItem('jwt'));
+        createOrder(myStorage.getItem('jwt'));
         cookies.set('trolley',[]);
         if (!myStorage.getItem('jwt')) history.push('/');
     }, [isLogin])
