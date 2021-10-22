@@ -263,6 +263,22 @@ export async function bestSellers(req, res) {
                               
                             )`),
                     'name',
+                ],
+                [sequelize.literal(`(
+                              SELECT price
+                              FROM products
+                              WHERE products.id = products_order.id_product
+                              
+                            )`),
+                    'price',
+                ],
+                [sequelize.literal(`(
+                              SELECT image
+                              FROM products
+                              WHERE products.id = products_order.id_product
+                              
+                            )`),
+                    'image',
                 ]],
             order: [[sequelize.fn('SUM', sequelize.col('quantity')), 'DESC']],
             limit: 7
