@@ -60,8 +60,7 @@ app.get("/feedback",(req, res) => {
 })
 app.use('/sucursal', Sucursal)
 app.use('/google044f3b2e2490ab3e',(req, res)=>{
-  console.log(__dirname)
-  return res.sendFile(__dirname + '/utils/google044f3b2e2490ab3e.html')
+  return res.send('<body><text>google-site-verification: google044f3b2e2490ab3e.html</text></body>')
 })
 
 
