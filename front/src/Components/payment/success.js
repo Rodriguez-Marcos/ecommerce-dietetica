@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import styles from './success.module.css'
 import NavBar from '../NavBar';
 import success from '../img/succes22.png'
-import createOrder from '../../Utils/emptyCart';
+import {createOrder} from '../../Utils/emptyCart';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router'
 import Cookies from 'universal-cookie'

@@ -24,7 +24,7 @@ export default function emptycart (token){
       
 
 }
-export default function createOrder (token){
+export  function createOrder (token){
   cookies.set('trolley',[])
 
     var config = {
