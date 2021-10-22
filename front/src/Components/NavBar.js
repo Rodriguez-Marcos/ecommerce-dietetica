@@ -147,7 +147,7 @@ function NavBar({ getProductbyName, setLoading, isLogin, token }) {
 
             {isAdmin ?
             <Nav.Link>
-              <NavLink to='/Admin'>Admin</NavLink>
+              <NavLink to='/Admin' className='navlink1'>Admin</NavLink>
               </Nav.Link> : null}
           </Nav>
           <Nav id="busqueda">

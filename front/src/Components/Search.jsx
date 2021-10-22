@@ -15,7 +15,7 @@ function Search() {
         <div id="contenedor">
             <NavBar/>
             <div id="s">
-            {!productsFiltered.length? <h1>No se encontro ningun resultado</h1>:<h5>Se encontraron {productsFiltered.length} productos</h5>}
+            {!productsFiltered.length? <h1>No se encontro ningun resultado</h1>:null}
             </div>
             <div id="s1">
                 <ProductsCards
