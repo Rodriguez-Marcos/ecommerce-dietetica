@@ -9,7 +9,7 @@ export default function emptycart (token){
 
     var config = {
         method: 'get',
-        url: 'http://localhost:3001/payment/success',
+        url: '/payment/success',
         headers: { 
           'Authorization': 'Bearer '+ token
         }

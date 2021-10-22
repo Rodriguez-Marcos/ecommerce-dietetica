@@ -153,7 +153,7 @@ export default function Pending() {
   }
 
   useEffect(() => {
-    axios.get('http://localhost:3001/sucursal').then(function (response) {
+    axios.get('/sucursal').then(function (response) {
       setSucursal(response.data.data);
     })
   }, [])
@@ -189,7 +189,7 @@ export default function Pending() {
 
     var config = {
       method: 'post',
-      url: 'http://localhost:3001/payment',
+      url: '/payment',
       headers: {
         'Authorization': 'Bearer ' + token,
         'Content-Type': 'application/json'

@@ -8,7 +8,7 @@ export default async function getTrolley(ids) {
       });
     var config = {
       method: 'POST',
-      url: 'http://localhost:3001/products/getProducts',
+      url: '/products/getProducts',
       headers: { 
         'Content-Type': 'application/json'
       },
