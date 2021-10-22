@@ -38,7 +38,7 @@ export default function Success(){
         dispatch({type: 'REMOVE_ALL'});
         emptyCart(myStorage.getItem('jwt'));
         cookies.set('trolley',[]);
-        if (!myStorage.getItem('jwt')) history.push('/home');
+        if (!myStorage.getItem('jwt')) history.push('/');
     }, [isLogin])
 
     // async function handleSubmit(event) {
@@ -57,7 +57,7 @@ export default function Success(){
         <div class="card-body" className={styles.body}>
             <h5 class="card-title">Pago exitoso!</h5>
             <p class="card-text">¡Muchas gracias por su compra!</p>
-            <a href="/home" class="btn btn-primary">Volver al inicio</a>
+            <a href="/" class="btn btn-primary">Volver al inicio</a>
          </div>
         </div>
         

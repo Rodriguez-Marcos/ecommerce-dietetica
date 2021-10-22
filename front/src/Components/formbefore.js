@@ -33,8 +33,10 @@ export default function Pending() {
     if (!!myStorage.getItem('jwt')) {
       getCart(myStorage.getItem('jwt'));
     }
-    else {
-      history.push('/home')
+
+    else{
+      history.push('/')
+
     }
   }, [isLogin])
 
@@ -190,13 +192,13 @@ export default function Pending() {
       data: data
     };
 
-    /* axios(config)
+     axios(config)
       .then(function (response) {
         window.location.replace(response.data);
       })
       .catch(function (error) {
         console.log(error);
-      }); */
+      });
 
   }
   async function payment(token) {
@@ -281,7 +283,7 @@ export default function Pending() {
             <Card className="card-domicilio">
               <Card.Body className="retiro-Body">
 
-              <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value={'retiro en sucursal'} defaultChecked onClick={handleSelect} ></input>
+              <input class="form-check-input" type="radio" name="exampleRadios2" id="exampleRadios1" value={'retiro en sucursal'} defaultChecked onClick={handleSelect} ></input>
                 <label class="form-check-label" for="exampleRadios2">
                   Retiro en local:
                 </label>
