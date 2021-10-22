@@ -67,7 +67,7 @@ export default function TableOrders() {
     status: "",
     modal: false,
   });
-
+console.log(state)
   function handlerDetails(e) {
 
 
@@ -131,7 +131,7 @@ export default function TableOrders() {
               <tbody>
                 <td>{e.id}</td>
                 <td>
-                  {e.client ? e.client.name : "User"} {"  "}
+                  {e.client ? e.client.name : "User"} {" "}
                   {e.client ? e.client.lastname : "No Found "}{" "}
                 </td>
                 <td>{e.client ? e.client.email : "No Found"}</td>

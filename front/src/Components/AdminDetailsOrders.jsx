@@ -13,6 +13,7 @@ export default function AdminDetailsOrders({ input , closeModal}) {
 
   return (
     <div>
+      
       <Modal isOpen={input.modal}>
         <ModalHeader>
           DETALLES DEL PEDIDO NRO: {input.id}{" "}
@@ -41,7 +42,7 @@ export default function AdminDetailsOrders({ input , closeModal}) {
             </h6>
           </div>
 
-          <table className="table">
+          <table className="table2">
             <thead>
               <th>Nombre del Producto</th>
               <th> Cant.</th>
