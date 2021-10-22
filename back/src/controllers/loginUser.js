@@ -3,7 +3,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken')
 const loginRouter = require('express').Router();
 const { OAuth2Client } = require('google-auth-library');
-const CLIENT_ID ='908895428836-kaesjl71puimi31fjbffca9t4nvl7v6r.apps.googleusercontent.com';
+const CLIENT_ID ='908895428836-4a919vmuc5gl4ao04i8cjpgmnjt58ks0.apps.googleusercontent.com';
 
 
 

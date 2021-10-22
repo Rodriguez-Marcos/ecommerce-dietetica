@@ -7,9 +7,9 @@ let items = [] ;
  console.log('items',items)
  data = JSON.stringify({items,
   back_urls: {
-    "success": "http://localhost:3001/feedback",
-    "failure": "http://localhost:3001/feedback",
-    "pending": "http://localhost:3001/feedback"
+    "success": "https://salvatore-dietetica.herokuapp.com/feedback",
+    "failure": "https://salvatore-dietetica.herokuapp.com/feedback",
+    "pending": "https://salvatore-dietetica.herokuapp.com/feedback"
   },
   auto_return: "approved",})
 var config = {

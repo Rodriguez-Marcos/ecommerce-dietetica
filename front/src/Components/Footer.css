@@ -78,6 +78,16 @@ ul{
 	color: #24262b;
 	background-color: #ffffff;
 }
+.footer-col{
+	display: flex;
+	flex-wrap: wrap;
+	flex-direction: column;
+}
+.row-footer{
+	display:flex;
+	flex-wrap: wrap;
+	justify-content: center;
+}
 
 /*responsive*/
 @media(max-width: 767px){
@@ -85,9 +95,15 @@ ul{
     width: 50%;
     margin-bottom: 30px;
 }
+.row-footer{
+	width: 99.5vw;
+}
 }
 @media(max-width: 574px){
   .footer-col{
     width: 100%;
+}
+.row-footer{
+	width: 99.5vw;
 }
 }

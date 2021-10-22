@@ -262,24 +262,24 @@ export default function Pending() {
       <div>
         <NavBar />
         <Container className="Container-Envio" >
-          <Row>
+          <Row className="row-envios">
             <Col xs="12" md="6" className="retiro-domicilio">
               <Card className="card-domicilio">
                 <Card.Body className="retiro-Body">
-                  <div>
+                  <div className="body-domicilio">
                     {addresses && addresses?.map(address => {
                       return (
                         <div class="form-check">
+                          <input class="form-check-input" type="radio" name="exampleRadios2" id={"domicilio: " + address.id} value={address.id} onClick={handleSetAddress} ></input>
                           <label class="form-check-label" for="exampleRadios2">
                             Envío a domicilio:
                           </label>
-                          <input class="form-check-input" type="radio" name="exampleRadios2" id={"domicilio: " + address.id} value={address.id} onClick={handleSetAddress} ></input>
                           <AddressCard address={address} />
                         </div>
                       )
                     })}
                     <div>
-                      <NavLink to='/newaddress'><button>Añadir nueva dirección</button></NavLink>
+                      <NavLink to='/newaddress'><button class="btn btn-primary">Añadir nueva dirección</button></NavLink>
                     </div>
                   </div>
                 </Card.Body>

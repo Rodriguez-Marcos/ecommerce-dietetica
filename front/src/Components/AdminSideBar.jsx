@@ -274,7 +274,84 @@ export default function Sidebar() {
 
   return (
     <Navbar bg="light" expand="lg" id="ContenedorNav">
-      <Container id="navResponsive">
+      <Container  id="navResponsive">
+        <Navbar.Brand href="#home">Menu</Navbar.Brand>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
+          <div className="sidebar">
+            <div className="sidebarWrapper">
+              <div className="sidebarMenu"></div>
+              <div className="sidebarMenu">
+                <h3 className="sidebarTitle">Agregar Elementos</h3>
+                <ul className="sidebarList">
+
+                  <li className="sidebarListItem" onClick={() => openProduct()}>
+                    <button className="sidebarIcon" />
+                    Productos
+                  </li>
+
+                  <li
+                    className="sidebarListItem"
+                    onClick={() => openCategory()}
+                  >
+                    <BarChart className="sidebarIcon" />
+                    Categorias
+                  </li>
+                  <li className="sidebarListItem" onClick={() => openDiet()}>
+                    <BarChart className="sidebarIcon" />
+                    Dietas
+                  </li>
+                  <li
+                    className="sidebarListItem"
+                    onClick={() => openSucursal()}
+                  >
+                    <button className="sidebarIcon" />
+                    Sucursales
+                  </li>
+                </ul>
+              </div>
+              <div className="sidebarMenu">
+                <h3 className="sidebarTitle">Tablas</h3>
+                <ul className="sidebarList">
+                  <li className="sidebarListItem">
+                    <DynamicFeed className="sidebarIcon " />
+                    <NavLink to="/Admin/grafics" class="text-decoration-none text-dark" >Graficas</NavLink>
+                  </li>
+                  <li className="sidebarListItem">
+                    <DynamicFeed className="sidebarIcon" />
+                    <NavLink to="/Admin/user" class="text-decoration-none text-dark">Usuarios</NavLink>
+                  </li>
+                  <li className="sidebarListItem">
+                    <DynamicFeed className="sidebarIcon" />
+                    <NavLink to="/Admin" class="text-decoration-none text-dark"> Productos</NavLink>
+                  </li>
+                  <li className="sidebarListItem">
+                    <DynamicFeed className="sidebarIcon" />
+                    <NavLink to="/Admin/orders" class="text-decoration-none text-dark">Ordenes</NavLink>
+                  </li>
+                  <li className="sidebarListItem">
+                    <DynamicFeed className="sidebarIcon" />
+                    <NavLink to="/Admin/filters" class="text-decoration-none text-dark">Categorias y Dietas</NavLink>
+                  </li>
+                  <li className="sidebarListItem">
+                    <DynamicFeed className="sidebarIcon" />
+                    <NavLink to="/Admin/sucursal" class="text-decoration-none text-dark" >Sucursales</NavLink>
+                  </li>
+                  <li className="sidebarListItem">
+                    <Report className="sidebarIcon" />
+                    <NavLink to="/" class="text-decoration-none text-danger">Salir</NavLink>
+                  </li>
+
+                </ul>
+              </div>
+
+            </div>
+          </div>
+        </Navbar.Collapse>
+      </Container>
+      {/* <Container id="navResponsive">
+      <Navbar.Brand href="#home">Menu</Navbar.Brand>
+      <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <div className="sidebar">
             <div className="sidebarWrapper">
@@ -346,7 +423,7 @@ export default function Sidebar() {
             </div>
           </div>
         </Navbar.Collapse>
-      </Container>
+      </Container> */}
       <FormCreator
         modal={modal}
         input={input}

@@ -27,7 +27,7 @@ var items = [
   {
     // name: "¡Envío gratis en tu primera compra!",
     // description: "Aprovechá y hace tu compra hoy",
-    link: "/",
+    link: "/products",
     img: banner3
   },
   {
