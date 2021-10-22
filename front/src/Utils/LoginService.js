@@ -1,7 +1,10 @@
+
+import dotenv from "dotenv";
+dotenv.config();
 const ENDPOINT = 'http://localhost:3001'
 
 export default function loginService(username, password) {
-    return fetch(`${ENDPOINT}/login`, {
+    return fetch(`${process.env.REACT_APP_API || ENDPOINT}/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password })
