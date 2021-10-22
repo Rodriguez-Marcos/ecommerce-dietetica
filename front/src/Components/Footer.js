@@ -19,10 +19,8 @@ function Footer() {
   	 		<div class="footer-col">
                <h4>Nuestra Tienda</h4>
   	 			<ul>
-  	 				<li><a href="#">Productos Vegetarianos</a></li>
-  	 				<li><a href="#">Productos Sin Gluten</a></li>
-  	 				<li><a href="#">Productos Veganos</a></li>
-  	 				<li><a href="#">Productos Sin Azucar</a></li>
+  	 				<li><a href="#">Nuestra visión es seguir enfocados en la permanente apertura de locales, en la rápida reposición de la mercadería, y en todo lo que nos acerque a facilitar ese cambio de vida en quienes lo buscan.</a></li>
+  	 				
   	 			</ul>
   	 		</div>
   	 		<div class="footer-col">
@@ -33,15 +31,7 @@ function Footer() {
   	 			
   	 			</ul>
   	 		</div>
-  	 		<div class="footer-col">
-  	 			<h4>Seguinos en nuestras redes</h4>
-  	 			<div class="social-links">
-  	 				<a href="#"><i class="fab fa-facebook-f"></i></a>
-  	 				<a href="#"><i class="fab fa-twitter"></i></a>
-  	 				<a href="#"><i class="fab fa-instagram"></i></a>
-  	 				<a href="#"><i class="fab fa-linkedin-in"></i></a>
-  	 			</div>
-  	 		</div>
+  	 	
   	 	</div>
   	 </div>
         </div>
