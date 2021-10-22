@@ -396,9 +396,7 @@ export default function Pending() {
                           onFocus={onFocus}
                           value={input.altura}
                         ></input>
-                        {errors.altura && touched.altura && (
-                          <p>{errors.altura}</p>
-                        )}
+                       
 
                         {/* 
       <input type="text" class="form-control" name='altura' value={input.altura} onChange={handleAdress} ></input> */}
@@ -466,9 +464,7 @@ export default function Pending() {
                           onFocus={onFocus}
                           value={input.numero}
                         ></input>
-                        {errors.numero && touched.numero && (
-                          <p >{errors.numero}</p>
-                        )}
+                        
                         {/* <input type="text" class="form-control" name='numero' value={input.numero} onChange={handleAdress} ></input> */}
                       </div>
                     </div>
