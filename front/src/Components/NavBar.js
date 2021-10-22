@@ -3,6 +3,7 @@ import { GoogleLogout } from 'react-google-login';
 import React, { useState, useEffect, useContext } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
+import { useLocation } from 'react-router';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import './Navbar.css';
 import { getProductbyName, setLoading } from '../Actions/index'
@@ -21,6 +22,7 @@ import Trolley from './Trolley'
 import { decode } from "jsonwebtoken";
 import 'boxicons';
 import Favorites from './favorites';
+import getCart from '../Utils/getCart';
 
 
 
@@ -41,6 +43,7 @@ function NavBar({ getProductbyName, setLoading, isLogin, token }) {
   const value = useContext(DataContext)
   const [menu, setMenu] = value.menu;
   const [favs, setFavs] = value.favs;
+  const location = useLocation();
   useEffect(()=>{
   },[comodin,cookies])
   
@@ -56,13 +59,16 @@ function NavBar({ getProductbyName, setLoading, isLogin, token }) {
   const myStorage = window.localStorage;
   useEffect(() => {
     const jwt = myStorage.getItem('jwt');
-    var isadmin = decode(jwt)
-
+    let loc = location.pathname;
+    getCart(jwt, (loc==='/payment/success'||loc==='/payment/pending'||loc==='/payment/failure'))
+    console.log(loc)
+    
     if (!!jwt) {
+      var isadmin = decode(jwt)
       dispatch({ type: 'LOGIN', payload: jwt })
       dispatch({ type: 'SET_LOGIN_USER', payload: isadmin.isAdmin })
     }
-  }, [myStorage])
+  }, [myStorage,comodin])
   let history = useHistory();
   useEffect(() => {
     let isArray = Array.isArray(cookies.get('trolley'))
@@ -152,7 +158,6 @@ function NavBar({ getProductbyName, setLoading, isLogin, token }) {
             </Form>
             {isLogin ? <div id="sesion">
                <p> <NavLink to='/userprofile'><AccountCircle/></NavLink>Bienvendido {jwt?.decode(token)?.name} </p>
-               <NavLink to='/home'>
                <GoogleLogout
               clientId="908895428836-kaesjl71puimi31fjbffca9t4nvl7v6r.apps.googleusercontent.com"
               buttonText="Cerrar Sesión"
@@ -160,7 +165,7 @@ function NavBar({ getProductbyName, setLoading, isLogin, token }) {
               onFailure={() => { console.log('fallo') }}
             >
               <span id='cerrarSesion'><ExitToApp/> Cerrar Sesión</span>
-            </GoogleLogout></NavLink> {/* <button onClick={()=>{logout(),signOut()}}> Salir </button> */} 
+            </GoogleLogout>
             </div>
               : <div id="btnsSesionRegistro">
                 <NavLink id="btnSesion" to='/Login'><Image id="imgSesion" src={Sesion} /><span>Inicia Sesion</span> </NavLink>

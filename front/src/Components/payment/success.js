@@ -5,10 +5,12 @@ import NavBar from '../NavBar';
 import success from '../img/succes22.png'
 import emptyCart from '../../Utils/emptycart';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router'
 import Cookies from 'universal-cookie'
 import { Style } from '@material-ui/icons';
 import 'boxicons';
 // import { postAdress } from '../../Actions';
+let cookies = new Cookies();
 
 export default function Success(){
     const dispatch =useDispatch();
@@ -29,12 +31,15 @@ export default function Success(){
     //         [event.target.name]: event.target.value
     //     })
     // }
-
+    const {isLogin}= useSelector(state=>state.cart)
+    const history = useHistory();
 
     useEffect(() => {
-        dispatch({type: 'REMOVE_ALL'})
-        emptyCart(myStorage.getItem('jwt'))
-    }, [])
+        dispatch({type: 'REMOVE_ALL'});
+        emptyCart(myStorage.getItem('jwt'));
+        cookies.set('trolley',[]);
+        if (!myStorage.getItem('jwt')) history.push('/home');
+    }, [isLogin])
 
     // async function handleSubmit(event) {
     //     event.preventDefault()

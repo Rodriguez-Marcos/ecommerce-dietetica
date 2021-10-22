@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import './formbefore.css'
 import NavBar from './NavBar';
-import { getAddress, postAddress, sendIdAddress,deleteAddress,sendIdStore } from '../Actions';
+import { getAddress, postAddress, sendIdAddress, deleteAddress, sendIdStore } from '../Actions';
 // import emptycart from '../../Utils/emptycart';
 import { StyleSharp } from '@material-ui/icons';
 import Cookies from "universal-cookie";
@@ -19,8 +19,9 @@ import { Button, Container, Row, Col, Card } from 'react-bootstrap';
 import { Select } from '@material-ui/core';
 
 export default function Pending() {
+  const { isLogin } = useSelector(state => state.cart)
   const [sucuSelected, setSucuSelected] = useState('Centro Córdoba')
-  const [idSucu, setIdsucu] = useState(0)
+  const [idSelected, setIdSelected] = useState(2)
   const myStorage = window.localStorage;
   const value = useContext(DataContext)
   const [carrito, setCarrito] = value.carrito;
@@ -28,6 +29,15 @@ export default function Pending() {
   const [menu, setMenu] = value.menu;
   const [errors, setErrors] = useState({});
   const [touched, setTouched] = useState({});
+  useEffect(() => {
+    if (!!myStorage.getItem('jwt')) {
+      getCart(myStorage.getItem('jwt'));
+    }
+    else {
+      history.push('/home')
+    }
+  }, [isLogin])
+
   const [addressid, setAddressId] = useState(null)
   const [sucursal, setSucursal] = useState([]);
 
@@ -115,7 +125,7 @@ export default function Pending() {
   // }
   const jwt = window.localStorage.jwt
   var client = decode(jwt)
-  var id = client.id
+  var id = client?.id
   const dispatch = useDispatch();
   useEffect(() => {
     const jwt = myStorage.getItem("jwt")
@@ -131,39 +141,41 @@ export default function Pending() {
       console.log(jwt)
       dispatch(postAddress(input, jwt))
       swal("Creado", "Dirección cargada con éxito!", "success")
-       window.location.reload()
+      window.location.reload()
     }
   }
 
   useEffect(() => {
-     axios.get('http://localhost:3001/sucursal').then(function (response) {
-       setSucursal(response.data.data);
-     })
-  },[])
-  
-  let { isLogin, token, comodin, addresses } = useSelector(state => state.reducerPablo)
+    axios.get('http://localhost:3001/sucursal').then(function (response) {
+      setSucursal(response.data.data);
+    })
+  }, [])
+
+  let { token, comodin, addresses } = useSelector(state => state.reducerPablo)
   const cookies = new Cookies();
-  
-  function handleSetAddress(e){
+
+  function handleSetAddress(e) {
     const jwt = myStorage.getItem("jwt");
-    const {value} = e.target
+    const { value } = e.target
     setAddressId(value)
-    dispatch(sendIdAddress(value,jwt))
+    dispatch(sendIdAddress(value, jwt))
   }
 
 
 
   useEffect(() => { }, [payment]);
   useEffect(() => {
-    getCart(token)
+    let jwt = window.localStorage.getItem('jwt');
+    if(!!jwt)
+    getCart(jwt)
   }, [comodin])
   const history = useHistory();
   async function handleCompra(event) {
     event.preventDefault();
-    const jwt = myStorage.getItem("jwt")
-    let idSucu = (sucursal?.find(x => x.name === sucuSelected))?.id
-    dispatch(sendIdStore(idSucu,jwt))
-    dispatch()
+    let el = document.getElementById('exampleRadios1')
+    if(el?.checked)
+    dispatch(sendIdStore(idSelected,myStorage.getItem('jwt')))
+    console.log('elemnto', el?.checked)
     var data = JSON.stringify({
       "payment": "mercadopago"
     });
@@ -178,13 +190,13 @@ export default function Pending() {
       data: data
     };
 
-    axios(config)
+    /* axios(config)
       .then(function (response) {
         window.location.replace(response.data);
       })
       .catch(function (error) {
         console.log(error);
-      });
+      }); */
 
   }
   async function payment(token) {
@@ -214,90 +226,92 @@ export default function Pending() {
 
   useEffect(() => {
     if (isLogin) {
-      getCart(token);
+      let jwt = window.localStorage.getItem('jwt');
+      if(!!jwt)
+      getCart(jwt)
     }
   }, [isLogin])
- 
+
   function handleInputSucu(e) {
     e.preventDefault();
     const { value } = e.target;
     setSucuSelected(value)
-    console.log(sucuSelected)
+    setIdSelected((sucursal?.find(x => x.name === value))?.id)
   }
 
-  
+  function handleSelect(e){
+    console.log(e.target.checked)
+    if(e.target.value !== 'retiro en sucursal'){
+
+    }
+  }
+
+
 
 
   if (addresses.length > 0) {
     return (
-
-      <Container>
-
-        <div >
-          <NavBar/>
-          <div class="form-check form-check-inline">
-           
-            <div class="form-check">
-              <label class="form-check-label" for="exampleRadios2">
-                Envío a domicilio:
-              </label>
-            </div>
-          </div>
-          <div>
-            {addresses && addresses?.map(address => {
-              return (
-                <div class="form-check">
-                  <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value={address.id} onClick={handleSetAddress} ></input>
-                  <AddressCard address={address} />
+      <div>
+        <NavBar />
+        <Container className="Container-Envio" >
+          <Col xs="12" md="6" className="retiro-domicilio">
+            <Card className="card-domicilio">
+              <Card.Body className="retiro-Body">
+                <div>
+                  {addresses && addresses?.map(address => {
+                    return (
+                      <div class="form-check">
+                        <label class="form-check-label" for="exampleRadios2">
+                          Envío a domicilio:
+                        </label>
+                        <input class="form-check-input" type="radio" name="exampleRadios2" id={"domicilio: "+ address.id} value={address.id} onClick={handleSetAddress} ></input>
+                        <AddressCard address={address} />
+                      </div>
+                    )
+                  })}
+                  <div>
+                    <NavLink to='/newaddress'><button>Añadir nueva dirección</button></NavLink>
+                  </div>
                 </div>
-              )
-            })}
-            <div><NavLink to='/newaddress'><button>Añadir nueva dirección</button></NavLink></div>
-          </div>
-        </div>
-        <div>
-          <div class="form-check">
-            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" ></input>
-            <label class="form-check-label" for="exampleRadios1">
-              Retiro en local:
-            </label>
-          </div>
-          <br />
-          <iframe id="map" src={(sucursal?.find(x => x.name === sucuSelected))?.src} width="480" height="250" loading="lazy"></iframe>
-          <br />
-          <h4>Seleccione una sucursal:</h4>
-          <div >
-            <p></p>
-            {/* a medida que selecciona el usuario ve lo que selecciona */}
-            <select name="types" onChange={handleInputSucu}>
-              <option value='Centro Córdoba'>Seleccionar sucursal</option>
-              {sucursal?.map(sucu => {
-                return <option value={sucu.name}>{sucu.name}</option>
-              })}
-            </select>
-          </div>
+              </Card.Body>
+            </Card>
+          </Col>
+
+          <Col xs="12" md="6" className="retiro-domicilio">
+            <Card className="card-domicilio">
+              <Card.Body className="retiro-Body">
+
+              <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value={'retiro en sucursal'} defaultChecked onClick={handleSelect} ></input>
+                <label class="form-check-label" for="exampleRadios2">
+                  Retiro en local:
+                </label>
+                <iframe id="map" src={(sucursal?.find(x => x.name === sucuSelected))?.src} width="480" height="250" loading="lazy"></iframe>
+                <h4>Seleccione una sucursal:</h4>
+                {/* a medida que selecciona el usuario ve lo que selecciona */}
+                <select name="types" onChange={handleInputSucu}>
+                  <option value='Centro Córdoba'>Seleccionar sucursal</option>
+                  {sucursal?.map(sucu => {
+                    return <option value={sucu.name}>{sucu.name}</option>
+                  })}
+                </select>
+                <h4>Por favor seleccione fecha y horario que va a retirar:</h4>
+                <h4>Por favor seleccione fecha y horario que va a retirar:</h4>
+          <Calendar></Calendar>
+              </Card.Body>
+            </Card>
+          </Col>
           {/* <p>Dirección: Rivadavia 29. Plaza San Martin </p> */}
-          <br />
-          <h4>Por favor seleccione fecha y horario que va a retirar:</h4>
-          {/* <Calendar></Calendar> */}
 
-        </div>
-        <br />
-
-        <div class="d-grid gap-2 col-3 mx-auto">
           <div class="form-check form-check-inline">
             <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1"></input>
             <label class="form-check-label" for="inlineCheckbox1">Quiero notificación vía mail de mi pedido</label>
+            <button type="button" class="btn btn-success" onClick={handleCompra}>Comprar</button>
+            {/* <button class="btn btn-primary" color="green" type="button">Comprar</button> */}
+
+            <button type="button" class="btn btn-dark" onClick={() => { setMenu(true) }} >Volver al carrito</button>
           </div>
-          <button type="button" class="btn btn-success" onClick={handleCompra}>Comprar</button>
-          {/* <button class="btn btn-primary" color="green" type="button">Comprar</button> */}
-
-          <button type="button" class="btn btn-dark" onClick={() => { setMenu(true) }} >Volver al carrito</button>
-
-        </div>
-
-
-      </Container>
+        </Container>
+      </div>
     )
   } else {
     return (
@@ -310,9 +324,10 @@ export default function Pending() {
 
         {/* 
         </div> */}
-
-        <h1 >¡Último paso! </h1>
-        <h5>Por favor seleccione: </h5>
+        <div className="ultimo-paso">
+          <h1 >¡Último paso! </h1>
+          <h5>Por favor seleccione: </h5>
+        </div>
         <Container className="Container-Envio" >
           <Row >
             <Col xs="12" md="6" className="retiro-domicilio">
@@ -448,23 +463,23 @@ export default function Pending() {
                 <Card.Body>
                   <div>
                     <div class="form-check">
-                      <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" checked></input>
+                      <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="retiro en sucursal" onClick={handleSelect} defaultChecked></input>
                       <label class="form-check-label" for="exampleRadios1">
                         Retiro en local:
                       </label>
                     </div>
 
-          <iframe id="map" src={(sucursal?.find(x => x.name === sucuSelected))?.src} width="480" height="250" loading="lazy"></iframe>
+                    <iframe id="map" src={(sucursal?.find(x => x.name === sucuSelected))?.src} width="480" height="250" loading="lazy"></iframe>
                     <h4>Seleccione una sucursal:</h4>
                     <div >
                       <p></p>
                       {/* a medida que selecciona el usuario ve lo que selecciona */}
                       <select name="types" onChange={handleInputSucu} >
-              <option value='Centro Córdoba'>Seleccionar sucursal</option>
-              {sucursal?.map(sucu => {
-                return <option value={sucu.name}>{sucu.name}</option>
-              })}
-            </select>
+                        <option value='Centro Córdoba'>Seleccionar sucursal</option>
+                        {sucursal?.map(sucu => {
+                          return <option value={sucu.name}>{sucu.name}</option>
+                        })}
+                      </select>
                     </div>
 
                     {/* <p>Dirección: Rivadavia 29. Plaza San Martin </p> */}
@@ -479,17 +494,15 @@ export default function Pending() {
           </Row>
 
           <div class="d-grid gap-2 col-3 mx-auto" className="btns-envio">
-            <div class="form-check form-check-inline">
+            <div class="form-check form-check-inline" className="btnEmail">
               <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1"></input>
               <label class="form-check-label" for="inlineCheckbox1">Quiero notificación vía mail de mi pedido</label>
-
-
-
             </div>
-            <button type="button" class="btn btn-success" onClick={handleCompra}>Comprar</button>
-            {/* <button class="btn btn-primary" color="green" type="button">Comprar</button> */}
-
-            <button type="button" class="btn btn-dark" onClick={() => { setMenu(true) }} >Volver al carrito</button>          
+            <div className="btnComprar">
+              <button type="button" class="btn btn-success" onClick={handleCompra}>Comprar</button>
+              {/* <button class="btn btn-primary" color="green" type="button">Comprar</button> */}
+              <button type="button" class="btn btn-dark" onClick={() => { setMenu(true) }} >Volver al carrito</button>
+            </div>
 
           </div>
         </Container>
