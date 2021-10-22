@@ -59,7 +59,10 @@ app.get("/feedback",(req, res) => {
    return res.redirect("https://ecommerce-dietetica.vercel.app/payment/failure") 
 })
 app.use('/sucursal', Sucursal)
-
+app.use('/google044f3b2e2490ab3e',(req, res)=>{
+  console.log(__dirname)
+  return res.sendFile(__dirname + '/utils/google044f3b2e2490ab3e.html')
+})
 
 
 export default app
