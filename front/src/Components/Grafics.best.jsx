@@ -125,7 +125,7 @@ export default function Bestsellers() {
       id="panel2bh-header"
       onClick={() => Dates() }
     >
-      <Typography sx={{ width: '33%', flexShrink: 0 }}>Users</Typography>
+      <Typography sx={{ width: '33%', flexShrink: 0 }}>Estadistica Productos mas vendidos</Typography>
     </AccordionSummary>
     <AccordionDetails>
     <div style={{ width: "65%", height: "500px" }}>
