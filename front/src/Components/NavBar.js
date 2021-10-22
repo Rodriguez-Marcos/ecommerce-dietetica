@@ -163,7 +163,7 @@ function NavBar({ getProductbyName, setLoading, isLogin, token }) {
             </Form>
             {isLogin ? <div id="sesion">
               <p> <NavLink className="perfil" to='/userprofile'><AccountCircle />Bienvendido {jwt?.decode(token)?.name} </NavLink></p>
-              <NavLink className='Link_cerrarSesion'to='/home'>
+              <NavLink className='Link_cerrarSesion'to='/'>
                 <GoogleLogout
                   clientId="908895428836-kaesjl71puimi31fjbffca9t4nvl7v6r.apps.googleusercontent.com"
                   buttonText="Cerrar Sesión"
