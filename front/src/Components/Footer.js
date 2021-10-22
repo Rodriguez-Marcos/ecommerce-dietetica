@@ -6,7 +6,7 @@ function Footer() {
     return (
         <div class="footer">
              <div class="container">
-  	 	<div class="row">
+  	 	<div class="row" className="row-footer">
   	 		<div class="footer-col">
   	 			<h4>Salvatore Dietetica</h4>
   	 			<ul>

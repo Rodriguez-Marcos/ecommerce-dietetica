@@ -193,16 +193,28 @@
         width: 30px;
         height: 70px;
     }
+    .carrito__item .img{
+        width: 10rem;
+        height: 10rem;
+    }
 }
 
 @media only screen and (max-width: 600px){
     header ul{
         display: none;
     }
+    .carrito__item .img{
+        width: 5rem;
+        height: 5rem;
+    }
 }
 
 @media only screen and (max-width: 450px){
     .carrito__item h3{
         display: .5rem;
+    }
+    .carrito__item .img{
+        width: 5rem;
+        height: 5rem;
     }
 }
