@@ -143,7 +143,7 @@ export default function Pending() {
       console.log(jwt)
       dispatch(postAddress(input, jwt))
       swal("Creado", "Dirección cargada con éxito!", "success")
-      window.location.reload()
+       window.location.reload()
     }
   }
 

@@ -26,10 +26,13 @@ export default function ProductsCards({products}) {
   },[])
 
   return (
+    <div>
     <div className={styles.main}>
       {products && products?.map(product=>{
         return <ProductCard product={product}/>
       })}
+    </div>
+   
     </div>
 
 
