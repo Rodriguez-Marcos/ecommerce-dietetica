@@ -17,7 +17,7 @@ import gif from './img/loading-25.gif'
 function Login({ respuesta, isLogin }) {
     // VER RUTA
     useEffect(() => {
-        if (isLogin) history.push('/home');
+        if (isLogin) history.push('/');
 
     }, [isLogin])
     const dispatch = useDispatch();

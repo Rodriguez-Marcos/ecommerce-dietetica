@@ -18,7 +18,7 @@ export default function Failure(){
         dispatch({type: 'REMOVE_ALL'})
         emptyCart(myStorage.getItem('jwt'));
                 cookies.set('trolley',[]);
-                if (!myStorage.getItem('jwt')) history.push('/home');
+                if (!myStorage.getItem('jwt')) history.push('/');
     }, [isLogin])
 
     return (
@@ -32,7 +32,7 @@ export default function Failure(){
         <br/>
             <h5 class="card-title">¡Ups! Algo salió mal...</h5>
             <p class="card-text">Revise su pago</p>
-            <a href="/home" class="btn btn-primary">Volver al inicio</a>
+            <a href="/" class="btn btn-primary">Volver al inicio</a>
          </div>
         </div>
         

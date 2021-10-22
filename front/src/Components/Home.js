@@ -19,8 +19,6 @@ function ProductsHome({ products, getProducts }) {
     return (
         <div >
             <NavBar />
-            <Image id="banner" src={banner} fluid />
-            <Example></Example>
             <ProductsFilters />
             <div className='home'>
                 <ProductsCards
