@@ -482,7 +482,7 @@ export default function Pending() {
                       </label>
                     </div>
 
-                    <iframe id="map" src={(sucursal?.find(x => x.name === sucuSelected))?.src} width="480" height="250" loading="lazy"></iframe>
+                     <iframe id="map" src={(sucursal?.find(x => x.name === sucuSelected))?.src} width="480" height="250" loading="lazy"></iframe>
                     <h4 class="sucu2">Seleccione una sucursal:</h4>
                     <div >
                       <p></p>
