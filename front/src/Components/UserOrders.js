@@ -5,11 +5,10 @@ import { Button } from "reactstrap";
 export default function UserOrders({orders,handlerDetails}){
 
 
-    console.log(orders)
 return(
     <div>
         <div>
-        <table className={` ${"table"} `}>
+        <table className='table'>
       <thead>
         <tr>
           <th>Numero: </th>
