@@ -147,6 +147,11 @@ export default function Pending() {
     }
   }
 
+  function calenSubmit(event){
+    event.preventDefault()
+    swal("Creado", "Turno asignado correctamente!", "success")
+  }
+
   useEffect(() => {
     axios.get('http://localhost:3001/sucursal').then(function (response) {
       setSucursal(response.data.data);
@@ -478,10 +483,11 @@ export default function Pending() {
                     </div>
 
                     <iframe id="map" src={(sucursal?.find(x => x.name === sucuSelected))?.src} width="480" height="250" loading="lazy"></iframe>
-                    <h4>Seleccione una sucursal:</h4>
+                    <h4 class="sucu2">Seleccione una sucursal:</h4>
                     <div >
                       <p></p>
                       {/* a medida que selecciona el usuario ve lo que selecciona */}
+                      <div class="sucuu">
                       <select name="types" onChange={handleInputSucu} >
                         <option value='Centro Córdoba'>Seleccionar sucursal</option>
                         {sucursal?.map(sucu => {
@@ -489,11 +495,18 @@ export default function Pending() {
                         })}
                       </select>
                     </div>
+                    </div>
+                    <br/>
 
                     {/* <p>Dirección: Rivadavia 29. Plaza San Martin </p> */}
 
-                    <h4>Por favor seleccione fecha y horario que va a retirar:</h4>
+                    <h4>Seleccione fecha y horario que va a retirar:</h4>
+                    <span class="calendar">
                     <Calendar></Calendar>
+                    </span>
+                    <div className="btn-Cargar">
+                    <button type="submit" class="btn btn-primary" onClick={calenSubmit}>Cargar</button>
+                  </div>
 
                   </div>
                 </Card.Body>
