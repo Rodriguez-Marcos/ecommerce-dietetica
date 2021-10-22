@@ -32,7 +32,7 @@ function handleChange(e){
   let isValid = validHours.find(x=>x===Number(hour))
   if(isValid){
     if(minut === '30' || minut === '00'){
-     setErr('')}
+     setErr(' ')}
      else{setErr('No se ha seleccionado un horario valido')}
   }
   else{setErr('No se ha seleccionado un horario valido')}
