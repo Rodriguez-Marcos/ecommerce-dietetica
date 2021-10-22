@@ -111,7 +111,7 @@ function NavBar({ getProductbyName, setLoading, isLogin, token }) {
             id="Links"
           >
             <Nav.Link >
-              <NavLink to="/" className='navlink1' >Inicio</NavLink>
+              <NavLink to="/" className='navlink1' id="navlink-inicio" >Inicio</NavLink>
             </Nav.Link>
             <Nav.Link >
               <NavLink to="/products" className='navlink1' >Productos</NavLink>

@@ -1,6 +1,6 @@
 import React from "react";
 import { Button } from "reactstrap";
-
+import './UserProfile.css'
 
 export default function UserOrders({orders,handlerDetails}){
 
@@ -8,7 +8,7 @@ export default function UserOrders({orders,handlerDetails}){
 return(
     <div>
         <div>
-        <table className='table'>
+        <table className="table perfil-tabla">
       <thead>
         <tr>
           <th>Numero: </th>
