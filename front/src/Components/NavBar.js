@@ -168,7 +168,7 @@ function NavBar({ getProductbyName, setLoading, isLogin, token }) {
                   clientId="908895428836-kaesjl71puimi31fjbffca9t4nvl7v6r.apps.googleusercontent.com"
                   buttonText="Cerrar Sesión"
                   onLogoutSuccess={logout}
-                  onFailure={() => { console.log('fallo') }}
+                  onFailure={(e) => { console.log('fallo',e) }}
                 >
                   <span id='cerrarSesion'><ExitToApp /> Cerrar Sesión</span>
                 </GoogleLogout>
