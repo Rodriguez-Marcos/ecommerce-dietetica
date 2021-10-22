@@ -11,7 +11,7 @@ import { Navbar, Nav, NavDropdown, Form, FormControl, Button, Image } from 'reac
 import useUser from '../Hooks/UseUser'; //hook para loguearse y ver si esta logueado el usuario
 import Logo from '../image/SALVATORE-grande.png'
 import lupa from '../image/buscar.png'
-import { Favorite, ShoppingCart } from '@material-ui/icons';
+import { Favorite, ShoppingCart} from '@material-ui/icons';
 import { AccountCircle } from '@material-ui/icons';
 import { ExitToApp } from '@material-ui/icons';
 import Cookies from "universal-cookie";
@@ -21,8 +21,6 @@ import Trolley from './Trolley'
 import { decode } from "jsonwebtoken";
 import 'boxicons';
 import Favorites from './favorites';
-
-
 
 const jwt = require('jsonwebtoken')
 const cookies = new Cookies();

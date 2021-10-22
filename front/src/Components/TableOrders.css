@@ -1,6 +1,7 @@
 .ordersContenedor{
-    width: 100vw;
+    width: 99vw;
     height: 100vh;
+    
 }
 .container{
     width: 75%;
@@ -18,19 +19,24 @@
 }
 .table1{
     margin-left: 250px;
-        overflow:scroll; 
+    overflow:scroll; 
+    height: 99%;
 /* 
         height:calc(95vh - 50px);
         width:calc(100vw - 50px); */
         /* margin: 5px; */
 }
-
+.table{
+    overflow:scroll; 
+    height:calc(95vh - 50px);
+    width:calc(100vw - 50px);
+}
 
 
 
 @media only screen and (max-width: 770px) {
     
-    #table1{
+    .table1{
         overflow:scroll; 
         height:calc(95vh - 50px);
         width:100vw;

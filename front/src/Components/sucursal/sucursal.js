@@ -6,8 +6,9 @@ import Sidebar from '../AdminSideBar'
 import Topbar from '../AdminTopBar'
 import ModalHeader from 'react-bootstrap/esm/ModalHeader';
 import { useDispatch } from 'react-redux';
-import { putSucursal,deleteSucursal } from '../../Actions/index.js';
+import { putSucursal, deleteSucursal } from '../../Actions/index.js';
 import "bootstrap/dist/css/bootstrap.min.css";
+import './sucursal.css'
 
 export default function Sucursal() {
     const myStorage = window.localStorage;
@@ -42,7 +43,7 @@ export default function Sucursal() {
         setModal({ ...modal, name: e.name, src: e.src, id: e.id, edit: true })
 
     }
-    function deletSucu(e){
+    function deletSucu(e) {
         setModal({ ...modal, name: e.name, src: e.src, id: e.id, delet: true })
     }
     function handlePut(e) {
@@ -76,7 +77,7 @@ export default function Sucursal() {
         })
     }
 
-    function deleteSucu(){
+    function deleteSucu() {
         const jwt = myStorage.getItem("jwt");
         dispatch(deleteSucursal(modal.id, jwt))
         setModal({
@@ -93,79 +94,83 @@ export default function Sucursal() {
     return (
         <div>
             <Topbar />
-            <Sidebar />
-            <h3>Lista de Sucursales</h3>
-            <table className="table">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Nombre</th>
-                        <th>Locacion</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                {sucursal.map((e) => (
-                    <tbody key={e.id}>
-                        <td>{e.id} </td>
-                        <td>{e.name}</td>
-                        <td>{e.src.slice(0, 30) + '...'}
-                            <Button onClick={() => { copyToClipboard(e.src) }} styles={{ hover: 'blue' }}>Copiar Link</Button>
-                        </td>
-                        <td>
-                            <Button color="danger" onClick={() => putSucu(e)}>
-                                🖋
+            <div className="sidebar-sucursales">
+                <Sidebar />
+                <div className="list-sucursales">
+                    <h3>Lista de Sucursales</h3>
+                    <table className="table-sucursales">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nombre</th>
+                                <th>Locacion</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        {sucursal.map((e) => (
+                            <tbody key={e.id}>
+                                <td>{e.id} </td>
+                                <td>{e.name}</td>
+                                <td>{e.src.slice(0, 30) + '...'}
+                                    <Button onClick={() => { copyToClipboard(e.src) }} styles={{ hover: 'blue' }}>Copiar Link</Button>
+                                </td>
+                                <td>
+                                    <Button color="danger" onClick={() => putSucu(e)}>
+                                        🖋
+                                    </Button>
+                                    <Button color="danger" onClick={() => deletSucu(e)}>
+                                        🗑
+                                    </Button>
+                                </td>
+                            </tbody>
+                        ))}
+                    </table>
+                    <Modal isOpen={modal.edit} >
+                        <ModalHeader> ¿Desea editar la Sucursal {modal.name} ?</ModalHeader>
+                        <ModalBody>Esta acción no se puede revertir </ModalBody>
+                        <FormGroup>
+                            <input
+                                className="form-control"
+                                type="text"
+                                value={modal.name}
+                                name="name"
+                                onChange={(e) => handlePut(e)}
+                            />
+                            {!modal.name ? <output> ✏</output> : <output> ✔</output>}
+                        </FormGroup>
+                        <FormGroup>
+                            <input
+                                className="form-control"
+                                type="text"
+                                value={modal.src}
+                                name="src"
+                                onChange={(e) => handlePut(e)}
+                            />
+                            {!modal.src ? <output> ✏</output> : <output> ✔</output>}
+                        </FormGroup>
+                        <ModalFooter>
+                            <Button color="danger" onClick={(e) => editSucu(e)}>
+                                Editar
                             </Button>
-                            <Button color="danger"  onClick={()=> deletSucu(e)}>
-                                🗑
+                            <Button color="primary" onClick={() => closeEdit()} >
+                                Cancelar
                             </Button>
-                        </td>
-                    </tbody>
-                ))}
-            </table>
-            <Modal isOpen={modal.edit} >
-                <ModalHeader> ¿Desea editar la Sucursal {modal.name} ?</ModalHeader>
-                <ModalBody>Esta acción no se puede revertir </ModalBody>
-                <FormGroup>
-                    <input
-                        className="form-control"
-                        type="text"
-                        value={modal.name}
-                        name="name"
-                        onChange={(e) => handlePut(e)}
-                    />
-                    {!modal.name ? <output> ✏</output> : <output> ✔</output>}
-                </FormGroup>
-                <FormGroup>
-                    <input
-                        className="form-control"
-                        type="text"
-                        value={modal.src}
-                        name="src"
-                        onChange={(e) => handlePut(e)}
-                    />
-                    {!modal.src ? <output> ✏</output> : <output> ✔</output>}
-                </FormGroup>
-                <ModalFooter>
-                    <Button color="danger" onClick={(e) => editSucu(e)}>
-                        Editar
-                    </Button>
-                    <Button color="primary" onClick={() => closeEdit()} >
-                        Cancelar
-                    </Button>
-                </ModalFooter>
-            </Modal>
-            <Modal isOpen={modal.delet} >
-                <ModalHeader> ¿Desea eliminar la Sucursal {modal.name} ?</ModalHeader>
-                <ModalBody>Esta acción no se puede revertir </ModalBody>
-                <ModalFooter>
-                    <Button color="danger" onClick={()=> deleteSucu()} >
-                        Borrar
-                    </Button>
-                    <Button color="primary" onClick={() => closeEdit()} >
-                        Cancelar
-                    </Button>
-                </ModalFooter>
-            </Modal>
+                        </ModalFooter>
+                    </Modal>
+                    <Modal isOpen={modal.delet} >
+                        <ModalHeader> ¿Desea eliminar la Sucursal {modal.name} ?</ModalHeader>
+                        <ModalBody>Esta acción no se puede revertir </ModalBody>
+                        <ModalFooter>
+                            <Button color="danger" onClick={() => deleteSucu()} >
+                                Borrar
+                            </Button>
+                            <Button color="primary" onClick={() => closeEdit()} >
+                                Cancelar
+                            </Button>
+                        </ModalFooter>
+                    </Modal>
+                </div>
+            </div>
         </div>
     )
 }
