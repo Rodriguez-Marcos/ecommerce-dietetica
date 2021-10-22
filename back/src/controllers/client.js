@@ -208,7 +208,7 @@ export async function RegOrCreateGaccount(req, res) {
 export async function resetPassword(req, res) {
     const { id } = req.params
     try {
-        let password = await bcrypt.hash('12345',10)
+        let password = await bcrypt.hash('salva1234',10)
         let clientresetpassword = await Client.update({ password: password }, { where: { id: id } })
         res.json({
             message:'Se forzo un password reset',

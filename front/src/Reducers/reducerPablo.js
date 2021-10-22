@@ -43,7 +43,9 @@ const InitialState = {
   addresses: [],
   paths: [null, null, null],
   totalByDay: [],
-  bestseller:[]
+  bestseller:[],
+  qualified:[]
+
 };
 
 export default function reducerPablo(state = InitialState, action) {
@@ -219,7 +221,11 @@ export default function reducerPablo(state = InitialState, action) {
           ...state,
           bestseller: action.payload,
         };
-      
+        case 'GET_QUALIFIED':
+          return {
+            ...state,
+            qualified: action.payload,
+          };
       case 'PUT_SUCURSAL':
         return {
           ...state,

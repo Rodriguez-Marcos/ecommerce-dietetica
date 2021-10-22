@@ -118,7 +118,8 @@ export async function createOrder(req, res, next) {
 }
 export async function getOrders(req, res) {
     let { id_client, id_order, status } = req.query
-    id_client = req.id;
+    
+    console.log("hola")
     try {
         if (!id_client && !id_order) {
             var orders = await Order.findAll(
@@ -247,13 +248,12 @@ export async function changeOrderStatus(req, res) {
 
     }
 }
-
 export async function bestSellers(req, res) {
     try {
 
         let productsQuantity = await Product_Order.findAll({
             group: ['id_product'],
-            attributes: ['id_product',
+            attributes: [['id_product','id'],
                 [sequelize.fn('SUM', sequelize.col('quantity')),
                     'productQuantity'],
                 [sequelize.literal(`(
@@ -296,7 +296,6 @@ export async function bestSellers(req, res) {
         })
     }
 }
-
 export async function totalOrderByDay(req, res) {
     try {
 
