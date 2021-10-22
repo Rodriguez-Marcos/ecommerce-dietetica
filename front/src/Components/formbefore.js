@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import './formbefore.css'
 import NavBar from './NavBar';
-import { getAddress, postAddress, sendIdAddress, deleteAddress } from '../Actions';
+import { getAddress, postAddress, sendIdAddress, deleteAddress, sendIdStore } from '../Actions';
 // import emptycart from '../../Utils/emptycart';
 import { StyleSharp } from '@material-ui/icons';
 import Cookies from "universal-cookie";
@@ -19,7 +19,9 @@ import { Button, Container, Row, Col, Card } from 'react-bootstrap';
 import { Select } from '@material-ui/core';
 
 export default function Pending() {
+  const { isLogin } = useSelector(state => state.cart)
   const [sucuSelected, setSucuSelected] = useState('Centro Córdoba')
+  const [idSelected, setIdSelected] = useState(2)
   const myStorage = window.localStorage;
   const value = useContext(DataContext)
   const [carrito, setCarrito] = value.carrito;
@@ -27,6 +29,17 @@ export default function Pending() {
   const [menu, setMenu] = value.menu;
   const [errors, setErrors] = useState({});
   const [touched, setTouched] = useState({});
+  useEffect(() => {
+    if (!!myStorage.getItem('jwt')) {
+      getCart(myStorage.getItem('jwt'));
+    }
+
+    else{
+      history.push('/')
+
+    }
+  }, [isLogin])
+
   const [addressid, setAddressId] = useState(null)
   const [sucursal, setSucursal] = useState([]);
 
@@ -114,7 +127,7 @@ export default function Pending() {
   // }
   const jwt = window.localStorage.jwt
   var client = decode(jwt)
-  var id = client.id
+  var id = client?.id
   const dispatch = useDispatch();
   useEffect(() => {
     const jwt = myStorage.getItem("jwt")
@@ -139,7 +152,7 @@ export default function Pending() {
     })
   }, [])
 
-  let { isLogin, token, comodin, addresses } = useSelector(state => state.reducerPablo)
+  let { token, comodin, addresses } = useSelector(state => state.reducerPablo)
   const cookies = new Cookies();
 
   function handleSetAddress(e) {
@@ -155,11 +168,17 @@ export default function Pending() {
 
   useEffect(() => { }, [payment]);
   useEffect(() => {
-    getCart(token)
+    let jwt = window.localStorage.getItem('jwt');
+    if(!!jwt)
+    getCart(jwt)
   }, [comodin])
   const history = useHistory();
   async function handleCompra(event) {
     event.preventDefault();
+    let el = document.getElementById('exampleRadios1')
+    if(el?.checked)
+    dispatch(sendIdStore(idSelected,myStorage.getItem('jwt')))
+    console.log('elemnto', el?.checked)
     var data = JSON.stringify({
       "payment": "mercadopago"
     });
@@ -174,7 +193,7 @@ export default function Pending() {
       data: data
     };
 
-    axios(config)
+     axios(config)
       .then(function (response) {
         window.location.replace(response.data);
       })
@@ -210,7 +229,9 @@ export default function Pending() {
 
   useEffect(() => {
     if (isLogin) {
-      getCart(token);
+      let jwt = window.localStorage.getItem('jwt');
+      if(!!jwt)
+      getCart(jwt)
     }
   }, [isLogin])
 
@@ -218,7 +239,14 @@ export default function Pending() {
     e.preventDefault();
     const { value } = e.target;
     setSucuSelected(value)
-    console.log(sucuSelected)
+    setIdSelected((sucursal?.find(x => x.name === value))?.id)
+  }
+
+  function handleSelect(e){
+    console.log(e.target.checked)
+    if(e.target.value !== 'retiro en sucursal'){
+
+    }
   }
 
 
@@ -239,7 +267,7 @@ export default function Pending() {
                         <label class="form-check-label" for="exampleRadios2">
                           Envío a domicilio:
                         </label>
-                        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value={address.id} onClick={handleSetAddress} ></input>
+                        <input class="form-check-input" type="radio" name="exampleRadios2" id={"domicilio: "+ address.id} value={address.id} onClick={handleSetAddress} ></input>
                         <AddressCard address={address} />
                       </div>
                     )
@@ -256,8 +284,8 @@ export default function Pending() {
             <Card className="card-domicilio">
               <Card.Body className="retiro-Body">
 
-                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value={0} onClick={handleSetAddress}></input>
-                <label class="form-check-label" for="exampleRadios1">
+              <input class="form-check-input" type="radio" name="exampleRadios2" id="exampleRadios1" value={'retiro en sucursal'} defaultChecked onClick={handleSelect} ></input>
+                <label class="form-check-label" for="exampleRadios2">
                   Retiro en local:
                 </label>
                 <iframe id="map" src={(sucursal?.find(x => x.name === sucuSelected))?.src} width="480" height="250" loading="lazy"></iframe>
@@ -438,7 +466,7 @@ export default function Pending() {
                 <Card.Body>
                   <div>
                     <div class="form-check">
-                      <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked></input>
+                      <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="retiro en sucursal" onClick={handleSelect} defaultChecked></input>
                       <label class="form-check-label" for="exampleRadios1">
                         Retiro en local:
                       </label>

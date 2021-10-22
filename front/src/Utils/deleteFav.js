@@ -15,5 +15,5 @@ export default async function deleteFavorites (id, token){
         data : data
       };
       
-      return setTimeout(()=>axios(config),50)
+      return setTimeout(()=>axios(config),600)
 }

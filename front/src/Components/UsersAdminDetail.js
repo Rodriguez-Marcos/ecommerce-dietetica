@@ -43,7 +43,7 @@ export default function UserDetail() {
     return(
         <div>
             {isadmin ?
-            <TableUser clients={clients} borrar={HandleDelete} handlerUpdateUser={handlerUpdateUser}  handleChangePassword={handleChangePassword}/> : <Redirect to='/home'/>}
+            <TableUser clients={clients} borrar={HandleDelete} handlerUpdateUser={handlerUpdateUser}  handleChangePassword={handleChangePassword}/> : <Redirect to='/'/>}
         </div>
     )
 }

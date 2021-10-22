@@ -28,7 +28,7 @@ export default function useUser() {
             await postCarrito(jwt, id_products)
             .then(async (res) => {
                 await getCart(jwt)
-                window.location.href = '/home';
+                window.location.href = '/';
             }).catch((err) => { console.error(err) })
             dispatch({ type: 'LOGIN', payload: jwt })
             var isadmin = decode(jwt)
@@ -43,9 +43,9 @@ export default function useUser() {
         dispatch({ type: 'ERROR', payload: false })
         let id_products = [];
         cookies.get('trolley')?.map(x => id_products.push({ id: x.id, quantity: x.quantity }));
-        myStorage.setItem('jwt', res.$b.id_token);
+        myStorage.setItem('jwt', res.tokenId);
         const { googleId } = res.profileObj;
-        await createUserByGoogle(googleId, res.$b.id_token)
+        await createUserByGoogle(googleId, res.tokenId)
         postCarrito(myStorage.getItem('jwt'), id_products)
         .then(async (res) => {
             await getCart(myStorage.getItem('jwt'));
@@ -53,7 +53,7 @@ export default function useUser() {
         .then((response) => {
             dispatch({ type: 'LOGIN', payload: myStorage.getItem('jwt') });
             dispatch({ type: 'LOADING', payload: false })
-            window.location.href = '/home';
+            window.location.href = '/';
             })
             .catch((err) => {
                 alert('Algo salio mal' + '\nEse usuario ya fue registrado en nuestra plataforma, prueba iniciar sesion con contraseña');
@@ -69,7 +69,7 @@ export default function useUser() {
         cookies.set('trolley', [])
         dispatch({ type: 'REMOVE_ALL_FAVS' })
         dispatch({ type: 'LOGOUT' })
-        window.location.href = '/home';
+        window.location.href = '/';
     }, []);
     return {
         login,

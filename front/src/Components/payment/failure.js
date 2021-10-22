@@ -4,16 +4,22 @@ import styles from './failure.module.css'
 import NavBar from '../NavBar';
 import fail from '../img/x.png'
 import emptyCart from '../../Utils/emptycart';
-import { useDispatch } from 'react-redux';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router';
+import Cookies from 'universal-cookie';
+let cookies = new Cookies();
 export default function Failure(){
     const dispatch = useDispatch();
     const myStorage = window.localStorage;
+    const {isLogin}= useSelector(state=>state.cart)
+    const history = useHistory();
 
     useEffect(() => {
         dispatch({type: 'REMOVE_ALL'})
-        emptyCart(myStorage.getItem('jwt'))
-    }, [])
+        emptyCart(myStorage.getItem('jwt'));
+                cookies.set('trolley',[]);
+                if (!myStorage.getItem('jwt')) history.push('/');
+    }, [isLogin])
 
     return (
         <div>
@@ -26,7 +32,7 @@ export default function Failure(){
         <br/>
             <h5 class="card-title">¡Ups! Algo salió mal...</h5>
             <p class="card-text">Revise su pago</p>
-            <a href="/home" class="btn btn-primary">Volver al inicio</a>
+            <a href="/" class="btn btn-primary">Volver al inicio</a>
          </div>
         </div>
         

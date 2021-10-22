@@ -3,6 +3,7 @@ import { GoogleLogout } from 'react-google-login';
 import React, { useState, useEffect, useContext } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
+import { useLocation } from 'react-router';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import './Navbar.css';
 import { getProductbyName, setLoading } from '../Actions/index'
@@ -21,6 +22,7 @@ import Trolley from './Trolley'
 import { decode } from "jsonwebtoken";
 import 'boxicons';
 import Favorites from './favorites';
+import getCart from '../Utils/getCart';
 
 const jwt = require('jsonwebtoken')
 const cookies = new Cookies();
@@ -39,8 +41,11 @@ function NavBar({ getProductbyName, setLoading, isLogin, token }) {
   const value = useContext(DataContext)
   const [menu, setMenu] = value.menu;
   const [favs, setFavs] = value.favs;
-  useEffect(() => {
-  }, [comodin, cookies])
+
+  const location = useLocation();
+  useEffect(()=>{
+  },[comodin,cookies])
+  
 
   function onLogoutSuccess() {
     console.log("logout success")
@@ -54,13 +59,16 @@ function NavBar({ getProductbyName, setLoading, isLogin, token }) {
   const myStorage = window.localStorage;
   useEffect(() => {
     const jwt = myStorage.getItem('jwt');
-    var isadmin = decode(jwt)
-
+    let loc = location.pathname;
+    getCart(jwt, (loc==='/payment/success'||loc==='/payment/pending'||loc==='/payment/failure'))
+    console.log(loc)
+    
     if (!!jwt) {
+      var isadmin = decode(jwt)
       dispatch({ type: 'LOGIN', payload: jwt })
       dispatch({ type: 'SET_LOGIN_USER', payload: isadmin.isAdmin })
     }
-  }, [myStorage])
+  }, [myStorage,comodin])
   let history = useHistory();
   useEffect(() => {
     let isArray = Array.isArray(cookies.get('trolley'))
@@ -79,7 +87,7 @@ function NavBar({ getProductbyName, setLoading, isLogin, token }) {
       setLoading();
       history.push("/search");
     } else {
-      history.push("/home");
+      history.push("/");
     }
   }
 
@@ -93,7 +101,7 @@ function NavBar({ getProductbyName, setLoading, isLogin, token }) {
   return (
     <div className="content">
       <Navbar classname="navbar" expand="lg">
-        <Navbar.Brand href="#"><NavLink to="/home" ><img className="Logo" src={Logo} /></NavLink></Navbar.Brand>
+        <Navbar.Brand href="#"><NavLink to="/" ><img className="Logo" src={Logo} /></NavLink></Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll">
           <Nav id="navScroll"
@@ -103,7 +111,10 @@ function NavBar({ getProductbyName, setLoading, isLogin, token }) {
             id="Links"
           >
             <Nav.Link >
-              <NavLink to="/home" className='navlink1' >Inicio</NavLink>
+              <NavLink to="/" className='navlink1' >Inicio</NavLink>
+            </Nav.Link>
+            <Nav.Link >
+              <NavLink to="/products" className='navlink1' >Productos</NavLink>
             </Nav.Link>
 
 
@@ -160,6 +171,7 @@ function NavBar({ getProductbyName, setLoading, isLogin, token }) {
                   <span id='cerrarSesion'><ExitToApp /> Cerrar Sesión</span>
                 </GoogleLogout>
               </NavLink> {/* <button onClick={()=>{logout(),signOut()}}> Salir </button> */}
+
             </div>
               : <div id="btnsSesionRegistro">
                 <NavLink id="btnSesion" to='/Login'><Image id="imgSesion" src={Sesion} /><span>Inicia Sesion</span> </NavLink>

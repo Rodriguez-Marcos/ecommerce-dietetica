@@ -34,7 +34,7 @@ export async function addAddress(req, res) {
 }
 
 export async function getAddress(req, res) {
-    let { id_client } = req.query
+    let id_client  = req.id
     try {
         if (id_client) {
             var addresses = await Address.findAll({ where: { id_client: id_client } })
@@ -57,7 +57,7 @@ export async function getAddress(req, res) {
     }
 }
 export async function deleteAddress(req, res) {
-    const { id } = req.params
+    const { id } = req
     try {
         let address = await Address.destroy({ where: { id: id } })
         return res.json({
@@ -76,7 +76,7 @@ export async function deleteAddress(req, res) {
 }
 export async function updateAddress(req, res) {
     const { calle, altura, barrio, otros, codigo, numero } = req.body
-    const { id } = req.params
+    const { id } = req
     try {
         await Address.update({
             calle: calle,

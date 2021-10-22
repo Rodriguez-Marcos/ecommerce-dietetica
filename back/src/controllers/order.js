@@ -8,10 +8,11 @@ import { sequelize } from '../database/db.js'
 import Address from '../models/Address.js';
 const nodemailer = require('nodemailer');
 
-export async function createOrder(req, res) {
+export async function createOrder(req, res, next) {
     const id_client = req.id
     try {
         let cart = await Cart.findOne({ where: { id_client: id_client } })
+        res.redirect('http://localhost:3001/cart/emptycart')
         let products = await Product_Cart.findAll({ where: { id_cart: cart.dataValues.id }, attributes: ["id_product", "quantity"] })
         console.log(products)
 
@@ -105,7 +106,6 @@ export async function createOrder(req, res) {
                 console.log('Message sent', info.messageId)
             }
 
-            return res.redirect('http://localhost:3001/cart/emptycart')
         }
 
     } catch (err) {
@@ -118,6 +118,7 @@ export async function createOrder(req, res) {
 }
 export async function getOrders(req, res) {
     let { id_client, id_order, status } = req.query
+    id_client = req.id;
     try {
         if (!id_client && !id_order) {
             var orders = await Order.findAll(
@@ -197,7 +198,7 @@ export async function changeOrderStatus(req, res) {
         await Order.update({ status: status }, { where: { id: id } })
         let order = await Order.findOne({
             where: { id: id },
-            attributes: ["id", "ammount", "shippingAddress", "createDate", "status"],
+            attributes: ["id", "ammount", "shippingAddress", "createDate", "status","shippingAddress"],
             include: [
                 { model: Client, attributes: ["id", "name", "lastname", "email", "phone"] },
                 {
@@ -205,6 +206,37 @@ export async function changeOrderStatus(req, res) {
                     through: { attributes: ["quantity", "total"] }
                 }],
         })
+        console.log(order)
+        if(status==="procesando"){
+            let client = await Client.findOne({ where: { id: order.dataValues.client.dataValues.id } })
+            let clientMail = client.dataValues.email
+            const transporter = nodemailer.createTransport({
+                host: 'smtp-relay.sendinblue.com',
+                port: 587,
+                secure: false,
+                auth: {
+                    user: 'faridsesin@gmail.com',
+                    pass: 'G76d8KXDCzjT4Ew0'
+                },
+                tls: {
+                    rejectUnauthorized: false
+                }
+            })
+           
+                //let address = await Address.findOne({ where: { id: order.dataValues.shippingAddress } })
+                const info = await transporter.sendMail({
+                    from: "'Salvatore' <faridsesin@gmail.com>",
+                    to: clientMail,
+                    subject: 'Tu pedido ha sido despachado',
+                    html: `
+                    <h1>TU PEDIDO HA SIDO DESPACHADO</h1>
+                    <h2>Hola ${client.dataValues.name} ${client.dataValues.lastname} </h2>
+                    <p>Pronto recibiras tus productos para que los disfrutes</p>
+                    `,
+                })
+                console.log('Message sent', info.messageId)
+            
+        }
         return res.status(200).send(order)
     } catch (err) {
         console.log(err)
@@ -231,6 +263,22 @@ export async function bestSellers(req, res) {
                               
                             )`),
                     'name',
+                ],
+                [sequelize.literal(`(
+                              SELECT price
+                              FROM products
+                              WHERE products.id = products_order.id_product
+                              
+                            )`),
+                    'price',
+                ],
+                [sequelize.literal(`(
+                              SELECT image
+                              FROM products
+                              WHERE products.id = products_order.id_product
+                              
+                            )`),
+                    'image',
                 ]],
             order: [[sequelize.fn('SUM', sequelize.col('quantity')), 'DESC']],
             limit: 7

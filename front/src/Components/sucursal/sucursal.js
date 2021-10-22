@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Button, FormGroup, Modal, ModalBody, ModalFooter } from 'reactstrap';
@@ -7,37 +7,87 @@ import Topbar from '../AdminTopBar'
 import ModalHeader from 'react-bootstrap/esm/ModalHeader';
 import { useDispatch } from 'react-redux';
 import { putSucursal, deleteSucursal } from '../../Actions/index.js';
+
 import "bootstrap/dist/css/bootstrap.min.css";
 import './sucursal.css'
 
 export default function Sucursal() {
-    const myStorage = window.localStorage;
-    let dispatch = useDispatch();
-    const [sucursal, setSucursal] = useState([])
-    const [modal, setModal] = useState({
-        id: '',
-        name: '',
-        src: '',
-        edit: false,
-        delet: false,
-    })
+  const myStorage = window.localStorage;
+  let dispatch = useDispatch();
+  const [sucursal, setSucursal] = useState([]);
+  const [modal, setModal] = useState({
+    id: "",
+    name: "",
+    src: "",
+    edit: false,
+    delet: false,
+  });
 
+  useEffect(() => {
+    axios.get("http://localhost:3001/sucursal").then(function (response) {
+      setSucursal(response.data.data);
+    });
+  }, [dispatch]);
 
-    useEffect(() => {
-        axios.get('http://localhost:3001/sucursal').then(function (response) {
-            setSucursal(response.data.data);
-        })
-    }, [dispatch])
+  const copyToClipboard = (text) => {
+    var textField = document.createElement("textarea");
+    textField.innerText = text;
+    document.body.appendChild(textField);
+    textField.select();
+    document.execCommand("copy");
+    textField.remove();
+  };
 
+  function putSucu(e) {
+    setModal({ ...modal, name: e.name, src: e.src, id: e.id, edit: true });
+  }
+  function deletSucu(e) {
+    setModal({ ...modal, name: e.name, src: e.src, id: e.id, delet: true });
+  }
+  function handlePut(e) {
+    setModal({
+      ...modal,
+      [e.target.name]: e.target.value,
+    });
+  }
+  function closeEdit() {
+    setModal({
+      id: "",
+      name: "",
+      src: "",
+      edit: false,
+      delet: false,
+    });
+  }
+  function editSucu(e) {
+    const jwt = myStorage.getItem("jwt");
+    dispatch(putSucursal(modal, modal.id, jwt));
+    setModal({
+      id: "",
+      name: "",
+      src: "",
+      edit: false,
+      delet: false,
+    });
+    axios.get("http://localhost:3001/sucursal").then(function (response) {
+      setSucursal(response.data.data);
+    });
+  }
 
-    const copyToClipboard = (text) => {
-        var textField = document.createElement('textarea')
-        textField.innerText = text
-        document.body.appendChild(textField)
-        textField.select()
-        document.execCommand('copy')
-        textField.remove()
-    }
+  function deleteSucu() {
+    const jwt = myStorage.getItem("jwt");
+    dispatch(deleteSucursal(modal.id, jwt));
+    setModal({
+      id: "",
+      name: "",
+      src: "",
+      edit: false,
+      delet: false,
+    });
+    axios.get("http://localhost:3001/sucursal").then(function (response) {
+      setSucursal(response.data.data);
+    });
+  }
 
     function putSucu(e) {
         setModal({ ...modal, name: e.name, src: e.src, id: e.id, edit: true })
@@ -174,3 +224,4 @@ export default function Sucursal() {
         </div>
     )
 }
+

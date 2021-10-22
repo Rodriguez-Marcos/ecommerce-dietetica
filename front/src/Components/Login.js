@@ -1,3 +1,4 @@
+import swal from "sweetalert";
 import React, { useEffect, useState } from 'react';
 import GoogleLogin from 'react-google-login';
 import { useHistory } from "react-router-dom";
@@ -16,14 +17,14 @@ import gif from './img/loading-25.gif'
 function Login({ respuesta, isLogin }) {
     // VER RUTA
     useEffect(() => {
-        if (isLogin) history.push('/home');
-    
+        if (isLogin) history.push('/');
+
     }, [isLogin])
     const dispatch = useDispatch();
     const [click, setClick] = useState(0)
-    let { loading, error } = useSelector(state=>state.loading)
+    let { loading, error } = useSelector(state => state.loading)
 
-    
+
     const [input, setInput] = useState({
         name: '',
         lastname: '',
@@ -33,75 +34,84 @@ function Login({ respuesta, isLogin }) {
         phone: '213124124',
     }
     )
-    const [control,setControl] = useState(input)
+    const [control, setControl] = useState({})
     const [account, setAccount] = useState(false)
 
     const { login, loginGoogle } = useUser();
     const history = useHistory();
-    
-    async function handelSubmit(event) {
+
+    async function handleSubLoginCreate(event) {
         event.preventDefault()
-        if (!input.name || !input.lastname || !input.password || !input.email) {
-            alert('Debes llenar todos los campos')
+        if (Object.keys(control).length|| !input.repeatPass) {
+            swal('Revisa los campos')
+
         }
         else {
-            dispatch({type:'LOADING', payload: true})
-            try{
-            let res = await createUser(input)
-            console.log(res)
+            dispatch({ type: 'LOADING', payload: true })
+            try {
+                let res = await createUser(input)
             }
-            catch(err){console.error(err)}
+            catch (err) { console.error(err) }
 
             await login(input.email, input.password)
-            dispatch({type:'LOADING', payload: false})
-
+            dispatch({ type: 'LOADING', payload: false })
+            
         }
     }
-
-    function handleChange(event) {
-        setControl(validate(input))
-        setInput({
-            ...input,
-            [event.target.name]: event.target.value
-        })
-        console.log('control: ',control)
-    }
-
-    function handleSubmit(event) {
+    
+    function handleSubLogin(event) {
         event.preventDefault()
-        if (!input.password || !input.email) {
-            alert('Debes llenar todos los campos')
+        console.log(input.repeatPass)
+        if (Object.keys(control).length) {
+            swal('Revisa los campos')
+
         }
         else {
-            
+
             login(input.email, input.password)
 
         }
     }
+    function handleChange(event) {
+        console.log(event.target.value)
+        setControl({ ...validate({
+                ...input,
+                [event.target.name]: event.target.value
+            },
+            account
+        )})
 
-    const responseGoogle = (response) => {}
-    
+        setInput({
+                ...input,
+                [event.target.name]: event.target.value
+            })
+            
+    }
+
+
+    const responseGoogle = (response) => { }
+
 
     if (!account) {
         return (
             <div>
                 <NavBar />
-                <Form className="divuser">
+                <Form className="divuser" onSubmit={handleSubLogin}>
                     <Form.Group className="mb-3" controlId="formBasicEmail" >
                         <Form.Label>Email</Form.Label>
-                        <Form.Control placeholder="ejemplo@email.com" type="text" name="email" value={input.email} onChange={handleChange} />
-                        <Form.Text className="text-muted">
-                            Nunca compartiremos su correo electrónico con nadie más.
+                        <Form.Control key='Email' style={control.email?.length ? { color: 'red', borderColor: 'red' } : { color: 'black' }} placeholder="ejemplo@email.com" type="text" name="email" value={input.email} onChange={handleChange} />
+                        <Form.Text key='email' style={control.email?.length ? { color: 'red' } : { color: 'black' }} className="text-muted">
+                            {control.email || 'Nunca compartiremos su correo electrónico con nadie más.'}
                         </Form.Text>
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="formBasicEmail" >
                         <Form.Label>Contraseña</Form.Label>
-                        <Form.Control placeholder="Contraseña" type="password" name='password' value={input.password} onChange={handleChange} />
+                        <Form.Control style={control.password?.length?{color: 'red', borderColor: 'red'}:{color: 'black'}} key='password' placeholder="Contraseña" type="password" name='password' value={input.password} onChange={handleChange} />
                         <Form.Text className="text-muted">
-                            Escriba su contraseña registrada
+                            {control.password || 'Escriba su contraseña'}
                         </Form.Text>
                     </Form.Group>
-                    <Button onClick={handleSubmit}> Aceptar </Button>
+                    <Button className='btn' onClick={handleSubLogin}> Aceptar </Button>
                     <GoogleLogin
                         clientId="908895428836-kaesjl71puimi31fjbffca9t4nvl7v6r.apps.googleusercontent.com"
                         buttonText="Login"
@@ -109,9 +119,9 @@ function Login({ respuesta, isLogin }) {
                         onFailure={responseGoogle}
                         cookiePolicy={'single_host_origin'}
                     />
-                    <h6 onClick={e => setAccount(true)}>No tienes una cuenta? <h6 >Registrate</h6></h6>
+                    <h6 className='registrarse' onClick={e => setAccount(true)}>No tienes una cuenta? <h6 >Registrate</h6></h6>
                 </Form>
-            {loading?<img className='imagenCargando' src={gif}></img>:false}
+                {loading ? <img className='imagenCargando' src={gif}></img> : false}
             </div>
 
         )
@@ -120,31 +130,36 @@ function Login({ respuesta, isLogin }) {
         return (
             <div>
                 <NavBar />
-                <Form className="divuser">
+                <Form className="divuser" onSubmit={handleSubLoginCreate}>
                     <Form.Group className="mb-3" controlId="formBasicEmail" >
                         <Form.Label>Nombre</Form.Label>
-                        <Form.Control type="text" placeholder="Nombre" type="text"
+                        <Form.Control style={control.name?.length ? { color: 'red', borderColor: 'red' } : { color: 'black' }} type="text" placeholder="Nombre" type="text"
                             value={input.name}
                             name="name"
                             onChange={handleChange} />
-                        <Form.Text className="text-muted">
-                            Nunca compartiremos su correo electrónico con nadie más.
-                        </Form.Text>
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                         <Form.Label>Apellidos</Form.Label>
-                        <Form.Control type="text" placeholder="Apellidos" value={input.lastname}
+                        <Form.Control style={control.lastname?.length ? { color: 'red', borderColor: 'red' } : { color: 'black' }} type="text" placeholder="Apellidos" value={input.lastname}
                             name="lastname" onChange={handleChange} />
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="formBasicPassword">
-                        <Form.Label>Contraseña</Form.Label>
-                        <Form.Control type="password" placeholder="Password" value={input.password}
-                            name="password" onChange={handleChange} />
                         <Form.Label>Email</Form.Label>
-                        <Form.Control type="text" placeholder="Email" value={input.email}
-                            name="email" onChange={handleChange} />
+                        <Form.Control key='Email' style={control.email?.length ? { color: 'red', borderColor: 'red' } : { color: 'black' }} placeholder="ejemplo@email.com" type="text" name="email" value={input.email} onChange={handleChange} />
+                        <Form.Text key='email' style={control.email?.length ? { color: 'red' } : { color: 'black' }} className="text-muted">
+                            {control.email || 'Nunca compartiremos su correo electrónico con nadie más.'}
+                        </Form.Text>
                     </Form.Group>
-                    <Button variant="primary" type="submit" onClick={handelSubmit}>
+                    <Form.Label>Contraseña</Form.Label>
+                        <Form.Control style={control.password?.length?{ borderColor: 'red'}:{color: 'black'}} key='password' placeholder="Contraseña" type="password" name='password' value={input.password} onChange={handleChange} />
+                        <Form.Text className="text-muted">
+                            {control.password || 'Escriba su contraseña'}
+                        </Form.Text>
+                            <br/>
+                        <Form.Control style={control.repeatPass?.length?{ borderColor: 'red'}:{color: 'black'}} type="password" placeholder="repita su contraseña" value={input.repeatPass}
+                            name="repeatPass" onChange={handleChange} />
+                            <br/>
+                    <Button className='btn' variant="primary" type="submit" onClick={handleSubLoginCreate}>
                         Crear Cuenta
                     </Button>
 
@@ -154,10 +169,10 @@ function Login({ respuesta, isLogin }) {
                         onSuccess={loginGoogle}
                         onFailure={responseGoogle}
                         cookiePolicy={'single_host_origin'}
-                    />,
-                    <h6 onClick={e => setAccount(false)}>ya tienes una cuenta? <h6 >Ingresa</h6></h6>
+                    />
+                    <h6 className='registrarse' onClick={e => setAccount(false)}>Ya tienes una cuenta? <h6 >Ingresa</h6></h6>
                 </Form>
-            {loading?<img className='imagenCargando' src={gif}></img>:false}
+                {loading ? <img className='imagenCargando' src={gif}></img> : false}
 
             </div>
         )

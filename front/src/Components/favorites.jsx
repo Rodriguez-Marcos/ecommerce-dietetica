@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useHistory } from "react-router"
+import Cookies from "universal-cookie"
 import { getProducts } from "../Actions"
 import { DataContext } from "../Contexts/DataProvider"
 import deleteFav from "../Utils/deleteFav"
@@ -8,31 +9,34 @@ import getFavorites from "../Utils/getFavorites"
 import postCarrito from "../Utils/postCarrito"
 
 const myStorage = window.localStorage
+let cookies = new Cookies();
 
 export default function Favorites() {
-    const {token , comodin, isLogin} = useSelector(state=>state.reducerPablo)
-    const {productsFavs} = useSelector(state=>state.favs)
+    const { token, comodin, isLogin } = useSelector(state => state.reducerPablo)
+    const { productsFavs } = useSelector(state => state.favs)
     const dispatch = useDispatch();
     const history = useHistory();
     const value = useContext(DataContext)
     const [favs, setFavs] = value.favs;
-    useEffect(()=>{
-        if(!isLogin){
-        history.push('/login')
-        setFavs(false)
-    }
-    },[])
+    useEffect(() => {
+        if (!isLogin) {
+            history.push('/login')
+            setFavs(false)
+        }
+    }, [])
 
-    function handleClose(id){
-        dispatch({type:'REMOVE_FAVS',payload: id})
-        deleteFav(id,token)
-        dispatch({type:'COMODIN'})
-    }
-
-    function addFavsToCart(){
-        postCarrito(token,productsFavs.map(x=>{return {id: x.id,quantity:1}}))
-        dispatch({type:'COMODIN'})
-        
+    function addFavsToCart() {
+        let trolley = Array.isArray(cookies.get('trolley')) ? [...cookies.get('trolley')] : []; /// trolley : []
+        productsFavs.forEach(({ id }) => {
+            if (!trolley.find(x => x.id === id)) {
+                trolley.push({ id, quantity: 1 });
+                if (isLogin) postCarrito(token, { id, quantity: 1 });
+            }
+            cookies.set('trolley', trolley)
+            dispatch({
+                type: 'COMODIN',
+            })
+        })
     }
 
     return (
@@ -62,10 +66,10 @@ export default function Favorites() {
 
                     </div>
                 ))}
-               <div className="carrito__footer">
-            <br /> <br />
-            {isLogin ? <button className="btn" onClick={addFavsToCart}>Agregar productos al carrito (beta)</button>:false}
-          </div>
+                <div className="carrito__footer">
+                    <br /> <br />
+                    {isLogin ? <button className="btn" onClick={addFavsToCart}>Agregar productos al carrito</button> : false}
+                </div>
 
 
 
