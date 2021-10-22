@@ -116,9 +116,8 @@ export async function createOrder(req, res, next) {
     }
 }
 export async function getOrders(req, res) {
-    let { id_client, id_order, status } = req.query
-    
-    console.log("hola")
+    let { id_order, status } = req.query
+    let id_client = req.id
     try {
         if (!id_client && !id_order) {
             var orders = await Order.findAll(
