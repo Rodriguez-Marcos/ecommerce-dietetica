@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import './formbefore.css'
 import NavBar from './NavBar';
-import { getAddress, postAddress, sendIdAddress,deleteAddress } from '../Actions';
+import { getAddress, postAddress, sendIdAddress, deleteAddress } from '../Actions';
 // import emptycart from '../../Utils/emptycart';
 import { StyleSharp } from '@material-ui/icons';
 import Cookies from "universal-cookie";
@@ -19,6 +19,7 @@ import { Button, Container, Row, Col, Card } from 'react-bootstrap';
 import { Select } from '@material-ui/core';
 
 export default function Pending() {
+  const {isLogin}= useSelector(state=>state.cart)
   const [sucuSelected, setSucuSelected] = useState('Centro Córdoba')
   const myStorage = window.localStorage;
   const value = useContext(DataContext)
@@ -27,7 +28,17 @@ export default function Pending() {
   const [menu, setMenu] = value.menu;
   const [errors, setErrors] = useState({});
   const [touched, setTouched] = useState({});
+  useEffect(() => {
+    if (!!myStorage.getItem('jwt')) {
+      getCart(myStorage.getItem('jwt'));
+    }
+    else{
+      history.push('/home')
+    }
+  }, [isLogin])
+  
   const [addressid, setAddressId] = useState(null)
+  const [sucursal, setSucursal] = useState([]);
 
   function validateForm(input) {
     let errors = {};
@@ -113,7 +124,7 @@ export default function Pending() {
   // }
   const jwt = window.localStorage.jwt
   var client = decode(jwt)
-  var id = client.id
+  var id = client?.id
   const dispatch = useDispatch();
   useEffect(() => {
     const jwt = myStorage.getItem("jwt")
@@ -132,16 +143,20 @@ export default function Pending() {
     }
   }
 
+  useEffect(() => {
+    axios.get('http://localhost:3001/sucursal').then(function (response) {
+      setSucursal(response.data.data);
+    })
+  }, [])
 
-  
-  let { isLogin, token, comodin, addresses } = useSelector(state => state.reducerPablo)
+  let { token, comodin, addresses } = useSelector(state => state.reducerPablo)
   const cookies = new Cookies();
-  
-  function handleSetAddress(e){
+
+  function handleSetAddress(e) {
     const jwt = myStorage.getItem("jwt");
-    const {value} = e.target
+    const { value } = e.target
     setAddressId(value)
-    dispatch(sendIdAddress(addressid,jwt))
+    dispatch(sendIdAddress(value, jwt))
   }
 
 
@@ -207,15 +222,7 @@ export default function Pending() {
       getCart(token);
     }
   }, [isLogin])
-  let sucursales = [{
-    name: 'Centro Túcuman',
-    src: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5989.084087354766!2d-65.23970981598292!3d-26.803966545215907!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94225d009b6cbcb9%3A0x5f70eb933f102370!2sWimac%20Servicio%20tecnico!5e0!3m2!1sen!2sar!4v1634738352935!5m2!1sen!2sar'
-  },
-  {
-    name: 'Centro Córdoba',
-    src: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4048.528218709014!2d-64.21707256668158!3d-31.430849654591235!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9432a246ddaef005%3A0xeb247e51452379bf!2sSKN%20IT!5e0!3m2!1sen!2sar!4v1634738510417!5m2!1sen!2sar'
-  }
-  ]
+
   function handleInputSucu(e) {
     e.preventDefault();
     const { value } = e.target;
@@ -223,79 +230,72 @@ export default function Pending() {
     console.log(sucuSelected)
   }
 
-  
+
 
 
   if (addresses.length > 0) {
     return (
-
-      <Container>
-
-        <div >
-          <NavBar/>
-          <div class="form-check form-check-inline">
-           
-            <div class="form-check">
-              <label class="form-check-label" for="exampleRadios2">
-                Envío a domicilio:
-              </label>
-            </div>
-          </div>
-          <div>
-            {addresses && addresses?.map(address => {
-              return (
-                <div class="form-check">
-                  <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value={address.id} onClick={handleSetAddress} ></input>
-                  <AddressCard address={address} />
+      <div>
+        <NavBar />
+        <Container className="Container-Envio" >
+          <Col xs="12" md="6" className="retiro-domicilio">
+            <Card className="card-domicilio">
+              <Card.Body className="retiro-Body">
+                <div>
+                  {addresses && addresses?.map(address => {
+                    return (
+                      <div class="form-check">
+                        <label class="form-check-label" for="exampleRadios2">
+                          Envío a domicilio:
+                        </label>
+                        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value={address.id} onClick={handleSetAddress} ></input>
+                        <AddressCard address={address} />
+                      </div>
+                    )
+                  })}
+                  <div>
+                    <NavLink to='/newaddress'><button>Añadir nueva dirección</button></NavLink>
+                  </div>
                 </div>
-              )
-            })}
-            <div><NavLink to='/newaddress'><button>Añadir nueva dirección</button></NavLink></div>
-          </div>
-        </div>
-        <div>
-          <div class="form-check">
-            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value={'Retiro en local'} onClick={handleSetAddress}></input>
-            <label class="form-check-label" for="exampleRadios1">
-              Retiro en local:
-            </label>
-          </div>
-          <br />
-          <iframe id="map" src={(sucursales.find(x => x.name === sucuSelected)).src} width="480" height="250" loading="lazy"></iframe>
-          <br />
-          <h4>Seleccione una sucursal:</h4>
-          <div >
-            <p></p>
-            {/* a medida que selecciona el usuario ve lo que selecciona */}
-            <select name="types" onChange={handleInputSucu}>
-              <option value='Centro Córdoba'>Seleccionar sucursal</option>
-              {sucursales?.map(sucu => {
-                return <option value={sucu.name}>{sucu.name}</option>
-              })}
-            </select>
-          </div>
+              </Card.Body>
+            </Card>
+          </Col>
+
+          <Col xs="12" md="6" className="retiro-domicilio">
+            <Card className="card-domicilio">
+              <Card.Body className="retiro-Body">
+
+                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value={0} onClick={handleSetAddress}></input>
+                <label class="form-check-label" for="exampleRadios1">
+                  Retiro en local:
+                </label>
+                <iframe id="map" src={(sucursal?.find(x => x.name === sucuSelected))?.src} width="480" height="250" loading="lazy"></iframe>
+                <h4>Seleccione una sucursal:</h4>
+                {/* a medida que selecciona el usuario ve lo que selecciona */}
+                <select name="types" onChange={handleInputSucu}>
+                  <option value='Centro Córdoba'>Seleccionar sucursal</option>
+                  {sucursal?.map(sucu => {
+                    return <option value={sucu.name}>{sucu.name}</option>
+                  })}
+                </select>
+                <h4>Por favor seleccione fecha y horario que va a retirar:</h4>
+                <h4>Por favor seleccione fecha y horario que va a retirar:</h4>
+          <Calendar></Calendar>
+              </Card.Body>
+            </Card>
+          </Col>
           {/* <p>Dirección: Rivadavia 29. Plaza San Martin </p> */}
-          <br />
-          <h4>Por favor seleccione fecha y horario que va a retirar:</h4>
-          {/* <Calendar></Calendar> */}
 
-        </div>
-        <br />
-
-        <div class="d-grid gap-2 col-3 mx-auto">
           <div class="form-check form-check-inline">
             <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1"></input>
             <label class="form-check-label" for="inlineCheckbox1">Quiero notificación vía mail de mi pedido</label>
+            <button type="button" class="btn btn-success" onClick={handleCompra}>Comprar</button>
+            {/* <button class="btn btn-primary" color="green" type="button">Comprar</button> */}
+
+            <button type="button" class="btn btn-dark" onClick={() => { setMenu(true) }} >Volver al carrito</button>
           </div>
-          <button type="button" class="btn btn-success" onClick={handleCompra}>Comprar</button>
-          {/* <button class="btn btn-primary" color="green" type="button">Comprar</button> */}
-
-          <button type="button" class="btn btn-dark" onClick={() => { setMenu(true) }} >Volver al carrito</button>
-
-        </div>
-
-
-      </Container>
+        </Container>
+      </div>
     )
   } else {
     return (
@@ -308,9 +308,10 @@ export default function Pending() {
 
         {/* 
         </div> */}
-
-        <h1 >¡Último paso! </h1>
-        <h5>Por favor seleccione: </h5>
+        <div className="ultimo-paso">
+          <h1 >¡Último paso! </h1>
+          <h5>Por favor seleccione: </h5>
+        </div>
         <Container className="Container-Envio" >
           <Row >
             <Col xs="12" md="6" className="retiro-domicilio">
@@ -452,17 +453,17 @@ export default function Pending() {
                       </label>
                     </div>
 
-          <iframe id="map" src={(sucursales.find(x => x.name === sucuSelected)).src} width="480" height="250" loading="lazy"></iframe>
+                    <iframe id="map" src={(sucursal?.find(x => x.name === sucuSelected))?.src} width="480" height="250" loading="lazy"></iframe>
                     <h4>Seleccione una sucursal:</h4>
                     <div >
                       <p></p>
                       {/* a medida que selecciona el usuario ve lo que selecciona */}
                       <select name="types" onChange={handleInputSucu} >
-              <option value='Centro Córdoba'>Seleccionar sucursal</option>
-              {sucursales?.map(sucu => {
-                return <option value={sucu.name}>{sucu.name}</option>
-              })}
-            </select>
+                        <option value='Centro Córdoba'>Seleccionar sucursal</option>
+                        {sucursal?.map(sucu => {
+                          return <option value={sucu.name}>{sucu.name}</option>
+                        })}
+                      </select>
                     </div>
 
                     {/* <p>Dirección: Rivadavia 29. Plaza San Martin </p> */}
@@ -477,17 +478,15 @@ export default function Pending() {
           </Row>
 
           <div class="d-grid gap-2 col-3 mx-auto" className="btns-envio">
-            <div class="form-check form-check-inline">
+            <div class="form-check form-check-inline" className="btnEmail">
               <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1"></input>
               <label class="form-check-label" for="inlineCheckbox1">Quiero notificación vía mail de mi pedido</label>
-
-
-
             </div>
-            <button type="button" class="btn btn-success" onClick={handleCompra}>Comprar</button>
-            {/* <button class="btn btn-primary" color="green" type="button">Comprar</button> */}
-
-            <button type="button" class="btn btn-dark" onClick={() => { setMenu(true) }} >Volver al carrito</button>          
+            <div className="btnComprar">
+              <button type="button" class="btn btn-success" onClick={handleCompra}>Comprar</button>
+              {/* <button class="btn btn-primary" color="green" type="button">Comprar</button> */}
+              <button type="button" class="btn btn-dark" onClick={() => { setMenu(true) }} >Volver al carrito</button>
+            </div>
 
           </div>
         </Container>

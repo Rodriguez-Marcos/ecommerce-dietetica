@@ -4,6 +4,10 @@ import { useSelector, useDispatch } from "react-redux";
 import { getBestSellers } from "../Actions";
 import { Pie } from "react-chartjs-2";
 import "chart.piecelabel.js";
+import {
+  Button,
+
+} from "reactstrap";
 
 export default function Bestsellers() {
   // Importaciones y creacion de entorno
@@ -102,10 +106,10 @@ export default function Bestsellers() {
 
   return (
     <div style={{ width: "65%", height: "500px" }}>
-      <button onClick={() => Dates()}>
+      <Button onClick={() => Dates() } color="primary bg-primary">
         {" "}
         <h2>Productos más Vendidos </h2>
-      </button>
+      </Button>
       <Pie data={data} options={opciones} />
     </div>
   );

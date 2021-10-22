@@ -32,10 +32,10 @@ export default function  TableProducts({p, editProductOpen, openDeleteProduct  }
           <td>{e.price}</td>
           <td>{e.stock}</td>
           <td>
-            <Button color="primary" onClick={() => editProductOpen(e)}>
+            <Button color="primary bg-primary" onClick={() => editProductOpen(e)}>
               ✏
             </Button>
-            <Button color="danger" onClick={() => openDeleteProduct(e)}>
+            <Button color="danger  bg-danger" onClick={() => openDeleteProduct(e)}>
               🗑
             </Button>
           </td>

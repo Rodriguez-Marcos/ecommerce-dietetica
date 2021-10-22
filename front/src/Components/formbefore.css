@@ -8,6 +8,13 @@
     margin: auto;
 }
 
+.ultimo-paso{
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: var(--colorCafe);
+}
 #map{
     width: 100%;
     border-radius: 15px;
@@ -16,6 +23,7 @@
 .retiro-local{
     border-radius: 5px;
     padding: 10px;
+    color: var(--colorverde);
 }
 .retiro-domicilio{
     border-radius: 5px;
@@ -39,6 +47,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    color: var(--colorverde);
 }
 
 .card-retiro{
@@ -56,5 +65,33 @@
     display: flex;
 }
 .btns-envio{
-    width: fit-content;
+    width: 100%;
+    display: flex;
+    flex-direction:column;
+    align-items: center;
+}
+.btnEmail{
+    display: flex;
+    flex-direction: row;
+    width: 29rem;
+    justify-content: center;
+}
+.btnComprar{
+    width: 20rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+
+@media only screen and (max-width: 770px) {
+    .btnEmail{
+        font-size: small;
+        padding: 5px;
+        width: auto;
+    }
+    .btnEmail input{
+        margin-top: 0;
+        justify-content: center;
+    }
 }

@@ -18,6 +18,7 @@ import CreateAddress from './Components/CreateAddress';
 import UserProfile from './Components/UserProfile'
 import Form from './Components/formbefore';
 import Grafics from './Components/Grafics';
+import Sucursal from './Components/sucursal/sucursal';
 
 
 
@@ -49,6 +50,7 @@ function App() {
     <Route exact path='/payment/success' component={Success}/>
     <Route exact path='/payment/pending' component={Pendings}/>
     <Route exact path='/payment/failure' component={Failure}/>
+    <Route exact path='/Admin/sucursal' render={() => isAdmin ? <Sucursal/>: <Redirect to='/home'/>}/>
  
    
 

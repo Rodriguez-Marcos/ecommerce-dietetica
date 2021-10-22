@@ -6,6 +6,10 @@ import { Bar } from "react-chartjs-2";
 import Topbar from "./AdminTopBar";
 import Sidebar from "./AdminSideBar";
 import Bestsellers from "./Grafics.best";
+import {
+  Button,
+
+} from "reactstrap";
 export default function Grafics() {
   // Importaciones y creacion de entorno
   const dispatch = useDispatch();
@@ -81,7 +85,7 @@ export default function Grafics() {
         backgroundColor: generateColors(),
         borderColor: "black",
         borderWidth: 2,
-        hoverBackgroundColor: generateColors(),
+        // hoverBackgroundColor: generateColors(),
         hoverBorderColor: "black",
         data: state.totalByDay_Total,
       },
@@ -99,10 +103,10 @@ export default function Grafics() {
         <Sidebar />
       </div>
       <div style={{ width: "65%", height: "500px" }}>
-        <button onClick={() => Dates()}>
+        <Button  color="primary bg-primary" onClick={() => Dates()}>
           {" "}
           <h2>Compras Diarias. </h2>
-        </button>
+        </Button>
         <Bar data={data} options={opciones} />
       </div>
       <br />

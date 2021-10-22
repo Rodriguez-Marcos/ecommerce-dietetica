@@ -8,17 +8,22 @@ import emptyCart from '../../Utils/emptycart';
 import emptycart from '../../Utils/emptycart';
 import { StyleSharp } from '@material-ui/icons';
 import swal from "sweetalert";
-import { useDispatch } from 'react-redux';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router';
+import Cookies from 'universal-cookie';
+let cookies = new Cookies();
 export default function Pending(){
     const dispatch = useDispatch();
     const myStorage = window.localStorage;
+    const {isLogin}= useSelector(state=>state.cart)
+    const history = useHistory();
 
     useEffect(() => {
         dispatch({type: 'REMOVE_ALL'})
-
+        cookies.set('trolley',[]);
         emptyCart(myStorage.getItem('jwt'))
-    }, [])
+        if (!myStorage.getItem('jwt')) history.push('/home');
+    }, [isLogin])
 
 
     return (
