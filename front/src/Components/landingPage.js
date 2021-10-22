@@ -34,12 +34,12 @@ export default function LandingPage() {
                 <Image id="banner" src={banner} fluid />
                 <Example></Example>
             </div>
-            <h2>PRODUCTOS MAS VENDIDOS</h2>
+            <h2 class="text-center display-4 text-secondary">PRODUCTOS MAS VENDIDOS</h2>
             <div className='home'>
                 <ProductsCards
                     products={bestsellers} />
             </div>
-            <h2>PRODUCTOS MEJOR CALIFICADOS</h2>
+            <h2 class="text-center display-4 text-secondary">PRODUCTOS MEJOR CALIFICADOS</h2>
             <div className='home'>
                 <ProductsCards
                     products={qualified} />
