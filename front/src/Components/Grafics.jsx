@@ -80,7 +80,7 @@ export default function Grafics() {
     return colors;
   }
 
-  console.log(generateColors());
+
   const data = {
     labels: state.totalByDay_Day,
     datasets: [
